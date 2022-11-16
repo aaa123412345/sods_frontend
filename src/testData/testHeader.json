@@ -1,0 +1,9 @@
+{
+    "src":"/images/testHeader.png",
+    "alt":"xxxshool",
+    "bootstrap":{},
+    "style":{
+        "width":"100%",
+        "maxHeight":"200px"
+    }
+  }
