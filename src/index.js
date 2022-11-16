@@ -11,7 +11,7 @@ import ConfiguratedNavbar from "./components/ConfiguredNavbar/ConfiguratedNavbar
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
       <Header/>
       <ConfiguratedNavbar/>
       <PageContent/>
