@@ -1,12 +1,18 @@
 import React from "react";
+import Components from "../../components";
+import contentdata from '../../testData/test.json'
 
 const PageContent = (props) => (
-    <h1>PageContent</h1>
+    <div className="PageContent">
+        
+    {contentdata.map(block => Components(block))}
+  </div>
 )
 
 export default PageContent;
 
-function a (){
 
-}
+  
+
+  
 
