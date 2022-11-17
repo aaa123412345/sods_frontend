@@ -9,8 +9,9 @@ use two cmd
 //Start the temporary Json Server for RestAPI in local
 run in http://localhost:3000/
 
-2. 
+2.1
 npm install
+2.2
 npm start
 //Start the react service
 run in http://localhost:3001/
