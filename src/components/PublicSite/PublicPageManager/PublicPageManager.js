@@ -4,17 +4,23 @@ import PublicHeader from "../PublicHeader/PublicHeader";
 import PublicPageContent from "../PublicPageContent/PublicPageContent";
 import PublicSidebar from "../PublicSidebar/PubllicSidebar";
 
+import {useParams} from "react-router-dom"
 
 
-const PublicPageManager = (props) => (
-    <div className="publicSite" >
-      <PublicSidebar/>
-      <div className="content" style={{paddingLeft:"200px"}}>
-      <PublicHeader/>
-      <PublicPageContent/>
+
+const PublicPageManager = () => {
+    let {path} = useParams();
+    
+    return(
+      <div className="publicSite" >
+        <PublicSidebar/>
+        <div className="content" style={{paddingLeft:"200px"}}>
+        <PublicHeader/>
+        <PublicPageContent />
+        </div>
+      
       </div>
-     
-    </div>
-)
+    )
+}
 
 export default PublicPageManager;

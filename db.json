@@ -1,0 +1,36 @@
+{
+    "about":[
+        {
+            "type":"ctext",
+            "rank":1,
+            "subrank":1,
+            "bootstrap":{},
+            "content":"About",
+            "style":{
+                "color":"#F00000",
+                "fontSize": 55,
+                "fontWeight":"bold",
+                "fontstyle": "italic",
+                "textDecorationLine": "underline"
+                
+            }
+        }
+    ],
+    "share":[
+        {
+            "type":"cvideo",
+            "rank":1,
+            "subrank":1,
+            "src":"/videos/testVideo.mp4",
+            "alt":"Bad",
+            "bootstrap":{},
+            "style":{
+                "height":500,
+                "width":500
+            },
+            "autoplay":true,
+            "muted":true,
+            "controls":true
+          }
+    ]
+}

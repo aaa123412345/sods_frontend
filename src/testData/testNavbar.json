@@ -6,8 +6,8 @@
                 "eng":"About us"
             },
             "path":{
-                "chi":"",
-                "eng":""
+                "chi":"/public/about",
+                "eng":"/public/about"
             },
             "child":[
             ]
@@ -73,8 +73,8 @@
                 "eng":"Student's Sharing"
             },
             "path":{
-                "chi":"",
-                "eng":""
+                "chi":"/public/share",
+                "eng":"/public/share"
             },
             "child":[
             ]
@@ -102,20 +102,17 @@
             },
             "child":[
             ]
+        },{
+            "navName":{
+                "chi":"前往後台頁面",
+                "eng":"Server"
+            },
+            "path":{
+                "chi":"/server",
+                "eng":"/server"
+            },
+            "child":[
+            ]
         }
-    ],
-    "style":{
-        "bg":"light",
-        "expand":"lg"
-    },
-    "home":{
-        "navName":{
-            "chi":"回到主頁",
-            "eng":"Home"
-        },
-        "path":{
-            "chi":"#chiHome",
-            "eng":"#engHome"
-        }
-    }
+    ]
 }

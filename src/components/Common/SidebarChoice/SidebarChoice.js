@@ -1,11 +1,12 @@
 import React from "react";
-
+import {Link} from 'react-router-dom'
 
 const SidebarChoice = ({data,lang}) => {
 
    
     return(
-        <a href={data.path[lang]}>{data.navName[lang]}</a>
+        <Link to={data.path[lang]}>{data.navName[lang]}</Link>
+       
     )
 }
 
