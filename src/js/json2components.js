@@ -1,10 +1,8 @@
 import React from "react";
-import CImage from "./components/CImage/CImage";
-import CMultipleText from "./components/CMultipleText/CMultipleText";
-
-
-import CText from "./components/CText/CText";
-import CVideo from "./components/CVideo/CVideo";
+import CImage from "../components/PublicSite/CImage/CImage";
+import CMultipleText from "../components/PublicSite/CMultipleText/CMultipleText";
+import CText from "../components/PublicSite/CText/CText";
+import CVideo from "../components/PublicSite/CVideo/CVideo";
 
 const Components = {
   ctext: CText,

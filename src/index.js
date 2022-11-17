@@ -4,17 +4,14 @@ import ReactDOM from "react-dom";
 
 import "./css/styles.css";
 import "./css/bootstrap.min.css"
-import PageContent from "./components/PageContent/PageContent.js";
-import Header from "./components/Header/Header";
-import ConfiguratedNavbar from "./components/ConfiguredNavbar/ConfiguratedNavbar";
+import PublicPageManager from "./components/PublicSite/PublicPageManager/PublicPageManager";
+
 
 
 function App() {
   return (
     <div className="App" >
-      <Header/>
-      <ConfiguratedNavbar/>
-      <PageContent/>
+      <PublicPageManager/>
     </div>
     
   );

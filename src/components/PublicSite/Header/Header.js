@@ -1,6 +1,6 @@
 import React from "react";
 
-import headerdata from '../../testData/testHeader.json'
+import headerdata from '../../../testData/testHeader.json'
 
 const Header = () => (
     <div className="Header">

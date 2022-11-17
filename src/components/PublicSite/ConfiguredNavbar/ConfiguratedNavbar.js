@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-import navbardata from '../../testData/testNavbar.json'
+import navbardata from '../../../testData/testNavbar.json'
 
 const lang = "chi"
 
