@@ -1,24 +1,25 @@
-import navbardata from '../../../testData/testNavbar.json'
+
 import React from "react";
 
 import { NavLink } from 'react-router-dom';
 import Sidebar from '../../Common/Sidebar/Sidebar' 
+import navbardata from '../../../testData/testNavbar.json'
 
 
 
 
 
 const PublicSidebar = props =>  {
-    return generator(props)
+    var lang = 'chi'
+
+    
+    return(
+        <Sidebar data={navbardata} lang={lang} />
+    )
     
 }
 
-function generator(props){
-    
-    return(
-        <Sidebar/>
-    )
-}
+
 
 
 

@@ -8,9 +8,12 @@ import PublicSidebar from "../PublicSidebar/PubllicSidebar";
 
 const PublicPageManager = (props) => (
     <div className="publicSite" >
-      <PublicHeader/>
       <PublicSidebar/>
+      <div className="content" style={{paddingLeft:"200px"}}>
+      <PublicHeader/>
       <PublicPageContent/>
+      </div>
+     
     </div>
 )
 

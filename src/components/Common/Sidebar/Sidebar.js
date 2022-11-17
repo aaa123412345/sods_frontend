@@ -1,4 +1,4 @@
-import navbardata from '../../../testData/testNavbar.json'
+
 import React from "react";
 
 import './Sidebar.css';
@@ -6,16 +6,21 @@ import './Sidebar.css';
 import SidebarChoice from '../SidebarChoice/SidebarChoice';
 import SidebarDropdown from '../SidebarDropdown/SidebarDropdown';
 
-const Sidebar = props =>  {
-    
+
+
+const Sidebar = ({data,lang}) =>  {
+   
+   
     return (
         <div className="sidenav">
-            <SidebarChoice/>
-            <SidebarDropdown/>
+            {data.navdata.map((data,index) => data["child"].length == 0? 
+            <SidebarChoice data={data} lang={lang} key={"sidebar-choice-"+index} />:
+            <SidebarDropdown data={data} lang={lang} key={"sidebar-choice-"+index} sindex={index}/>)}
         </div>
     )
     
 }
+
 
 
 

@@ -1,9 +1,11 @@
 import React from "react";
 
 
-const SidebarChoice = (props) => {
+const SidebarChoice = ({data,lang}) => {
+
+   
     return(
-        <a href="#about">About</a>
+        <a href={data.path[lang]}>{data.navName[lang]}</a>
     )
 }
 

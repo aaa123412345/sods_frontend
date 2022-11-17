@@ -2,6 +2,18 @@
     "navdata":[
         {
             "navName":{
+                "chi":"關於我們",
+                "eng":"About us"
+            },
+            "path":{
+                "chi":"",
+                "eng":""
+            },
+            "child":[
+            ]
+        },
+        {
+            "navName":{
                 "chi":"科目",
                 "eng":"Subject"
             },
@@ -29,13 +41,24 @@
                         "chi":"",
                         "eng":""
                     }
+                },
+                {
+                    "navName":{
+                        "chi":"科學",
+                        "eng":"Science"
+                    },
+                    "path":{
+                        "chi":"",
+                        "eng":""
+                    }
                 }
             ]
         },
+       
         {
             "navName":{
-                "chi":"相",
-                "eng":"photo"
+                "chi":"STEM學習",
+                "eng":"STEM"
             },
             "path":{
                 "chi":"",
@@ -46,8 +69,8 @@
         },
         {
             "navName":{
-                "chi":"a",
-                "eng":"a"
+                "chi":"學生心聲",
+                "eng":"Student's Sharing"
             },
             "path":{
                 "chi":"",
@@ -58,8 +81,8 @@
         },
         {
             "navName":{
-                "chi":"b",
-                "eng":"b"
+                "chi":"課外活動",
+                "eng":"c"
             },
             "path":{
                 "chi":"",
@@ -70,7 +93,7 @@
         },
         {
             "navName":{
-                "chi":"c",
+                "chi":"比賽成積",
                 "eng":"c"
             },
             "path":{
