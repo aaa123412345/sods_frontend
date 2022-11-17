@@ -9,4 +9,4 @@ use two cmd
 //Start the react service
 
 2. json-server db.json
-//Start the temporay Json Server for RestAPI in local
+//Start the temporary Json Server for RestAPI in local
