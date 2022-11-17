@@ -8,7 +8,7 @@ import navbardata from '../../../testData/testNavbar.json'
 
 const lang = "chi"
 
-const ConfiguratedNavbar = () => (
+const PublicNavbar = () => (
   <div className="configuratedNavbar">
      <Navbar bg={navbardata.style.bg} expand={navbardata.style.expand}>
       <Container style={{paddingRight:0,paddingLeft:10, margin:0}}>
@@ -25,7 +25,7 @@ const ConfiguratedNavbar = () => (
   </div>
 )
 
-export default ConfiguratedNavbar;
+export default PublicNavbar;
 
 function navbarTypeSelector(data,index){
  

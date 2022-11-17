@@ -1,15 +1,16 @@
 import React from "react";
-import ConfiguratedNavbar from "../ConfiguredNavbar/ConfiguratedNavbar";
-import Header from "../Header/Header";
-import PageContent from "../PageContent/PageContent";
+import PublicNavbar from "../PublicNavbar/PublicNavbar";
+import PublicHeader from "../PublicHeader/PublicHeader";
+import PublicPageContent from "../PublicPageContent/PublicPageContent";
+import PublicSidebar from "../PublicSidebar/PubllicSidebar";
 
 
 
 const PublicPageManager = (props) => (
     <div className="publicSite" >
-      <Header/>
-      <ConfiguratedNavbar/>
-      <PageContent/>
+      <PublicHeader/>
+      <PublicSidebar/>
+      <PublicPageContent/>
     </div>
 )
 
