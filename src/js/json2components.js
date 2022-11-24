@@ -4,11 +4,14 @@ import CMultipleText from "../components/PublicSite/CMultipleText/CMultipleText"
 import CText from "../components/PublicSite/CText/CText";
 import CVideo from "../components/PublicSite/CVideo/CVideo";
 
+import TourGuideCanvas from "../components/TourGuideCanvas/TourGuideCanvas";
+
 const Components = {
   ctext: CText,
   cimage: CImage,
   cvideo: CVideo,
-  cmultipletext: CMultipleText
+  cmultipletext: CMultipleText,
+  ctourguide: TourGuideCanvas
 };
 
 export default block => {

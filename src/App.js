@@ -4,6 +4,8 @@ import ServerPageManager from "./components/ServerSite/ServerPageManager/ServerP
 
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 
+import { ChakraProvider } from '@chakra-ui/react'
+
 
 function App() {
 
@@ -13,21 +15,22 @@ function App() {
     */
 
     return (
-        <BrowserRouter>
-            <Routes>
+        <ChakraProvider>
+            <BrowserRouter>
+                <Routes>
+                    
+                    <Route path='/public/:path' element={<PublicPageManager />}></Route> 
+                    <Route path='/server/*' element={<ServerPageManager/>}></Route>
+                    <Route
+                        path="*"
+                        element={
+                            <Navigate replace to="/public/about" />
+                        }
+                        />
+                </Routes>
                 
-                <Route path='/public/:path' element={<PublicPageManager />}></Route> 
-                <Route path='/server/*' element={<ServerPageManager/>}></Route>
-                <Route
-                    path="*"
-                    element={
-                        <Navigate replace to="/public/about" />
-                    }
-                    />
-            </Routes>
-            
-        </BrowserRouter>
-      
+            </BrowserRouter>
+        </ChakraProvider>
       
     );
   }

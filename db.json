@@ -32,5 +32,13 @@
             "muted":true,
             "controls":true
           }
+    ],
+    "tourguide":[
+        {
+            "type":"ctourguide",
+            "rank": 1,
+            "subrank": 1,
+            "themeColor": "blue"
+        }
     ]
 }
