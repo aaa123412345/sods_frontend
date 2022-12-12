@@ -14,6 +14,21 @@
                 "textDecorationLine": "underline"
                 
             }
+        },
+        {
+            "type":"ctext",
+            "rank":1,
+            "subrank":1,
+            "bootstrap":{},
+            "content":"Test Update",
+            "style":{
+                "color":"#F00000",
+                "fontSize": 55,
+                "fontWeight":"bold",
+                "fontstyle": "italic",
+                "textDecorationLine": "underline"
+                
+            }
         }
     ],
     "share":[
