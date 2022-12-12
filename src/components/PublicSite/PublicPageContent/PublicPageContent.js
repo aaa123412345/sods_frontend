@@ -1,11 +1,14 @@
 import React from "react";
-import Components from "../../../js/json2components";
+
+
 
 import { useState,useEffect,useParams } from "react";
+import PageBootstrapHandler from "../../PageBuilder/BootstrapHandler/BootstrapHandler";
 
 const PublicPageContent = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
   
@@ -21,7 +24,7 @@ const PublicPageContent = () => {
           (result) => {
             setIsLoaded(true);
             setItems(result);
-           
+            setIsReady(true);
           },
           // Note: it's important to handle errors here
           // instead of a catch() block so that we don't swallow
@@ -37,11 +40,11 @@ const PublicPageContent = () => {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
-    } else {
-
+    } else if(ready) {
+      
       return(
         <div className="PageContent">    
-        {items.map(block => Components(block))}
+          <PageBootstrapHandler data={items}></PageBootstrapHandler>
         </div>
       )
     }

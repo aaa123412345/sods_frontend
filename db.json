@@ -4,7 +4,7 @@
             "type":"ctext",
             "rank":1,
             "subrank":1,
-            "bootstrap":{},
+            "bootstrap":{"xs":12, "sm":12, "md":12, "lg":12, "xl":12,"xxl":12},
             "content":"About",
             "style":{
                 "color":"#F00000",
@@ -17,10 +17,25 @@
         },
         {
             "type":"ctext",
-            "rank":1,
+            "rank":2,
             "subrank":1,
-            "bootstrap":{},
+            "bootstrap":{"xs":6, "sm":6, "md":6, "lg":6, "xl":6,"xxl":6},
             "content":"Test Update",
+            "style":{
+                "color":"#F00000",
+                "fontSize": 55,
+                "fontWeight":"bold",
+                "fontstyle": "italic",
+                "textDecorationLine": "underline"
+                
+            }
+        },
+        {
+            "type":"ctext",
+            "rank":2,
+            "subrank":2,
+            "bootstrap":{"xs":6, "sm":6, "md":6, "lg":6, "xl":6,"xxl":6},
+            "content":"Test Boostrap",
             "style":{
                 "color":"#F00000",
                 "fontSize": 55,

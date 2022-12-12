@@ -1,10 +1,10 @@
 import React from "react";
-import CImage from "../components/Common/LayoutElement/CImage/CImage";
-import CMultipleText from "../components/Common/LayoutElement/CMultipleText/CMultipleText";
-import CText from "../components/Common/LayoutElement/CText/CText";
-import CVideo from "../components/Common/LayoutElement/CVideo/CVideo";
+import CImage from "../../Common/LayoutElement/CImage/CImage";
+import CMultipleText from "../../Common/LayoutElement/CMultipleText/CMultipleText";
+import CText from "../../Common/LayoutElement/CText/CText";
+import CVideo from "../../Common/LayoutElement/CVideo/CVideo";
 
-import TourGuideCanvas from "../components/TourGuideCanvas/TourGuideCanvas";
+import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
 
 const Components = {
   ctext: CText,
