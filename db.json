@@ -53,7 +53,7 @@
             "subrank":1,
             "src":"/videos/testVideo.mp4",
             "alt":"Bad",
-            "bootstrap":{},
+            "bootstrap":{"xs":12, "sm":12, "md":12, "lg":12, "xl":12,"xxl":12},
             "style":{
                 "height":500,
                 "width":500
@@ -68,6 +68,7 @@
             "type":"ctourguide",
             "rank": 1,
             "subrank": 1,
+            "bootstrap":{"xs":12, "sm":12, "md":12, "lg":12, "xl":12,"xxl":12},
             "themeColor": "blue"
         }
     ]
