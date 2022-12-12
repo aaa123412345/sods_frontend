@@ -104,6 +104,17 @@
             ]
         },{
             "navName":{
+                "chi":"導賞團",
+                "eng":"Tourguide"
+            },
+            "path":{
+                "chi":"/public/tourguide",
+                "eng":"/public/tourguide"
+            },
+            "child":[
+            ]
+        },{
+            "navName":{
                 "chi":"前往後台頁面",
                 "eng":"Server"
             },
