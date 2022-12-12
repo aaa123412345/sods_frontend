@@ -1,8 +1,8 @@
 import React from "react";
-import CImage from "../components/PublicSite/CImage/CImage";
-import CMultipleText from "../components/PublicSite/CMultipleText/CMultipleText";
-import CText from "../components/PublicSite/CText/CText";
-import CVideo from "../components/PublicSite/CVideo/CVideo";
+import CImage from "../components/Common/LayoutElement/CImage/CImage";
+import CMultipleText from "../components/Common/LayoutElement/CMultipleText/CMultipleText";
+import CText from "../components/Common/LayoutElement/CText/CText";
+import CVideo from "../components/Common/LayoutElement/CVideo/CVideo";
 
 import TourGuideCanvas from "../components/TourGuideCanvas/TourGuideCanvas";
 

@@ -3,8 +3,8 @@ import React from "react";
 
 import './Sidebar.css';
 
-import SidebarChoice from '../SidebarChoice/SidebarChoice';
-import SidebarDropdown from '../SidebarDropdown/SidebarDropdown';
+import SidebarChoice from './SidebarChoice/SidebarChoice';
+import SidebarDropdown from './SidebarDropdown/SidebarDropdown';
 
 //Json to sidebar
 
