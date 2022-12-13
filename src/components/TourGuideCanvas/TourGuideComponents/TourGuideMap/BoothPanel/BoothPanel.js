@@ -83,7 +83,7 @@ const BoothPanel = (props) => {
             
             <ShowButton/>
             <Panel bg={bg}
-                w={{base: 'calc(100% - 200px)', md: isShowBooth?'350px':'0px'}}
+                w={{base: '100%', md: isShowBooth?'350px':'0px'}}
                 h={{base: isShowBooth?"350px":"0px", md: '100%'}}
             >
 

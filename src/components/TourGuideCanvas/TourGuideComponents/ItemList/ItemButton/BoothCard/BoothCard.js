@@ -276,7 +276,7 @@ const CardButton = styled(Card)`
 
     margin: 1em 1em;
     height: 350px;
-    width: 250px; min-width: 250px; max-width: 250px;
+    width: 200px; min-width: 200px; max-width: 200px;
     flex-basis: 100%; flex-grow: 0; flex-shrink: 0;
     cursor: pointer;
 

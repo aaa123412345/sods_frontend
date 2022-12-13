@@ -146,7 +146,7 @@ const ItemList = (props) => {
       <Heading size="sm" mt="1em" ml="1em">{heading}</Heading>
 
       <ScrollContent flexDir={{base: 'row', md: isCategoryList?"column":"row"}}
-        flexWrap={{md: 'wrap'}}>
+        flexWrap={{md: isCategoryList ? 'no-wrap':"wrap"}}>
         {
           items.map((item, index) => (
             <ItemButton key={index}
