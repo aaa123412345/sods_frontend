@@ -15,11 +15,11 @@ const PublicPageContent = () => {
   
     
     
-    var link = "http://localhost:3000/"
+    const host = process.env.REACT_APP_REST_HOST
     const pathname = window.location.pathname
 
     useEffect(() => {
-      fetch(link+pathname.slice(8))
+      fetch(host+pathname.slice(8))
         .then(res => res.json())
         .then(
           (result) => {
