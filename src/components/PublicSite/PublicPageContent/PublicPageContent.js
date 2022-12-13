@@ -4,6 +4,7 @@ import React from "react";
 
 import { useState,useEffect,useParams } from "react";
 import PageBootstrapHandler from "../../PageBuilder/BootstrapHandler/BootstrapHandler";
+import PublicNavbar from "../PublicNavbar/PublicNavbar";
 
 const PublicPageContent = () => {
     const [error, setError] = useState(null);
@@ -41,10 +42,11 @@ const PublicPageContent = () => {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else if(ready) {
-      
+
       return(
-        <div className="PageContent">    
-          <PageBootstrapHandler data={items}></PageBootstrapHandler>
+        <div className="PageContent"> 
+          <PublicNavbar></PublicNavbar>   
+          <PageBootstrapHandler data={items.element}></PageBootstrapHandler>
         </div>
       )
     }

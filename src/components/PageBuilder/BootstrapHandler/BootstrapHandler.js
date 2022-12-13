@@ -7,9 +7,10 @@ import BoostrapRowHandler from "../BootstrapRowHandler/BootstrapRowHandler";
 
 const BoostrapHandler = (data) => {
     
+   
     const groupedData= dataRowGrouper(data['data'])
     
- 
+   
     return(
         <Container>
             {groupedData.map((element,index) =>  React.createElement(BoostrapRowHandler,{data:element,key:"row"+index.toString(),keypass:"row"+index.toString()}))}
@@ -18,6 +19,8 @@ const BoostrapHandler = (data) => {
 }
 
 function dataRowGrouper(data){
+    
+
     const maxRow = data[data.length-1]['rank']
     const result = []
     for(var i=0;i<maxRow;i++){

@@ -6,13 +6,13 @@ import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 
 import { ChakraProvider } from '@chakra-ui/react'
 
+import useWindowSize from "./hooks/useWindowSize";
+
 
 function App() {
 
-    /*
-    <Route path='/public' element={<PublicPageManager />}></Route> 
-                <Route path='/' element={<PublicPageManager />}></Route> 
-    */
+   
+
 
     return (
         <ChakraProvider>
