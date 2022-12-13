@@ -4,7 +4,8 @@ import ServerPageManager from "./components/ServerSite/ServerPageManager/ServerP
 
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { Provider } from "react-redux";
+import { store } from './model/store'
 
 
 
@@ -15,7 +16,8 @@ function App() {
 
 
     return (
-        <ChakraProvider>
+
+        <Provider store={store}>
             <BrowserRouter>
                 <Routes>
                     
@@ -30,7 +32,8 @@ function App() {
                 </Routes>
                 
             </BrowserRouter>
-        </ChakraProvider>
+        </Provider>
+        
       
     );
   }

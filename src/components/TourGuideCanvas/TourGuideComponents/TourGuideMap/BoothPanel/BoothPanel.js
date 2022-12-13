@@ -2,17 +2,21 @@ import React, {useEffect, useState} from 'react'
 
 import styled from 'styled-components'
 
-import { Flex, Button } from '@chakra-ui/react'
+import { Flex, Button, useColorModeValue } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 
-import samplePara from '../../../../helpers/SampleParagraph'
+import { useSelector } from 'react-redux'
+
+import samplePara from '../../../../../helpers/SampleParagraph'
 import MainInfo from './MainInfo/MainInfo'
 import MoreInfo from './MoreInfo/MoreInfo'
 
 const BoothPanel = (props) => {
     
-    const { isShowBooth, setIsShowBooth, themeColor } = props
+    const { isShowBooth, setIsShowBooth } = props
+
+    const themeColor = useSelector(state => state.themeConfig.themeColor)
 
     const [page, setPage] = useState(0)
 
@@ -58,7 +62,7 @@ const BoothPanel = (props) => {
         return (
             <Button 
                 onClick={()=>{setIsShowBooth(!isShowBooth)}}
-                colorScheme={themeColor} 
+                variant={themeColor} m={0}
                 mt="50px" h={{base: '50px', md: "100px"}} w={{base: '100px', md: "50px"}}
                 borderRadius={{base:'25px 25px 0px 0px', md:'25px 0px 0px 25px'}}
                 >
@@ -68,17 +72,19 @@ const BoothPanel = (props) => {
 
     }
 
+    const bg = useColorModeValue("white", "black")
+
     return (
         
         <Float direction={{base: 'column', md: 'row'}}
             alignItems={{base: 'flex-end', md: "flex-start"}}
-            height={{base: 'fit-content', md: 'inherit'}}
+            height={{base: 'fit-content', md: '100%'}}
             width={{base: 'inherit', md: 'fit-content'}}>
             
             <ShowButton/>
-            <Panel
-                w={{base: 'inherit', md: isShowBooth?'350px':'0px'}}
-                h={{base: isShowBooth?"350px":"0px", md: 'inherit'}}
+            <Panel bg={bg}
+                w={{base: 'calc(100% - 200px)', md: isShowBooth?'350px':'0px'}}
+                h={{base: isShowBooth?"350px":"0px", md: '100%'}}
             >
 
                 {   page === 0 && <MainInfo setPage={setPage} boothInfo={boothInfo} themeColor={themeColor} /> }
@@ -95,7 +101,7 @@ export default BoothPanel
 
 const Float = styled(Flex)`
 
-    position: fixed;
+    position: absolute;
     right: 0; bottom: 0;
 
 `
@@ -103,9 +109,9 @@ const Float = styled(Flex)`
 const Panel = styled(Flex)`
 
     position: relative;
-    height: inherit;
-    width: 100%;
-    background: white;
     align-items: center; justify-content: center;
+    box-shadow: -10px 0px 22px rgba(0, 0, 0, .4);
+    border-radius: 25px 0px 0px 0px;
+
 
 `

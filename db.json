@@ -1,405 +1,576 @@
 {
-    "about":{
-        "page":{
-            
+  "about": {
+    "page": {},
+    "element": [
+      {
+        "type": "ctext",
+        "rank": 1,
+        "subrank": 1,
+        "bootstrap": {
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12,
+          "xxl": 12
         },
-        "element":[
-            {
-                "type":"ctext",
-                "rank":1,
-                "subrank":1,
-                "bootstrap":{"xs":12, "sm":12, "md":12, "lg":12, "xl":12,"xxl":12},
-                "content":"About",
-                "style":{
-                    "color":"#F00000",
-                    "fontSize": 55,
-                    "fontWeight":"bold",
-                    "fontstyle": "italic",
-                    "textDecorationLine": "underline"
-                    
-                }
+        "content": "About",
+        "style": {
+          "color": "#F00000",
+          "fontSize": 55,
+          "fontWeight": "bold",
+          "fontstyle": "italic",
+          "textDecorationLine": "underline"
+        }
+      },
+      {
+        "type": "ctext",
+        "rank": 2,
+        "subrank": 1,
+        "bootstrap": {
+          "xs": 6,
+          "sm": 6,
+          "md": 6,
+          "lg": 6,
+          "xl": 6,
+          "xxl": 6
+        },
+        "content": "Test Update",
+        "style": {
+          "color": "#F00000",
+          "fontSize": 55,
+          "fontWeight": "bold",
+          "fontstyle": "italic",
+          "textDecorationLine": "underline"
+        }
+      },
+      {
+        "type": "ctext",
+        "rank": 2,
+        "subrank": 2,
+        "bootstrap": {
+          "xs": 6,
+          "sm": 6,
+          "md": 6,
+          "lg": 6,
+          "xl": 6,
+          "xxl": 6
+        },
+        "content": "Test Boostrap",
+        "style": {
+          "color": "#F00000",
+          "fontSize": 55,
+          "fontWeight": "bold",
+          "fontstyle": "italic",
+          "textDecorationLine": "underline"
+        }
+      }
+    ]
+  },
+  "share": {
+    "page": {},
+    "element": [
+      {
+        "type": "cvideo",
+        "rank": 1,
+        "subrank": 1,
+        "src": "/videos/testVideo.mp4",
+        "alt": "Bad",
+        "bootstrap": {
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12,
+          "xxl": 12
+        },
+        "style": {
+          "height": 500,
+          "width": 500
+        },
+        "autoplay": true,
+        "muted": true,
+        "controls": true
+      }
+    ]
+  },
+  "tourguide": {
+    "page": {},
+    "element": [
+      {
+        "type": "ctourguide",
+        "rank": 1,
+        "subrank": 1,
+        "bootstrap": {
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12,
+          "xxl": 12
+        },
+        "themeColor": "blue"
+      }
+    ]
+  },
+  "publicnavdata": {
+    "navdata": [
+      {
+        "navName": {
+          "chi": "關於我們",
+          "eng": "About us"
+        },
+        "path": {
+          "chi": "/public/about",
+          "eng": "/public/about"
+        },
+        "child": []
+      },
+      {
+        "navName": {
+          "chi": "科目",
+          "eng": "Subject"
+        },
+        "path": {
+          "chi": "",
+          "eng": ""
+        },
+        "child": [
+          {
+            "navName": {
+              "chi": "中文",
+              "eng": "Chinese"
             },
-            {
-                "type":"ctext",
-                "rank":2,
-                "subrank":1,
-                "bootstrap":{"xs":6, "sm":6, "md":6, "lg":6, "xl":6,"xxl":6},
-                "content":"Test Update",
-                "style":{
-                    "color":"#F00000",
-                    "fontSize": 55,
-                    "fontWeight":"bold",
-                    "fontstyle": "italic",
-                    "textDecorationLine": "underline"
-                    
-                }
-            },
-            {
-                "type":"ctext",
-                "rank":2,
-                "subrank":2,
-                "bootstrap":{"xs":6, "sm":6, "md":6, "lg":6, "xl":6,"xxl":6},
-                "content":"Test Boostrap",
-                "style":{
-                    "color":"#F00000",
-                    "fontSize": 55,
-                    "fontWeight":"bold",
-                    "fontstyle": "italic",
-                    "textDecorationLine": "underline"
-                    
-                }
+            "path": {
+              "chi": "",
+              "eng": ""
             }
-        ]
-    },
-    "share":{
-        "page":{
-            
-        },
-        "element":[
-            {
-            "type":"cvideo",
-            "rank":1,
-            "subrank":1,
-            "src":"/videos/testVideo.mp4",
-            "alt":"Bad",
-            "bootstrap":{"xs":12, "sm":12, "md":12, "lg":12, "xl":12,"xxl":12},
-            "style":{
-                "height":500,
-                "width":500
+          },
+          {
+            "navName": {
+              "chi": "英文",
+              "eng": "English"
             },
-            "autoplay":true,
-            "muted":true,
-            "controls":true
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          },
+          {
+            "navName": {
+              "chi": "科學",
+              "eng": "Science"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
           }
         ]
-    },
-    "tourguide":{
-        "page":{
-            
+      },
+      {
+        "navName": {
+          "chi": "STEM學習",
+          "eng": "STEM"
         },
-        "element":[
-        {
-            "type":"ctourguide",
-            "rank": 1,
-            "subrank": 1,
-            "bootstrap":{"xs":12, "sm":12, "md":12, "lg":12, "xl":12,"xxl":12},
-            "themeColor": "blue"
-        }
+        "path": {
+          "chi": "",
+          "eng": ""
+        },
+        "child": []
+      },
+      {
+        "navName": {
+          "chi": "學生心聲",
+          "eng": "Student's Sharing"
+        },
+        "path": {
+          "chi": "/public/share",
+          "eng": "/public/share"
+        },
+        "child": []
+      },
+      {
+        "navName": {
+          "chi": "課外活動",
+          "eng": "c"
+        },
+        "path": {
+          "chi": "",
+          "eng": ""
+        },
+        "child": []
+      },
+      {
+        "navName": {
+          "chi": "比賽成積",
+          "eng": "c"
+        },
+        "path": {
+          "chi": "",
+          "eng": ""
+        },
+        "child": []
+      },
+      {
+        "navName": {
+          "chi": "導賞團",
+          "eng": "Tourguide"
+        },
+        "path": {
+          "chi": "/public/tourguide",
+          "eng": "/public/tourguide"
+        },
+        "child": []
+      },
+      {
+        "navName": {
+          "chi": "前往後台頁面",
+          "eng": "Server"
+        },
+        "path": {
+          "chi": "/server",
+          "eng": "/server"
+        },
+        "child": []
+      }
     ]
-    },
-    "publicnavdata":{
-        "navdata":[
-            {
-                "navName":{
-                    "chi":"關於我們",
-                    "eng":"About us"
-                },
-                "path":{
-                    "chi":"/public/about",
-                    "eng":"/public/about"
-                },
-                "child":[
-                ]
+  },
+  "servernavdata": {
+    "navdata": [
+      {
+        "navName": {
+          "chi": "統計頁面",
+          "eng": "About us"
+        },
+        "path": {
+          "chi": "",
+          "eng": ""
+        },
+        "child": []
+      },
+      {
+        "navName": {
+          "chi": "CMS管理",
+          "eng": "Subject"
+        },
+        "path": {
+          "chi": "",
+          "eng": ""
+        },
+        "child": [
+          {
+            "navName": {
+              "chi": "頁面設計",
+              "eng": "Chinese"
             },
-            {
-                "navName":{
-                    "chi":"科目",
-                    "eng":"Subject"
-                },
-                "path":{
-                    "chi":"",
-                    "eng":""
-                },
-                "child":[
-                    {
-                        "navName":{
-                            "chi":"中文",
-                            "eng":"Chinese"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"英文",
-                            "eng":"English"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"科學",
-                            "eng":"Science"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    }
-                ]
-            },
-           
-            {
-                "navName":{
-                    "chi":"STEM學習",
-                    "eng":"STEM"
-                },
-                "path":{
-                    "chi":"",
-                    "eng":""
-                },
-                "child":[
-                ]
-            },
-            {
-                "navName":{
-                    "chi":"學生心聲",
-                    "eng":"Student's Sharing"
-                },
-                "path":{
-                    "chi":"/public/share",
-                    "eng":"/public/share"
-                },
-                "child":[
-                ]
-            },
-            {
-                "navName":{
-                    "chi":"課外活動",
-                    "eng":"c"
-                },
-                "path":{
-                    "chi":"",
-                    "eng":""
-                },
-                "child":[
-                ]
-            },
-            {
-                "navName":{
-                    "chi":"比賽成積",
-                    "eng":"c"
-                },
-                "path":{
-                    "chi":"",
-                    "eng":""
-                },
-                "child":[
-                ]
-            },{
-                "navName":{
-                    "chi":"導賞團",
-                    "eng":"Tourguide"
-                },
-                "path":{
-                    "chi":"/public/tourguide",
-                    "eng":"/public/tourguide"
-                },
-                "child":[
-                ]
-            },{
-                "navName":{
-                    "chi":"前往後台頁面",
-                    "eng":"Server"
-                },
-                "path":{
-                    "chi":"/server",
-                    "eng":"/server"
-                },
-                "child":[
-                ]
+            "path": {
+              "chi": "",
+              "eng": ""
             }
-        ]
-    },
-    "servernavdata":{
-        "navdata":[
-            {
-                "navName":{
-                    "chi":"統計頁面",
-                    "eng":"About us"
-                },
-                "path":{
-                    "chi":"",
-                    "eng":""
-                },
-                "child":[
-                ]
+          },
+          {
+            "navName": {
+              "chi": "路由設定",
+              "eng": "English"
             },
-            {
-                "navName":{
-                    "chi":"CMS管理",
-                    "eng":"Subject"
-                },
-                "path":{
-                    "chi":"",
-                    "eng":""
-                },
-                "child":[
-                    {
-                        "navName":{
-                            "chi":"頁面設計",
-                            "eng":"Chinese"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"路由設定",
-                            "eng":"English"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"樣板存取",
-                            "eng":"Science"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    }
-                ]
-            },
-            {
-                "navName":{
-                    "chi":"問卷系統",
-                    "eng":"Subject"
-                },
-                "path":{
-                    "chi":"",
-                    "eng":""
-                },
-                "child":[
-                    {
-                        "navName":{
-                            "chi":"查詢已有問卷/投票",
-                            "eng":"Chinese"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"設計問卷/投票",
-                            "eng":"Chinese"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"修改問卷/投票",
-                            "eng":"English"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"刪除問卷/投票",
-                            "eng":"Science"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    }
-                ]
-            },
-            {
-                "navName":{
-                    "chi":"時段預留系統",
-                    "eng":"Subject"
-                },
-                "path":{
-                    "chi":"",
-                    "eng":""
-                },
-                "child":[
-                    {
-                        "navName":{
-                            "chi":"查詢已有記錄",
-                            "eng":"Chinese"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"新增時段",
-                            "eng":"English"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"修改時段",
-                            "eng":"Science"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    },
-                    {
-                        "navName":{
-                            "chi":"移除時段",
-                            "eng":"Science"
-                        },
-                        "path":{
-                            "chi":"",
-                            "eng":""
-                        }
-                    }
-                    
-                ]
-            },
-           
-            {
-                "navName":{
-                    "chi":"回到前台網頁",
-                    "eng":"Server"
-                },
-                "path":{
-                    "chi":"/",
-                    "eng":"/"
-                },
-                "child":[
-                ]
+            "path": {
+              "chi": "",
+              "eng": ""
             }
+          },
+          {
+            "navName": {
+              "chi": "樣板存取",
+              "eng": "Science"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          }
         ]
-    },
-    "publicheader":{
-        "src":"/images/testHeader.png",
-        "alt":"xxxshool",
-        "bootstrap":{},
-        "style":{
-            "width":"100%",
-            "maxHeight":"200px"
-        }
+      },
+      {
+        "navName": {
+          "chi": "問卷系統",
+          "eng": "Subject"
+        },
+        "path": {
+          "chi": "",
+          "eng": ""
+        },
+        "child": [
+          {
+            "navName": {
+              "chi": "查詢已有問卷/投票",
+              "eng": "Chinese"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          },
+          {
+            "navName": {
+              "chi": "設計問卷/投票",
+              "eng": "Chinese"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          },
+          {
+            "navName": {
+              "chi": "修改問卷/投票",
+              "eng": "English"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          },
+          {
+            "navName": {
+              "chi": "刪除問卷/投票",
+              "eng": "Science"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          }
+        ]
+      },
+      {
+        "navName": {
+          "chi": "時段預留系統",
+          "eng": "Subject"
+        },
+        "path": {
+          "chi": "",
+          "eng": ""
+        },
+        "child": [
+          {
+            "navName": {
+              "chi": "查詢已有記錄",
+              "eng": "Chinese"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          },
+          {
+            "navName": {
+              "chi": "新增時段",
+              "eng": "English"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          },
+          {
+            "navName": {
+              "chi": "修改時段",
+              "eng": "Science"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          },
+          {
+            "navName": {
+              "chi": "移除時段",
+              "eng": "Science"
+            },
+            "path": {
+              "chi": "",
+              "eng": ""
+            }
+          }
+        ]
+      },
+      {
+        "navName": {
+          "chi": "回到前台網頁",
+          "eng": "Server"
+        },
+        "path": {
+          "chi": "/",
+          "eng": "/"
+        },
+        "child": []
+      }
+    ]
+  },
+  "publicheader": {
+    "src": "/images/testHeader.png",
+    "alt": "xxxshool",
+    "bootstrap": {},
+    "style": {
+      "width": "100%",
+      "maxHeight": "200px"
     }
-
+  },
+  "floorplans": [
+    {
+      "region": "1 Floor"
+    },
+    {
+      "region": "2 Floor"
+    },
+    {
+      "region": "3 Floor"
+    },
+    {
+      "region": "8 Floor"
+    },
+    {
+      "region": "9 Floor"
+    },
+    {
+      "region": "10 Floor"
+    },
+    {
+      "region": "11 Floor"
+    }
+  ],
+  "markers": [
+    {
+      "region": "1 Floor",
+      "top": 39.15974948308411,
+      "left": 24.591738712776177,
+      "booth": null,
+      "id": 1
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 40.737143689603265,
+      "left": 76.698028981526,
+      "id": 2
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 23.643956684310204,
+      "left": 70.10507520087906,
+      "id": 3
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 12.144903608022144,
+      "left": 77.35732435959069,
+      "id": 4
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 43.06803282668868,
+      "left": 55.16104663141268,
+      "id": 5
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 41.04792890788132,
+      "left": 61.09470503399492,
+      "id": 6
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 66.6877094158209,
+      "left": 75.23292814138223,
+      "id": 7
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 48.97295197397174,
+      "left": 66.7353432685484,
+      "id": 8
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 63.2690720147623,
+      "left": 83.36423780418012,
+      "id": 9
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 26.75180886709076,
+      "left": 13.918457981365748,
+      "id": 10
+    },
+    {
+      "region": "2 Floor",
+      "booth": null,
+      "top": 21.098272896834047,
+      "left": 15.785867628922487,
+      "id": 11
+    },
+    {
+      "region": "2 Floor",
+      "booth": null,
+      "top": 40.78676452777172,
+      "left": 19.95158269766592,
+      "id": 12
+    },
+    {
+      "region": "2 Floor",
+      "booth": null,
+      "top": 51.01857907613303,
+      "left": 27.698351071118623,
+      "id": 13
+    }
+  ],
+  "booths": [
+    {
+      "id": 125,
+      "region": "1 Floor",
+      "name": "let's Code",
+      "venue": "1/F, Rm 304, Computer Lab Room",
+      "description": "This is the place for students to learn computer science knowledge.",
+      "passcode": 1234,
+      "gameType": null
+    },
+    {
+      "id": 126,
+      "region": "2 Floor",
+      "name": "English Time",
+      "venue": "1/F, Rm 305, English Lab Room",
+      "description": "This is the place for students to learn computer science knowledge.",
+      "passcode": 1234,
+      "gameType": null
+    },
+    {
+      "region": "1 Floor",
+      "name": "Math Booth",
+      "venue": "1/F, Rm 109, 1A Classroom",
+      "description": "This is the booth to show you how students learn Maths with us in daily class. ",
+      "passcode": "0000",
+      "id": 127
+    }
+  ],
+  "ar-treasure": [
+    {
+      "id": 111,
+      "booth": null,
+      "name": "What is the school name?"
+    },
+    {
+      "id": 112,
+      "booth": null,
+      "name": "Who establish this school?"
+    }
+  ]
 }

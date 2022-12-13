@@ -13,7 +13,7 @@ const MoreInfo = (props) => {
     return (
         <Container>
             <Flex alignItems='center' marginBottom=".5em">
-                <Button w={50} h={50} borderRadius={'50%'} colorScheme="gray"
+                <Button w={50} h={50} borderRadius={'50%'} variant="gray"
                     onClick={()=>setPage(0)}>
                     <FontAwesomeIcon icon={faAngleLeft}/>
                 </Button>
@@ -23,7 +23,7 @@ const MoreInfo = (props) => {
                 moreInfo.map((info, index)=>(
                     <div key={index}>
                         <Heading size="sm" mt="1em">{info.heading}</Heading>
-                        <Text color='gray'>{info.paragraph}</Text>
+                        <Text mt=".5em" color='gray'>{info.paragraph}</Text>
                     </div>
                 ))
             }

@@ -2,41 +2,67 @@ import React, { useState, useEffect } from 'react'
 
 import styled from 'styled-components'
 
+import { ChakraProvider } from '@chakra-ui/react'
+import { newTheme } from '../../theme/theme'
 import { Flex, Box, Button } from '@chakra-ui/react'
 
+import { useSelector } from 'react-redux'
+
 import TourGuideEditor from './TourGuideEditor/TourGuideEditor'
-import TourGuideMap from './TourGuideMap/TourGuideMap'
+import TourGuideMap from './TourGuideComponents/TourGuideMap/TourGuideMap'
+import useSessionStorage from '../../hooks/useSessionStorage'
 
-const TourGuideCanvas = (props) => {
+const TourGuideCanvas = () => {
 
-    const { themeColor } = props.block
+    // session storage
+    const [editorModeSession, setEditorModeSession] = useSessionStorage('editorMode', false)
 
-    const [isEditMode, setIsEditMode] = useState(false)
-    const [isAdmin, setIsAdmin] = useState(false)
+    // chakra hooks
+    const themeColor = useSelector(state => state.themeConfig.themeColor)
 
-    const update_mode = (pathname) => { return pathname.slice(1, 7) === "public" ? false : true }
+    // react hooks
+    const [isAdmin, setIsAdmin] = useState(false) // for development use
+    const [isEditMode, setIsEditMode] = useState(true)
+
+    const update_mode = (pathname) => { 
+        return pathname.slice(1, 7) === "public" ? true : true 
+    }
+
+    const change_editMode = () => {
+        setEditorModeSession(!isEditMode)
+        setIsEditMode(!isEditMode)
+    }
 
     useEffect(()=>{
 
-        setIsAdmin(update_mode(window.location.pathname))
+        let canEdit = update_mode(window.location.pathname)
+        setIsAdmin(canEdit) // for development use
+        setIsEditMode(editorModeSession)
 
     }, [window.location.pathname])
 
     return (
-        <OuterContainer isAdmin={isAdmin}>
+        <ChakraProvider resetCSS theme={newTheme}>
 
-            { isEditMode && isAdmin ? <TourGuideEditor/> : <TourGuideMap themeColor={themeColor} /> }
+            <OuterContainer>
 
-            <Float>
-                <EditButton
-                    colorScheme={themeColor}
-                    borderRadius={'0 25px 0 0'}
-                    onClick={()=>setIsEditMode(!isEditMode)}>Edit</EditButton>
-            </Float>
+                { isEditMode && isAdmin ? <TourGuideEditor /> : <TourGuideMap /> }
 
-        </OuterContainer>
-    ) 
-    
+                <Float> 
+                    <EditButton
+                        variant={themeColor}
+                        borderRadius={25}
+                        onClick={change_editMode}>
+                            {isAdmin?isEditMode?"Preview":"Edit":"My Ticket"}
+                    </EditButton>
+                    
+                </Float>
+
+            </OuterContainer>
+            
+        </ChakraProvider>
+    )
+
 }
 
 export default TourGuideCanvas
@@ -44,16 +70,19 @@ export default TourGuideCanvas
 const OuterContainer = styled(Flex)`
 
     background: red;
-    position: fixed;
-    width: calc(100vw - 200px); 
-    height: ${props=>props.isAdmin? '100%' : 'calc(100vh - 200px)'};
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100vh;
     bottom: 0;
+
 
 `
 const Float = styled(Box)`
 
-    position: fixed;
-    bottom: inherit;
+    position: absolute;
+    z-index: 3;
+    right: 0;
 
 `
 
