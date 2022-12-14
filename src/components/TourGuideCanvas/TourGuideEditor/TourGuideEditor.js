@@ -24,20 +24,19 @@ const TourGuideEditor = (props) => {
             <Button onClick={toggleColorMode}
                 variant="gray"
                 position="absolute" zIndex="999"
-                bottom="1em" right="1em">
+                right="5px">
                 { colorMode === 'light'? "Light":"Dark"} Mode
             </Button>
         )
     }
 
     return (
-        <>
+        <React.Fragment>
             <EditorHeader bg={bg}>
                 <Heading ml=".5em" size="lg">Tour Guideline Editor</Heading>
             </EditorHeader>
             
             <Container bg={bg}
-                overflow={{base: 'scroll', md: 'hidden'}}
                 flexDir={{base: 'column', md: 'row'}}>
             
                 <LeftPanel />
@@ -50,7 +49,7 @@ const TourGuideEditor = (props) => {
 
             </Container>
 
-        </>
+        </React.Fragment>
     )
 
 }
@@ -59,15 +58,18 @@ export default TourGuideEditor
 
 const EditorHeader = styled(Flex)`
 
-    flex: 1;
     align-items: center;
-    height: 80px; max-height: 80px;
+    width: calc(100% + 0px);
+    height: 100%; max-height: 80px;
+    padding: 28px 0em;
 
 `
 
 const Container = styled(Flex)`
 
-    height: calc(100% - 80px); 
+    height: fit-content; 
+    min-height: calc(100% - 80px + 14px);
+    position: relative;
     width: inherit;
 
 `

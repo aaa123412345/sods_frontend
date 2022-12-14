@@ -44,7 +44,7 @@ const TourGuideCanvas = () => {
     return (
         <ChakraProvider resetCSS theme={newTheme}>
 
-            <OuterContainer>
+            <OuterContainer w={{base: "100%", md: "calc(100vw - 200px)"}}>
 
                 { isEditMode && isAdmin ? <TourGuideEditor /> : <TourGuideMap /> }
 
@@ -69,13 +69,11 @@ export default TourGuideCanvas
 
 const OuterContainer = styled(Flex)`
 
-    background: red;
     flex-direction: column;
-    position: relative;
-    width: 100%;
+    position: absolute;
     height: 100vh;
-    bottom: 0;
-
+    max-width: 100vw;
+    right: 0; margin-top: -12px;
 
 `
 const Float = styled(Box)`
