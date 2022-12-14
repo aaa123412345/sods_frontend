@@ -1,10 +1,10 @@
 import React from "react";
 
 
-
-import { useState,useEffect,useParams } from "react";
+import { useState,useEffect } from "react";
 import PageBootstrapHandler from "../../PageBuilder/BootstrapHandler/BootstrapHandler";
 import PublicNavbar from "../PublicNavbar/PublicNavbar";
+import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
 const PublicPageContent = () => {
     const [error, setError] = useState(null);
@@ -20,9 +20,16 @@ const PublicPageContent = () => {
         .then(res => res.json())
         .then(
           (result) => {
-            setIsLoaded(true);
-            setItems(result);
-            setIsReady(true);
+            var rest = jsonExtractor(result);
+            if(rest.response == "success"){
+              setIsLoaded(true);
+              setItems(rest.data);
+              setIsReady(true);
+            }else{
+              /*Error */
+              setIsLoaded(true);
+              setError(error);
+            }
           },
           // Note: it's important to handle errors here
           // instead of a catch() block so that we don't swallow

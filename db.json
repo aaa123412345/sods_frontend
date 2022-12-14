@@ -1,420 +1,444 @@
 {
   "about": {
+    "code": 200,
+    "msg":"OK",
+    "data":{
     "page": {},
-    "element": [
-      {
-        "type": "ctext",
-        "rank": 1,
-        "subrank": 1,
-        "bootstrap": {
-          "xs": 12,
-          "sm": 12,
-          "md": 12,
-          "lg": 12,
-          "xl": 12,
-          "xxl": 12
+      "element": [
+        {
+          "type": "ctext",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "content": "About",
+          "style": {
+            "color": "#F00000",
+            "fontSize": 55,
+            "fontWeight": "bold",
+            "fontstyle": "italic",
+            "textDecorationLine": "underline"
+          }
         },
-        "content": "About",
-        "style": {
-          "color": "#F00000",
-          "fontSize": 55,
-          "fontWeight": "bold",
-          "fontstyle": "italic",
-          "textDecorationLine": "underline"
-        }
-      },
-      {
-        "type": "ctext",
-        "rank": 2,
-        "subrank": 1,
-        "bootstrap": {
-          "xs": 6,
-          "sm": 6,
-          "md": 6,
-          "lg": 6,
-          "xl": 6,
-          "xxl": 6
+        {
+          "type": "ctext",
+          "rank": 2,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 6,
+            "sm": 6,
+            "md": 6,
+            "lg": 6,
+            "xl": 6,
+            "xxl": 6
+          },
+          "content": "Test Update",
+          "style": {
+            "color": "#F00000",
+            "fontSize": 55,
+            "fontWeight": "bold",
+            "fontstyle": "italic",
+            "textDecorationLine": "underline"
+          }
         },
-        "content": "Test Update",
-        "style": {
-          "color": "#F00000",
-          "fontSize": 55,
-          "fontWeight": "bold",
-          "fontstyle": "italic",
-          "textDecorationLine": "underline"
+        {
+          "type": "ctext",
+          "rank": 2,
+          "subrank": 2,
+          "bootstrap": {
+            "xs": 6,
+            "sm": 6,
+            "md": 6,
+            "lg": 6,
+            "xl": 6,
+            "xxl": 6
+          },
+          "content": "Test Boostrap",
+          "style": {
+            "color": "#F00000",
+            "fontSize": 55,
+            "fontWeight": "bold",
+            "fontstyle": "italic",
+            "textDecorationLine": "underline"
+          }
         }
-      },
-      {
-        "type": "ctext",
-        "rank": 2,
-        "subrank": 2,
-        "bootstrap": {
-          "xs": 6,
-          "sm": 6,
-          "md": 6,
-          "lg": 6,
-          "xl": 6,
-          "xxl": 6
-        },
-        "content": "Test Boostrap",
-        "style": {
-          "color": "#F00000",
-          "fontSize": 55,
-          "fontWeight": "bold",
-          "fontstyle": "italic",
-          "textDecorationLine": "underline"
-        }
-      }
-    ]
+      ]
+    }
   },
   "share": {
-    "page": {},
-    "element": [
-      {
-        "type": "cvideo",
-        "rank": 1,
-        "subrank": 1,
-        "src": "/videos/testVideo.mp4",
-        "alt": "Bad",
-        "bootstrap": {
-          "xs": 12,
-          "sm": 12,
-          "md": 12,
-          "lg": 12,
-          "xl": 12,
-          "xxl": 12
-        },
-        "style": {
-          "height": 500,
-          "width": 500
-        },
-        "autoplay": true,
-        "muted": true,
-        "controls": true
-      }
-    ]
+    "code": 200,
+    "msg":"OK",
+    "data":{
+      "page": {},
+      "element": [
+        {
+          "type": "cvideo",
+          "rank": 1,
+          "subrank": 1,
+          "src": "/videos/testVideo.mp4",
+          "alt": "Bad",
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "style": {
+            "height": 500,
+            "width": 500
+          },
+          "autoplay": true,
+          "muted": true,
+          "controls": true
+        }
+      ]
+    }
   },
   "tourguide": {
-    "page": {},
-    "element": [
-      {
-        "type": "ctourguide",
-        "rank": 1,
-        "subrank": 1,
-        "bootstrap": {
-          "xs": 12,
-          "sm": 12,
-          "md": 12,
-          "lg": 12,
-          "xl": 12,
-          "xxl": 12
-        },
-        "themeColor": "blue"
-      }
-    ]
+    "code": 200,
+    "msg":"OK",
+    "data":{
+      "page": {},
+      "element": [
+        {
+          "type": "ctourguide",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "themeColor": "blue"
+        }
+      ]
+    }
   },
   "publicnavdata": {
-    "navdata": [
-      {
-        "navName": {
-          "chi": "關於我們",
-          "eng": "About us"
-        },
-        "path": {
-          "chi": "/public/about",
-          "eng": "/public/about"
-        },
-        "child": []
-      },
-      {
-        "navName": {
-          "chi": "科目",
-          "eng": "Subject"
-        },
-        "path": {
-          "chi": "",
-          "eng": ""
-        },
-        "child": [
-          {
-            "navName": {
-              "chi": "中文",
-              "eng": "Chinese"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
+    "code": 200,
+    "msg":"OK",
+    "data":{
+      "navdata": [
+        {
+          "navName": {
+            "chi": "關於我們",
+            "eng": "About us"
           },
-          {
-            "navName": {
-              "chi": "英文",
-              "eng": "English"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
+          "path": {
+            "chi": "/public/about",
+            "eng": "/public/about"
           },
-          {
-            "navName": {
-              "chi": "科學",
-              "eng": "Science"
+          "child": []
+        },
+        {
+          "navName": {
+            "chi": "科目",
+            "eng": "Subject"
+          },
+          "path": {
+            "chi": "",
+            "eng": ""
+          },
+          "child": [
+            {
+              "navName": {
+                "chi": "中文",
+                "eng": "Chinese"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
             },
-            "path": {
-              "chi": "",
-              "eng": ""
+            {
+              "navName": {
+                "chi": "英文",
+                "eng": "English"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
+            },
+            {
+              "navName": {
+                "chi": "科學",
+                "eng": "Science"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
             }
-          }
-        ]
-      },
-      {
-        "navName": {
-          "chi": "STEM學習",
-          "eng": "STEM"
+          ]
         },
-        "path": {
-          "chi": "",
-          "eng": ""
+        {
+          "navName": {
+            "chi": "STEM學習",
+            "eng": "STEM"
+          },
+          "path": {
+            "chi": "",
+            "eng": ""
+          },
+          "child": []
         },
-        "child": []
-      },
-      {
-        "navName": {
-          "chi": "學生心聲",
-          "eng": "Student's Sharing"
+        {
+          "navName": {
+            "chi": "學生心聲",
+            "eng": "Student's Sharing"
+          },
+          "path": {
+            "chi": "/public/share",
+            "eng": "/public/share"
+          },
+          "child": []
         },
-        "path": {
-          "chi": "/public/share",
-          "eng": "/public/share"
+        {
+          "navName": {
+            "chi": "課外活動",
+            "eng": "c"
+          },
+          "path": {
+            "chi": "",
+            "eng": ""
+          },
+          "child": []
         },
-        "child": []
-      },
-      {
-        "navName": {
-          "chi": "課外活動",
-          "eng": "c"
+        {
+          "navName": {
+            "chi": "比賽成積",
+            "eng": "c"
+          },
+          "path": {
+            "chi": "",
+            "eng": ""
+          },
+          "child": []
         },
-        "path": {
-          "chi": "",
-          "eng": ""
+        {
+          "navName": {
+            "chi": "導賞團",
+            "eng": "Tourguide"
+          },
+          "path": {
+            "chi": "/public/tourguide",
+            "eng": "/public/tourguide"
+          },
+          "child": []
         },
-        "child": []
-      },
-      {
-        "navName": {
-          "chi": "比賽成積",
-          "eng": "c"
-        },
-        "path": {
-          "chi": "",
-          "eng": ""
-        },
-        "child": []
-      },
-      {
-        "navName": {
-          "chi": "導賞團",
-          "eng": "Tourguide"
-        },
-        "path": {
-          "chi": "/public/tourguide",
-          "eng": "/public/tourguide"
-        },
-        "child": []
-      },
-      {
-        "navName": {
-          "chi": "前往後台頁面",
-          "eng": "Server"
-        },
-        "path": {
-          "chi": "/server",
-          "eng": "/server"
-        },
-        "child": []
-      }
-    ]
+        {
+          "navName": {
+            "chi": "前往後台頁面",
+            "eng": "Server"
+          },
+          "path": {
+            "chi": "/server",
+            "eng": "/server"
+          },
+          "child": []
+        }
+      ]
+    }
   },
   "servernavdata": {
-    "navdata": [
-      {
-        "navName": {
-          "chi": "統計頁面",
-          "eng": "About us"
-        },
-        "path": {
-          "chi": "",
-          "eng": ""
-        },
-        "child": []
-      },
-      {
-        "navName": {
-          "chi": "CMS管理",
-          "eng": "Subject"
-        },
-        "path": {
-          "chi": "",
-          "eng": ""
-        },
-        "child": [
-          {
-            "navName": {
-              "chi": "頁面設計",
-              "eng": "Chinese"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
+    "code": 200,
+    "msg":"OK",
+    "data":{
+      "navdata": [
+        {
+          "navName": {
+            "chi": "統計頁面",
+            "eng": "About us"
           },
-          {
-            "navName": {
-              "chi": "路由設定",
-              "eng": "English"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
+          "path": {
+            "chi": "",
+            "eng": ""
           },
-          {
-            "navName": {
-              "chi": "樣板存取",
-              "eng": "Science"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
-          }
-        ]
-      },
-      {
-        "navName": {
-          "chi": "問卷系統",
-          "eng": "Subject"
+          "child": []
         },
-        "path": {
-          "chi": "",
-          "eng": ""
+        {
+          "navName": {
+            "chi": "CMS管理",
+            "eng": "Subject"
+          },
+          "path": {
+            "chi": "",
+            "eng": ""
+          },
+          "child": [
+            {
+              "navName": {
+                "chi": "頁面設計",
+                "eng": "Chinese"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
+            },
+            {
+              "navName": {
+                "chi": "路由設定",
+                "eng": "English"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
+            },
+            {
+              "navName": {
+                "chi": "樣板存取",
+                "eng": "Science"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
+            }
+          ]
         },
-        "child": [
-          {
-            "navName": {
-              "chi": "查詢已有問卷/投票",
-              "eng": "Chinese"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
+        {
+          "navName": {
+            "chi": "問卷系統",
+            "eng": "Subject"
           },
-          {
-            "navName": {
-              "chi": "設計問卷/投票",
-              "eng": "Chinese"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
+          "path": {
+            "chi": "",
+            "eng": ""
           },
-          {
-            "navName": {
-              "chi": "修改問卷/投票",
-              "eng": "English"
+          "child": [
+            {
+              "navName": {
+                "chi": "查詢已有問卷/投票",
+                "eng": "Chinese"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
             },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
-          },
-          {
-            "navName": {
-              "chi": "刪除問卷/投票",
-              "eng": "Science"
+            {
+              "navName": {
+                "chi": "設計問卷/投票",
+                "eng": "Chinese"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
             },
-            "path": {
-              "chi": "",
-              "eng": ""
+            {
+              "navName": {
+                "chi": "修改問卷/投票",
+                "eng": "English"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
+            },
+            {
+              "navName": {
+                "chi": "刪除問卷/投票",
+                "eng": "Science"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
             }
-          }
-        ]
-      },
-      {
-        "navName": {
-          "chi": "時段預留系統",
-          "eng": "Subject"
+          ]
         },
-        "path": {
-          "chi": "",
-          "eng": ""
-        },
-        "child": [
-          {
-            "navName": {
-              "chi": "查詢已有記錄",
-              "eng": "Chinese"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
+        {
+          "navName": {
+            "chi": "時段預留系統",
+            "eng": "Subject"
           },
-          {
-            "navName": {
-              "chi": "新增時段",
-              "eng": "English"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
+          "path": {
+            "chi": "",
+            "eng": ""
           },
-          {
-            "navName": {
-              "chi": "修改時段",
-              "eng": "Science"
+          "child": [
+            {
+              "navName": {
+                "chi": "查詢已有記錄",
+                "eng": "Chinese"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
             },
-            "path": {
-              "chi": "",
-              "eng": ""
+            {
+              "navName": {
+                "chi": "新增時段",
+                "eng": "English"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
+            },
+            {
+              "navName": {
+                "chi": "修改時段",
+                "eng": "Science"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
+            },
+            {
+              "navName": {
+                "chi": "移除時段",
+                "eng": "Science"
+              },
+              "path": {
+                "chi": "",
+                "eng": ""
+              }
             }
+          ]
+        },
+        {
+          "navName": {
+            "chi": "回到前台網頁",
+            "eng": "Server"
           },
-          {
-            "navName": {
-              "chi": "移除時段",
-              "eng": "Science"
-            },
-            "path": {
-              "chi": "",
-              "eng": ""
-            }
-          }
-        ]
-      },
-      {
-        "navName": {
-          "chi": "回到前台網頁",
-          "eng": "Server"
-        },
-        "path": {
-          "chi": "/",
-          "eng": "/"
-        },
-        "child": []
-      }
-    ]
+          "path": {
+            "chi": "/",
+            "eng": "/"
+          },
+          "child": []
+        }
+      ]
+    }
   },
   "publicheader": {
-    "src": "/images/testHeader.png",
-    "alt": "xxxshool",
-    "bootstrap": {},
-    "style": {
-      "width": "100%",
-      "maxHeight": "200px"
+    "code": 200,
+    "msg":"OK",
+    "data":{
+      "src": "/images/testHeader.png",
+      "alt": "xxxshool",
+      "bootstrap": {},
+      "style": {
+        "width": "100%",
+        "maxHeight": "200px"
+      }
     }
   },
   "floorplans": [

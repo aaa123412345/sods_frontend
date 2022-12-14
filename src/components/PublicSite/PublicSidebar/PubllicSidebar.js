@@ -3,6 +3,7 @@ import React from "react";
 
 import Sidebar from '../../Common/Sidebar/Sidebar' 
 import { useState,useEffect } from "react";
+import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
 const PublicSidebar = props =>  {
     var lang = 'chi'
@@ -19,9 +20,16 @@ const PublicSidebar = props =>  {
           .then(res => res.json())
           .then(
             (result) => {
+              var rest = jsonExtractor(result);
+            if(rest.response == "success"){
               setIsLoaded(true);
-              setItems(result);
+              setItems(rest.data);
               setIsReady(true);
+            }else{
+              /*Error */
+              setIsLoaded(true);
+              setError(error);
+            }
             },
             // Note: it's important to handle errors here
             // instead of a catch() block so that we don't swallow
