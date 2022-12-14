@@ -572,5 +572,19 @@
       "booth": null,
       "name": "Who establish this school?"
     }
+  ],
+  "story": [
+    {
+      "id": 111, 
+      "content": "Jacky is a shy student. He is afraid to talk to other classmates. One day, Miss Cheung has introduced him to join the music team. Jacky then joined the team.",
+      "bg": "/test-school-photo.jpg"
+
+    },
+    {
+      "id": 112, 
+      "content": "After joining the team, Jacky met many friends and usually play basketball with them. He would like to say thank you to Miss Cheung, since Miss Cheung has given him a good recommendation for him to improve his social communication skill. ",
+      "bg": "/test-school-photo-01.jpeg"
+
+    }
   ]
 }

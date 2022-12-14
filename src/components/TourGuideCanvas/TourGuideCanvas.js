@@ -11,49 +11,63 @@ import { useSelector } from 'react-redux'
 import TourGuideEditor from './TourGuideEditor/TourGuideEditor'
 import TourGuideMap from './TourGuideComponents/TourGuideMap/TourGuideMap'
 import useSessionStorage from '../../hooks/useSessionStorage'
+import GameTicket from './TourGuideComponents/GameTicket/GameTicket'
 
 const TourGuideCanvas = () => {
 
     // session storage
-    const [editorModeSession, setEditorModeSession] = useSessionStorage('editorMode', false)
+    const [mapModeSession, setMapModeSession] = useSessionStorage('mapMode', false)
 
     // chakra hooks
     const themeColor = useSelector(state => state.themeConfig.themeColor)
 
     // react hooks
     const [isAdmin, setIsAdmin] = useState(false) // for development use
-    const [isEditMode, setIsEditMode] = useState(true)
+    const [isMap, setIsMap] = useState(true)
 
-    const update_mode = (pathname) => { 
-        return pathname.slice(1, 7) === "public" ? true : true 
+    const update_AdminMode = (pathname) => { 
+        return pathname.slice(1, 7) === "public" ? false : true 
     }
 
     const change_editMode = () => {
-        setEditorModeSession(!isEditMode)
-        setIsEditMode(!isEditMode)
+        setMapModeSession(!isMap)
+        setIsMap(!isMap)
+    }
+
+    const render_label = () => {
+
+        if(isAdmin)
+            return isMap ? "Edit" : "Preview" 
+        else
+            return isMap ? "My Ticket" : "Map"
+
     }
 
     useEffect(()=>{
 
-        let canEdit = update_mode(window.location.pathname)
+        let canEdit = update_AdminMode(window.location.pathname)
         setIsAdmin(canEdit) // for development use
-        setIsEditMode(editorModeSession)
+        setIsMap(mapModeSession)
 
     }, [window.location.pathname])
 
     return (
         <ChakraProvider resetCSS theme={newTheme}>
 
-            <OuterContainer w={{base: "100%", md: "calc(100vw - 200px)"}}>
+            <OuterContainer w={{base: "100%", md: "calc(100vw - 210px)"}}>
 
-                { isEditMode && isAdmin ? <TourGuideEditor /> : <TourGuideMap /> }
+                { isMap && <TourGuideMap /> }
+
+                { !isMap && !isAdmin && <GameTicket /> }
+
+                { !isMap && isAdmin && <TourGuideEditor /> }
 
                 <Float> 
                     <EditButton
                         variant={themeColor}
                         borderRadius={25}
                         onClick={change_editMode}>
-                            {isAdmin?isEditMode?"Preview":"Edit":"My Ticket"}
+                            {render_label()}
                     </EditButton>
                     
                 </Float>
@@ -80,7 +94,8 @@ const Float = styled(Box)`
 
     position: absolute;
     z-index: 3;
-    right: 0;
+    left: 0;
+    
 
 `
 
