@@ -1,6 +1,6 @@
 import React from 'react'
 import { 
-    Flex, Popover, PopoverTrigger,
+    Flex, Popover, PopoverTrigger,Box,
     PopoverContent, Button
 } from '@chakra-ui/react'
 import MyButton from '../../MyButton/MyButton';
@@ -91,8 +91,8 @@ const CategoryButtons = (props) => {
 
     return (
 
-        <Flex alignItems="center">
-            <CategoryBar categoryList={categoryList}/>
+        <Flex alignItems="center" minH="50px">
+            {categoryList !== undefined && <CategoryBar categoryList={categoryList}/>}
             <OptionBar optionList={optionList} />
         </Flex>
 

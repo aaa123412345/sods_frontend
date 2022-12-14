@@ -1,5 +1,5 @@
-import { faAlignLeft, faGamepad, faKey, faLocationDot, faTent } from "@fortawesome/free-solid-svg-icons";
-import { faMap } from "@fortawesome/free-regular-svg-icons";
+import { faAlignLeft, faBook, faGamepad, faKey, faLocationDot, faTent } from "@fortawesome/free-solid-svg-icons";
+import { faImages, faMap } from "@fortawesome/free-regular-svg-icons";
 import TextInput from "../components/TourGuideCanvas/TourGuideComponents/Inputs/TextInput/TextInput";
 import ImageUploader from "../components/TourGuideCanvas/TourGuideComponents/Inputs/ImageUploader/ImageUploader";
 import NumberInput from "../components/TourGuideCanvas/TourGuideComponents/Inputs/NumberInput/NumberInput";
@@ -179,7 +179,58 @@ const tourModalData = [
                 ]
             }
         ]
-    }
+    },
+    {
+
+        index: 4,
+        name: "Story",
+        assignRequests: null,
+        pages: [
+            {
+                heading: "Your Story",
+                components: [
+          
+                    {
+                        type: TextInput,
+                        props: {
+                            faIcon: faBook,
+                            label: "Story Title",
+                            names: {
+                                form: "story",
+                                field: "name",
+                            },
+                            placeholder: "A Day of School",
+                            updateType: "UPDATE_STORY"
+                        }
+                    },
+                    {
+                        type: TextInput,
+                        props: {
+                            isTextArea: true,
+                            faIcon: faAlignLeft,
+                            label: "Story Content",
+                            names: {
+                                form: "story",
+                                field: "content",
+                            },
+                            placeholder: "Mary is a shy student, and one day, Miss Chan had chatted with her about ...",
+                            updateType: "UPDATE_STORY"
+                        }
+                    },
+                    {
+                        type: ImageUploader, 
+                        props: {
+                            faIcon: faImages,
+                            label: "Upload Cover Image"
+                        }
+                    }
+                           
+                ]
+
+            }
+        ]
+        
+    },
 
 ]
 
