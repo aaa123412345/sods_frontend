@@ -1,6 +1,6 @@
 import React from 'react'
 import BoothCard from './BoothCard/BoothCard'
-import RegionButton from './RegionButton/RegionButton'
+import RectangleIconButton from './RectangleIconButton/RectangleIconButton'
 
 const ItemButton = (props) => {
   
@@ -9,7 +9,9 @@ const ItemButton = (props) => {
     switch(type){
 
         case 'floorplans':
-            return React.createElement(RegionButton,  {...props})
+            return React.createElement(RectangleIconButton,  {...props})
+        case 'story':
+            return React.createElement(RectangleIconButton,  {...props})
         case 'booths':
             return React.createElement(BoothCard,  {...props})
 

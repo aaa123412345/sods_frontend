@@ -4,6 +4,7 @@ const initState = {
 
     page: 0,
     regionIndex: 0,
+    storyIndex: 0,
     floorplans: [],
     floorplan: {
         region: ""
@@ -26,8 +27,11 @@ const initState = {
         gameType: null,
     },
     stories: [],
-    storyProgress: 0,
-    story: {}
+    storyProgress: 2,
+    story: {
+        name: "",
+        content: ""
+    }
 
 }
 
@@ -37,6 +41,8 @@ const tourguideReducer = (state = initState, action) => {
             return { ...state, page: action.payload }
         case "UPDATE_REGION_INDEX":
             return { ...state, regionIndex: action.payload}
+        case "UPDATE_STORY_INDEX":
+            return { ...state, storyIndex: action.payload}
         case 'UPDATE_FLOORPLANS':
             return { ...state, floorplans: action.payload }
         case 'UPDATE_FLOORPLAN':
@@ -73,7 +79,11 @@ const tourguideReducer = (state = initState, action) => {
                         left: null,
                         region: null
                     },
-                    game: {gameType: null}
+                    game: {gameType: null},
+                    story: {
+                        name: "",
+                        content: ""
+                    }
                 }
         default:
             return state

@@ -2,11 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMap } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faMap } from '@fortawesome/free-solid-svg-icons'
+import { useSelector } from 'react-redux'
 
-const RegionButton = (props) => {
+const RectangleIconButton = (props) => {
 
     const { variant, onClick, data } = props
+
+    const { page } = useSelector(state => state.tourguide)
 
     return (
         <StyledButton maxH="50px"
@@ -16,16 +19,16 @@ const RegionButton = (props) => {
             boxShadow={'0px 5px 12px rgba(0, 0, 0, .1)'}>
 
             <FontAwesomeIcon 
-                icon={faMap} 
+                icon={page <= 1 ? faMap : faBook} 
                 style={{position: 'absolute', left: '1em'}}/>
 
-            {data['region']}
+            {data[page <= 1 ? 'region' : 'id']}
 
         </StyledButton>
     )
 }
 
-export default RegionButton
+export default RectangleIconButton
 
 const StyledButton = styled(Button)`
 

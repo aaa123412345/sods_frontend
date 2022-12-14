@@ -1,5 +1,6 @@
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideComponents/TourGuideMap/TourGuideMap";
 import ItemList from "../components/TourGuideCanvas/TourGuideComponents/ItemList/ItemList";
+import GameTicket from "../components/TourGuideCanvas/TourGuideComponents/GameTicket/GameTicket";
 
 const tourPageData = [
 
@@ -20,8 +21,8 @@ const tourPageData = [
     },
     {
 
-        index: 0,
-        page: 0,
+        index: 1,
+        page: 1,
         name: "Booths",
         components: [
             {
@@ -34,6 +35,21 @@ const tourPageData = [
                     path: "booths",
                     name: 'booth',
                     labelName: "name"
+                }
+            }
+        ]
+    },
+
+    {
+
+        index: 2,
+        page: 2,
+        name: "Ticket",
+        components: [
+            {
+                type: GameTicket, 
+                props: {
+                    isPreviewMode: true
                 }
             }
         ]

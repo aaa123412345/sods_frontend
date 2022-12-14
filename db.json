@@ -22,9 +22,9 @@
   },
   "about": {
     "code": 200,
-    "msg":"OK",
-    "data":{
-    "page": {},
+    "msg": "OK",
+    "data": {
+      "page": {},
       "element": [
         {
           "type": "ctext",
@@ -116,8 +116,8 @@
   },
   "share": {
     "code": 200,
-    "msg":"OK",
-    "data":{
+    "msg": "OK",
+    "data": {
       "page": {},
       "element": [
         {
@@ -147,8 +147,8 @@
   },
   "tourguide": {
     "code": 200,
-    "msg":"OK",
-    "data":{
+    "msg": "OK",
+    "data": {
       "page": {},
       "element": [
         {
@@ -170,8 +170,8 @@
   },
   "publicnavdata": {
     "code": 200,
-    "msg":"OK",
-    "data":{
+    "msg": "OK",
+    "data": {
       "navdata": [
         {
           "navName": {
@@ -297,8 +297,8 @@
   },
   "servernavdata": {
     "code": 200,
-    "msg":"OK",
-    "data":{
+    "msg": "OK",
+    "data": {
       "navdata": [
         {
           "navName": {
@@ -473,8 +473,8 @@
   },
   "publicheader": {
     "code": 200,
-    "msg":"OK",
-    "data":{
+    "msg": "OK",
+    "data": {
       "src": "/images/testHeader.png",
       "alt": "xxxshool",
       "bootstrap": {},
@@ -598,6 +598,13 @@
       "top": 51.01857907613303,
       "left": 27.698351071118623,
       "id": 13
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": -1.9095477386934674,
+      "left": 66.99437370447143,
+      "id": 14
     }
   ],
   "booths": [
@@ -642,16 +649,26 @@
   ],
   "story": [
     {
-      "id": 111, 
+      "id": 111,
+      "name": "Jacky Study F.1 Now",
       "content": "Jacky is a shy student. He is afraid to talk to other classmates. One day, Miss Cheung has introduced him to join the music team. Jacky then joined the team.",
       "bg": "/test-school-photo.jpg"
-
     },
     {
-      "id": 112, 
+      "id": 112,
+      "name": "Jacky Become Happy",
       "content": "After joining the team, Jacky met many friends and usually play basketball with them. He would like to say thank you to Miss Cheung, since Miss Cheung has given him a good recommendation for him to improve his social communication skill. ",
       "bg": "/test-school-photo-01.jpeg"
-
+    },
+    {
+      "name": "Love Go To School ",
+      "content": "Mary is a student who love go to school, because our school can provide a fruitful school life to her. ",
+      "id": 113
+    },
+    {
+      "name": "Our School Life is Fruitful",
+      "content": "Our School is very very good.",
+      "id": 114
     }
   ]
 }

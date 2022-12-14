@@ -22,12 +22,13 @@ const ItemList = (props) => {
   // redux state
   const themeColor = useSelector(state => state.themeConfig.themeColor)
   const link = useSelector(state => state.themeConfig.link)
-  const { regionIndex, floorplans } = useSelector(state => state.tourguide)
+  const { storyIndex, regionIndex, floorplans, page } = useSelector(state => state.tourguide)
   const { isOpen } = useSelector(state => state.modal)
   const dispatch = useDispatch()
 
   // session storage
   const [regionIndexSession, setRegionIndexSession] = useSessionStorage('regionIndex', 0)
+  const [storyIndexSession, setStoryIndexSession] = useSessionStorage('storyIndex', 0)
 
   // chakra hooks
   const toast = useToast({
@@ -45,7 +46,7 @@ const ItemList = (props) => {
     return isDeleteMode ? 
       selectedItems.includes(items[index][id]) ? true : false 
       :
-      isCategoryList ? regionIndex === index ?  true : false
+      isCategoryList ? (regionIndex === index && path === "floorplans") || (storyIndex === index && path === "story") ?  true : false
       :
       false
 
@@ -66,11 +67,16 @@ const ItemList = (props) => {
   }
 
   const update_page = (index) => {
-    setRegionIndexSession(index)
-    dispatch({type: "UPDATE_REGION_INDEX", payload: index})
-  }
+    if(path === 'floorplans'){
+      setRegionIndexSession(index)
+      dispatch({type: "UPDATE_REGION_INDEX", payload: index})
+    }
 
-  const popup_modal = () => {}
+    if(path === 'story'){
+      setStoryIndexSession(index)
+      dispatch({type: "UPDATE_STORY_INDEX", payload: index})
+    }
+  }
 
   const select_item = (index) => {
 
@@ -93,6 +99,8 @@ const ItemList = (props) => {
       type = "UPDATE_FLOORPLANS"
     if(path==="booths")
       type = "UPDATE_BOOTHS"
+    if(path==="story")
+      type = "UPDATE_STORIES"
   
     dispatch({type: type, payload: data})
 
@@ -129,7 +137,7 @@ const ItemList = (props) => {
         containerStyle:{bg:"error"}
     }))
 
-  },[regionIndex, isDeleteMode, isOpen, floorplans.length])
+  },[regionIndex, isDeleteMode, isOpen, floorplans.length, page])
 
   return (
     

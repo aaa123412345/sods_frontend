@@ -14,11 +14,12 @@ const RightPanel = (props) => {
     // redux state
     const modalState = useSelector(state => state.modal)
     const tourguideState = useSelector(state => state.tourguide)
-    const { regionIndex, page, floorplans } = tourguideState
+    const { regionIndex, storyIndex, page, floorplans, stories } = tourguideState
     const dispatch = useDispatch()
 
     // session storage
     const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', tourguideState.floorplan)
+    const [storySession, setStorySession] = useSessionStorage('story', tourguideState.story)
     const [modalSession, setModalSession] = useSessionStorage('modal', modalState)
 
     // chakra hooks
@@ -33,23 +34,29 @@ const RightPanel = (props) => {
     const onOpen = () => {
 
         let floorplanPayload = {...floorplans[regionIndex]}
+        let storyPayload = {...stories[storyIndex]}
 
         let modalPayload = {
 
-            modalIndex: 0,
-            path: 'floorplans',
+            modalIndex: page === 2 ? 4 : 0,
+            path: page === 2 ? 'story':'floorplans',
             method: "put",
-            name: 'floorplan',
+            name: page === 2 ? 'story' : 'floorplan',
             updateID: {
-                name: 'region',
-                value: floorplanPayload.region
+                name: page === 2 ? 'id' : 'region',
+                value: page === 2 ? storyPayload.id : floorplanPayload.region
             }
 
         }
         
-        setFloorplanSession(floorplanPayload)
+        if(page === 2){
+            setStorySession(storyPayload)
+            dispatch({type: "UPDATE_STORY", payload: storyPayload})
+        }else{
+            setFloorplanSession(floorplanPayload)
+            dispatch({type: "UPDATE_FLOORPLAN", payload: floorplanPayload})
+        }
         setModalSession({...modalSession, ...modalPayload})
-        dispatch({type: "UPDATE_FLOORPLAN", payload: floorplanPayload})
         dispatch({type: "OPEN_MODAL", payload: modalPayload})
 
     }
@@ -60,11 +67,8 @@ const RightPanel = (props) => {
             
         
             <Toolbar type={2} 
-                categoryList={categories}
-                optionList={[{
-                    text:"Edit Region", faIcon: faPen, 
-                    onClick: onOpen
-                }]} />
+                categoryList={page === 2 ? undefined : categories}
+                optionList={ [{text: `Edit ${page === 2? "Story" : 'Region'}`, faIcon: faPen, onClick: onOpen}]} />
 
 
             <Content bg={bg} ref={contentRef}>

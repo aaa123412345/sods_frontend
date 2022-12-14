@@ -172,8 +172,8 @@ const FunctionalFooter = (props) => {
              */}
             <Flex justifyContent='space-between'>
 
-                <MyButton text={page === 0 ? 'Cancel' : "Back"} onClick={page === 0 ? onClose : ()=>{goto_page("back")}}/>
-                <MyButton text={page === totalPage - 1 ? handle_methodText(method) : "Next"} onClick={()=>{ page === totalPage - 1 ? handle_method(method) : goto_page('next')}}
+                <MyButton text={'Cancel'} onClick={onClose}/>
+                <MyButton text={handle_methodText(method)} onClick={()=>{handle_method(method)}}
                     bgColor={handle_methodText(method) === "Delete" ? "danger" : themeColor} />
 
             </Flex>

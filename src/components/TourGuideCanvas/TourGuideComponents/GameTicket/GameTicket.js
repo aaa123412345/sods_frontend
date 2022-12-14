@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, createRef } from 'react'
+import React, { useState, useEffect, useRef, createRef } from 'react'
 import styled from 'styled-components'
 
 import { Flex, Box, Text } from '@chakra-ui/react'
@@ -13,10 +13,15 @@ import BadgeSlider from './BadgeSlider/BadgeSlider'
 
 const GameTicket = (props) => {
 
+    const { isPreviewMode = false } = props
+
     const link = useSelector(state=>state.themeConfig.link)
-    const { stories, storyProgress } = useSelector(state=>state.tourguide)
+    const { isOpen } = useSelector(state => state.modal)
+    const { stories, storyProgress, storyIndex, page } = useSelector(state=>state.tourguide)
     const dispatch = useDispatch()
     const path = "story"
+
+    const [storyList, setStoryList] = useState([])
 
     const sliderRef = useRef()
     const sectionRef = stories.reduce((arr, value) => {
@@ -40,31 +45,44 @@ const GameTicket = (props) => {
 
         axios.get(link+path)
         .then(res=>{
-            dispatch({type: "UPDATE_STORIES", payload: [...res.data]})
+            let data = res.data
+            setStoryList([...data])
+            dispatch({type: "UPDATE_STORIES", payload: [...data]})
         })
         .catch(err=>console.log(err))
 
-    },[])
+        if(isPreviewMode && storyList.length !== 0){
+
+            let viewID = storyList[storyIndex].id
+
+            let target = sectionRef[viewID].current
+            let slider = sliderRef.current
+            let targetX = target.offsetLeft
+            slider.scrollLeft = targetX
+
+        }
+
+    },[storyIndex, page, isOpen])
 
 
     return (
-        <StyledCanvas>
-            <Slider dir='ltr' ref={sliderRef}>
+        <StyledCanvas h={isPreviewMode? "100%": '100vh'}>
+            <Slider dir='ltr' ref={sliderRef}
+                overflowX={isPreviewMode?'hidden':"scroll"}>
 
             {
-                stories.map((item, index) => (
-
+                storyList.map((item, index) => (
                     <StorySection ref={sectionRef[item.id]} key={index}
-                        bgImg={index > storyProgress - 1 ? 'gray' : `url('/images/${item.bg}')`}>
+                        bgImg={index <= storyProgress - 1 || isPreviewMode ? `url('/images/${item.bg}')` : 'gray' }>
                         <StoryBox>
-                            {index> storyProgress - 1 ?<LockMessage/>:<Text>{item.content}</Text>}
+                            {index <= storyProgress - 1 || isPreviewMode ?<Text>{item.content}</Text>:<LockMessage/>}
                         </StoryBox>
                     </StorySection>
-
                 ))
             }
             </Slider>
-            <BadgeSlider sectionRef={sectionRef} sliderRef={sliderRef}/>
+            { !isPreviewMode && <BadgeSlider sectionRef={sectionRef} sliderRef={sliderRef}/>}
+            
         </StyledCanvas>
     )
 }
@@ -73,10 +91,8 @@ export default GameTicket
 
 const StyledCanvas = styled(Flex)`
 
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  background: red;
+    position: relative;
+    width: 100%;
 
 `
 
@@ -86,7 +102,6 @@ const Slider = styled(Flex)`
     position: relative;
     height: inherit; width: 100%;
 
-    overflow-x: scroll;
     scroll-behaviour: smooth;
     scroll-snap-type: x mandatory;
 

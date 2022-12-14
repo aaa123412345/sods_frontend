@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import styled from 'styled-components'
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, useColorModeValue } from '@chakra-ui/react'
 import { newTheme } from '../../theme/theme'
 import { Flex, Box, Button } from '@chakra-ui/react'
 
@@ -18,15 +18,18 @@ const TourGuideCanvas = () => {
     // session storage
     const [mapModeSession, setMapModeSession] = useSessionStorage('mapMode', false)
 
-    // chakra hooks
+    // redux state
     const themeColor = useSelector(state => state.themeConfig.themeColor)
+    const { page } = useSelector(state => state.tourguide)
 
+    // chakra hooks
+    
     // react hooks
     const [isAdmin, setIsAdmin] = useState(false) // for development use
     const [isMap, setIsMap] = useState(true)
 
     const update_AdminMode = (pathname) => { 
-        return pathname.slice(1, 7) === "public" ? false : true 
+        return pathname.slice(1, 7) === "public" ? true : true 
     }
 
     const change_editMode = () => {
@@ -54,7 +57,8 @@ const TourGuideCanvas = () => {
     return (
         <ChakraProvider resetCSS theme={newTheme}>
 
-            <OuterContainer w={{base: "100%", md: "calc(100vw - 210px)"}}>
+            <OuterContainer
+                w={{base: "100%", md: "calc(100vw - 210px)"}}>
 
                 { isMap && <TourGuideMap /> }
 
@@ -62,15 +66,22 @@ const TourGuideCanvas = () => {
 
                 { !isMap && isAdmin && <TourGuideEditor /> }
 
-                <Float> 
-                    <EditButton
-                        variant={themeColor}
-                        borderRadius={25}
-                        onClick={change_editMode}>
-                            {render_label()}
-                    </EditButton>
-                    
-                </Float>
+
+                {
+
+                    (page !== 2) 
+                    &&
+                    <Float> 
+                        <EditButton
+                            variant={themeColor}
+                            borderRadius={25}
+                            onClick={change_editMode}>
+                                {render_label()}
+                        </EditButton>
+                    </Float>
+
+                }
+                
 
             </OuterContainer>
             
@@ -94,7 +105,7 @@ const Float = styled(Box)`
 
     position: absolute;
     z-index: 3;
-    left: 0;
+    right: 0;
     
 
 `
