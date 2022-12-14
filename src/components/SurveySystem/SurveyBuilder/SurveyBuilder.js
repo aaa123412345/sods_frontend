@@ -15,7 +15,7 @@ const SurveyBuilder = ({data}) => {
         console.log(formData)
     }
 
-    console.log(data.questionset)
+
 
     return (
         

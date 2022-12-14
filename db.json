@@ -21,6 +21,26 @@
           "question":"AAMMMNNNN ?",
           "option":["vfvf","dsdsd","eq","adg","qwqgq"],
           "required":true
+        },
+        {
+          "type":"sradio",
+          "question":"AAMMMNGGGGGGGGGGGGGGNNN ?",
+          "option":["vfv","dsdd","eq","ag","qwgq"],
+          "required":true
+        },
+        {
+          "type":"schecker",
+          "question":"5 lfoofofoofoofoof?",
+          "option":["wv","dd","eq","ag","gq"],
+          "required":true
+        },
+        {
+          "type":"srange",
+          "question":"fsabadbdngdm?",
+          "min":0,
+          "max":10,
+          "step":1
+         
         }
       ]
     }
