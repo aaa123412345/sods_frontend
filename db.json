@@ -12,10 +12,15 @@
       },
       "questionset":[
         {
-          "type":"",
-          "questionID":"",
-          "question":"",
-          "option":[]
+          "type":"stext",
+          "question":"aaaabbbbbcccccssss ?",
+          "required":true
+          
+        },{
+          "type":"sselect",
+          "question":"AAMMMNNNN ?",
+          "option":["vfvf","dsdsd","eq","adg","qwqgq"],
+          "required":true
         }
       ]
     }
@@ -186,8 +191,8 @@
         },
         {
           "navName": {
-            "chi": "科目",
-            "eng": "Subject"
+            "chi": "問卷調查",
+            "eng": "Survey"
           },
           "path": {
             "chi": "",
@@ -196,32 +201,32 @@
           "child": [
             {
               "navName": {
-                "chi": "中文",
-                "eng": "Chinese"
+                "chi": "1",
+                "eng": "1"
               },
               "path": {
-                "chi": "",
-                "eng": ""
+                "chi": "/public/survey",
+                "eng": "/public/survey"
               }
             },
             {
               "navName": {
-                "chi": "英文",
-                "eng": "English"
+                "chi": "2",
+                "eng": "2"
               },
               "path": {
-                "chi": "",
-                "eng": ""
+                "chi": "/public/survey",
+                "eng": "/public/survey"
               }
             },
             {
               "navName": {
-                "chi": "科學",
-                "eng": "Science"
+                "chi": "3",
+                "eng": "3"
               },
               "path": {
-                "chi": "",
-                "eng": ""
+                "chi": "/public/survey",
+                "eng": "/public/survey"
               }
             }
           ]

@@ -1,9 +1,10 @@
 import React from "react";
 import { Form,Row,Col,Button } from "react-bootstrap";
 import { useState } from "react";
-import SurveyTextfield from "./SurverTextfield/SurveyTextfield";
 
-const SurveyBuilder = () => {
+import SurveyElementDict from "./SurveyElementDict";
+
+const SurveyBuilder = ({data}) => {
     const [formData, setformData] = useState({})
    
     function onInput(qid,value){
@@ -14,14 +15,16 @@ const SurveyBuilder = () => {
         console.log(formData)
     }
 
-    
+    console.log(data.questionset)
 
     return (
         
         <Form>
-            <SurveyTextfield qid={1} parentFunction={onInput}></SurveyTextfield>
-            <SurveyTextfield qid={2} parentFunction={onInput}></SurveyTextfield>
-            
+            {data.questionset.map((element,index) => <SurveyElementDict 
+            data={element} qid={index+1} parentFunction={onInput} 
+            key={"surveydict-"+(index+1).toString()}></SurveyElementDict>)}
+
+
             <Button type="submit">
                 Submit
             </Button>

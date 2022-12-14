@@ -1,26 +1,24 @@
 import React from "react";
-import { Form,Row,Col,Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
-
-  
-
-const SurveyTextfield = ({parentFunction,qid}) => {
+const SurveyTextfield = ({data,parentFunction,qid}) => {
    
     function setdata(event){
         
         parentFunction(event.target.getAttribute("qid"),event.target.value)
     }
 
+  
     return (
-        
-       
-        <Form.Control 
-            type="text" 
-            qid={qid}
-            onChange={setdata} 
-        />
+        <>
+            <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
+            <Form.Control 
+                type="text" 
+                qid={qid}
+                onChange={setdata} 
+            />
            
-      
+       </>
     )
 }
 export default SurveyTextfield;
