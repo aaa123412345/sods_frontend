@@ -25,7 +25,8 @@ const initState = {
     game: {
         gameType: null,
     },
-    stories: [], 
+    stories: [],
+    storyProgress: 0,
     story: {}
 
 }
@@ -50,6 +51,10 @@ const tourguideReducer = (state = initState, action) => {
             return { ...state, games: action.payload }
         case 'UPDATE_GAME':
             return { ...state, game: action.payload }
+        case 'UPDATE_STORIES':
+            return { ...state, stories: action.payload }
+        case 'UPDATE_STORY':
+            return { ...state, story: action.payload }
         case 'RESET_DATA':
             return { 
                     ...state, 
