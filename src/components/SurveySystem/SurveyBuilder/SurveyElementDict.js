@@ -13,14 +13,15 @@ const Components = {
     srange:SurveyRange
   };
   
- const SurveyElementDict = ({data,qid,parentFunction}) => {
+ const SurveyElementDict = ({data,qid,parentFunction,validated}) => {
     var tkey = data.type+qid.toString()
     if (typeof Components[data.type] !== "undefined") {
       return React.createElement(Components[data.type], {
         key: tkey,
         data: data,
         qid: qid,
-        parentFunction: parentFunction
+        parentFunction: parentFunction,
+        validated:validated
       });
     }
     return React.createElement(

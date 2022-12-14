@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Form, Row } from "react-bootstrap";
 
 
 const SurveyRadio = ({data,parentFunction,qid}) => {
@@ -16,10 +16,14 @@ const SurveyRadio = ({data,parentFunction,qid}) => {
 
     return (
         <>
-            <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
-            <div key={qid.toString()+"-inline-radio-main"} className="mb-3">
-            {data.option.map((element,index) => radioCreator(index+1, element,qid))}
-            </div>
+        <Row>
+            <Form.Group  controlId={"validationCustom-radio-"+qid}>
+                <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
+                <div key={qid.toString()+"-inline-radio-main"} className="mb-3">
+                 {data.option.map((element,index) => radioCreator(index+1, element,qid))}
+                </div>
+            </Form.Group>
+        </Row>
            
        </>
     )
@@ -36,6 +40,7 @@ const SurveyRadio = ({data,parentFunction,qid}) => {
             value={option}
             key={qid.toString()+"-radio-option-"+index.toString()}
             onClick={setdata}
+            required={data.required}
             />
         )
     }

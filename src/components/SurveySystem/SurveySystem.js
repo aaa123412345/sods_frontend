@@ -2,6 +2,7 @@ import React from "react";
 import SurveyBuilder from "./SurveyBuilder/SurveyBuilder";
 import jsonExtractor from "../Common/RESTjsonextract/RESTjsonextract";
 import { useState,useEffect } from "react";
+import FormExample from "./FormExample";
 
 const SurveySystem = () => {
     const [error, setError] = useState(null);
@@ -45,8 +46,10 @@ const SurveySystem = () => {
 
       return(
    
-        <SurveyBuilder data={items}></SurveyBuilder>
+         <SurveyBuilder data={items}></SurveyBuilder>
       )
     }
+
+    //<SurveyBuilder data={items}></SurveyBuilder>
 }
 export default SurveySystem;

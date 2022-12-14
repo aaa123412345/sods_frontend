@@ -32,7 +32,9 @@
           "type":"schecker",
           "question":"5 lfoofofoofoofoof?",
           "option":["wv","dd","eq","ag","gq"],
-          "required":true
+          "required":true,
+          "maxSelect":2,
+          "minSelect":1
         },
         {
           "type":"srange",

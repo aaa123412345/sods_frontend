@@ -6,22 +6,37 @@ import SurveyElementDict from "./SurveyElementDict";
 
 const SurveyBuilder = ({data}) => {
     const [formData, setformData] = useState({})
+    const [validated, setValidated] = useState(false);
    
     function onInput(qid,value){
         let temp = formData
         temp[qid]=value
         setformData(temp)
 
-        console.log(formData)
+       
     }
 
-
+    const handleSubmit = (event) => {
+        const form = event.currentTarget;
+       
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log("no ok")
+        }else{
+            console.log("ok")
+             console.log(formData)
+        }
+       
+        setValidated(true);
+      };
 
     return (
         
-        <Form>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+
             {data.questionset.map((element,index) => <SurveyElementDict 
-            data={element} qid={index+1} parentFunction={onInput} 
+            data={element} qid={index+1} parentFunction={onInput} validated={validated} 
             key={"surveydict-"+(index+1).toString()}></SurveyElementDict>)}
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 
 const SurveyTextfield = ({data,parentFunction,qid}) => {
    
@@ -11,12 +11,21 @@ const SurveyTextfield = ({data,parentFunction,qid}) => {
   
     return (
         <>
+        <Row>
+            <Form.Group  controlId={"validationCustom-text-"+qid}>
             <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
-            <Form.Control 
-                type="text" 
-                qid={qid}
-                onChange={setdata} 
-            />
+            <Row>
+                <Col md={8}>
+                    <Form.Control 
+                        type="text" 
+                        qid={qid}
+                        onChange={setdata} 
+                        required={data.required}
+                    />
+                </Col>
+            </Row>
+            </Form.Group>
+        </Row>
            
        </>
     )
