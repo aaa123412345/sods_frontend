@@ -3,6 +3,7 @@ import CImage from "../../Common/LayoutElement/CImage/CImage";
 import CMultipleText from "../../Common/LayoutElement/CMultipleText/CMultipleText";
 import CText from "../../Common/LayoutElement/CText/CText";
 import CVideo from "../../Common/LayoutElement/CVideo/CVideo";
+import SurveySystem from "../../SurveySystem/SurveySystem";
 
 import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
 
@@ -11,7 +12,8 @@ const Components = {
   cimage: CImage,
   cvideo: CVideo,
   cmultipletext: CMultipleText,
-  ctourguide: TourGuideCanvas
+  ctourguide: TourGuideCanvas,
+  survey: SurveySystem
 };
 
 export default block => {

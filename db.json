@@ -1,4 +1,25 @@
 {
+  "surveydata": {
+    "code": 200,
+    "msg":"OK",
+    "data":{
+      "info":{
+        "surveyID":"",
+        "type":""
+      },
+      "header":{
+        "tittle":"XXX survey"
+      },
+      "questionset":[
+        {
+          "type":"",
+          "questionID":"",
+          "question":"",
+          "option":[]
+        }
+      ]
+    }
+  },
   "about": {
     "code": 200,
     "msg":"OK",
@@ -66,6 +87,28 @@
             "fontWeight": "bold",
             "fontstyle": "italic",
             "textDecorationLine": "underline"
+          }
+        }
+      ]
+    }
+  },
+  "survey": {
+    "code": 200,
+    "msg":"OK",
+    "data":{
+    "page": {},
+      "element": [
+        {
+          "type": "survey",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
           }
         }
       ]
