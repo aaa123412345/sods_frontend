@@ -22,6 +22,7 @@ const Components = {
         qid: qid,
         parentFunction: parentFunction,
         validated:validated
+        
       });
     }
     return React.createElement(

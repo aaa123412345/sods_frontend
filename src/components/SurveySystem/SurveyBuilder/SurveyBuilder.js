@@ -2,7 +2,7 @@ import React from "react";
 import { Form,Row,Col,Button } from "react-bootstrap";
 import { useState } from "react";
 
-import SurveyElementDict from "./SurveyElementDict";
+import SurveyFormmator from "./SurveyFormmator";
 
 const SurveyBuilder = ({data}) => {
     const [formData, setformData] = useState({})
@@ -35,9 +35,9 @@ const SurveyBuilder = ({data}) => {
         
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
 
-            {data.questionset.map((element,index) => <SurveyElementDict 
+            {data.questionset.map((element,index) => <SurveyFormmator
             data={element} qid={index+1} parentFunction={onInput} validated={validated} 
-            key={"surveydict-"+(index+1).toString()}></SurveyElementDict>)}
+            key={"surveydict-"+(index+1).toString()}></SurveyFormmator>)}
 
 
             <Button type="submit">

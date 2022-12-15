@@ -16,8 +16,7 @@ const SurveySelector = ({data,parentFunction,qid}) => {
 
     return (
         <>
-        <Row>
-        <Form.Group  controlId={"validationCustom-selector-"+qid}>
+        
             <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
             <Row>
                 <Col md={8}>
@@ -27,8 +26,7 @@ const SurveySelector = ({data,parentFunction,qid}) => {
                     </Form.Select>
                 </Col>
             </Row>
-            </Form.Group>
-        </Row>
+           
            
        </>
     )

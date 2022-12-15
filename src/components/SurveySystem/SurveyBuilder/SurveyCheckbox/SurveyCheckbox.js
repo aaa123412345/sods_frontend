@@ -7,7 +7,7 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated}) => {
     
     const [selected, setSelected] = useState([]);
     const [init, setInit] = useState(true)
-    const [validation, setValidation] = useState(false);
+    const [ready, setReady] = useState(false);
     
     function setdata(event){
         let target = event.target.value
@@ -28,9 +28,9 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated}) => {
 
          //Update checkbox require array
          if(temp.length>= data.minSelect && temp.length<= data.maxSelect){
-            setValidation(false)
+            setReady(true)
          }else{
-            setValidation(true)
+            setReady(false)
          }
 
         setInit(false)
@@ -49,20 +49,42 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated}) => {
         return arr;
       }
 
+    function errorTextConstructor(){
+        var str=""
+        if(data.minSelect == data.maxSelect){
+            str += "You should select "+data.minSelect+ " option(s)"
+        }else if(data.minSelect == -1 || data.maxSelect==-1){
+            if(data.minSelect == -1){
+                str+=  "You should select at most"+data.minSelect+ " option(s)"
+            }else{
+                str+=  "You should select at least"+data.minSelect+ " option(s)"
+            }
+        }else{
+            str += "You should select "+data.minSelect+ " to "+data.maxSelect+" option(s)"
+        }
+        return str
+    }
     
 
     return (
         <>
-         <Row>
-             <Form.Group controlId={"validationCustom-checkbox-"+qid}  >
+        
                 <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
                 
-                <div key={qid.toString()+"-inline-checkbox-main"} className="mb-3" required >
+                <div key={qid.toString()+"-inline-checkbox-main"}  required >
                     {data.option.map((element,index) => checkboxCreator(index+1, element,qid,data.required))}
                 </div>
+                {
+                data.required&&validated&&!ready?
+                <span style={{color: '#DC3545' }}>
+                    {
+                    errorTextConstructor()
+                    }
+                </span>
+                :''
+                }
            
-            </Form.Group>
-        </Row>
+          
             
        </>
     )
@@ -72,7 +94,7 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated}) => {
         if(init){
             required=initRequired;
         }else{
-            required=validation;
+            required=!ready;
         }
         if(!validated){
             return(

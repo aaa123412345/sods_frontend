@@ -11,8 +11,7 @@ const SurveyTextfield = ({data,parentFunction,qid}) => {
   
     return (
         <>
-        <Row>
-            <Form.Group  controlId={"validationCustom-text-"+qid}>
+      
             <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
             <Row>
                 <Col md={8}>
@@ -24,8 +23,7 @@ const SurveyTextfield = ({data,parentFunction,qid}) => {
                     />
                 </Col>
             </Row>
-            </Form.Group>
-        </Row>
+            
            
        </>
     )

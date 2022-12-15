@@ -16,14 +16,12 @@ const SurveyRadio = ({data,parentFunction,qid}) => {
 
     return (
         <>
-        <Row>
-            <Form.Group  controlId={"validationCustom-radio-"+qid}>
+      
                 <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
                 <div key={qid.toString()+"-inline-radio-main"} className="mb-3">
                  {data.option.map((element,index) => radioCreator(index+1, element,qid))}
                 </div>
-            </Form.Group>
-        </Row>
+           
            
        </>
     )
