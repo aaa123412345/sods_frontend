@@ -47,7 +47,7 @@ const ServerSidebar = props =>  {
       } else if(ready) {
 
         return(
-            <Sidebar data={items} lang={lang} />
+            <Sidebar data={items} lang={lang} setDisplay={true}/>
         )
       }
     
