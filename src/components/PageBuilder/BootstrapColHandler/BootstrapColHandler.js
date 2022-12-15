@@ -10,7 +10,7 @@ const BoostrapColHandler = (data) => {
    
     return(
        <Col xs={bsData.xs} sm={bsData.sm} md={bsData.md} lg={bsData.lg} xl={bsData.xl} xxl={bsData.xxl}>
-            {ElementBuilder(data.data)}
+            {ElementBuilder(data)}
        </Col>
     )
 }

@@ -9,7 +9,14 @@ const BoostrapRowHandler = (data) => {
 
     return(
        <Row>
-            {data['data'].map((element,index) =>  React.createElement(BoostrapColHandler,{data:element,key:data['keypass']+"col"+index.toString()}))}
+            {data['data'].map((element,index) =>  React.createElement(BoostrapColHandler,
+                {
+                    data:element,
+                    key:data['keypass']+"col"+index.toString(),
+                    path : data.path,
+                    subpath: data.subpath
+                }
+                ))}
        </Row>
     )
 }

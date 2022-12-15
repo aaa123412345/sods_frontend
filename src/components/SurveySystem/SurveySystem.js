@@ -2,15 +2,15 @@ import React from "react";
 import SurveyBuilder from "./SurveyBuilder/SurveyBuilder";
 import jsonExtractor from "../Common/RESTjsonextract/RESTjsonextract";
 import { useState,useEffect } from "react";
-import FormExample from "./FormExample";
 
-const SurveySystem = () => {
+
+const SurveySystem = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
-    const host = process.env.REACT_APP_SURVEY_DATA
+    const host = process.env.REACT_APP_SURVEY_DATA+props.subpath
     
     useEffect(() => {
       fetch(host)
@@ -45,7 +45,7 @@ const SurveySystem = () => {
     } else if(ready) {
 
       return(
-   
+        
          <SurveyBuilder data={items}></SurveyBuilder>
       )
     }

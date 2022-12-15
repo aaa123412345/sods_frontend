@@ -8,9 +8,10 @@ import {useState} from "react";
 
 
 const PublicPageManager = () => {
-    let {path} = useParams();
+    let {path,subpath} = useParams();
     const [mobile,setMoblie] = useState(false)
     const windowSize = useWindowSize();
+   
 
     if (typeof windowSize.width !== 'undefined'){
     
@@ -22,7 +23,7 @@ const PublicPageManager = () => {
             <div className="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
             
           <PublicHeader/>
-          <PublicPageContent />
+          <PublicPageContent path={path} subpath={subpath}/>
           </div>
         </div>
         )

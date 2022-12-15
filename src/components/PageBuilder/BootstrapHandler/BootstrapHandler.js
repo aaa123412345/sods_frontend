@@ -13,9 +13,18 @@ const BoostrapHandler = (data) => {
    
     return(
         <Container>
-            {groupedData.map((element,index) =>  React.createElement(BoostrapRowHandler,{data:element,key:"row"+index.toString(),keypass:"row"+index.toString()}))}
+            {groupedData.map((element,index) =>  React.createElement(BoostrapRowHandler,
+            {
+                data:element,
+                key:"row"+index.toString(),
+                keypass:"row"+index.toString(),
+                path : data.path,
+                subpath: data.subpath
+            }
+            ))}
         </Container>
     )
+    
 }
 
 function dataRowGrouper(data){

@@ -17,15 +17,17 @@ const Components = {
 };
 
 export default block => {
-  var tkey = block.rank.toString()+block.subrank.toString()+block.type
-  if (typeof Components[block.type] !== "undefined") {
-    return React.createElement(Components[block.type], {
+  var tkey = block.data.rank.toString()+block.data.subrank.toString()+block.data.type
+  if (typeof Components[block.data.type] !== "undefined") {
+    return React.createElement(Components[block.data.type], {
       key: tkey,
-      block: block
+      block: block.data,
+      path:block.path,
+      subpath:block.subpath
     });
   }
   return React.createElement(
-    () => <div>The component {block.type} has not been created yet.</div>,
+    () => <div>The component {block.data.type} has not been created yet.</div>,
     { key: tkey }
   );
 };

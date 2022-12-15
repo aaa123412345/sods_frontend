@@ -6,17 +6,18 @@ import PageBootstrapHandler from "../../PageBuilder/BootstrapHandler/BootstrapHa
 import PublicNavbar from "../PublicNavbar/PublicNavbar";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
-const PublicPageContent = () => {
+const PublicPageContent = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
+  
     const host = process.env.REACT_APP_PUBLIC_REST_HOST
-    const pathname = window.location.pathname
+    const pathname = props.path
   
     useEffect(() => {
-      fetch(host+pathname.slice(8))
+      fetch(host+pathname)
         .then(res => res.json())
         .then(
           (result) => {
@@ -50,7 +51,7 @@ const PublicPageContent = () => {
       return(
         <div className="PageContent"> 
           <PublicNavbar></PublicNavbar>   
-          <PageBootstrapHandler data={items.element}></PageBootstrapHandler>
+          <PageBootstrapHandler data={items.element} path={ props.path} subpath={ props.subpath}></PageBootstrapHandler>
         </div>
       )
     }
