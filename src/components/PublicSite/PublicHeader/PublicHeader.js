@@ -8,7 +8,7 @@ const PublicHeader = () => {
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
     
-    const host = process.env.REACT_APP_REST_HOST
+    const host = process.env.REACT_APP_PUBLIC_REST_HOST
     const pathname = "publicheader"
 
     useEffect(() => {

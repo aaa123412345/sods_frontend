@@ -3,16 +3,16 @@ import React from "react";
 
 import { useState,useEffect } from "react";
 import PageBootstrapHandler from "../../PageBuilder/BootstrapHandler/BootstrapHandler";
-import PublicNavbar from "../PublicNavbar/PublicNavbar";
+import ServerNavbar from "../ServerNavbar/ServerNavbar";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
-const PublicPageContent = () => {
+const ServerPageContent = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
-    const host = process.env.REACT_APP_PUBLIC_REST_HOST
+    const host = process.env.REACT_APP_SERVER_REST_HOST
     const pathname = window.location.pathname
   
     useEffect(() => {
@@ -49,14 +49,14 @@ const PublicPageContent = () => {
 
       return(
         <div className="PageContent"> 
-          <PublicNavbar></PublicNavbar>   
+          <ServerNavbar></ServerNavbar>
           <PageBootstrapHandler data={items.element}></PageBootstrapHandler>
         </div>
       )
     }
 }
 
-export default PublicPageContent;
+export default ServerPageContent;
 
 
   

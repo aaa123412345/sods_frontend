@@ -1,5 +1,5 @@
 {
-  "surveydata": {
+  "public-surveydata": {
     "code": 200,
     "msg":"OK",
     "data":{
@@ -47,7 +47,37 @@
       ]
     }
   },
-  "about": {
+  "server-serverWecome": {
+    "code": 200,
+    "msg": "OK",
+    "data": {
+      "page": {},
+      "element": [
+        {
+          "type": "ctext",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "content": "Server Welcome",
+          "style": {
+            "color": "#F00000",
+            "fontSize": 55,
+            "fontWeight": "bold",
+            "fontstyle": "italic",
+            "textDecorationLine": "underline"
+          }
+        }
+      ]
+    }
+  },
+  "public-about": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -119,7 +149,7 @@
       ]
     }
   },
-  "survey": {
+  "public-survey": {
     "code": 200,
     "msg":"OK",
     "data":{
@@ -141,7 +171,7 @@
       ]
     }
   },
-  "share": {
+  "public-share": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -172,7 +202,7 @@
       ]
     }
   },
-  "tourguide": {
+  "public-tourguide": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -195,7 +225,7 @@
       ]
     }
   },
-  "publicnavdata": {
+  "public-publicnavdata": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -314,15 +344,15 @@
             "eng": "Server"
           },
           "path": {
-            "chi": "/server",
-            "eng": "/server"
+            "chi": "/server/serverWecome",
+            "eng": "/server/serverWecome"
           },
           "child": []
         }
       ]
     }
   },
-  "servernavdata": {
+  "server-servernavdata": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -498,7 +528,7 @@
       ]
     }
   },
-  "publicheader": {
+  "public-publicheader": {
     "code": 200,
     "msg": "OK",
     "data": {

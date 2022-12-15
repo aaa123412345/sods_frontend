@@ -22,7 +22,7 @@ function App() {
                 <Routes>
                    
                     <Route path='/public/:path' element={<PublicPageManager />}></Route> 
-                    <Route path='/server/*' element={<ServerPageManager/>}></Route>
+                    <Route path='/server/:path' element={<ServerPageManager/>}></Route>
                     <Route
                         path="*"
                         element={

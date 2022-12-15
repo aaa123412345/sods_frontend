@@ -11,7 +11,7 @@ const ServerSidebar = props =>  {
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
     
-    const host = process.env.REACT_APP_REST_HOST
+    const host = process.env.REACT_APP_SERVER_REST_HOST
     const pathname = "servernavdata"
 
     useEffect(() => {
@@ -47,7 +47,7 @@ const ServerSidebar = props =>  {
       } else if(ready) {
 
         return(
-            <Sidebar data={items} lang={lang} setDisplay={true}/>
+            <Sidebar data={items} lang={lang} setDisplay={props.setDisplay}/>
         )
       }
     

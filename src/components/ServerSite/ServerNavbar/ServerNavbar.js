@@ -1,19 +1,18 @@
-
 import React from "react";
 
 import CusNavbar from "../../Common/Navbar/CusNavbar/CusNavbar";
 import { useState,useEffect } from "react";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
-const PublicNavbar = props =>  {
+const ServerNavbar = props =>  {
     var lang = 'chi'
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
     
-    const host = process.env.REACT_APP_PUBLIC_REST_HOST
-    const pathname = "publicnavdata"
+    const host = process.env.REACT_APP_SERVER_REST_HOST
+    const pathname = "servernavdata"
 
     useEffect(() => {
         fetch(host+pathname)
@@ -55,4 +54,4 @@ const PublicNavbar = props =>  {
     
 }
 
-export default PublicNavbar;
+export default ServerNavbar;
