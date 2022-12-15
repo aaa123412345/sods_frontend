@@ -13,24 +13,34 @@ const PublicPageManager = () => {
     const windowSize = useWindowSize();
 
     if (typeof windowSize.width !== 'undefined'){
+      var pL="0px"
       if(windowSize.width>768){
-        return(
-          DesktopLayoout()
-        )
-      }else{
-        return(
-          MobileLayoout()
-        )
+          pL="200px"
       }
+        return(
+          <div className="publicSite" >
+            {windowSize.width>768?
+            <PublicSidebar/>:''}
+
+           
+            <div className="content" style={{paddingLeft:pL}}>
+            
+          <PublicHeader/>
+          <PublicPageContent />
+          </div>
+        </div>
+        )
+      
     }
 
    
     
 }
 
-function DesktopLayoout(){
+function Layoout(){
   return(
     <div className="publicSite" >
+     
     <PublicSidebar/>
     <div className="content" style={{paddingLeft:"200px"}}>
     <PublicHeader/>
