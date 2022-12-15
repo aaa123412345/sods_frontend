@@ -13,17 +13,13 @@ const PublicPageManager = () => {
     const windowSize = useWindowSize();
 
     if (typeof windowSize.width !== 'undefined'){
-      var pL="0px"
-      if(windowSize.width>768){
-          pL="200px"
-      }
+    
         return(
           <div className="publicSite" >
-            {windowSize.width>768?
-            <PublicSidebar/>:''}
+     
+            <PublicSidebar setDisplay = {windowSize.width>768 ? true:false}/>
 
-           
-            <div className="content" style={{paddingLeft:pL}}>
+            <div className="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
             
           <PublicHeader/>
           <PublicPageContent />
@@ -32,33 +28,8 @@ const PublicPageManager = () => {
         )
       
     }
-
-   
-    
 }
 
-function Layoout(){
-  return(
-    <div className="publicSite" >
-     
-    <PublicSidebar/>
-    <div className="content" style={{paddingLeft:"200px"}}>
-    <PublicHeader/>
-    <PublicPageContent />
-    </div>
-  </div>
-  )
-}
 
-function MobileLayoout(){
-  return(
-    <div className="publicSite" >
-    <div className="content">
-    <PublicHeader/>
-    <PublicPageContent />
-    </div>
-  </div>
-  )
-}
 
 export default PublicPageManager;

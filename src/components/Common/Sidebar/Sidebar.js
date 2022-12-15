@@ -10,10 +10,10 @@ import SidebarDropdown from './SidebarDropdown/SidebarDropdown';
 
 //have format requirnment in json
 
-const Sidebar = ({data,lang}) =>  {
+const Sidebar = ({data,lang,setDisplay}) =>  {
 
     return (
-        <div className="sidenav">
+        <div className="sidenav" style={{display: setDisplay?'block':'none'}}>
             {data.navdata.map((data,index) => data["child"].length == 0? 
             <SidebarChoice data={data} lang={lang} key={"sidebar-choice-"+index} />:
             <SidebarDropdown data={data} lang={lang} key={"sidebar-choice-"+index} sindex={index}/>)}
