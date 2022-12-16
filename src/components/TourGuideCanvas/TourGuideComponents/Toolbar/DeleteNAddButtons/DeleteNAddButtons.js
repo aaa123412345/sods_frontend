@@ -17,6 +17,7 @@ const DeleteNAddButtons = (props) => {
     const modalState = useSelector(state=>state.modal)
     const themeColor = useSelector(state => state.themeConfig.themeColor)
     const tourguideState = useSelector(state => state.tourguide)
+    const { floorplans, regionIndex, booth } = tourguideState
     const dispatch = useDispatch()
 
     // session storage
@@ -30,22 +31,22 @@ const DeleteNAddButtons = (props) => {
             modalIndex: modalIndex, 
             path: path, 
             method: 'post', 
-            name: name
-        }
-
-        setModalSession({
-            ...modalSession, 
-            ...payload,
+            name: name,
             isOpen: true,
             isError: false,
             page: 0
-        })
-        setBoothSession({
-            ...boothSession, 
-            region: tourguideState
-                    .floorplans[tourguideState.regionIndex]
-                    .region
-        })
+        }
+
+        setModalSession({...modalSession, ...payload})
+        
+        if(path === 'booths' && floorplans.length !== 0 ){
+
+            let currentFloor = floorplans[regionIndex].region
+            dispatch({type: "UPDATE_BOOTH", payload: {...booth, region: currentFloor}})
+            setBoothSession({...boothSession, region: currentFloor})
+
+        }
+        
         dispatch({type: "OPEN_MODAL", payload: payload})
 
     }

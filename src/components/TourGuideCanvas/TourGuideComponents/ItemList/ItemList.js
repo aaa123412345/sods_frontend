@@ -91,17 +91,16 @@ const ItemList = (props) => {
 
   const update_data = (data) => {
 
-    setItems(data)
-
     let type = ""
-
+    
     if(path==="floorplans")
       type = "UPDATE_FLOORPLANS"
     if(path==="booths")
       type = "UPDATE_BOOTHS"
     if(path==="story")
       type = "UPDATE_STORIES"
-  
+    
+    setItems(data)
     dispatch({type: type, payload: data})
 
   }
@@ -120,7 +119,7 @@ const ItemList = (props) => {
 
   useEffect(()=>{
 
-    const regionStr = floorplans.length !== 0 ? floorplans[regionIndex]['region'] : ""
+    const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex]['region'] : ""
 
     const queryStr = isRegionFilter ? "?region=" +  regionStr : ""
 
@@ -137,7 +136,7 @@ const ItemList = (props) => {
         containerStyle:{bg:"error"}
     }))
 
-  },[regionIndex, isDeleteMode, isOpen, floorplans.length, page])
+  },[regionIndex, isDeleteMode, isOpen, page])
 
   return (
     
@@ -154,12 +153,15 @@ const ItemList = (props) => {
       <Heading size="sm" mt="1em" ml="1em">{heading}</Heading>
 
       <ScrollContent flexDir={{base: 'row', md: isCategoryList?"column":"row"}}
-        flexWrap={{md: isCategoryList ? 'no-wrap':"wrap"}}>
+        flexWrap={{md: isCategoryList ? 'no-wrap':"wrap"}}
+        overflowX={{base: 'scroll', md: "hidden"}}
+        overflowY={{base: 'hidden', md: "scroll"}}>
         {
+          items.length !== 0 && 
           items.map((item, index) => (
             <ItemButton key={index}
               type={path} 
-              variant={handle_active(index) ? isDeleteMode? 'danger': themeColor : 'gray'}
+              variant={handle_active(index) ? isDeleteMode ? 'danger': themeColor : 'gray'}
               onClick={()=>(select_item(index))}
               data={item}/>
           ))

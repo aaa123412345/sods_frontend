@@ -197,7 +197,7 @@ const tourModalData = [
                             label: "Story Title",
                             names: {
                                 form: "story",
-                                field: "name",
+                                field: "title",
                             },
                             placeholder: "A Day of School",
                             updateType: "UPDATE_STORY"

@@ -18,7 +18,7 @@ const EditorModal = (props) => {
     const tourguideState = useSelector(state => state.tourguide)
     const modalState = useSelector(state => state.modal)
     const { floorplans, floorplan, booth, regionIndex } = tourguideState
-    const { isOpen, path, method, name, updateID, page } = modalState
+    const { isOpen, path, method, name, id, page } = modalState
 
     const dispatch = useDispatch()
 
@@ -39,13 +39,18 @@ const EditorModal = (props) => {
         })
 
         setFloorplanSession({region: ""})
-        setBoothSession({
-            region: floorplans[regionIndex].region,
-            name: "",
-            venue: "",
-            description: "",
-            passcode: '0000'
-        })
+
+        if(path === "booth"){
+            let booth = {
+                region: "",
+                name: "",
+                venue: "",
+                description: "",
+                passcode: '0000'
+            }
+            setBoothSession(booth)
+        }
+
         dispatch({type: "RESET_DATA"});
         dispatch({type: "CLOSE_MODAL"})
 
@@ -100,7 +105,7 @@ const EditorModal = (props) => {
                     totalPage={pages.length} page={page}
                     assignRequests={assignRequests}
                     method={method} path={path} name={name}
-                    updateID={updateID}
+                    id={id}
                     />
 
             </Modal>

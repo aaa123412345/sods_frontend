@@ -22,7 +22,7 @@ const RectangleIconButton = (props) => {
                 icon={page <= 1 ? faMap : faBook} 
                 style={{position: 'absolute', left: '1em'}}/>
 
-            {data[page <= 1 ? 'region' : 'id']}
+            {data[page <= 1 ? 'region' : 'title']}
 
         </StyledButton>
     )

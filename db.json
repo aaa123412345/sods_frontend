@@ -1,128 +1,163 @@
 {
   "surveydata-S1234567890": {
     "code": 200,
-    "msg":"OK",
-    "data":{
-      "info":{
-        "surveyID":"",
-        "type":""
+    "msg": "OK",
+    "data": {
+      "info": {
+        "surveyID": "",
+        "type": ""
       },
-      "header":{
-        "tittle":"XXX survey"
+      "header": {
+        "tittle": "XXX survey"
       },
-      "questionset":[
+      "questionset": [
         {
-          "type":"stext",
-          "question":"aaaabbbbbcccccssss ?",
-          "required":true
-          
-        },{
-          "type":"sselect",
-          "question":"AAMMMNNNN ?",
-          "option":["vfvf","dsdsd","eq","adg","qwqgq"],
-          "required":true
+          "type": "stext",
+          "question": "aaaabbbbbcccccssss ?",
+          "required": true
         },
         {
-          "type":"sradio",
-          "question":"AAMMMNGGGGGGGGGGGGGGNNN ?",
-          "option":["vfv","dsdd","eq","ag","qwgq"],
-          "required":true
+          "type": "sselect",
+          "question": "AAMMMNNNN ?",
+          "option": [
+            "vfvf",
+            "dsdsd",
+            "eq",
+            "adg",
+            "qwqgq"
+          ],
+          "required": true
         },
         {
-          "type":"schecker",
-          "question":"5 lfoofofoofoofoof?",
-          "option":["wv","dd","eq","ag","gq"],
-          "required":true,
-          "maxSelect":2,
-          "minSelect":1
+          "type": "sradio",
+          "question": "AAMMMNGGGGGGGGGGGGGGNNN ?",
+          "option": [
+            "vfv",
+            "dsdd",
+            "eq",
+            "ag",
+            "qwgq"
+          ],
+          "required": true
         },
         {
-          "type":"srange",
-          "question":"fsabadbdngdm?",
-          "min":0,
-          "max":10,
-          "step":1
-         
+          "type": "schecker",
+          "question": "5 lfoofofoofoofoof?",
+          "option": [
+            "wv",
+            "dd",
+            "eq",
+            "ag",
+            "gq"
+          ],
+          "required": true,
+          "maxSelect": 2,
+          "minSelect": 1
+        },
+        {
+          "type": "srange",
+          "question": "fsabadbdngdm?",
+          "min": 0,
+          "max": 10,
+          "step": 1
         }
       ]
     }
   },
   "surveydata-MX141241567": {
     "code": 200,
-    "msg":"OK",
-    "data":{
-      "info":{
-        "surveyID":"",
-        "type":""
+    "msg": "OK",
+    "data": {
+      "info": {
+        "surveyID": "",
+        "type": ""
       },
-      "header":{
-        "tittle":"XXX survey"
+      "header": {
+        "tittle": "XXX survey"
       },
-      "questionset":[
-       
+      "questionset": [
         {
-          "type":"sradio",
-          "question":"A?",
-          "option":["vfv","dsdd","eq","ag","qwgq"],
-          "required":true
+          "type": "sradio",
+          "question": "A?",
+          "option": [
+            "vfv",
+            "dsdd",
+            "eq",
+            "ag",
+            "qwgq"
+          ],
+          "required": true
         },
         {
-          "type":"sradio",
-          "question":"B?",
-          "option":["vfv","dsdd","eq","ag","qwgq"],
-          "required":true
+          "type": "sradio",
+          "question": "B?",
+          "option": [
+            "vfv",
+            "dsdd",
+            "eq",
+            "ag",
+            "qwgq"
+          ],
+          "required": true
         },
         {
-          "type":"sradio",
-          "question":"C ?",
-          "option":["vfv","dsdd","eq","ag","qwgq"],
-          "required":true
+          "type": "sradio",
+          "question": "C ?",
+          "option": [
+            "vfv",
+            "dsdd",
+            "eq",
+            "ag",
+            "qwgq"
+          ],
+          "required": true
         },
         {
-          "type":"sradio",
-          "question":"F?",
-          "option":["vfv","dsdd","eq","ag","qwgq"],
-          "required":true
+          "type": "sradio",
+          "question": "F?",
+          "option": [
+            "vfv",
+            "dsdd",
+            "eq",
+            "ag",
+            "qwgq"
+          ],
+          "required": true
         }
-       
       ]
     }
   },
   "surveydata-S0000000001": {
     "code": 200,
-    "msg":"OK",
-    "data":{
-      "info":{
-        "surveyID":"",
-        "type":""
+    "msg": "OK",
+    "data": {
+      "info": {
+        "surveyID": "",
+        "type": ""
       },
-      "header":{
-        "tittle":"XXX survey"
+      "header": {
+        "tittle": "XXX survey"
       },
-      "questionset":[
+      "questionset": [
         {
-          "type":"stext",
-          "question":"1 ?",
-          "required":true
-          
+          "type": "stext",
+          "question": "1 ?",
+          "required": true
         },
         {
-          "type":"stext",
-          "question":"2?",
-          "required":true
-          
+          "type": "stext",
+          "question": "2?",
+          "required": true
         },
         {
-          "type":"stext",
-          "question":"333cssss ?",
-          "required":true
-          
+          "type": "stext",
+          "question": "333cssss ?",
+          "required": true
         },
         {
-          "type":"stext",
-          "question":"aaaabb5351cssss ?",
-          "required":true
-          
+          "type": "stext",
+          "question": "aaaabb5351cssss ?",
+          "required": true
         }
       ]
     }
@@ -231,9 +266,9 @@
   },
   "public-survey": {
     "code": 200,
-    "msg":"OK",
-    "data":{
-    "page": {},
+    "msg": "OK",
+    "data": {
+      "page": {},
       "element": [
         {
           "type": "survey",
@@ -283,6 +318,29 @@
     }
   },
   "public-tourguide": {
+    "code": 200,
+    "msg": "OK",
+    "data": {
+      "page": {},
+      "element": [
+        {
+          "type": "ctourguide",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "themeColor": "blue"
+        }
+      ]
+    }
+  },
+  "server-tourguide": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -742,6 +800,27 @@
       "top": -1.9095477386934674,
       "left": 66.99437370447143,
       "id": 14
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 44.99845916795069,
+      "left": 64.64959516522683,
+      "id": 15
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 36.32049306625578,
+      "left": 37.00461008019215,
+      "id": 16
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 28.56291730868002,
+      "left": 32.29380544686786,
+      "id": 17
     }
   ],
   "booths": [
@@ -755,13 +834,12 @@
       "gameType": null
     },
     {
-      "id": 126,
       "region": "2 Floor",
       "name": "English Time",
       "venue": "1/F, Rm 305, English Lab Room",
       "description": "This is the place for students to learn computer science knowledge.",
       "passcode": 1234,
-      "gameType": null
+      "id": 126
     },
     {
       "region": "1 Floor",
@@ -787,23 +865,23 @@
   "story": [
     {
       "id": 111,
-      "name": "Jacky Study F.1 Now",
+      "title": "Jacky Study F.1 Now",
       "content": "Jacky is a shy student. He is afraid to talk to other classmates. One day, Miss Cheung has introduced him to join the music team. Jacky then joined the team.",
       "bg": "/test-school-photo.jpg"
     },
     {
       "id": 112,
-      "name": "Jacky Become Happy",
+      "title": "Jacky Become Happy",
       "content": "After joining the team, Jacky met many friends and usually play basketball with them. He would like to say thank you to Miss Cheung, since Miss Cheung has given him a good recommendation for him to improve his social communication skill. ",
       "bg": "/test-school-photo-01.jpeg"
     },
     {
-      "name": "Love Go To School ",
+      "title": "Love Go To School ",
       "content": "Mary is a student who love go to school, because our school can provide a fruitful school life to her. ",
       "id": 113
     },
     {
-      "name": "Our School Life is Fruitful",
+      "title": "Our School Life is Fruitful",
       "content": "Our School is very very good.",
       "id": 114
     }

@@ -8,7 +8,7 @@ const initState = {
     path: '',
     method: '',
     name: "",
-    updateID: null,
+    id: null,
     isError: false,
 
 }
@@ -23,7 +23,7 @@ const modalReducer = (state = initState, action) => {
                 path: action.payload.path,
                 method: action.payload.method,
                 name: action.payload.name,
-                updateID: action.payload.updateID,
+                id: action.payload.id,
                 isOpen: true,
                 isError: false
             }

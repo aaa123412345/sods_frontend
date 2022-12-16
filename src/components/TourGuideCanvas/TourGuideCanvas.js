@@ -29,7 +29,7 @@ const TourGuideCanvas = () => {
     const [isMap, setIsMap] = useState(true)
 
     const update_AdminMode = (pathname) => { 
-        return pathname.slice(1, 7) === "public" ? true : true 
+        return pathname.slice(1, 7) === "public" ? false : true 
     }
 
     const change_editMode = () => {
@@ -50,7 +50,7 @@ const TourGuideCanvas = () => {
 
         let canEdit = update_AdminMode(window.location.pathname)
         setIsAdmin(canEdit) // for development use
-        setIsMap(mapModeSession)
+        setIsMap(!canEdit)
 
     }, [window.location.pathname])
 
@@ -69,7 +69,7 @@ const TourGuideCanvas = () => {
 
                 {
 
-                    (page !== 2) 
+                    ((page !== 2 && isAdmin) || !isAdmin)
                     &&
                     <Float> 
                         <EditButton
