@@ -12,7 +12,7 @@ const SurveyBuilder = ({data}) => {
         let temp = formData
         temp[qid]=value
         setformData(temp)
-
+        console.log(formData)
        
     }
 
@@ -31,6 +31,7 @@ const SurveyBuilder = ({data}) => {
         setValidated(true);
       };
 
+      
     return (
         
         <Form noValidate validated={validated} onSubmit={handleSubmit}>

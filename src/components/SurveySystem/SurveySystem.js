@@ -34,6 +34,7 @@ const SurveySystem = (props) => {
           (error) => {
             setIsLoaded(true);
             setError(error);
+            
           }
         )
     }, [host])

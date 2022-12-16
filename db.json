@@ -773,6 +773,7 @@
     }
   ],
   "ar-treasure": [
+    
     {
       "id": 111,
       "booth": null,
@@ -783,7 +784,8 @@
       "booth": null,
       "name": "Who establish this school?"
     }
-  ],
+  ]
+   ,
   "story": [
     {
       "id": 111,
