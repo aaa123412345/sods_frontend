@@ -129,7 +129,7 @@ const TourGuideMap = (props) => {
 
     useEffect(()=>{
 
-        if(floorplans.length !== 0){
+        if(floorplans[regionIndex] !== undefined){
             
             const queryStr = "?region=" + floorplans[regionIndex].region
     

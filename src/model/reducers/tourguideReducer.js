@@ -29,7 +29,7 @@ const initState = {
     stories: [],
     storyProgress: 2,
     story: {
-        name: "",
+        title: "",
         content: ""
     }
 
@@ -50,7 +50,7 @@ const tourguideReducer = (state = initState, action) => {
         case 'UPDATE_BOOTHS':
             return { ...state, booths: action.payload }
         case 'UPDATE_BOOTH':
-            return { ...state, booth: {...action.payload, region: state.floorplans[state.regionIndex].region,}}
+            return { ...state, booth: action.payload}
         case 'UPDATE_MARKER':
             return { ...state, marker: action.payload }
         case "UPDATE_GAMES":
@@ -68,7 +68,7 @@ const tourguideReducer = (state = initState, action) => {
                         region: "" 
                     }, 
                     booth: {
-                        region: state.floorplans[state.regionIndex].region,
+                        region: "",
                         name: "",
                         venue: "",
                         description: "",
@@ -81,7 +81,7 @@ const tourguideReducer = (state = initState, action) => {
                     },
                     game: {gameType: null},
                     story: {
-                        name: "",
+                        title: "",
                         content: ""
                     }
                 }

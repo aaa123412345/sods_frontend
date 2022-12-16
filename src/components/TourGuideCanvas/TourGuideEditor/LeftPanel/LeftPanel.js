@@ -14,7 +14,7 @@ const LeftPanel = () => {
       heading: "Region(s)",
       path: "floorplans",
       name: "floorplan",
-      id: "region"
+      id: "id"
     },
     {
       modalIndex: 4, 

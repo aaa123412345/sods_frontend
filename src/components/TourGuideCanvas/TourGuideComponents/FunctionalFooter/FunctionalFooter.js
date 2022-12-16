@@ -12,7 +12,7 @@ const FunctionalFooter = (props) => {
         isShow, onClose, 
         assignRequests,
         path, method, name, 
-        data = null, updateID, 
+        data = null, id, 
         totalLength, 
         page, totalPage 
      } = props
@@ -66,16 +66,16 @@ const FunctionalFooter = (props) => {
 
         if(data !== null){
     
-            data.forEach((item)=>{
+            data.forEach((id)=>{
                 
-                axios.delete(link+path+'/'+item.toString())
+                axios.delete(link+path+'/'+id.toString())
                 .then((res)=>toast({
-                    title: 'Deleted Region',
+                    title: 'Deleted '+ path,
                     status: 'success',
                     containerStyle:{bg:"success"}
                 }))
                 .catch(err=>toast({
-                    title: 'Delete Region Error',
+                    title: 'Delete Error',
                     description: "Please try again.",
                     status: 'error',
                     containerStyle:{bg:"error"}
@@ -137,8 +137,9 @@ const FunctionalFooter = (props) => {
     const handle_update = () => {
 
         let data = tourguideState[name]
-        
-        axios.put(link+path+`?${updateID.name}=${updateID.value}`, {...data})
+        console.log('put: ', id)
+
+        axios.put(link+path+`/${id}`, {...data})
         .then((res)=>toast({
             title: 'Updated Region',
             status: 'success',
@@ -150,17 +151,19 @@ const FunctionalFooter = (props) => {
             status: 'error',
             containerStyle:{bg:"error"}
         }))
-
+        
+        dispatch({type: "RESET_DATA"})
         dispatch({type: "HIDE_FOOTER"})
+        dispatch({type: "CLOSE_MODAL"})
 
     }
 
-    const goto_page = (type) => {
-        if(type === "next" && page < totalPage - 1)
-            dispatch({type: "GOTO_NEXT_PAGE"})
-        if(type === "back" && page > 0)
-            dispatch({type: "GOTO_PREVIOUS_PAGE"})
-    }
+    // const goto_page = (type) => {
+    //     if(type === "next" && page < totalPage - 1)
+    //         dispatch({type: "GOTO_NEXT_PAGE"})
+    //     if(type === "back" && page > 0)
+    //         dispatch({type: "GOTO_PREVIOUS_PAGE"})
+    // }
     
 
     return !isShow ? <></> :  (

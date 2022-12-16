@@ -42,10 +42,7 @@ const RightPanel = (props) => {
             path: page === 2 ? 'story':'floorplans',
             method: "put",
             name: page === 2 ? 'story' : 'floorplan',
-            updateID: {
-                name: page === 2 ? 'id' : 'region',
-                value: page === 2 ? storyPayload.id : floorplanPayload.region
-            }
+            id: page === 2 ? storyPayload.id : floorplanPayload.id
 
         }
         

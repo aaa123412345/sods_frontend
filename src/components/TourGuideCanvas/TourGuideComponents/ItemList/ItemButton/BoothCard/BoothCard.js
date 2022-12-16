@@ -54,10 +54,7 @@ const BoothCard = (props) => {
                 path: 'booths',
                 method: "put",
                 name: 'booth',
-                updateID: {
-                    name: 'id',
-                    value: data.id
-                }
+                id: data.id
             }
             setBoothSession(boothPayload)
             setModalSession({
@@ -86,10 +83,7 @@ const BoothCard = (props) => {
                 path: 'markers',
                 method: "put",
                 name: 'marker',
-                updateID: {
-                    name: 'id',
-                    value: data.id
-                }
+                id: data.id
             }
             setModalSession({
                 ...modalSession, 
@@ -116,10 +110,7 @@ const BoothCard = (props) => {
                 path: data.gameType,
                 method: "put",
                 name: 'game',
-                updateID: {
-                    name: 'id',
-                    value: data.id
-                }
+                id: data.id
             }
             setModalSession({
                 ...modalSession, 
@@ -237,7 +228,7 @@ const BoothCard = (props) => {
         return (
 
             <CardBody position="relative"
-                p="0 1em" overflow='scroll' w="100%"
+                p="0 1em" overflow='hidden' w="100%"
                 textAlign='left'>
 
                 <Box m="0 .5em" color={color}> 
