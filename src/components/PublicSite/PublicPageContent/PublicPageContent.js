@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import PageBootstrapHandler from "../../PageBuilder/BootstrapHandler/BootstrapHandler";
 import PublicNavbar from "../PublicNavbar/PublicNavbar";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
+import ElementBuilder from "../../PageBuilder/ElementBuilder/ElementBuilder";
 
 const PublicPageContent = (props) => {
     const [error, setError] = useState(null);
@@ -47,11 +48,14 @@ const PublicPageContent = (props) => {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else if(ready) {
-
+      
       return(
         <div className="PageContent"> 
           <PublicNavbar></PublicNavbar>   
-          <PageBootstrapHandler data={items.element} path={ props.path} subpath={ props.subpath}></PageBootstrapHandler>
+          { items.page.useBootstrap?
+          <PageBootstrapHandler data={items.element} path={ props.path} subpath={ props.subpath}></PageBootstrapHandler>:
+          items.element.map((element)=> ElementBuilder({data:element,path:props.path,subpath:props.subpath}))
+          }
         </div>
       )
     }

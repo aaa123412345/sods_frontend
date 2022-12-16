@@ -166,7 +166,9 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      "page": {},
+      "page": {
+        "useBootstrap":true
+      },
       "element": [
         {
           "type": "ctext",
@@ -196,7 +198,9 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      "page": {},
+      "page": {
+        "useBootstrap":true
+      },
       "element": [
         {
           "type": "ctext",
@@ -268,7 +272,9 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      "page": {},
+      "page": {
+        "useBootstrap":true
+      },
       "element": [
         {
           "type": "survey",
@@ -290,7 +296,9 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      "page": {},
+      "page": {
+        "useBootstrap":true
+      },
       "element": [
         {
           "type": "cvideo",
@@ -321,7 +329,9 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      "page": {},
+      "page": {
+        "useBootstrap":true
+      },
       "element": [
         {
           "type": "ctourguide",
@@ -344,7 +354,9 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      "page": {},
+      "page": {
+        "useBootstrap":true
+      },
       "element": [
         {
           "type": "ctourguide",
