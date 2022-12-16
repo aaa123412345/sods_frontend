@@ -1,6 +1,13 @@
-FROM node:15.13-alpine 
-WORKDIR /SODS_FRONTEND
-ENV PATH="./node_modules/.bin:$PATH"
+FROM node:17-alpine 
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
 COPY . .
-RUN npm run build
-CMD ["npm","start"]
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

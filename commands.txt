@@ -1,5 +1,0 @@
-//build images with command in terminal
-docker build --tag react .
-
-//run
-docker run --publish 3001:3001 react

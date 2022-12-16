@@ -15,3 +15,11 @@ npm install
 npm start
 //Start the react service
 run in http://localhost:3001/
+
+
+Docker image:
+//build images with command in terminal
+docker build --tag aaa123412345/react .
+
+//run
+docker run --publish 3000:3000 aaa123412345/react
