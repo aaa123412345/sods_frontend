@@ -24,6 +24,7 @@ function App() {
                     <Route path='/public/:path' element={<PublicPageManager />}></Route> 
                     <Route path='/public/:path/:subpath' element={<PublicPageManager />}></Route> 
                     <Route path='/server/:path' element={<ServerPageManager/>}></Route>
+                    <Route path='/server/:path/:subpath' element={<ServerPageManager/>}></Route> 
                     <Route
                         path="*"
                         element={

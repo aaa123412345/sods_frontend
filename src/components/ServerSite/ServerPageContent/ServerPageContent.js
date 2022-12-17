@@ -5,18 +5,19 @@ import { useState,useEffect } from "react";
 import PageBootstrapHandler from "../../PageBuilder/BootstrapHandler/BootstrapHandler";
 import ServerNavbar from "../ServerNavbar/ServerNavbar";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
+import ElementBuilder from "../../PageBuilder/ElementBuilder/ElementBuilder";
 
-const ServerPageContent = () => {
+const ServerPageContent = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
     const host = process.env.REACT_APP_SERVER_REST_HOST
-    const pathname = window.location.pathname
+    const pathname = props.path
   
     useEffect(() => {
-      fetch(host+pathname.slice(8))
+      fetch(host+pathname)
         .then(res => res.json())
         .then(
           (result) => {
@@ -50,7 +51,11 @@ const ServerPageContent = () => {
       return(
         <div className="PageContent"> 
           <ServerNavbar></ServerNavbar>
-          <PageBootstrapHandler data={items.element}></PageBootstrapHandler>
+          { items.page.useBootstrap?
+          <PageBootstrapHandler data={items.element} path={ props.path} subpath={ props.subpath}></PageBootstrapHandler>:
+          items.element.map((element)=> ElementBuilder({data:element,path:props.path,subpath:props.subpath}))
+          }
+         
         </div>
       )
     }

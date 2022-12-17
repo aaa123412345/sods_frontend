@@ -1,3 +1,4 @@
+/*  Base style */
 .App {
     font-family: sans-serif;
     text-align: center;
@@ -5,7 +6,38 @@
 
 body{
   margin: 0;
+  height: inherit;
+  width: inherit;
 }
+
+html{
+  height: 100%;
+  width: 100%;
+ 
+}
+
+#root{
+  height: inherit;
+  width: inherit;
+}
+
+/*  Component style */
+#site{
+  height: inherit;
+  width: inherit;
+}
+
+#content{
+  height: inherit;
+  width: inherit;
+}
+
+.PageContent{
+  height: inherit;
+  width: inherit;
+}
+
+
 
 
   

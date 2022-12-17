@@ -194,6 +194,33 @@
       ]
     }
   },
+  "server-surveyeditor": {
+    "code": 200,
+    "msg": "OK",
+    "data": {
+      "page": {
+        "useBootstrap":false
+      },
+      "element": [
+        {
+          "type": "surveyeditor",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "style": {
+            
+          }
+        }
+      ]
+    }
+  },
   "public-about": {
     "code": 200,
     "msg": "OK",
@@ -586,8 +613,8 @@
                 "eng": "Chinese"
               },
               "path": {
-                "chi": "",
-                "eng": ""
+                "chi": "/server/surveyeditor",
+                "eng": "/server/surveyeditor"
               }
             },
             {
@@ -663,6 +690,17 @@
               }
             }
           ]
+        },
+        {
+          "navName": {
+            "chi": "導賞團編輯器",
+            "eng": "Tourguide Editor"
+          },
+          "path": {
+            "chi": "/server/tourguide",
+            "eng": "/server/tourguide"
+          },
+          "child": []
         },
         {
           "navName": {

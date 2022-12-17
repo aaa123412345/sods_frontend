@@ -16,11 +16,11 @@ const PublicPageManager = () => {
     if (typeof windowSize.width !== 'undefined'){
     
         return(
-          <div className="publicSite" >
+          <div id="site" >
      
             <PublicSidebar setDisplay = {windowSize.width>768 ? true:false}/>
 
-            <div className="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
+            <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
             
           <PublicHeader/>
           <PublicPageContent path={path} subpath={subpath}/>

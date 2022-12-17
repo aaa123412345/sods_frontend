@@ -10,20 +10,20 @@ import ServerPageContent from "../ServerPageContent/ServerPageContent";
 
 const ServerPageManager = (props) => {
     
-    let {path} = useParams();
+    let {path,subpath} = useParams();
     const [mobile,setMoblie] = useState(false)
     const windowSize = useWindowSize();
 
     if (typeof windowSize.width !== 'undefined'){
     
         return(
-          <div className="serverSite" >
+          <div id="site" >
      
             <ServerSidebar setDisplay = {windowSize.width>768 ? true:false}/>
 
-            <div className="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
+            <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
                
-                <ServerPageContent />
+                <ServerPageContent path={path} subpath={subpath}/>
           
           </div>
         </div>
