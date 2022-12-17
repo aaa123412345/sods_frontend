@@ -5,6 +5,7 @@ import Sidebar from '../../Common/Sidebar/Sidebar'
 import { useState,useEffect } from "react";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
+
 const PublicSidebar = props =>  {
     var lang = 'chi'
     const [error, setError] = useState(null);
@@ -48,11 +49,11 @@ const PublicSidebar = props =>  {
       } else if(ready) {
 
         return(
-            <Sidebar data={items} lang={lang} setDisplay={props.setDisplay}/>
+          <Sidebar data={items} lang={lang} setDisplay={props.setDisplay}/>
         )
       }
     
-   
+   //<Sidebar data={items} lang={lang} setDisplay={props.setDisplay}/>
     
 }
 

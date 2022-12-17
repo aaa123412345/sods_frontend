@@ -1,10 +1,13 @@
 import React from "react";
 
-import {FaAngleDown} from "react-icons/fa"
-import {FaAngleUp} from "react-icons/fa"
+
 import { useState } from "react";
 
 import SidebarChoice from '../SidebarChoice/SidebarChoice'
+import { faAngleUp,faAngleDown } from "@fortawesome/free-solid-svg-icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 
 
@@ -16,7 +19,10 @@ const SidebarDropdown = ({data,lang,sindex}) => {
         <button className="dropdown-btn" onClick={() => setToggle(!toggle)}>
             {data.navName[lang]}
             <span style= {{float:'right'}}>
-                {toggle? <FaAngleUp style= {iconStyle} />:<FaAngleDown style= {iconStyle}/>}
+                {toggle?
+                <FontAwesomeIcon icon={faAngleUp} />:
+                <FontAwesomeIcon icon={faAngleDown} />
+                }
             </span>
         </button>
 
