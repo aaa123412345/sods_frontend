@@ -6,19 +6,26 @@
       "info": {
         "surveyID": "",
         "type": "",
-        "totalpart":2
+        "totalpart": 2
       },
       "header": {
         "tittle": "XXX survey"
       },
       "questionset": {
-        "1":[
+        "1": [
           {
+            "qid": 0,
+            "type": "sparttips",
+            "msg": "Part 1 100mins"
+          },
+          {
+            "qid": 1,
             "type": "stext",
             "question": "aaaabbbbbcccccssss ?",
             "required": true
           },
           {
+            "qid": 2,
             "type": "sselect",
             "question": "AAMMMNNNN ?",
             "option": [
@@ -30,10 +37,10 @@
             ],
             "required": true
           }
-          
         ],
-        "2":[
+        "2": [
           {
+            "qid": 3,
             "type": "sradio",
             "question": "AAMMMNGGGGGGGGGGGGGGNNN ?",
             "option": [
@@ -46,6 +53,7 @@
             "required": true
           },
           {
+            "qid": 4,
             "type": "schecker",
             "question": "5 lfoofofoofoofoof?",
             "option": [
@@ -60,6 +68,7 @@
             "minSelect": 1
           },
           {
+            "qid": 5,
             "type": "srange",
             "question": "fsabadbdngdm?",
             "min": 0,
@@ -70,13 +79,12 @@
       }
     }
   },
-  
   "server-serverWecome": {
     "code": 200,
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap":true
+        "useBootstrap": true
       },
       "element": [
         {
@@ -108,7 +116,7 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap":false
+        "useBootstrap": false
       },
       "element": [
         {
@@ -123,9 +131,7 @@
             "xl": 12,
             "xxl": 12
           },
-          "style": {
-            
-          }
+          "style": {}
         }
       ]
     }
@@ -135,7 +141,7 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap":true
+        "useBootstrap": true
       },
       "element": [
         {
@@ -209,7 +215,7 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap":true
+        "useBootstrap": true
       },
       "element": [
         {
@@ -233,7 +239,7 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap":true
+        "useBootstrap": true
       },
       "element": [
         {
@@ -266,7 +272,7 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap":true
+        "useBootstrap": true
       },
       "element": [
         {
@@ -291,7 +297,7 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap":true
+        "useBootstrap": true
       },
       "element": [
         {
@@ -780,6 +786,13 @@
       "top": 28.56291730868002,
       "left": 32.29380544686786,
       "id": 17
+    },
+    {
+      "region": "1 Floor",
+      "booth": null,
+      "top": 28.29521753442293,
+      "left": 25.881691016957202,
+      "id": 18
     }
   ],
   "booths": [
@@ -810,7 +823,6 @@
     }
   ],
   "ar-treasure": [
-    
     {
       "id": 111,
       "booth": null,
@@ -821,8 +833,7 @@
       "booth": null,
       "name": "Who establish this school?"
     }
-  ]
-   ,
+  ],
   "story": [
     {
       "id": 111,

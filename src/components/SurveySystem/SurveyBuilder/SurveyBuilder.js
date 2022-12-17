@@ -4,7 +4,7 @@ import { Form,Button, Row } from "react-bootstrap";
 
 import SurveyFormmator from "./SurveyFormmator";
 
-const SurveyBuilder = ({data,submitBTN}) => {
+const SurveyBuilder = ({data,testMode}) => {
     const [formData, setformData] = useState({})
     const [validated, setValidated] = useState(false);
     const [curPart, setCurPart] = useState(1)
@@ -45,19 +45,25 @@ const SurveyBuilder = ({data,submitBTN}) => {
 
     const CheckAndNext = (event)=>{
         const form = event.currentTarget.parentNode
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-            //Not ok
-            setValidated(true);
+        if(!testMode){
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                //Not ok
+                setValidated(true);
 
-          }else{
-              //next page
-                var c = curPart;
-                c++;
-                setCurPart(c)
-                setValidated(false);
-          }
+            }else{
+                //next page
+                  
+                    setCurPart(curPart+1)
+                    setValidated(false);
+            }
+        }else{
+            setCurPart(curPart+1)
+            setValidated(false);
+        }
+        
+          
          
           
     }
@@ -73,11 +79,11 @@ const SurveyBuilder = ({data,submitBTN}) => {
         
         <Form noValidate validated={validated} onSubmit={handleSubmit} >
              {data.questionset[curPart.toString()].map((element,index) => <SurveyFormmator
-            data={element} qid={index+1} parentFunction={onInput} validated={validated} 
+            data={element} qid={element.qid} parentFunction={onInput} validated={validated} 
             key={"surveydict-"+(index+1).toString()}></SurveyFormmator>)}
             
            
-             { submitBTN&&curPart==totalPart?
+             { !testMode&&curPart==totalPart?
                 <Button type="submit" >
                     Submit
                 </Button>:''

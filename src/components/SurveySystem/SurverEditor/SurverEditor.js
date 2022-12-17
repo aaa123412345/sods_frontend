@@ -14,27 +14,40 @@ const SurveyEditor = () => {
 
     const items = {
         header:{},
-        questionset:[
+        info:{
+            totalpart:2
+        },
+        questionset:{
+        '1':[
             {
+                qid:1,
                 type:"stext",
                 question:"A ?",
                 required:true
             }
+        ],
+        '2':[
+            {
+                qid:2,
+                type:"stext",
+                question:"B ?",
+                required:true
+            }
         ]
+
+    }
     }
 
     function offcanvas(btnname){
         return(
             <>
-            <Button variant="primary" onClick={handleShow}>
-                Launch
-            </Button>
+            
             <Offcanvas show={show} onHide={handleClose} placement={'end'}>
                 <Offcanvas.Header closeButton>
-                <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+                <Offcanvas.Title>Preview</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <SurveyBuilder data={items} submitBTN={false}></SurveyBuilder>
+                    <SurveyBuilder data={items} testMode={true}></SurveyBuilder>
                 </Offcanvas.Body>
             </Offcanvas>
           </>
@@ -45,7 +58,7 @@ const SurveyEditor = () => {
     return(
         <Row style={{backgroundColor:"gray",height:'100%',paddingTop:'10px'}}>
             <Col sm={7}>
-                <SurverEditorOverall></SurverEditorOverall>
+                <SurverEditorOverall handleShow={handleShow}></SurverEditorOverall>
             </Col>
             <Col sm={5}>
                 Design
@@ -58,3 +71,5 @@ const SurveyEditor = () => {
 }
 
 export default SurveyEditor;
+
+//SurveyEditor => SurveyBuilder => SurveyFormmator => SurveyElementDict => SurveyCoomponent

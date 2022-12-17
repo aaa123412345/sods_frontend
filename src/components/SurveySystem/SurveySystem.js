@@ -47,10 +47,12 @@ const SurveySystem = (props) => {
 
       return(
         
-         <SurveyBuilder data={items} submitBTN={true}></SurveyBuilder>
+         <SurveyBuilder data={items} testMode={false}></SurveyBuilder>
       )
     }
 
-    //<SurveyBuilder data={items}></SurveyBuilder>
+    
 }
 export default SurveySystem;
+
+//SurveySystem => SurveyBuilder => SurveyFormmator => SurveyElementDict => SurveyCoomponent

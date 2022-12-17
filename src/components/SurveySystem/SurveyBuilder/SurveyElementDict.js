@@ -4,13 +4,15 @@ import SurveySelector from "./SurveySelector/SurveySelector";
 import SurveyRadio from "./SurveyRadio/SurveyRadio";
 import SurveyCheckbox from "./SurveyCheckbox/SurveyCheckbox";
 import SurveyRange from "./SurveyRange/SurveyRange";
+import SurveyPartHeader from "./SurverPartHeader/SurverPartHeader";
 
 const Components = {
     stext:SurveyTextfield,
     sselect:SurveySelector,
     sradio:SurveyRadio,
     schecker:SurveyCheckbox,
-    srange:SurveyRange
+    srange:SurveyRange,
+    sparttips:SurveyPartHeader
   };
   
  const SurveyElementDict = ({data,qid,parentFunction,validated}) => {
