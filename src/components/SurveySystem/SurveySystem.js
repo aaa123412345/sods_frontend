@@ -47,7 +47,7 @@ const SurveySystem = (props) => {
 
       return(
         
-         <SurveyBuilder data={items}></SurveyBuilder>
+         <SurveyBuilder data={items} submitBTN={true}></SurveyBuilder>
       )
     }
 
