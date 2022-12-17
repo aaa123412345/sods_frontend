@@ -17,7 +17,7 @@ const SurveyRadio = ({data,parentFunction,qid}) => {
     return (
         <>
       
-                <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
+                <Form.Label >Q{qid.toString()+": "+data.msg}</Form.Label>
                 <div key={qid.toString()+"-inline-radio-main"} className="mb-3">
                  {data.option.map((element,index) => radioCreator(index+1, element,qid))}
                 </div>

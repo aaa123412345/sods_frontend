@@ -69,7 +69,7 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated}) => {
     return (
         <>
         
-                <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
+                <Form.Label >Q{qid.toString()+": "+data.msg}</Form.Label>
                 
                 <div key={qid.toString()+"-inline-checkbox-main"}  required >
                     {data.option.map((element,index) => checkboxCreator(index+1, element,qid,data.required))}

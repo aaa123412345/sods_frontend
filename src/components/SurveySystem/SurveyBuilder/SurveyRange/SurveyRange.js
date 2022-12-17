@@ -14,7 +14,7 @@ const SurveyRange = ({data,parentFunction,qid}) => {
         <>
         
             <Row>
-                <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
+                <Form.Label >Q{qid.toString()+": "+data.msg}</Form.Label>
                 <Col xs={11} md={11}>
                  <Form.Range  
                     qid={qid}

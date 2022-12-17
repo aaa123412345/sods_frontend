@@ -17,7 +17,7 @@ const SurveySelector = ({data,parentFunction,qid}) => {
     return (
         <>
         
-            <Form.Label >Q{qid.toString()+": "+data.question}</Form.Label>
+            <Form.Label >Q{qid.toString()+": "+data.msg}</Form.Label>
             <Row>
                 <Col md={8}>
                     <Form.Select qid={qid} onChange={setdata} key={"sselect-real-"+qid.toString()} required={data.required}>

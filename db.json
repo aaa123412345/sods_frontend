@@ -21,13 +21,13 @@
           {
             "qid": 1,
             "type": "stext",
-            "question": "aaaabbbbbcccccssss ?",
+            "msg": "aaaabbbbbcccccssss ?",
             "required": true
           },
           {
             "qid": 2,
             "type": "sselect",
-            "question": "AAMMMNNNN ?",
+            "msg": "AAMMMNNNN ?",
             "option": [
               "vfvf",
               "dsdsd",
@@ -42,7 +42,7 @@
           {
             "qid": 3,
             "type": "sradio",
-            "question": "AAMMMNGGGGGGGGGGGGGGNNN ?",
+            "msg": "AAMMMNGGGGGGGGGGGGGGNNN ?",
             "option": [
               "vfv",
               "dsdd",
@@ -55,7 +55,7 @@
           {
             "qid": 4,
             "type": "schecker",
-            "question": "5 lfoofofoofoofoof?",
+            "msg": "5 lfoofofoofoofoof?",
             "option": [
               "wv",
               "dd",
@@ -70,7 +70,7 @@
           {
             "qid": 5,
             "type": "srange",
-            "question": "fsabadbdngdm?",
+            "msg": "fsabadbdngdm?",
             "min": 0,
             "max": 10,
             "step": 1
