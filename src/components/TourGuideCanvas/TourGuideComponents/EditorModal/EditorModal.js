@@ -4,26 +4,24 @@ import styled from 'styled-components'
 import { Box, Flex,Heading, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import MyButton from '../../TourGuideComponents/MyButton/MyButton'
+import MyButton from '../EditorButton/EditorButton'
 import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
+import { booth as boothTemplate , floorplan as floorplanTemplate } from '../../../../data/formTemplates'
+import { resetData } from '../../../../redux/form/form.action'
+import { closeModal, updateModal } from '../../../../redux/modal/modal.action'
 
 const EditorModal = (props) => {
 
-    const { assignRequests, pages }  = props
-
-    // redux state
-    const themeColor = useSelector(state=>state.themeConfig.themeColor)
-    const tourguideState = useSelector(state => state.tourguide)
-    const modalState = useSelector(state => state.modal)
-    const { floorplans, floorplan, booth, regionIndex } = tourguideState
-    const { isOpen, path, method, name, id, page } = modalState
+    const { pages, form, modal }  = props
+    const { floorplan, booth } = form
+    const { isOpen, path, method, name, id, page } = modal
 
     const dispatch = useDispatch()
 
     // session storage
-    const [modalSession, setModalSession] = useSessionStorage('modal', modalState)
+    const [modalSession, setModalSession] = useSessionStorage('modal', modal)
     const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
     const [boothSession, setBoothSession] = useSessionStorage('booth', booth)
 
@@ -33,59 +31,37 @@ const EditorModal = (props) => {
 
     const close_modal = () => {
 
-        setModalSession({
-            ...modalSession, 
-            isOpen: false
-        })
+        setModalSession({ ...modalSession, isOpen: false})
+        setFloorplanSession(floorplanTemplate)
 
-        setFloorplanSession({region: ""})
+        if(path === "booth")
+            setBoothSession(boothTemplate)
 
-        if(path === "booth"){
-            let booth = {
-                region: "",
-                name: "",
-                venue: "",
-                description: "",
-                passcode: '0000'
-            }
-            setBoothSession(booth)
-        }
-
-        dispatch({type: "RESET_DATA"});
-        dispatch({type: "CLOSE_MODAL"})
+        dispatch(resetData())
+        dispatch(closeModal())
 
     }
 
     useEffect(()=>{
 
-        dispatch({type: "UPDATE_MODAL", payload: modalSession})
+        dispatch(updateModal(modalSession))
 
     },[])
 
     return !isOpen ? <></> : (
         <Overlay alignItems={{base: 'flex-end', md: 'center'}}>
 
-            <Modal bg={bg} 
-                borderRadius={{base: '18px 18px 0px 0px', md: 25}}
-                w={{base: '100%', md: '80%'}}
-                h={{base: '90%', md: '70%'}}>
+            <Modal bg={bg} borderRadius={{base: '18px 18px 0px 0px', md: 25}}
+                w={{base: '100%', md: '80%'}} h={{base: '90%', md: '70%'}}>
 
-                <ProgressBar bg={progressBg} w="100%">
+                {/* <ProgressBar bg={progressBg} w="100%">
                     <Progress h="10px" w={`${(page + 1)/pages.length * 100}%`} bg={themeColor}></Progress>
-                </ProgressBar>
+                </ProgressBar> */}
 
-                <Flex w="100%" p="1em"
-                    alignItems='center'
-                    justifyContent='space-between'>
-                    
-                    <ModalHeading>{pages[page].heading}</ModalHeading>
-                    <MyButton 
-                        faIcon={faXmark} 
-                        isCircle={true} 
-                        onClick={close_modal}/>
-
-
-                </Flex>
+                <ModalHeader>
+                    <Heading>{pages[page].heading}</Heading>
+                    <MyButton faIcon={faXmark} isCircle={true} onClick={close_modal}/>
+                </ModalHeader>
 
                 <Content w={{base: '90%', md: '70%'}}>
                     
@@ -100,12 +76,9 @@ const EditorModal = (props) => {
                 </Content>
 
                 <FunctionalFooter 
-                    isShow={isOpen} 
-                    onClose={close_modal}
+                    isShow={isOpen} onClose={close_modal}
                     totalPage={pages.length} page={page}
-                    assignRequests={assignRequests}
-                    method={method} path={path} name={name}
-                    id={id}
+                    method={method} path={path} name={name} id={id}
                     />
 
             </Modal>
@@ -113,7 +86,18 @@ const EditorModal = (props) => {
     )
 }
 
-export default EditorModal
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide,
+        modal: state.modal,
+        form: state.form
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(EditorModal)
 
 const Overlay = styled(Flex)`
 
@@ -136,8 +120,12 @@ const Modal = styled(Flex)`
 
 `
 
-const ModalHeading = styled(Heading)`
-
+const ModalHeader = styled(Flex)`
+    
+    width: 100%;
+    padding: 1em;
+    align-items: center;
+    justify-content: space-between;
 
 `
 

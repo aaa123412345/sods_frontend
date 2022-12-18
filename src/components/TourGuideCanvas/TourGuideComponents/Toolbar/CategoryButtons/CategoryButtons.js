@@ -1,32 +1,31 @@
 import React from 'react'
 import { 
-    Flex, Popover, PopoverTrigger,Box,
+    Flex, Popover, PopoverTrigger, Heading,
     PopoverContent, Button
 } from '@chakra-ui/react'
-import MyButton from '../../MyButton/MyButton';
+import MyButton from '../../EditorButton/EditorButton';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import useSessionStorage from '../../../../../hooks/useSessionStorage';
 import { useEffect } from 'react';
+import { updatePage } from '../../../../../redux/tourguide/tourguide.action';
 
 const CategoryButtons = (props) => {
 
-    const { categoryList, optionList } = props
-
-    const themeColor = useSelector(state => state.themeConfig.themeColor)
-    const { page } = useSelector(state => state.tourguide)
+    const { categoryList, optionList, heading, tourguide } = props
+    const { themeColor, page } = tourguide
     const dispatch = useDispatch()
 
     const [pageSession, setPageSession] = useSessionStorage('page', 0)
 
     const handle_onClick = (index)=>{
         setPageSession(index)        
-        dispatch({type: 'UPDATE_PAGE', payload: index})
+        dispatch(updatePage(index))
     }
 
     useEffect(()=>{
-        dispatch({type: 'UPDATE_PAGE', payload: pageSession})
+        dispatch(updatePage(pageSession))
     },[])
 
     const OptionBar = (props) => {
@@ -43,7 +42,7 @@ const CategoryButtons = (props) => {
 
         const Options= (OptionList) => {
             return (
-                <PopoverContent w="100%" h="fit-content" bg="transparent" borderColor="transparent">
+                <PopoverContent w="100%" h="fit-content" bg="transparent" borderColor="transparent" boxShadow='none'>
                 {
                     optionList.map((option, index)=>{
 
@@ -70,7 +69,7 @@ const CategoryButtons = (props) => {
     const CategoryBar = (props) => {
         
         return (
-            <>
+            <React.Fragment>
             {
                 props.categoryList.map((category, index) => (
                     <MyButton
@@ -85,19 +84,31 @@ const CategoryButtons = (props) => {
                 ))
 
             }
-            </>
+            </React.Fragment>
         )
     }
 
     return (
 
         <Flex alignItems="center" minH="50px">
-            {categoryList !== undefined && <CategoryBar categoryList={categoryList}/>}
             <OptionBar optionList={optionList} />
+            {categoryList !== undefined && heading === undefined && <CategoryBar categoryList={categoryList}/>}
+            {heading !== undefined && <Heading ml="1em" size={'lg'}>{heading}</Heading>}
         </Flex>
 
     )
     
 }
 
-export default CategoryButtons
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide,
+        modal: state.modal,
+        form: state.form
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(CategoryButtons)

@@ -3,23 +3,27 @@ import styled from 'styled-components'
 
 import { Box, Image } from '@chakra-ui/react'
 
+import axios from 'axios';
+import { useDispatch, connect } from 'react-redux';
+
 import ImageMarker from 'react-image-marker';
 import BoothPanel from './BoothPanel/BoothPanel'
-import axios from 'axios';
-import MyButton from '../MyButton/MyButton';
-import { useDispatch, useSelector } from 'react-redux';
+import MyButton from '../EditorButton/EditorButton';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import { markerConvertor } from '../../../../helpers/markerJsonConvertor';
+import { jsonFilter } from '../../../../helpers/jsonFilter';
 
 const TourGuideMap = (props) => {
 
-    const { isMarkable = false, isAssignBooth = false, height } = props
-
-    const themeColor = useSelector(state => state.themeConfig.themeColor)
-    const link = useSelector(state => state.themeConfig.link)
-    const { regionIndex, floorplans } = useSelector(state => state.tourguide)
+    const { isMarkable = false, isAssignBooth = false, height, tourguide } = props
+    const { themeColor, host, regionIndex, floorplans } = tourguide
 
     const path = 'markers'
 
     const mapRef = useRef(null)
+
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     // map original size
     const [mapSize, setMapSize] = useState(null)
@@ -36,10 +40,11 @@ const TourGuideMap = (props) => {
             
             let newMarkers = [...markers, marker]
             let newData = { region: floorplans[regionIndex].region, booth: null, ...marker }
+            newData = markerConvertor(newData, false)
 
-            axios.post(link+path, newData)
-            .then(res=>setMarkers(newMarkers))
-            .catch(err=>console.log(err))
+            // axios.post(host+path, newData)
+            // .then(res=>setMarkers(newMarkers))
+            // .catch(err=>console.log(err))
 
         }
 
@@ -49,23 +54,13 @@ const TourGuideMap = (props) => {
 
         if(isMarkable){
 
-            // let markerToDelete = markers[index]
-            // markerToDelete = { region: floorplans[regionIndex].region, ...markerToDelete}
-            // let newMarkers = markers
+            let markerToDelete = markerConvertor(markers[index], false)
+            let newMarkers = markers
+            newMarkers.splice(index, 1)
 
-            // newMarkers.splice(index, 1)
-
-            // let url = link+path+`?region=${region}&top=${markerToDelete.top}&left=${markerToDelete.left}`
-
-            // // should delete with region, top, left column later
-            // axios.get(url)
-            // .then(res=>{
-            //     let markerID = res.data[0]['id']
-            //     console.log(markerID)
-            //     axios.delete(link+markerPath+'/'+markerID)
-            //     .then(res=>setMarkers(newMarkers))
-            //     .catch(err=>console.log(err))
-            // })
+            // console.log("markerToDelete: ", `/${markerToDelete.region}/${markerToDelete.y}/${markerToDelete.x}`)
+            // axios.delete(host+path+`/${markerToDelete.region}/${markerToDelete.y}/${markerToDelete.x}`)
+            // .then(res=>setMarkers(newMarkers))
             // .catch(err=>console.log(err))
 
         }
@@ -78,40 +73,39 @@ const TourGuideMap = (props) => {
 
     const update_mapHeight = () => {
 
-        const map = mapRef.current
-        const mapStyle = map.style
 
-        if(mapSize !== null){
+        if(mapRef.current !== null){
+            
+            const map = mapRef.current
+            const mapStyle = map.style
+    
+            if(mapSize !== null){
+    
+                let originalWidth = mapSize[0]
+                let originalHeight = mapSize[1]
+                let currentHeight = height === null || height === undefined ? map.offsetHeight : height
+                let newWidth =  (currentHeight * originalWidth / originalHeight)
+          
+                mapStyle.minWidth = `${newWidth}px`
 
-            let originalWidth = mapSize[0]
-            let originalHeight = mapSize[1]
-            let currentHeight = height === null || height === undefined ? map.offsetHeight : height
-            let newWidth =  (currentHeight * originalWidth / originalHeight)
-      
-            mapStyle.minWidth = `${newWidth}px`
-
-            // for debug
-            // console.log('ori width: ', originalWidth)
-            // console.log('ori height: ', originalHeight)
-            // console.log('current height: ', currentHeight)
-            // console.log('new width: ', newWidth)
-
+            }
         }
+
 
     }
 
     const store_marker_value = (marker) => {
 
-        let payload = {
-            region: marker.region,
-            top: marker.top,
-            left: marker.left,
-            boothID: null
-        }
+        // let payload = {
+        //     region: marker.region,
+        //     top: marker.top,
+        //     left: marker.left,
+        //     boothID: null
+        // }
 
-        console.log(payload)
+        // console.log(payload)
 
-        dispatch({type: "UPDATE_MARKER", payload: payload})
+        // dispatch({type: "UPDATE_MARKER", payload: payload})
     }
 
     useEffect(()=>{
@@ -129,19 +123,29 @@ const TourGuideMap = (props) => {
 
     useEffect(()=>{
 
-        if(floorplans[regionIndex] !== undefined){
-            
-            const queryStr = "?region=" + floorplans[regionIndex].region
-    
-            axios.get(link+path+queryStr)
-            .then((res)=>{
-    
-                let data = res.data
-                setMarkers(data)
-        
-            })
+        setMarkers([])
 
-        }    
+        const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex].region : ""
+        const queryStr = "?region=" + regionStr
+
+        // console.log(host+path+queryStr)
+
+        axios.get(host+path+queryStr)
+        .then((res)=>{
+
+            let data = res.data.data
+            data = markerConvertor(data)
+            setMarkers(data)
+            setError(null)
+            setIsLoading(false)
+    
+        })
+        .catch(err=>{
+            setMarkers([])
+            setError(error)
+            setIsLoading(true)
+        })
+
 
     }, [regionIndex, floorplans])
 
@@ -152,11 +156,11 @@ const TourGuideMap = (props) => {
         const handle_onClick = () => {
             setSelectedMarker(itemNumber)
             if(isMarkable)
-                delete_marker(props.itemNumber)
+                delete_marker(itemNumber)
             else if(isAssignBooth)
                 store_marker_value(props)
             else
-                handle_showBooth(props.itemNumber)
+                handle_showBooth(itemNumber)
         }
 
         return (
@@ -164,12 +168,18 @@ const TourGuideMap = (props) => {
                 text={itemNumber}
                 onClick={handle_onClick}
                 isCircle={true}
-                bgColor={selectedMarker === props.itemNumber || !isAssignBooth ? themeColor: 'gray'}
+                bgColor={selectedMarker === itemNumber || !isAssignBooth ? themeColor: 'gray'}
                 isWhiteBorder={true}
             />
         );
 
     };
+
+    if(error !== null)
+        return <div>{error.message}</div>
+
+    if(isLoading)
+        return <LoadingSpinner />
 
     return (
         
@@ -182,12 +192,19 @@ const TourGuideMap = (props) => {
 
             <MapContainer ref={mapRef}>
 
-                <ImageMarker
-                    src="/images/test-floor-plan-1.jpg"
-                    markers={markers}
-                    markerComponent={CustomMarker}
-                    onAddMarker={(marker)=>add_marker(marker)}
-                    />
+                {
+
+                    markers !== undefined 
+                    && 
+                    <ImageMarker
+                        src="/images/test-floor-plan-1.jpg"
+                        markers={markers}
+                        markerComponent={CustomMarker}
+                        onAddMarker={(marker)=>add_marker(marker)}
+                        />
+
+                }
+
 
             </MapContainer>
 
@@ -207,13 +224,23 @@ const TourGuideMap = (props) => {
     )
 }
 
-export default TourGuideMap
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(TourGuideMap)
 
 const ScrollMap = styled(Box)`
 
     width: 100%; max-width: 100%;
     height: 100%; max-height: 100%;
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
 
 `
 

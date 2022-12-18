@@ -6,19 +6,22 @@ import { Flex, Button, useColorModeValue } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 
-import { useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 
 import samplePara from '../../../../../helpers/SampleParagraph'
+
 import MainInfo from './MainInfo/MainInfo'
 import MoreInfo from './MoreInfo/MoreInfo'
 
 const BoothPanel = (props) => {
     
-    const { isShowBooth, setIsShowBooth } = props
+    const { isShowBooth, setIsShowBooth, tourguide } = props
+    const { themeColor } = tourguide 
 
-    const themeColor = useSelector(state => state.themeConfig.themeColor)
+    const bg = useColorModeValue("white", "black")
 
     const [page, setPage] = useState(0)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
     const [boothInfo, setBoothInfo] = useState({
 
@@ -36,9 +39,8 @@ const BoothPanel = (props) => {
 
     })
 
-    const [moreInfo, setMoreInfo] = useState(boothInfo.moreInfo)
+    // const [moreInfo, setMoreInfo] = useState(boothInfo.moreInfo)
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
     const update_windowWidth = () => {
 
@@ -60,19 +62,19 @@ const BoothPanel = (props) => {
         const arrowForMobile = isShowBooth?faAngleDown:faAngleUp 
 
         return (
-            <Button 
-                onClick={()=>{setIsShowBooth(!isShowBooth)}}
-                variant={themeColor} m={0}
-                mt="50px" h={{base: '50px', md: "100px"}} w={{base: '100px', md: "50px"}}
-                borderRadius={{base:'25px 25px 0px 0px', md:'25px 0px 0px 25px'}}
-                >
+            <Button m={0} mt="50px"
+                variant={themeColor} 
+                onClick={()=>setIsShowBooth(!isShowBooth)} 
+                h={{base: '50px', md: "100px"}} 
+                w={{base: '100px', md: "50px"}}
+                borderRadius={{base:'25px 25px 0px 0px', md:'25px 0px 0px 25px'}}>
+
                 <FontAwesomeIcon icon={windowWidth > 16 * 55 ? arrowForLaptop:arrowForMobile}/>
+
             </Button>
         )
 
     }
-
-    const bg = useColorModeValue("white", "black")
 
     return (
         
@@ -82,13 +84,13 @@ const BoothPanel = (props) => {
             width={{base: 'inherit', md: 'fit-content'}}>
             
             <ShowButton/>
+
             <Panel bg={bg}
                 w={{base: '100%', md: isShowBooth?'350px':'0px'}}
-                h={{base: isShowBooth?"350px":"0px", md: '100%'}}
-            >
+                h={{base: isShowBooth?"350px":"0px", md: '100%'}}>
 
                 {   page === 0 && <MainInfo setPage={setPage} boothInfo={boothInfo} themeColor={themeColor} /> }
-                {   page === 1 && <MoreInfo setPage={setPage} moreInfo={moreInfo} themeColor={themeColor} /> }
+                {/* {   page === 1 && <MoreInfo setPage={setPage} moreInfo={moreInfo} themeColor={themeColor} /> } */}
 
             </Panel>
 
@@ -97,7 +99,16 @@ const BoothPanel = (props) => {
     )
 }
 
-export default BoothPanel
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(BoothPanel)
 
 const Float = styled(Flex)`
 

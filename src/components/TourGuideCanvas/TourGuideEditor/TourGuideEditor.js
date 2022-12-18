@@ -1,23 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Flex, Heading, Button, useColorModeValue, useColorMode } from '@chakra-ui/react'
 
-import RightPanel from './RightPanel/RightPanel'
 import EditorModal from '../TourGuideComponents/EditorModal/EditorModal'
+import RightPanel from './RightPanel/RightPanel'
 import LeftPanel from './LeftPanel/LeftPanel'
 
 import tourModalData from '../../../data/tourModalData'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../hooks/useSessionStorage'
-import { useEffect } from 'react'
+import { updatePage } from '../../../redux/tourguide/tourguide.action'
+
  
 const TourGuideEditor = (props) => {
 
-    // redux state
-    const { themeColor } = useSelector(state => state.themeConfig)
-    const { page } = useSelector(state => state.tourguide)
-    const { modalIndex } = useSelector(state => state.modal)
+    const { tourguide, modal, form } = props
+    const { themeColor, page } = tourguide
+    const { modalIndex } = modal
     const dispatch = useDispatch()
 
     // chakra hooks
@@ -30,35 +30,38 @@ const TourGuideEditor = (props) => {
 
 
     const change_page = (page) => {
-        dispatch({type: "UPDATE_PAGE", payload: page})
+        dispatch(updatePage(page))
         setPageSession(page)
     }
 
     useEffect(()=>{
-        dispatch({type: "UPDATE_PAGE", payload: pageSession})
+        dispatch(updatePage(pageSession))
     },[])
 
     const DarkLightModeButton = () => {
         return (
-            <Button onClick={toggleColorMode}
-                variant="gray"
-                position="absolute" zIndex="999"
-                right="5px" bottom="5px">
+            <ModeButton onClick={toggleColorMode} variant="gray" position="absolute">
                 { colorMode === 'light'? "Light":"Dark"} Mode
-            </Button>
+            </ModeButton>
+        )
+    }
+
+    const EditorHeader = () => {
+        return (
+            <HeaderContainer bg={headerBg}>
+                <Heading size="sm" mr="1em">Editor Type</Heading>
+                <Button variant={page <= 1 ? themeColor : 'gray'} onClick={()=>change_page(0)}>Tour Guide</Button> 
+                <Button variant={page === 2 ? themeColor : 'gray'} onClick={()=>change_page(2)}>Game Ticket</Button>
+            </HeaderContainer>
         )
     }
 
     return (
         <React.Fragment>
-            <EditorHeader bg={headerBg}>
-                <Heading size="sm" mr="1em">Editor Type</Heading>
-                <Button variant={page <= 1 ? themeColor : 'gray'} onClick={()=>change_page(0)}>Tour Guide</Button> 
-                <Button variant={page === 2 ? themeColor : 'gray'} onClick={()=>change_page(2)}>Game Ticket</Button>
-            </EditorHeader>
             
-            <Container bg={bg}
-                flexDir={{base: 'column', md: 'row'}}>
+            <EditorHeader />
+            
+            <Container bg={bg} flexDir={{base: 'column', md: 'row'}}>
             
                 <LeftPanel />
                 
@@ -75,9 +78,20 @@ const TourGuideEditor = (props) => {
 
 }
 
-export default TourGuideEditor
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide,
+        modal: state.modal,
+        form: state.form
+    };
+};
 
-const EditorHeader = styled(Flex)`
+export default connect(
+    mapStateToProps,
+    null
+)(TourGuideEditor)
+
+const HeaderContainer = styled(Flex)`
 
     align-items: center; 
     width: 100%; 
@@ -92,5 +106,13 @@ const Container = styled(Flex)`
     min-height: calc(100% - 80px + 14px);
     position: relative;
     width: inherit;
+
+`
+
+const ModeButton = styled(Button)`
+
+    z-index: 999;
+    right: 5px;
+    bottom: 5px;
 
 `

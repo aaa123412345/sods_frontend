@@ -1,33 +1,33 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 
 const TextInput = (props) => {
 
     const { 
         isTextArea = false, 
         faIcon, label, names, placeholder, 
-        updateType, tourguideData, updateData
+        form, update
     } = props
+    const dispatch = useDispatch()
 
-    const data = tourguideData[names.form]
+    const data = form[names.form]
 
     const handle_onChange = (e) => {
 
         const value = e.target.value
         let newData = {...data}
         newData[names.field] = value
-        updateData(updateType, newData)
+        dispatch(update(newData))
 
     }
 
+
     return (
 
-        <Flex
-            mt="1em" 
-            flexDir="column" 
-            alignItems='flex-start' >
+        <TextFieldContainer>
 
             <Flex alignItems='center'>
                 <FontAwesomeIcon icon={faIcon} />
@@ -37,8 +37,7 @@ const TextInput = (props) => {
             {
 
                 isTextArea?
-                <Textarea m="1em 0"
-                    w="100%" h="fit-content" p=".5em 1em" 
+                <CustomInputField
                     borderRadius={25}
                     name={names.field}
                     value={data[names.field]} 
@@ -46,8 +45,7 @@ const TextInput = (props) => {
                     placeholder={placeholder} 
                     />
                 :
-                <Input m="1em 0"
-                    w="100%" h="fit-content" p=".5em 1em" 
+                <CustomInputField
                     borderRadius={25}
                     name={names.field}
                     value={data[names.field]} 
@@ -56,18 +54,18 @@ const TextInput = (props) => {
                     />
             }
            
-        </Flex>
+        </TextFieldContainer>
 
     )
 }
 
 const mapStateToProps = state => {
     return {
-      tourguideData: state.tourguide
+      form: state.form
     };
 };
 const mapDispatchToProps = dispatch => ({
-    updateData: (type, payload) => dispatch(({type: type, payload: payload }))
+    // update: (type, payload) => dispatch(({type: type, payload: payload }))
 });
 
 export default connect(
@@ -75,3 +73,19 @@ export default connect(
     mapDispatchToProps
 )(TextInput);
   
+const TextFieldContainer = styled(Flex)`
+
+    margin-top: 1em; 
+    flex-direction: column; 
+    align-items: flex-start;
+
+
+`
+
+const CustomInputField = styled(Input)`
+
+    margin: 1em 0;
+    width: 100%; height: fit-content; 
+    padding: .5em 1em; 
+
+`

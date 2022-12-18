@@ -10,10 +10,11 @@ const DropDownList = (props) => {
     faIcon, label,
     defaultList, names, placeholder,  
     fetchTarget = null,
-    updateType, tourguideData, updateData, link
+    updateType, tourguide, form, update,
   } = props
 
-  const data = tourguideData[names.form]
+  const { host } = tourguide
+  const data = form[names.form]
   const dispach = useDispatch()
 
   const [itemList, setItemList] = useState(defaultList)
@@ -25,29 +26,29 @@ const DropDownList = (props) => {
       let newData = {...data}
       newData[names.field] = value
       setSelecteditem(value)
-      updateData(updateType, newData)
+      update(updateType, newData)
       
   }
 
   useEffect(()=>{
 
-    if(defaultList !== undefined){
+    // if(defaultList !== undefined){
 
-      console.log(selectedItem)
-      if(selectedItem != null){
-        const path = selectedItem.toLowerCase().split(' ').join('-')
-        axios.get(link+path)
-        .then((res)=>{
-          let tempData = res.data
-          dispach({type: fetchTarget.type, payload: tempData})
-        }).catch((err)=>console.log(err))
-      }
+    //   console.log(selectedItem)
+    //   if(selectedItem != null){
+    //     const path = selectedItem.toLowerCase().split(' ').join('-')
+    //     axios.get(link+path)
+    //     .then((res)=>{
+    //       let tempData = res.data
+    //       dispach({type: fetchTarget.type, payload: tempData})
+    //     }).catch((err)=>console.log(err))
+    //   }
 
-    }else{
+    // }else{
 
-      setItemList(tourguideData[fetchTarget.name])
+    //   setItemList(tourguideData[fetchTarget.name])
 
-    }
+    // }
 
   },[selectedItem])
   
@@ -83,12 +84,12 @@ const DropDownList = (props) => {
 
 const mapStateToProps = state => {
   return {
-    tourguideData: state.tourguide,
-    link: state.themeConfig.link
+    tourguide: state.tourguide,
+    form: state.form
   };
 };
 const mapDispatchToProps = dispatch => ({
-  updateData: (type, payload) => dispatch(({type: type, payload: payload }))
+  update: (type, payload) => dispatch(({type: type, payload: payload }))
 });
 
 export default connect(

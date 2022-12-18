@@ -6,27 +6,29 @@ import { faMapLocationDot, faPen, faTent } from '@fortawesome/free-solid-svg-ico
 
 import tourPageData from '../../../../data/tourPageData'
 import Toolbar from '../../TourGuideComponents/Toolbar/Toolbar'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
+import { updateFloorplan, updateStory } from '../../../../redux/form/form.action'
+import { openModal } from '../../../../redux/modal/modal.action'
 
 const RightPanel = (props) => {
 
-    // redux state
-    const modalState = useSelector(state => state.modal)
-    const tourguideState = useSelector(state => state.tourguide)
-    const { regionIndex, storyIndex, page, floorplans, stories } = tourguideState
+    const { tourguide, modal, form } = props
+    const { page, regionIndex, storyIndex, floorplans, stories } = tourguide
+    const { floorplan, story } = form
     const dispatch = useDispatch()
 
     // session storage
-    const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', tourguideState.floorplan)
-    const [storySession, setStorySession] = useSessionStorage('story', tourguideState.story)
-    const [modalSession, setModalSession] = useSessionStorage('modal', modalState)
+    const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
+    const [storySession, setStorySession] = useSessionStorage('story', story)
+    const [modalSession, setModalSession] = useSessionStorage('modal', modal)
 
     // chakra hooks
     const bg = useColorModeValue('gray.10', 'gray.100')
     
     // constants
     const categories = [{label: "Floor Plan", icon: faMapLocationDot}, {label: "Booth", icon: faTent}]
+    const isTicketEditor = page === 2
 
     // react hooks
     const contentRef = useRef(null)
@@ -34,27 +36,29 @@ const RightPanel = (props) => {
     const onOpen = () => {
 
         let floorplanPayload = {...floorplans[regionIndex]}
-        let storyPayload = {...stories[storyIndex]}
+        let storyPayload = {...stories[storyIndex]} 
 
         let modalPayload = {
 
-            modalIndex: page === 2 ? 4 : 0,
-            path: page === 2 ? 'story':'floorplans',
+            page: 0,
+            modalIndex: isTicketEditor ? 4 : 0,
+            path: isTicketEditor ? 'story':'floorplans',
             method: "put",
-            name: page === 2 ? 'story' : 'floorplan',
-            id: page === 2 ? storyPayload.id : floorplanPayload.id
+            name: isTicketEditor ? 'story' : 'floorplan',
+            id: isTicketEditor ? storyPayload.id : floorplanPayload.id
 
         }
         
-        if(page === 2){
+        if(isTicketEditor){
             setStorySession(storyPayload)
-            dispatch({type: "UPDATE_STORY", payload: storyPayload})
+            dispatch(updateStory(storyPayload))
         }else{
             setFloorplanSession(floorplanPayload)
-            dispatch({type: "UPDATE_FLOORPLAN", payload: floorplanPayload})
+            dispatch(updateFloorplan(floorplanPayload))
         }
+
         setModalSession({...modalSession, ...modalPayload})
-        dispatch({type: "OPEN_MODAL", payload: modalPayload})
+        dispatch(openModal(modalPayload))
 
     }
 
@@ -64,8 +68,9 @@ const RightPanel = (props) => {
             
         
             <Toolbar type={2} 
-                categoryList={page === 2 ? undefined : categories}
-                optionList={ [{text: `Edit ${page === 2? "Story" : 'Region'}`, faIcon: faPen, onClick: onOpen}]} />
+                categoryList={isTicketEditor ? undefined : categories}
+                heading={isTicketEditor ? "Preview Ticket Cover" : undefined}
+                optionList={ [{text: `Edit ${isTicketEditor ? "Story" : 'Region'}`, faIcon: faPen, onClick: onOpen}]} />
 
 
             <Content bg={bg} ref={contentRef}>
@@ -91,7 +96,6 @@ const RightPanel = (props) => {
                     })
                 }
                 
-        
             </Content>
             
         </Container>
@@ -99,7 +103,18 @@ const RightPanel = (props) => {
     )
 }
 
-export default RightPanel
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide,
+        modal: state.modal,
+        form: state.form
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(RightPanel)
 
 const Container = styled(Flex)`
 
@@ -122,12 +137,3 @@ const Content = styled(Flex)`
     overflow: hidden;
 
 `
-
-// const ScrollableContent = styled(Flex)`
-
-//     position: relative;
-//     flex-direction: column;
-//     overflow: scroll;
-//     // max-height: calc(100% - 90px);
-
-// `

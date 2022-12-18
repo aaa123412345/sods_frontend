@@ -7,23 +7,26 @@ import { Flex, Heading, useToast } from '@chakra-ui/react'
 import ItemButton from './ItemButton/ItemButton'
 import Toolbar from '../../TourGuideComponents/Toolbar/Toolbar'
 import FunctionalFooter from '../../TourGuideComponents/FunctionalFooter/FunctionalFooter'
-import { useDispatch, useSelector } from 'react-redux'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import { errorToast } from '../../../../constants/toastStyle'
+import { useDispatch, connect } from 'react-redux'
+import { updateBooths, updateFloorplans, updateRegionIndex, updateStories, updateStoryIndex } from '../../../../redux/tourguide/tourguide.action'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
+import { jsonFilter } from '../../../../helpers/jsonFilter'
 
 const ItemList = (props) => {
 
   const { 
     isCategoryList, isRegionFilter = false, 
-    modalIndex, 
-    heading, path, name, 
-    id = "id" 
+    modalIndex, heading, path, name,
+    tourguide, modal
   } = props
 
-  // redux state
-  const themeColor = useSelector(state => state.themeConfig.themeColor)
-  const link = useSelector(state => state.themeConfig.link)
-  const { storyIndex, regionIndex, floorplans, page } = useSelector(state => state.tourguide)
-  const { isOpen } = useSelector(state => state.modal)
+  const { 
+    themeColor, host, storyIndex, regionIndex, page,
+    floorplans, booths, stories 
+  } = tourguide
+  const { isOpen } = modal
   const dispatch = useDispatch()
 
   // session storage
@@ -31,50 +34,51 @@ const ItemList = (props) => {
   const [storyIndexSession, setStoryIndexSession] = useSessionStorage('storyIndex', 0)
 
   // chakra hooks
-  const toast = useToast({
-    duration: 3000,
-    isClosable: true,
-  })
+  const toast = useToast({ duration: 3000, isClosable: true })
 
   // react state
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
   const [isDeleteMode, setIsDeleteMode] = useState(false)
   const [items, setItems] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
 
   const handle_active = (index) => {
 
-    return isDeleteMode ? 
-      selectedItems.includes(items[index][id]) ? true : false 
-      :
-      isCategoryList ? (regionIndex === index && path === "floorplans") || (storyIndex === index && path === "story") ?  true : false
-      :
-      false
+    let isSameIndex = (regionIndex === index && path === "floorplans") || (storyIndex === index && path === "story")
+
+    if(isDeleteMode)
+      return selectedItems.includes(items[index].id) ? true : false 
+    if(isCategoryList)
+      return isSameIndex ?  true : false
+    return false
 
   }
 
   const add_to_list = (index) => {
 
     let newList = [...selectedItems]
-    let current = items[index]
+    let current = items[index].id
 
-    if(newList.includes(current[id]))
-      newList.splice(newList.indexOf(current[id]), 1)
+    if(newList.includes(current))
+      newList.splice(newList.indexOf(current), 1)
     else
-      newList.push(current[id])
-      
+      newList.push(current)
+
     setSelectedItems(newList)
 
   }
 
   const update_page = (index) => {
+
     if(path === 'floorplans'){
       setRegionIndexSession(index)
-      dispatch({type: "UPDATE_REGION_INDEX", payload: index})
+      dispatch(updateRegionIndex(index))
     }
 
     if(path === 'story'){
       setStoryIndexSession(index)
-      dispatch({type: "UPDATE_STORY_INDEX", payload: index})
+      dispatch(updateStoryIndex(index))
     }
   }
 
@@ -86,84 +90,95 @@ const ItemList = (props) => {
     if(isCategoryList)
       update_page(index)
     
-
   }
 
   const update_data = (data) => {
 
-    let type = ""
-    
     if(path==="floorplans")
-      type = "UPDATE_FLOORPLANS"
+      dispatch(updateFloorplans(data))
     if(path==="booths")
-      type = "UPDATE_BOOTHS"
+      dispatch(updateBooths(data))
     if(path==="story")
-      type = "UPDATE_STORIES"
+      dispatch(updateStories(data))
     
     setItems(data)
-    dispatch({type: type, payload: data})
 
   }
 
   useEffect(()=>{
 
-    setSelectedItems([])
-
-  },[isDeleteMode])
-
-  useEffect(()=>{
-
-    update_page(regionIndexSession)
+    if(path === "floorplans")
+      update_page(regionIndexSession)
+    if(path === "story")
+      update_page(storyIndexSession)
 
   },[])
 
   useEffect(()=>{
+    setSelectedItems([])
+  },[isDeleteMode])
 
-    const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex]['region'] : ""
+  useEffect(()=>{
+    setItems([])
+    setIsLoading(true)
+  }, [page])
 
-    const queryStr = isRegionFilter ? "?region=" +  regionStr : ""
+  useEffect(()=>{
+    
+    const refreshId = setTimeout(()=>{  
 
-    // console.log(floorplans) // for debug use
-    axios.get(link+path+queryStr)
-    .then((res)=>{
-      let data = res.data
-      update_data(data)
-    })
-    .catch(err=>toast({
-        title: 'Error',
-        description: "Please try again.",
-        status: 'error',
-        containerStyle:{bg:"error"}
-    }))
+      let targetFloor = floorplans[regionIndex]
+      const regionStr = targetFloor !== undefined ? targetFloor.region : ""
+      const queryStr = isRegionFilter ? "?region=" +  regionStr : ""
+      axios.get(host+path+queryStr)
+      .then((res)=>{
+        let data = res.data.data
+        // data = isRegionFilter && regionStr !== "" ? jsonFilter(data, "region", regionStr) : data
+        update_data(data)
+        setError(null)
+        setIsLoading(false)
+      })
+      .catch(err=>{
+        toast(errorToast)
+        setError(error)
+        setIsLoading(true)
+      })
 
-  },[regionIndex, isDeleteMode, isOpen, page])
+    }, 1000)
+
+
+    return () => clearTimeout(refreshId)
+
+  },[regionIndex, isOpen, isDeleteMode, page])
+
+  if(error !== null)
+    return <div>{error.message}</div>
+
+  if(isLoading)
+    return <LoadingSpinner />
 
   return (
     
     <React.Fragment>
 
-      <Toolbar 
-        type={1} 
+      <Toolbar type={1} 
         modalIndex={modalIndex} 
-        path={path} 
-        name={name} 
+        path={path} name={name} 
         isDeleteMode={isDeleteMode} 
         setIsDeleteMode={setIsDeleteMode} />
 
-      <Heading size="sm" mt="1em" ml="1em">{heading}</Heading>
+      <Title size="sm">{heading}</Title>
 
       <ScrollContent flexDir={{base: 'row', md: isCategoryList?"column":"row"}}
         flexWrap={{md: isCategoryList ? 'no-wrap':"wrap"}}
         overflowX={{base: 'scroll', md: "hidden"}}
         overflowY={{base: 'hidden', md: "scroll"}}>
         {
-          items.length !== 0 && 
+          items !== undefined && 
           items.map((item, index) => (
-            <ItemButton key={index}
-              type={path} 
+            <ItemButton key={index} type={path} data={item}
               variant={handle_active(index) ? isDeleteMode ? 'danger': themeColor : 'gray'}
-              onClick={()=>(select_item(index))}
-              data={item}/>
+              onClick={()=>(select_item(index))}/>
           ))
         }
       </ScrollContent>
@@ -171,8 +186,7 @@ const ItemList = (props) => {
       <FunctionalFooter 
         isShow={isDeleteMode} 
         onClose={()=>{setIsDeleteMode(false); setSelectedItems([])}}
-        path={path} method='delete'
-        data={selectedItems}
+        path={path} method='delete' data={selectedItems}
         />
 
     </React.Fragment>
@@ -180,7 +194,18 @@ const ItemList = (props) => {
   )
 }
 
-export default ItemList
+const mapStateToProps = state => {
+  return {
+      tourguide: state.tourguide,
+      modal: state.modal,
+      form: state.form
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(ItemList)
 
 const ScrollContent = styled(Flex)`
 
@@ -188,5 +213,12 @@ const ScrollContent = styled(Flex)`
   height: 100%; width: 100%;
   padding: 1em 0em;
   overflow: scroll;
+
+`
+
+const Title = styled(Heading)`
+
+  margin-top: 1em;
+  margin-left: 1em;
 
 `

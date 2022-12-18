@@ -2,63 +2,65 @@ import React, { useState, useEffect } from 'react'
 
 import styled from 'styled-components'
 
-import { ChakraProvider, useColorModeValue } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import { newTheme } from '../../theme/theme'
 import { Flex, Box, Button } from '@chakra-ui/react'
 
-import { useSelector } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
+import { updateHost, updateThemeColor } from '../../redux/tourguide/tourguide.action'
+
+import useSessionStorage from '../../hooks/useSessionStorage'
 
 import TourGuideEditor from './TourGuideEditor/TourGuideEditor'
 import TourGuideMap from './TourGuideComponents/TourGuideMap/TourGuideMap'
-import useSessionStorage from '../../hooks/useSessionStorage'
 import GameTicket from './TourGuideComponents/GameTicket/GameTicket'
+import axios from 'axios'
 
-const TourGuideCanvas = () => {
+const TourGuideCanvas = (props) => {
+
+    const { block, tourguide } = props
+    const { themeColor, isAdmin } = block
+
+    // redux
+    const { page } = tourguide
+    const dispatch = useDispatch()
 
     // session storage
-    const [mapModeSession, setMapModeSession] = useSessionStorage('mapMode', false)
+    const [mapModeSession, setMapModeSession] = useSessionStorage('mapMode', !isAdmin)
 
-    // redux state
-    const themeColor = useSelector(state => state.themeConfig.themeColor)
-    const { page } = useSelector(state => state.tourguide)
-
-    // chakra hooks
-    
     // react hooks
-    const [isAdmin, setIsAdmin] = useState(false) // for development use
     const [isMap, setIsMap] = useState(true)
 
-    const update_AdminMode = (pathname) => { 
-        return pathname.slice(1, 7) === "public" ? false : true 
-    }
+    // constant 
+    const host = isAdmin ? process.env.REACT_APP_SERVER_REST_HOST : process.env.REACT_APP_PUBLIC_REST_HOST
 
     const change_editMode = () => {
-        setMapModeSession(!isMap)
+
         setIsMap(!isMap)
+        setMapModeSession(!isMap)
+
     }
 
     const render_label = () => {
 
         if(isAdmin)
             return isMap ? "Edit" : "Preview" 
-        else
-            return isMap ? "My Ticket" : "Map"
+        return isMap ? "My Ticket" : "Map"
 
     }
 
     useEffect(()=>{
 
-        let canEdit = update_AdminMode(window.location.pathname)
-        setIsAdmin(canEdit) // for development use
-        setIsMap(!canEdit)
+        setIsMap(mapModeSession)
+        dispatch(updateThemeColor(themeColor))
+        dispatch(updateHost(host))
 
     }, [window.location.pathname])
 
     return (
         <ChakraProvider resetCSS theme={newTheme}>
 
-            <OuterContainer
-                w={{base: "100%", md: "calc(100vw - 210px)"}}>
+            <OuterContainer>
 
                 { isMap && <TourGuideMap /> }
 
@@ -66,23 +68,19 @@ const TourGuideCanvas = () => {
 
                 { !isMap && isAdmin && <TourGuideEditor /> }
 
-
                 {
 
                     ((page !== 2 && isAdmin) || !isAdmin)
                     &&
-                    <Float> 
-                        <EditButton
-                            variant={themeColor}
-                            borderRadius={25}
+                    <Float>
+                        <Button variant={themeColor} borderRadius={25}
                             onClick={change_editMode}>
                                 {render_label()}
-                        </EditButton>
+                        </Button>
                     </Float>
 
                 }
                 
-
             </OuterContainer>
             
         </ChakraProvider>
@@ -90,24 +88,30 @@ const TourGuideCanvas = () => {
 
 }
 
-export default TourGuideCanvas
+
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(TourGuideCanvas)
 
 const OuterContainer = styled(Flex)`
 
     flex-direction: column;
-    position: absolute;
+    position: relative;
     height: 100vh;
-    max-width: 100vw;
-    right: 0; margin-top: -12px;
+    max-width: 100vw; width: 100%;
+
 
 `
 const Float = styled(Box)`
 
-    position: absolute;
-    z-index: 3;
-    right: 0;
+    position: absolute; z-index: 3;
+    right: 1em; top: 1em;
     
-
 `
-
-const EditButton = styled(Button)``

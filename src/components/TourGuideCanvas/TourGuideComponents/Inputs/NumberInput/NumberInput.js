@@ -4,50 +4,50 @@ import { Flex, Box, Heading, Input, Button } from '@chakra-ui/react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd, faMinus } from '@fortawesome/free-solid-svg-icons'
-import { useSelector, connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 
 const NumberInput = (props) => {
 
     const { 
         needButtons = false, max = 9999, min = 0, 
         names, faIcon, label, placeholder,
-        updateType, tourguideData, updateData
+        tourguide, form, update
     } = props
+    const { themeColor } = tourguide
+    const dispatch = useDispatch()
 
-
-    const data = tourguideData[names.form]
+    const data = form[names.form]
     const step = needButtons ? 1 : 0
 
-    const themeColor = useSelector(state => state.themeConfig.themeColor)
-    
-    const handle_increment = () => {
+    // const handle_increment = () => {
 
-        let newData = {...data}
-        let newValue = data[names.field] + step
-        if(newValue > max)
-            newValue = max
-        newData[names.field] = newValue
-        updateData({type: updateType, payload: newData})
+    //     let newData = {...data}
+    //     let newValue = data[names.field] + step
+    //     if(newValue > max)
+    //         newValue = max
+    //     newData[names.field] = newValue
+    //     update(newData)
 
-    }
+    // }
 
-    const handle_decrement = () => {
+    // const handle_decrement = () => {
 
-        let newData = {...data}
-        let newValue = data[names.field] - step
-        if(newValue < min)
-            newValue = min
-        newData[names.field] = newValue
-        updateData(updateType, newData)
+    //     let newData = {...data}
+    //     let newValue = data[names.field] - step
+    //     if(newValue < min)
+    //         newValue = min
+    //     newData[names.field] = newValue
+    //     update(newData)
 
-    }
+    // }
 
     const handle_onChange = (e) => {
 
         const value = e.target.value
         let newData = {...data}
         newData[names.field] = value
-        updateData(updateType, newData)
+        console.log(form[names.form])
+        dispatch(update(newData))
         
     }
 
@@ -66,17 +66,7 @@ const NumberInput = (props) => {
             value = newValue+value 
         }
         newData[names.field] = value
-        updateData(updateType, newData)
-
-        // const { name, value } = e.target
-        // let newSetting = { ... setting }
-        // let newValue = value
-        // if(newValue > numberSetting.max)
-        //     newValue = numberSetting.max
-        // if(newValue < numberSetting.min)
-        //     newValue = numberSetting.min
-        // newSetting[name] = newValue
-        // setSetting(newSetting)
+        dispatch(update(newData))
 
     }
     
@@ -88,7 +78,7 @@ const NumberInput = (props) => {
                 {label} 
             </Heading>
             <Margin>
-                {
+                {/* {
 
                     needButtons
                     &&
@@ -96,7 +86,7 @@ const NumberInput = (props) => {
                         <FontAwesomeIcon icon={faMinus} />
                     </CircleButton>
 
-                }
+                } */}
                 <NumInput 
                     borderRadius={needButtons?0:25}
                     textAlign={needButtons?'center':'left'}
@@ -105,7 +95,7 @@ const NumberInput = (props) => {
                     name={names.field} value={data[names.field]} 
                     onChange={e=>handle_onChange(e)} 
                     onBlur={e=>handle_onBlur(e)} />
-                {
+                {/* {
 
                     needButtons
                     &&
@@ -113,7 +103,7 @@ const NumberInput = (props) => {
                         <FontAwesomeIcon icon={faAdd} />
                     </CircleButton>
 
-                }
+                } */}
             </Margin>
         </InputContainer>
 
@@ -122,11 +112,12 @@ const NumberInput = (props) => {
 
 const mapStateToProps = state => {
     return {
-      tourguideData: state.tourguide
+        tourguide: state.tourguide,
+        form: state.form
     };
 };
 const mapDispatchToProps = dispatch => ({
-    updateData: (type, payload) => dispatch(({type: type, payload: payload }))
+    // update: (type, payload) => dispatch(({type: type, payload: payload }))
 });
 
 export default connect(

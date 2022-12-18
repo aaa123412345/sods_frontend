@@ -272,7 +272,7 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": true
+        "useBootstrap": false
       },
       "element": [
         {
@@ -287,7 +287,8 @@
             "xl": 12,
             "xxl": 12
           },
-          "themeColor": "blue"
+          "themeColor": "blue",
+          "isAdmin": false
         }
       ]
     }
@@ -297,7 +298,7 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": true
+        "useBootstrap": false
       },
       "element": [
         {
@@ -312,7 +313,8 @@
             "xl": 12,
             "xxl": 12
           },
-          "themeColor": "blue"
+          "themeColor": "blue",
+          "isAdmin": true
         }
       ]
     }
@@ -644,218 +646,177 @@
       }
     }
   },
-  "floorplans": [
-    {
-      "region": "1 Floor"
-    },
-    {
-      "region": "2 Floor"
-    },
-    {
-      "region": "3 Floor"
-    },
-    {
-      "region": "8 Floor"
-    },
-    {
-      "region": "9 Floor"
-    },
-    {
-      "region": "10 Floor"
-    },
-    {
-      "region": "11 Floor"
-    }
-  ],
-  "markers": [
-    {
-      "region": "1 Floor",
-      "top": 39.15974948308411,
-      "left": 24.591738712776177,
-      "booth": null,
-      "id": 1
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 40.737143689603265,
-      "left": 76.698028981526,
-      "id": 2
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 23.643956684310204,
-      "left": 70.10507520087906,
-      "id": 3
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 12.144903608022144,
-      "left": 77.35732435959069,
-      "id": 4
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 43.06803282668868,
-      "left": 55.16104663141268,
-      "id": 5
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 41.04792890788132,
-      "left": 61.09470503399492,
-      "id": 6
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 66.6877094158209,
-      "left": 75.23292814138223,
-      "id": 7
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 48.97295197397174,
-      "left": 66.7353432685484,
-      "id": 8
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 63.2690720147623,
-      "left": 83.36423780418012,
-      "id": 9
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 26.75180886709076,
-      "left": 13.918457981365748,
-      "id": 10
-    },
-    {
-      "region": "2 Floor",
-      "booth": null,
-      "top": 21.098272896834047,
-      "left": 15.785867628922487,
-      "id": 11
-    },
-    {
-      "region": "2 Floor",
-      "booth": null,
-      "top": 40.78676452777172,
-      "left": 19.95158269766592,
-      "id": 12
-    },
-    {
-      "region": "2 Floor",
-      "booth": null,
-      "top": 51.01857907613303,
-      "left": 27.698351071118623,
-      "id": 13
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": -1.9095477386934674,
-      "left": 66.99437370447143,
-      "id": 14
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 44.99845916795069,
-      "left": 64.64959516522683,
-      "id": 15
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 36.32049306625578,
-      "left": 37.00461008019215,
-      "id": 16
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 28.56291730868002,
-      "left": 32.29380544686786,
-      "id": 17
-    },
-    {
-      "region": "1 Floor",
-      "booth": null,
-      "top": 28.29521753442293,
-      "left": 25.881691016957202,
-      "id": 18
-    }
-  ],
-  "booths": [
-    {
-      "id": 125,
-      "region": "1 Floor",
-      "name": "let's Code",
-      "venue": "1/F, Rm 304, Computer Lab Room",
-      "description": "This is the place for students to learn computer science knowledge.",
-      "passcode": 1234,
-      "gameType": null
-    },
-    {
-      "region": "2 Floor",
-      "name": "English Time",
-      "venue": "1/F, Rm 305, English Lab Room",
-      "description": "This is the place for students to learn computer science knowledge.",
-      "passcode": 1234,
-      "id": 126
-    },
-    {
-      "region": "1 Floor",
-      "name": "Math Booth",
-      "venue": "1/F, Rm 109, 1A Classroom",
-      "description": "This is the booth to show you how students learn Maths with us in daily class. ",
-      "passcode": "0000",
-      "id": 127
-    }
-  ],
-  "ar-treasure": [
-    {
-      "id": 111,
-      "booth": null,
-      "name": "What is the school name?"
-    },
-    {
-      "id": 112,
-      "booth": null,
-      "name": "Who establish this school?"
-    }
-  ],
-  "story": [
-    {
-      "id": 111,
-      "title": "Jacky Study F.1 Now",
-      "content": "Jacky is a shy student. He is afraid to talk to other classmates. One day, Miss Cheung has introduced him to join the music team. Jacky then joined the team.",
-      "bg": "/test-school-photo.jpg"
-    },
-    {
-      "id": 112,
-      "title": "Jacky Become Happy",
-      "content": "After joining the team, Jacky met many friends and usually play basketball with them. He would like to say thank you to Miss Cheung, since Miss Cheung has given him a good recommendation for him to improve his social communication skill. ",
-      "bg": "/test-school-photo-01.jpeg"
-    },
-    {
-      "title": "Love Go To School ",
-      "content": "Mary is a student who love go to school, because our school can provide a fruitful school life to her. ",
-      "id": 113
-    },
-    {
-      "title": "Our School Life is Fruitful",
-      "content": "Our School is very very good.",
-      "id": 114
-    }
-  ]
+  "public-floorplans": {
+    "code": 200,
+    "msg": "OK",
+    "data": []
+  },
+  "server-floorplans": {
+    "code": 200,
+    "msg": "OK",
+    "data": [
+      {
+        "region": "1 Floor",
+        "id": 1
+      },
+      {
+        "region": "2 Floor",
+        "id": 2
+      },
+      {
+        "region": "3 Floor",
+        "id": 3
+      }
+    ]
+  },
+  "public-markers": {
+    "code": 200,
+    "msg": "OK",
+    "data": [
+      {
+        "region": "1 Floor",
+        "y": 39.15974948308411,
+        "x": 24.591738712776177,
+        "booth": null,
+        "id": 1
+      }
+    ]
+  },
+  "server-markers": {
+    "code": 200,
+    "msg": "OK",
+    "data": [
+      {
+        "region": "1 Floor",
+        "y": 39.15974948308411,
+        "x": 24.591738712776177,
+        "booth": null,
+        "id": 1
+      }
+    ]
+  },
+  "public-booths": {
+    "code": 200,
+    "msg": "OK",
+    "data": [
+      {
+        "region": "1 Floor",
+        "name": "Let's Code",
+        "venue": "1/F, Rm 304, Computer Lab Room",
+        "description": "This is the place for students to learn computer science knowledge.",
+        "passcode": 1234,
+        "gameType": null,
+        "id": 1
+      },
+      {
+        "region": "2 Floor",
+        "name": "English Time",
+        "venue": "1/F, Rm 305, English Lab Room",
+        "description": "This is the place for students to learn computer science knowledge.",
+        "passcode": 1234,
+        "id": 2
+      },
+      {
+        "region": "1 Floor",
+        "name": "Math Booth",
+        "venue": "1/F, Rm 109, 1A Classroom",
+        "description": "This is the booth to show you how students learn Maths with us in daily class. ",
+        "passcode": "0000",
+        "id": 3
+      }
+    ]
+  },
+  "server-booths": {
+    "code": 200,
+    "msg": "OK",
+    "data": []
+  },
+  "public-ar-treasure": {
+    "code": 200,
+    "msg": "OK",
+    "data": [
+      {
+        "booth": null,
+        "name": "What is the school name?",
+        "id": 111
+      },
+      {
+        "booth": null,
+        "name": "Who establish this school?",
+        "id": 112
+      }
+    ]
+  },
+  "server-ar-treasure": {
+    "code": 200,
+    "msg": "OK",
+    "data": [
+      {
+        "booth": null,
+        "name": "What is the school name?",
+        "id": 111
+      },
+      {
+        "booth": null,
+        "name": "Who establish this school?",
+        "id": 112
+      }
+    ]
+  },
+  "public-story": {
+    "code": 200,
+    "msg": "OK",
+    "data": [
+      {
+        "title": "Jacky Study F.1 Now",
+        "content": "Jacky is a shy student. He is afraid to talk to other classmates. One day, Miss Cheung has introduced him to join the music team. Jacky then joined the team.",
+        "bg": "/test-school-photo.jpg",
+        "id": 1
+      },
+      {
+        "title": "Jacky Become Happy",
+        "content": "After joining the team, Jacky met many friends and usually play basketball with them. He would like to say thank you to Miss Cheung, since Miss Cheung has given him a good recommendation for him to improve his social communication skill. ",
+        "bg": "/test-school-photo-01.jpeg",
+        "id": 2
+      },
+      {
+        "title": "Love Go To School ",
+        "content": "Mary is a student who love go to school, because our school can provide a fruitful school life to her. ",
+        "id": 3
+      },
+      {
+        "title": "Our School Life is Fruitful",
+        "content": "Our School is very very good.",
+        "id": 4
+      }
+    ]
+  },
+  "server-story": {
+    "code": 200,
+    "msg": "OK",
+    "data": [
+      {
+        "title": "Jacky Study F.1 Now",
+        "content": "Jacky is a shy student. He is afraid to talk to other classmates. One day, Miss Cheung has introduced him to join the music team. Jacky then joined the team.",
+        "bg": "/test-school-photo.jpg",
+        "id": 1
+      },
+      {
+        "title": "Jacky Become Happy",
+        "content": "After joining the team, Jacky met many friends and usually play basketball with them. He would like to say thank you to Miss Cheung, since Miss Cheung has given him a good recommendation for him to improve his social communication skill. ",
+        "bg": "/test-school-photo-01.jpeg",
+        "id": 2
+      },
+      {
+        "title": "Love Go To School ",
+        "content": "Mary is a student who love go to school, because our school can provide a fruitful school life to her. ",
+        "id": 3
+      },
+      {
+        "title": "Our School Life is Fruitful",
+        "content": "Our School is very very good.",
+        "id": 4
+      }
+    ]
+  }
 }

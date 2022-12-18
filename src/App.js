@@ -5,7 +5,7 @@ import ServerPageManager from "./components/ServerSite/ServerPageManager/ServerP
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 
 import { Provider } from "react-redux";
-import { store } from './model/store'
+import { store } from './redux/store'
 
 
 

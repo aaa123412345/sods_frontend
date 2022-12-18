@@ -1,26 +1,29 @@
 import React, { useState, useEffect, useRef, createRef } from 'react'
 import styled from 'styled-components'
 
-import { Flex, Box, Text } from '@chakra-ui/react'
+import { Flex, Box, Text, Heading } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, connect } from 'react-redux'
 import axios from 'axios'
 
 import BadgeSlider from './BadgeSlider/BadgeSlider'
-
+import { updateStories } from '../../../../redux/tourguide/tourguide.action'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 const GameTicket = (props) => {
 
-    const { isPreviewMode = false } = props
-
-    const link = useSelector(state=>state.themeConfig.link)
-    const { isOpen } = useSelector(state => state.modal)
-    const { stories, storyProgress, storyIndex, page } = useSelector(state=>state.tourguide)
+    const { isPreviewMode = false, tourguide, modal } = props
+    const { host, stories, storyProgress, storyIndex, page, themeColor, isAdmin } = tourguide
+    const { isOpen } = modal
     const dispatch = useDispatch()
-    const path = "story"
 
+    const path = "story"
+  
+
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(null)
     const [storyList, setStoryList] = useState([])
 
     const sliderRef = useRef()
@@ -31,9 +34,13 @@ const GameTicket = (props) => {
 
     }, {})  
 
+    const check_isUnlocked = (index) => {
+        return index <= storyProgress - 1
+    }
+
     const LockMessage = () => {
         return(
-            <Text textAlign='center' lineHeight={2}>
+            <Text textAlign='center' lineHeight={2} color="white">
                 <FontAwesomeIcon icon={faLock}/>
                 <br/>
                 Let's visit booths & play mini games to unlock. 
@@ -41,45 +48,76 @@ const GameTicket = (props) => {
         )
     }
 
+    const CoverStory = (props) => {
+        const {item} = props
+        return (
+            <React.Fragment>
+                <Heading size="md" mb="1em" color="white">{item.title}</Heading>
+                <Text color="white">{item.content}</Text>
+            </React.Fragment>
+        )
+    }
+
     useEffect(()=>{
 
-        axios.get(link+path)
-        .then(res=>{
-            let data = res.data
-            setStoryList([...data])
-            dispatch({type: "UPDATE_STORIES", payload: [...data]})
-        })
-        .catch(err=>console.log(err))
+        if(!isAdmin){
+            
+            axios.get(host+path)
+            .then(res=>{
+                let data = res.data.data
+                setStoryList([...data])
+                setIsLoading(false)
+                dispatch(updateStories([...data])) 
+            })
+            .catch(err=>setError(err))
+
+        }else{
+            setStoryList(stories)
+            setIsLoading(false)
+            setError(null)
+        }
+
+    },[])
+
+    useEffect(()=>{
 
         if(isPreviewMode && storyList.length !== 0){
 
             let viewID = storyList[storyIndex].id
-
             let target = sectionRef[viewID].current
             let slider = sliderRef.current
             let targetX = target.offsetLeft
-            slider.scrollLeft = targetX
+            slider.scrollLeft = targetX 
 
         }
 
-    },[storyIndex, page, isOpen])
+    },[storyIndex])
 
+
+    if(error !== null)
+        return <div>{error.message}</div>    
+    
+    if(isLoading)
+        return <LoadingSpinner/>
 
     return (
         <StyledCanvas h={isPreviewMode? "100%": '100vh'}>
+
             <Slider dir='ltr' ref={sliderRef}
                 overflowX={isPreviewMode?'hidden':"scroll"}>
 
             {
                 storyList.map((item, index) => (
                     <StorySection ref={sectionRef[item.id]} key={index}
-                        bgImg={index <= storyProgress - 1 || isPreviewMode ? `url('/images/${item.bg}')` : 'gray' }>
+                        bgImg={check_isUnlocked(index) || isPreviewMode ? `url('/images/${item.bg}')` : 'gray' }>
                         <StoryBox>
-                            {index <= storyProgress - 1 || isPreviewMode ?<Text>{item.content}</Text>:<LockMessage/>}
+                            
+                            {check_isUnlocked(index) || isPreviewMode ? <CoverStory item={item}/>:<LockMessage/>}
                         </StoryBox>
                     </StorySection>
                 ))
             }
+
             </Slider>
             { !isPreviewMode && <BadgeSlider sectionRef={sectionRef} sliderRef={sliderRef}/>}
             
@@ -87,7 +125,17 @@ const GameTicket = (props) => {
     )
 }
 
-export default GameTicket
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide,
+        modal: state.modal
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(GameTicket)
 
 const StyledCanvas = styled(Flex)`
 
@@ -123,6 +171,7 @@ const StorySection = styled(Box)`
 const StoryBox = styled(Flex)`
 
     margin: 100px auto; padding: 1.5em;
+    flex-direction: column;
     align-items: center; justify-content: center;
 
     background-color: rgba(0, 0, 0, .4);

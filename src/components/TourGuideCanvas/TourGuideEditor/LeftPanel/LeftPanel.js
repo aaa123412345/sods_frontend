@@ -6,22 +6,20 @@ import { useSelector } from 'react-redux'
 
 const LeftPanel = () => {
 
-  const { page } = useSelector(state=>state.tourguide)
+  const { page } = useSelector(state => state.tourguide)
 
   const propsList = [
     {
       modalIndex: 0, 
       heading: "Region(s)",
       path: "floorplans",
-      name: "floorplan",
-      id: "id"
+      name: "floorplan"
     },
     {
       modalIndex: 4, 
-      heading: "Story",
+      heading: "Cover Story",
       path: "story",
-      name: "story",
-      id: "id"
+      name: "story"
     }
   ]
 
@@ -32,12 +30,11 @@ const LeftPanel = () => {
 
       <ItemList 
           type={0} 
-          modalIndex={propsList[index].modalIndex}
           isCategoryList={true}
+          modalIndex={propsList[index].modalIndex}
           heading={propsList[index].heading}
           path={propsList[index].path}
-          name={propsList[index].name}
-          id={propsList[index].id} />
+          name={propsList[index].name} />
             
     </Container>
   )

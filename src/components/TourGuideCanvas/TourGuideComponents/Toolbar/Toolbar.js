@@ -9,7 +9,7 @@ const Toolbar = (props) => {
         modalIndex, 
         path, name, 
         isDeleteMode, setIsDeleteMode, 
-        categoryList, optionList
+        categoryList, optionList, heading
     } = props
 
     switch(type){
@@ -20,7 +20,10 @@ const Toolbar = (props) => {
                         setIsDeleteMode={setIsDeleteMode}
                         path={path} name={name} modalIndex={modalIndex} />
         case 2:
-            return <CategoryButtons categoryList={categoryList} optionList={optionList} />
+            return <CategoryButtons 
+                        heading={heading} 
+                        categoryList={categoryList} 
+                        optionList={optionList} />
 
         default:
             <></>

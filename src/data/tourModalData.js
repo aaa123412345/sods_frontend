@@ -5,6 +5,7 @@ import ImageUploader from "../components/TourGuideCanvas/TourGuideComponents/Inp
 import NumberInput from "../components/TourGuideCanvas/TourGuideComponents/Inputs/NumberInput/NumberInput";
 import DropDownList from "../components/TourGuideCanvas/TourGuideComponents/Inputs/DropDownList/DropDownList";
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideComponents/TourGuideMap/TourGuideMap";
+import { updateBooth, updateFloorplan, updateStory, updateGame } from "../redux/form/form.action";
 
 const tourModalData = [
 
@@ -28,7 +29,7 @@ const tourModalData = [
                                 field: "region",
                             },
                             placeholder: "1 Floor",
-                            updateType: "UPDATE_FLOORPLAN"
+                            update: (data) => updateFloorplan(data)
                         }
                     },
                     {
@@ -64,7 +65,7 @@ const tourModalData = [
                                 field: "name",
                             },
                             placeholder: "Mathematic Booth",
-                            updateType: "UPDATE_BOOTH"
+                            update: (data) => updateBooth(data)
                         }
                     },
                     {
@@ -77,7 +78,7 @@ const tourModalData = [
                                 field: "venue",
                             },
                             placeholder: "1/F, Rm 304, Computer Room",
-                            updateType: "UPDATE_BOOTH"
+                            update: (data) => updateBooth(data)
                         }
                     },
                     {
@@ -91,7 +92,7 @@ const tourModalData = [
                                 field: "description",
                             },
                             placeholder: "This is the place for students to learn Maths.",
-                            updateType: "UPDATE_BOOTH"
+                            update: (data) => updateBooth(data)
                         }
                     },
                     {
@@ -104,7 +105,7 @@ const tourModalData = [
                                 field: "passcode",
                             },
                             placeholder: 1234,
-                            updateType: "UPDATE_BOOTH"
+                            update: (data) => updateBooth(data)
                         }
                     },
                     
@@ -155,7 +156,7 @@ const tourModalData = [
                                 field: "gameType",
                             },
                             placeholder: "Select a Game Type ",
-                            updateType: "UPDATE_GAME"
+                            update: (data) => updateGame(data)
                         }
                     },
                     {
@@ -172,7 +173,7 @@ const tourModalData = [
                                 field: "gameID",
                             },
                             placeholder: "Select a Game",
-                            updateType: "UPDATE_GAME"
+                            update: (data) => updateGame(data)
                         }
                     }
                     
@@ -200,7 +201,7 @@ const tourModalData = [
                                 field: "title",
                             },
                             placeholder: "A Day of School",
-                            updateType: "UPDATE_STORY"
+                            update: (data) => updateStory(data)
                         }
                     },
                     {
@@ -214,7 +215,7 @@ const tourModalData = [
                                 field: "content",
                             },
                             placeholder: "Mary is a shy student, and one day, Miss Chan had chatted with her about ...",
-                            updateType: "UPDATE_STORY"
+                            update: (data) => updateStory(data)
                         }
                     },
                     {

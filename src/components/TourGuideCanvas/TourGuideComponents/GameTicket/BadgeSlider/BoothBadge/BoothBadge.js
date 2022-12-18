@@ -4,14 +4,13 @@ import styled from 'styled-components'
 import { Flex, Box, Button, Heading, useColorModeValue } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
-import { useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 
 
 const BoothBadge = (props) => {
 
-  const { isLock, name, sectionRef, sliderRef } = props
-
-  const themeColor = useSelector(state=>state.themeConfig.themeColor)
+  const { isLock, name, sectionRef, sliderRef, tourguide } = props
+  const { themeColor } = tourguide
 
   const bg = useColorModeValue('white', 'black')
   const color = useColorModeValue('black', 'white')
@@ -27,7 +26,6 @@ const BoothBadge = (props) => {
 
   return (
 
-
     <BadgeBorder onClick={()=>{handle_scroll()}}
       bg={isLock? 'gray':bg} 
       borderColor={isLock?bg:themeColor} 
@@ -41,12 +39,20 @@ const BoothBadge = (props) => {
       }
 
     </BadgeBorder>
-    
 
   )
 }
 
-export default BoothBadge
+const mapStateToProps = state => {
+  return {
+    tourguide: state.tourguide
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(BoothBadge)
 
 const BadgeBorder = styled(Flex)`
 

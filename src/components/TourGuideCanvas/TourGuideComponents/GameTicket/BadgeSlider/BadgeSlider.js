@@ -5,22 +5,16 @@ import { Flex, Box, Text, useColorModeValue } from '@chakra-ui/react'
 import BoothBadge from './BoothBadge/BoothBadge'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrophy } from '@fortawesome/free-solid-svg-icons'
-import { useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 
 const BadgeSlider = (props) => {
 
-    const { sectionRef, sliderRef } = props
+    const { sectionRef, sliderRef, tourguide } = props
+    const { themeColor, stories, storyProgress } = tourguide
 
-    // redux state
-    const themeColor = useSelector(state=>state.themeConfig.themeColor)
-    const { stories, storyProgress } = useSelector(state=>state.tourguide)
-
-    // chakra hooks
     const color = useColorModeValue('white', 'black')
 
-    // constants
     const level = "理大知識大王"
-
 
     const BadgeLevelBar = () => {
 
@@ -74,7 +68,16 @@ const BadgeSlider = (props) => {
     )
 }
 
-export default BadgeSlider
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(BadgeSlider)
 
 
 const Container = styled(Box)`

@@ -1,29 +1,29 @@
 import { Flex } from '@chakra-ui/react';
 import { faAdd, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import MyButton from '../../MyButton/MyButton';
+import MyButton from '../../EditorButton/EditorButton';
 
-import { useDispatch, useSelector } from 'react-redux';
 import useSessionStorage from '../../../../../hooks/useSessionStorage';
+import { useDispatch, connect } from 'react-redux';
+import { updateBooth } from '../../../../../redux/form/form.action';
+import { openModal } from '../../../../../redux/modal/modal.action';
 
 const DeleteNAddButtons = (props) => {
 
     const { 
         isDeleteMode, setIsDeleteMode,
-        modalIndex, path, name
+        modalIndex, path, name, tourguide, form, modal
     } = props
 
-    // redux state
-    const modalState = useSelector(state=>state.modal)
-    const themeColor = useSelector(state => state.themeConfig.themeColor)
-    const tourguideState = useSelector(state => state.tourguide)
-    const { floorplans, regionIndex, booth } = tourguideState
+    const { themeColor, floorplans, regionIndex } = tourguide
+    const { booth } = form
     const dispatch = useDispatch()
 
     // session storage
-    const [modalSession, setModalSession] = useSessionStorage('modal', modalState)
-    const [boothSession, setBoothSession] = useSessionStorage('booth', tourguideState.booth)
+    const [modalSession, setModalSession] = useSessionStorage('modal', modal)
+    const [boothSession, setBoothSession] = useSessionStorage('booth', booth)
 
+    const isNoRegionDefined = path === "booths" && floorplans.length === 0 ? true : false
 
     const open_modal = () => {
 
@@ -36,19 +36,18 @@ const DeleteNAddButtons = (props) => {
             isError: false,
             page: 0
         }
-
-        setModalSession({...modalSession, ...payload})
         
         if(path === 'booths' && floorplans.length !== 0 ){
-
+            
             let currentFloor = floorplans[regionIndex].region
-            dispatch({type: "UPDATE_BOOTH", payload: {...booth, region: currentFloor}})
+            dispatch(updateBooth({...booth, region: currentFloor}))
             setBoothSession({...boothSession, region: currentFloor})
-
+            
         }
         
-        dispatch({type: "OPEN_MODAL", payload: payload})
-
+        setModalSession({...modalSession, ...payload})
+        dispatch(openModal(payload))
+        
     }
 
     return (
@@ -58,7 +57,7 @@ const DeleteNAddButtons = (props) => {
                 faIcon={faAdd} 
                 isCircle={true} 
                 bgColor={themeColor} 
-                isDisabled={isDeleteMode}
+                isDisabled={isDeleteMode || isNoRegionDefined}
                 onClick = {open_modal}
                 />
 
@@ -67,11 +66,23 @@ const DeleteNAddButtons = (props) => {
                 isCircle={true} 
                 bgColor='danger'
                 isSelected={isDeleteMode} 
-                onClick={()=>{setIsDeleteMode(!isDeleteMode);}}
+                onClick={()=>{setIsDeleteMode(!isDeleteMode)}}
+                isDisabled={isNoRegionDefined}
             />
         </Flex>
     
     )
 }
 
-export default DeleteNAddButtons 
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide,
+        modal: state.modal,
+        form: state.form
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(DeleteNAddButtons)

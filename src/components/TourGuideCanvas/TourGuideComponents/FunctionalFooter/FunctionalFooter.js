@@ -3,181 +3,101 @@ import axios from 'axios'
 import styled from 'styled-components'
 
 import { Box, Flex, useToast } from '@chakra-ui/react'
-import MyButton from '../MyButton/MyButton'
-import { useDispatch, useSelector } from 'react-redux'
+import MyButton from '../EditorButton/EditorButton'
+import { useDispatch, connect } from 'react-redux'
+import { errorToast } from '../../../../constants/toastStyle'
+import { resetData } from '../../../../redux/form/form.action'
+import { closeModal } from '../../../../redux/modal/modal.action'
 
 const FunctionalFooter = (props) => {
 
     const { 
         isShow, onClose, 
-        assignRequests,
-        path, method, name, 
-        data = null, id, 
-        totalLength, 
-        page, totalPage 
-     } = props
+        path, method, name, data = null, 
+        tourguide, form, id
+    } = props
 
-    // redux state
-    const themeColor = useSelector(state=>state.themeConfig.themeColor)
-    const tourguideState = useSelector(state=>state.tourguide)
-    const link = useSelector(state=>state.themeConfig.link)
-   
+    const { themeColor, host } = tourguide   
     const dispatch = useDispatch()
 
     // chakra hooks
-    const toast = useToast({
-        duration: 3000,
-        isClosable: true,
-    })
+    const toast = useToast({duration: 3000, isClosable: true})
 
-    const handle_methodText = (method) => {
-
-        switch (method){
-            case "post":
-                return "Create"
-            case "delete":
-                return "Delete"
-            case "put":
-                return "Update"
-            default:
-                return;
-
+    const generate_toast = (method, name) => {
+        return {
+            title: `${method} ${name}`,
+            status: 'success',
+            containerStyle:{bg:"success"}
         }
     }
 
-    const handle_method = (method) => {
+    const handle_method = (method, isText = false) => {
 
         switch (method){
             case "post":
-                return handle_create()
+                return isText ? "Create" : handle_create()
             case "delete":
-                return handle_delete()
+                return isText ? "Delete" : handle_delete()
             case "put":
-                return handle_update()
+                return isText ? "Update" : handle_update()
             default:
                 return;
-            
+
         }
-    
     }
 
     const handle_delete = () => {
-
 
         if(data !== null){
     
             data.forEach((id)=>{
                 
-                axios.delete(link+path+'/'+id.toString())
-                .then((res)=>toast({
-                    title: 'Deleted '+ path,
-                    status: 'success',
-                    containerStyle:{bg:"success"}
-                }))
-                .catch(err=>toast({
-                    title: 'Delete Error',
-                    description: "Please try again.",
-                    status: 'error',
-                    containerStyle:{bg:"error"}
-                }))
+                axios.delete(host+path+'/'+id)
+                .then((res)=>toast(generate_toast("Deleted", path)))
+                .catch(err=>toast(errorToast))
     
             })
 
             onClose()
 
         }
-
-        dispatch({type: "HIDE_FOOTER"})
         
-    }
-
-    const assign_item = (id) => {
-
-        assignRequests.forEach(request => {
-
-            axios.put(link+request.path + `/${path}/`+ id)
-            .then(res=>console.log(res))
-            .then(err=>console.log(err))
-        })
-
     }
 
     const handle_create = () => {
 
-        let data = tourguideState[name]
-        console.log('data: ', data)
-        console.log('path: ', path)
-        console.log('name: ', name)
+        let data = form[name]
 
-        axios.post(link+path, {...data})
-        .then((res)=>{
+        axios.post(host+path, {...data})
+        .then((res)=>{toast(generate_toast("Created", name))})
+        .catch(err=>{toast(errorToast)})
 
-            toast({
-                title: 'Created '+ name,
-                status: 'success',
-                containerStyle:{bg:"success"}
-            })
-        
-        })
-        .catch(err=>{
-            console.log(err)
-            toast({
-            title: "Error",
-            description: "Please try again.",
-            status: 'error',
-            containerStyle:{bg:"error"}
-        })})
-
-        dispatch({type: "RESET_DATA"})
-        dispatch({type: "HIDE_FOOTER"})
-        dispatch({type: "CLOSE_MODAL"})
+        dispatch(resetData())
+        dispatch(closeModal())
 
     }
 
     const handle_update = () => {
 
-        let data = tourguideState[name]
-        console.log('put: ', id)
+        let data = form[name]
 
-        axios.put(link+path+`/${id}`, {...data})
-        .then((res)=>toast({
-            title: 'Updated Region',
-            status: 'success',
-            containerStyle:{bg:"success"}
-        }))
-        .catch(err=>toast({
-            title: 'Update Region Error',
-            description: "Please try again.",
-            status: 'error',
-            containerStyle:{bg:"error"}
-        }))
+        axios.put(host+path+`/${id}`, {...data})
+        .then((res)=>toast(generate_toast("Updated", path)))
+        .catch(err=>toast(errorToast))
         
-        dispatch({type: "RESET_DATA"})
-        dispatch({type: "HIDE_FOOTER"})
-        dispatch({type: "CLOSE_MODAL"})
+        dispatch(resetData())
+        dispatch(closeModal())
 
-    }
-
-    // const goto_page = (type) => {
-    //     if(type === "next" && page < totalPage - 1)
-    //         dispatch({type: "GOTO_NEXT_PAGE"})
-    //     if(type === "back" && page > 0)
-    //         dispatch({type: "GOTO_PREVIOUS_PAGE"})
-    // }
-    
+    }    
 
     return !isShow ? <></> :  (
         <PanelFooter>
-            {/*             
-            {
-                totalLength && <Text m="0em 1em">Selected {data.length}/{totalLength}</Text>
-            }
-             */}
+
             <Flex justifyContent='space-between'>
 
                 <MyButton text={'Cancel'} onClick={onClose}/>
-                <MyButton text={handle_methodText(method)} onClick={()=>{handle_method(method)}}
-                    bgColor={handle_methodText(method) === "Delete" ? "danger" : themeColor} />
+                <MyButton text={handle_method(method, true)} onClick={()=>{handle_method(method)}}
+                    bgColor={handle_method(method, true) === "Delete" ? "danger" : themeColor} />
 
             </Flex>
 
@@ -185,14 +105,24 @@ const FunctionalFooter = (props) => {
     )
 }
 
-export default FunctionalFooter
+const mapStateToProps = state => {
+    return {
+        tourguide: state.tourguide,
+        modal: state.modal,
+        form: state.form
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(FunctionalFooter)
 
 const PanelFooter = styled(Box)`
 
     position: relative; z-index: 3;
     width: 100%; max-width: 450px;
     max-height: 120px; height: 100px;
-    justify-content: space-around;
     margin-left: auto;
     bottom: 0em; right: 0;
 
