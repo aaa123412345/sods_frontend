@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { Flex, Heading, Button, useColorModeValue, useColorMode } from '@chakra-ui/react'
+import { Flex, Box, Heading, Button, useColorModeValue, useColorMode } from '@chakra-ui/react'
 
 import EditorModal from '../TourGuideComponents/EditorModal/EditorModal'
 import RightPanel from './RightPanel/RightPanel'

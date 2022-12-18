@@ -29,11 +29,23 @@ const MainInfo = (props) => {
 
     }
 
+    console.log("mainInfo: ", boothInfo)
+
+    if(boothInfo === null || boothInfo === undefined)
+    return (
+        <Container>
+            <Flex alignItems='center' justifyContent="center" flex="1">
+                <Text>Please select a booth within the floor plan. </Text>
+            </Flex>
+        </Container>
+    )
+
     return (
         <Container overflowY={{base: 'scroll', md: 'hidden'}}>
+
             <Heading m={'.5em 0'} color={themeColor} size="lg">{boothInfo['name']}</Heading>
-            <IconText icon={faUser} text={boothInfo['visitorNum'] + " visitor(s) now"}/>
-            <IconText icon={faLocationDot} text={boothInfo['venue']}/>
+            {/* <IconText icon={faUser} text={boothInfo['visitorNum'] + " visitor(s) now"}/> */}
+            <IconText icon={faLocationDot} text={boothInfo['venue']}/> 
             <Heading size={'sm'} color={themeColor} mt="1.5em">Description</Heading>
             <Text mt=".5em">{boothInfo["description"]}</Text>
             {/* <Button variant={'gray'} borderRadius={25} onClick={()=>setPage(1)}>More</Button> */}

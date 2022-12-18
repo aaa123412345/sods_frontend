@@ -649,23 +649,32 @@
   "public-floorplans": {
     "code": 200,
     "msg": "OK",
-    "data": []
+    "data": [
+      {
+        "image": "/images/test-floor-plan-1.jpg",
+        "region": "1 Floor",
+        "id": 1
+      },
+      {
+        "image": "/images/test-floor-plan-2.jpg",
+        "region": "2 Floor",
+        "id": 2
+      }
+    ]
   },
   "server-floorplans": {
     "code": 200,
     "msg": "OK",
     "data": [
       {
+        "image": "/images/test-floor-plan-1.jpg",
         "region": "1 Floor",
         "id": 1
       },
       {
+        "image": "/images/test-floor-plan-2.jpg",
         "region": "2 Floor",
         "id": 2
-      },
-      {
-        "region": "3 Floor",
-        "id": 3
       }
     ]
   },
@@ -677,7 +686,15 @@
         "region": "1 Floor",
         "y": 39.15974948308411,
         "x": 24.591738712776177,
-        "booth": null,
+        "booth": {
+          "region": "1 Floor",
+          "name": "Let's Code",
+          "venue": "1/F, Rm 304, Computer Lab Room",
+          "description": "This is the place for students to learn computer science knowledge.",
+          "passcode": 1234,
+          "gameType": null,
+          "id": 1
+        },
         "id": 1
       }
     ]

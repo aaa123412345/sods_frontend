@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
-import { Box, Image } from '@chakra-ui/react'
+import { Flex, Box, Image } from '@chakra-ui/react'
 
 import axios from 'axios';
 import { useDispatch, connect } from 'react-redux';
@@ -11,7 +11,7 @@ import BoothPanel from './BoothPanel/BoothPanel'
 import MyButton from '../EditorButton/EditorButton';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { markerConvertor } from '../../../../helpers/markerJsonConvertor';
-import { jsonFilter } from '../../../../helpers/jsonFilter';
+import FloorSelector from './FloorSelector/FloorSelector';
 
 const TourGuideMap = (props) => {
 
@@ -19,6 +19,7 @@ const TourGuideMap = (props) => {
     const { themeColor, host, regionIndex, floorplans } = tourguide
 
     const path = 'markers'
+    const isClientView = !isMarkable && !isAssignBooth 
 
     const mapRef = useRef(null)
 
@@ -27,7 +28,8 @@ const TourGuideMap = (props) => {
 
     // map original size
     const [mapSize, setMapSize] = useState(null)
-    const [isShowBooth, setIsShowBooth] = useState(true)
+    const [isShowBooth, setIsShowBooth] = useState(false)
+    const [currentBooth, setCurrentBooth] = useState(null)
     
     const [markers, setMarkers] = useState([])
     const [selectedMarker, setSelectedMarker] = useState(null)
@@ -67,12 +69,23 @@ const TourGuideMap = (props) => {
 
     }
 
-    const handle_showBooth = (boothID) => {
+    const handle_showBooth = (marker) => {
+
+        // axios.get(host+path+`/${marker.region}/${marker.top}/${marker.left}`)
+        // .then(res=>{
+            // let booth = res.data.data[0].booth
+        //     setCurrentBooth(res.data.data[0].booth)
+        //     setIsShowBooth(true)
+                // axios.post(host+'booth-visit-record', {id: booth.id, startTime: Date.now()})
+                // .then(res=>console.log(res))
+                // .catch(err=>console.log(err))
+
+        // })
+        // .catch(err=>console.log(err))
 
     }
 
     const update_mapHeight = () => {
-
 
         if(mapRef.current !== null){
             
@@ -91,26 +104,15 @@ const TourGuideMap = (props) => {
             }
         }
 
-
-    }
-
-    const store_marker_value = (marker) => {
-
-        // let payload = {
-        //     region: marker.region,
-        //     top: marker.top,
-        //     left: marker.left,
-        //     boothID: null
-        // }
-
-        // console.log(payload)
-
-        // dispatch({type: "UPDATE_MARKER", payload: payload})
     }
 
     useEffect(()=>{
 
-        update_mapHeight()
+        const refreshId = setInterval(()=>{
+            update_mapHeight()
+        }, 100)
+
+        return () => clearInterval(refreshId)
 
     }, [mapSize, setMapSize, height])
 
@@ -123,31 +125,40 @@ const TourGuideMap = (props) => {
 
     useEffect(()=>{
 
-        setMarkers([])
+        const refreshId = setTimeout(()=>{
+            const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex].region : ""
+            const queryStr = "?region=" + regionStr
 
-        const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex].region : ""
-        const queryStr = "?region=" + regionStr
+            console.log(floorplans[regionIndex] !== undefined ? floorplans[regionIndex].image : "")
 
-        // console.log(host+path+queryStr)
+            axios.get(host+path+queryStr)
+            .then((res)=>{
 
-        axios.get(host+path+queryStr)
-        .then((res)=>{
+                let data = res.data.data
+                data = markerConvertor(data)
+                setMarkers(data)
+                setError(null)
+                setIsLoading(false)
+        
+            })
+            .catch(err=>{
+                setMarkers([])
+                setError(error)
+                setIsLoading(true)
+            })
+        }, 1000)
 
-            let data = res.data.data
-            data = markerConvertor(data)
-            setMarkers(data)
-            setError(null)
-            setIsLoading(false)
-    
-        })
-        .catch(err=>{
-            setMarkers([])
-            setError(error)
-            setIsLoading(true)
-        })
-
+        return ()=> clearTimeout(refreshId)
 
     }, [regionIndex, floorplans])
+
+    useEffect(()=>{
+
+        setIsLoading(true)
+        setMarkers([])
+    
+
+    },[regionIndex])
 
     const CustomMarker = (props) => {
 
@@ -157,10 +168,10 @@ const TourGuideMap = (props) => {
             setSelectedMarker(itemNumber)
             if(isMarkable)
                 delete_marker(itemNumber)
-            else if(isAssignBooth)
-                store_marker_value(props)
+            // else if(isAssignBooth)
+            //     ()=>{}
             else
-                handle_showBooth(itemNumber)
+                handle_showBooth(props)
         }
 
         return (
@@ -182,45 +193,57 @@ const TourGuideMap = (props) => {
         return <LoadingSpinner />
 
     return (
-        
-        <ScrollMap borderRadius={isAssignBooth && 25}>
 
-            <LoadImageSize 
-                src="/images/test-floor-plan-1.jpg" 
-                w="50%"
-                onLoad={e=>setMapSize([e.target.clientWidth, e.target.clientHeight])}/>
+        <React.Fragment>
+            { isClientView && <FloorSelector />}
 
-            <MapContainer ref={mapRef}>
+            <ScrollMap borderRadius={isAssignBooth && 25}>
 
-                {
+                <LoadImageSize 
+                    src={floorplans[regionIndex] !== undefined ? floorplans[regionIndex].image: ""}
+                    w="50%"
+                    onLoad={e=>setMapSize([e.target.clientWidth, e.target.clientHeight])}/>
 
-                    markers !== undefined 
-                    && 
-                    <ImageMarker
-                        src="/images/test-floor-plan-1.jpg"
-                        markers={markers}
-                        markerComponent={CustomMarker}
-                        onAddMarker={(marker)=>add_marker(marker)}
-                        />
+                <MapContainer ref={mapRef}>
 
-                }
+                    {
 
+                        markers !== undefined 
+                        && 
+                        <ImageMarker
+                            src={floorplans[regionIndex] !== undefined ? floorplans[regionIndex].image: ""}
+                            markers={markers}
+                            markerComponent={CustomMarker}
+                            onAddMarker={(marker)=>add_marker(marker)}
+                            />
 
-            </MapContainer>
+                    }
 
+                </MapContainer>
+
+                    
             {
-                !isMarkable && !isAssignBooth
+                isClientView
                 &&
-                <BoothPanel
-                    isShowBooth={isShowBooth}
-                    setIsShowBooth={setIsShowBooth}
-                    themeColor={themeColor}
-                    />
-
+                <React.Fragment>
+            
+                    <BoothPanel
+                        isShowBooth={isShowBooth}
+                        setIsShowBooth={setIsShowBooth}
+                        currentBooth={currentBooth}
+                        themeColor={themeColor}
+                        />
+            
+                    
+                </React.Fragment>
+                
             }
 
-        </ScrollMap>
-        
+            </ScrollMap>
+        </React.Fragment>
+    
+
+    
     )
 }
 

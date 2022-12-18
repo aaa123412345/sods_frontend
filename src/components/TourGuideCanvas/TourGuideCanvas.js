@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { ChakraProvider } from '@chakra-ui/react'
 import { newTheme } from '../../theme/theme'
-import { Flex, Box, Button } from '@chakra-ui/react'
+import { Flex, Box, Button, Text } from '@chakra-ui/react'
 
 import { connect, useDispatch } from 'react-redux'
 import { updateHost, updateThemeColor } from '../../redux/tourguide/tourguide.action'
@@ -14,7 +14,8 @@ import useSessionStorage from '../../hooks/useSessionStorage'
 import TourGuideEditor from './TourGuideEditor/TourGuideEditor'
 import TourGuideMap from './TourGuideComponents/TourGuideMap/TourGuideMap'
 import GameTicket from './TourGuideComponents/GameTicket/GameTicket'
-import axios from 'axios'
+import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const TourGuideCanvas = (props) => {
 
@@ -33,6 +34,7 @@ const TourGuideCanvas = (props) => {
 
     // constant 
     const host = isAdmin ? process.env.REACT_APP_SERVER_REST_HOST : process.env.REACT_APP_PUBLIC_REST_HOST
+    // const degree = isAdmin ? '0' : '-90'
 
     const change_editMode = () => {
 
@@ -49,6 +51,14 @@ const TourGuideCanvas = (props) => {
 
     }
 
+    const render_icon = () => {
+
+        if(isAdmin)
+            return isMap ? faEdit : faEye
+        return isMap ? faTicket : faMap
+
+    }
+
     useEffect(()=>{
 
         setIsMap(mapModeSession)
@@ -62,6 +72,7 @@ const TourGuideCanvas = (props) => {
 
             <OuterContainer>
 
+
                 { isMap && <TourGuideMap /> }
 
                 { !isMap && !isAdmin && <GameTicket /> }
@@ -72,15 +83,21 @@ const TourGuideCanvas = (props) => {
 
                     ((page !== 2 && isAdmin) || !isAdmin)
                     &&
-                    <Float>
-                        <Button variant={themeColor} borderRadius={25}
+                    <Float right={isAdmin&&5} bottom={isAdmin&&5}
+                        left={!isAdmin&&-5} top={!isAdmin&&200} 
+                        transform={`rotateZ(${isAdmin?'0':'-90'}deg)`}>
+
+                        <Button variant={themeColor} borderRadius={25} m="0"
+                            w="150ppx" minW="150px" maxW="150px"
                             onClick={change_editMode}>
-                                {render_label()}
+                                <Text>{render_label()}</Text>
+                                <FontAwesomeIcon icon={render_icon()} style={{marginLeft: 16}}/>
                         </Button>
+                        
                     </Float>
 
                 }
-                
+
             </OuterContainer>
             
         </ChakraProvider>
@@ -102,8 +119,8 @@ export default connect(
 
 const OuterContainer = styled(Flex)`
 
-    flex-direction: column;
     position: relative;
+    flex-direction: column;
     height: 100vh;
     max-width: 100vw; width: 100%;
 
@@ -111,7 +128,6 @@ const OuterContainer = styled(Flex)`
 `
 const Float = styled(Box)`
 
-    position: absolute; z-index: 3;
-    right: 1em; top: 1em;
+    position: absolute; z-index: 999;
     
 `
