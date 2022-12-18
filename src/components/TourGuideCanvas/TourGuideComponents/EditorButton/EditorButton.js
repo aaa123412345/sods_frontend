@@ -11,7 +11,8 @@ const EditorButton = (props) => {
         bgColor = "gray", 
         isCircle = false,
         isOutline = false,
-        isWhiteBorder = false
+        isWhiteBorder = false,
+        cssStyle = null
     } = props
 
     const outline = isOutline ? "Outline" : ""
@@ -48,13 +49,11 @@ const EditorButton = (props) => {
             border={isWhiteBorder?'5px solid white': ""}
             variant={currentColor.concat(outline)}
             isDisabled={isDisabled}
+            style={cssStyle}
             onClick={onClick}>
 
             <Text mr={text && faIcon && !isHide ? ".5em": '0'}>
-            {
-                faIcon && 
-                <FontAwesomeIcon icon={faIcon} />
-            }
+                { faIcon && <FontAwesomeIcon icon={faIcon} /> }
             </Text>
 
             { !isHide && <Text>{text}</Text>}

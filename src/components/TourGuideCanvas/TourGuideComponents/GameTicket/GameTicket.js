@@ -174,9 +174,9 @@ const StoryBox = styled(Flex)`
     flex-direction: column;
     align-items: center; justify-content: center;
 
-    background-color: rgba(0, 0, 0, .4);
-    backdrop-filter: blur(1rem);
-    box-shadow: 5px 5px 22px rgba(0, 0, 0, .3);
+    background-color: rgba(255, 255, 255, .1);
+    backdrop-filter: blur(15px);
+    box-shadow: 10px 10px 22px rgba(0, 0, 0, .4);
     opacity: .9;
 
     width: fit-content; max-width: 70%;

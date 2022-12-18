@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 
 import { Provider } from "react-redux";
 import { store } from './redux/store'
+import Chatroom from "./components/Chatroom/Chatroom";
 
 
 
@@ -19,10 +20,15 @@ function App() {
 
         <Provider store={store}>
             <BrowserRouter>
+                
+                <Chatroom/>
+
                 <Routes>
-                   
+                    
+                   <Route>
                     <Route path='/public/:path' element={<PublicPageManager />}></Route> 
                     <Route path='/public/:path/:subpath' element={<PublicPageManager />}></Route> 
+                   </Route>
                     <Route path='/server/:path' element={<ServerPageManager/>}></Route>
                     <Route path='/server/:path/:subpath' element={<ServerPageManager/>}></Route> 
                     <Route
@@ -32,7 +38,7 @@ function App() {
                         }
                         />
                 </Routes>
-                
+               
             </BrowserRouter>
         </Provider>
         

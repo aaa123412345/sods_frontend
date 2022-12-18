@@ -8,14 +8,12 @@ import { faAngleLeft, faAngleRight, faAngleDown, faAngleUp } from '@fortawesome/
 
 import { connect } from 'react-redux'
 
-import samplePara from '../../../../../helpers/SampleParagraph'
-
 import MainInfo from './MainInfo/MainInfo'
 import MoreInfo from './MoreInfo/MoreInfo'
 
 const BoothPanel = (props) => {
     
-    const { isShowBooth, setIsShowBooth, tourguide } = props
+    const { isShowBooth, setIsShowBooth, currentBooth, tourguide } = props
     const { themeColor } = tourguide 
 
     const bg = useColorModeValue("white", "black")
@@ -23,24 +21,12 @@ const BoothPanel = (props) => {
     const [page, setPage] = useState(0)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-    const [boothInfo, setBoothInfo] = useState({
+    const toggle_booth = () => {
 
-        'name': "I Love HardCode", 
-        'venue': "G/F, School Hall",
-        'description': samplePara,
-        'moreInfo': [
-            {heading: "custom heading", paragraph: samplePara},
-            {heading: "custom heading", paragraph: samplePara},
-            {heading: "custom heading", paragraph: samplePara},
-            {heading: "custom heading", paragraph: samplePara},
-            {heading: "custom heading", paragraph: samplePara}
-        ],
-        'visitorNum': 100
-
-    })
-
-    // const [moreInfo, setMoreInfo] = useState(boothInfo.moreInfo)
-
+        setIsShowBooth(!isShowBooth)
+        window.scrollTo(0, document.body.scrollHeight)
+    
+    }
 
     const update_windowWidth = () => {
 
@@ -62,11 +48,12 @@ const BoothPanel = (props) => {
         const arrowForMobile = isShowBooth?faAngleDown:faAngleUp 
 
         return (
-            <Button m={0} mt="50px"
+            <Button m={0} mt="50px" transition={"all .1s linear .25s"}
                 variant={themeColor} 
-                onClick={()=>setIsShowBooth(!isShowBooth)} 
+                onClick={()=>{toggle_booth}} 
                 h={{base: '50px', md: "100px"}} 
                 w={{base: '100px', md: "50px"}}
+                boxShadow="0px 0px 22px rgba(0, 0, 0, .5)"
                 borderRadius={{base:'25px 25px 0px 0px', md:'25px 0px 0px 25px'}}>
 
                 <FontAwesomeIcon icon={windowWidth > 16 * 55 ? arrowForLaptop:arrowForMobile}/>
@@ -80,16 +67,17 @@ const BoothPanel = (props) => {
         
         <Float direction={{base: 'column', md: 'row'}}
             alignItems={{base: 'flex-end', md: "flex-start"}}
-            height={{base: 'fit-content', md: '100%'}}
+            height={{base: 'fit-content', md: 'calc(100% - 90px)'}}
             width={{base: 'inherit', md: 'fit-content'}}>
             
             <ShowButton/>
 
-            <Panel bg={bg}
+            <Panel bg={bg}  overflow="hidden"
+                transform={{base: `translateY(${isShowBooth? "0" : "350"}px)`, md:`translateX(${isShowBooth? "0" : "350"}px)`}}
                 w={{base: '100%', md: isShowBooth?'350px':'0px'}}
                 h={{base: isShowBooth?"350px":"0px", md: '100%'}}>
 
-                {   page === 0 && <MainInfo setPage={setPage} boothInfo={boothInfo} themeColor={themeColor} /> }
+                {   page === 0 && <MainInfo setPage={setPage} boothInfo={currentBooth} themeColor={themeColor} /> }
                 {/* {   page === 1 && <MoreInfo setPage={setPage} moreInfo={moreInfo} themeColor={themeColor} /> } */}
 
             </Panel>
@@ -119,10 +107,11 @@ const Float = styled(Flex)`
 
 const Panel = styled(Flex)`
 
-    position: relative;
+    position: relative; 
     align-items: center; justify-content: center;
     box-shadow: -10px 0px 22px rgba(0, 0, 0, .4);
     border-radius: 25px 0px 0px 0px;
+    transition: all .1s linear .25s;
 
 
 `
