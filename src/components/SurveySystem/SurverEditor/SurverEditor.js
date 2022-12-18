@@ -54,15 +54,9 @@ const SurveyEditor = () => {
             //questionset dict resort
             //swap if remove 2, then 3:{} => 2:{}
             dict.questionset[i]=dict.questionset[i+1]
-
-            
         }
-       
         delete dict['questionset'][(dict.info.totalpart+1).toString()]
-        return dict
-
-        
-        
+        return dict   
     }
 
     
