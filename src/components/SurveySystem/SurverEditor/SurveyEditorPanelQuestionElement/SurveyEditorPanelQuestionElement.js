@@ -4,12 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {Button,Stack,OverlayTrigger,Tooltip,Row,Col,ButtonGroup} from 'react-bootstrap'
 
-const SurveyEditorPanelQuestionElement = () =>{
+const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement}) =>{
+    function deleteQElement(){
+        deleteElement(partName,data.qid)
+    }
+
     return(
         <Row style={{outlineStyle: 'dotted'}}>
             <Stack direction="horizontal" gap={1}>
                 <Col xs={6} sm={5} lg={5} md={5} xl={8}>
-                    ABC
+                    {"Qid"+data.qid+"msg"+data.msg}
                 </Col>
                 <Col xs={6} sm={7} lg={7} md={7} xl={4}>
                     <Row style={{marginLeft:0,marginRight:0}}>
@@ -24,7 +28,7 @@ const SurveyEditorPanelQuestionElement = () =>{
                                 <Button variant="secondary"><FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon></Button>
                             </OverlayTrigger>
                             <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remove</Tooltip>}>
-                                <Button variant="danger"><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></Button>
+                                <Button variant="danger" onClick={deleteQElement}><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></Button>
                             </OverlayTrigger>
                         </ButtonGroup>
                     </Row>

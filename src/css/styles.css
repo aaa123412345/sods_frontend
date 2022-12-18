@@ -8,12 +8,14 @@ body{
   margin: 0;
   height: inherit;
   width: inherit;
+  background-color: rgba(0,0,0,0) !important
 }
 
 html{
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  background-color: gray;
 }
 
 #root{

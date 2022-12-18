@@ -14,6 +14,7 @@ const SurveyEditor = () => {
     const [ready, setReady] = useState(false);
     const [nextPID, setNextPID] = useState(1);
     const [nextQID, setNextQID] = useState(1);
+    
 
     const [surveyData, setSurveyData] = useState({});
 
@@ -34,7 +35,8 @@ const SurveyEditor = () => {
 
         //resort
         all=deletePartReSort(partID,all)
-        console.log(all)
+        all= elementSort(all)
+       
         //update State
         setSurveyData(all)
         setUpdate(true)
@@ -83,16 +85,88 @@ const SurveyEditor = () => {
     }
 
     function deleteElement(partID,elementID){
+        var dictlv1 = surveyData
+        var dictlv2 = surveyData['questionset']
+        var dictlv3 = surveyData.questionset[partID]
+        var curQID = nextQID
+        //remove target
+        var target = dictlv3.find(element => element.qid == elementID )
+        dictlv3=removeItemOnce(dictlv3,target)
 
+        //add Dict
+        dictlv2[partID]=dictlv3
+        dictlv1['questionset']=dictlv2
+
+        //sort
+        dictlv1=elementSort(dictlv1)
+
+         //setState
+         setUpdate(true)
+         setNextQID(curQID-1)
+         setSurveyData(dictlv1)
     }
 
     function addElement(partID){
         
-    }
+        var dictlv1 = surveyData
+        var dictlv2 = surveyData['questionset']
+        var dictlv3 = surveyData.questionset[partID]
+        var curQID = nextQID
 
-    function partSort(){
+        var tempElement = {'qid':curQID,'msg':curQID}
+
+        //put in dict
+        dictlv3.push(tempElement)
+       
+        //add Dict
+        dictlv2[partID]=dictlv3
+        dictlv1['questionset']=dictlv2
+
+        //sort
+        dictlv1=elementSort(dictlv1)
+
+        //setState
+        setUpdate(true)
+        setNextQID(curQID+1)
+        setSurveyData(dictlv1)
+
         
     }
+
+    function elementSort(Dict){
+        var dictlv1 = Dict
+        var dictlv2 = Dict['questionset']
+        var parts = Dict.info.partKey
+
+        //Storing the index for upper element to bottom
+        var sindex = 1
+
+        //loop element from start part
+        for(var i=0; i<parts.length; i++){
+
+            //Get Arr for specfic part
+            var partInQuestionset = dictlv2[parts[i]]
+
+            //loop part arr and sort with index
+            for(var j=0; j<partInQuestionset.length;j++,sindex++){
+                //Get Dict and set index
+               
+                var qDict = partInQuestionset[j]
+                qDict.qid = sindex
+                
+                partInQuestionset[j]=qDict
+            }
+
+            dictlv2[parts[i]] = partInQuestionset
+        }
+
+        dictlv1['questionset'] = dictlv2
+
+        return dictlv1
+
+    }
+
+    
 
     function removeItemOnce(arr, value) {
         var index = arr.indexOf(value);
@@ -100,7 +174,7 @@ const SurveyEditor = () => {
           arr.splice(index, 1);
         }
         return arr;
-      }
+    }
 
     const items = {
         header:{},
@@ -125,13 +199,14 @@ const SurveyEditor = () => {
 
     if(update){
         setUpdate(false)
+        console.log(surveyData, nextQID)
     }
     
     
     if(ready){
         return(
-            <Row style={{backgroundColor:"gray",height:'100%',paddingTop:'10px'}}>
-                <Col sm={7}>
+            <Row style={{backgroundColor:"gray",paddingTop:'10px'}}>
+                <Col sm={7} style={{overflowY:'scroll',height:'650px',border:'solid'}}>
                     <SurverEditorOverall handleShow={handleShow} data={surveyData}
                      deletePart={deletePart} deleteElement={deleteElement}
                      addElement={addElement} addPart={addPart}

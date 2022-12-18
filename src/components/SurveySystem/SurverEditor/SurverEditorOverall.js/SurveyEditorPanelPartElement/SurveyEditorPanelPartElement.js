@@ -1,11 +1,14 @@
-import React from "react";
+import React,{ useState } from "react";
 import SurveyEditorPanelQuestionElement from "../../SurveyEditorPanelQuestionElement/SurveyEditorPanelQuestionElement";
 
-import { faPlus,faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import { faPlus,faTrashCan, faSquareCaretUp, faSquareCaretDown} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {Button,OverlayTrigger,Tooltip,ButtonGroup, ButtonToolbar} from 'react-bootstrap'
+import {Button,OverlayTrigger,Tooltip,ButtonGroup, ButtonToolbar,Collapse} from 'react-bootstrap'
+
 
 const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,addElement}) => {
+    const [open, setOpen] = useState(true)
+
     function partAddElement(){
         addElement(partName);
     }
@@ -20,7 +23,15 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                     className="justify-content-between mb-1 mt-1"
                     aria-label="Toolbar with Button groups"
                 >
-                <span></span>
+                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Collapse</Tooltip>}>
+                        <Button variant="secondary" onClick={() => setOpen(!open)}>
+                            {data.length+' '}
+                            {open?
+                            <FontAwesomeIcon icon={faSquareCaretDown}/>:
+                            <FontAwesomeIcon icon={faSquareCaretUp}/>}
+                        </Button>
+                </OverlayTrigger>
+
                 <h3>Part {partName}</h3>
                 <ButtonGroup>
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Add a question</Tooltip>}>
@@ -31,13 +42,16 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                     </OverlayTrigger>
                 </ButtonGroup>
                 </ButtonToolbar>
-                {
-                data.map(element =>
-                <SurveyEditorPanelQuestionElement 
-                partName={partName} data={element} deleteElement={deleteElement} key={'part'-partName-'qid'-element.qid}>
-                </SurveyEditorPanelQuestionElement>
-                )
-                }
+                <div className={open?'d-block':'d-none'}>
+                    {
+                        data.map(element =>
+                        <SurveyEditorPanelQuestionElement 
+                            partName={partName} data={element} 
+                            deleteElement={deleteElement} key={'part-'+partName+'-qid-'+element.qid}>
+                        </SurveyEditorPanelQuestionElement>
+                        )
+                    }
+                </div>
            
         </div>
     )

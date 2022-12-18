@@ -9,10 +9,10 @@ import SurveyEditorPanelPartElement from "./SurveyEditorPanelPartElement/SurveyE
 const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,addElement}) =>{
     const [partdata,setPartData]=useState({})
 
-    
     return(
         <>
-        <div style={{marginLeft:'auto',marginRight:'auto',width:'90%',textAlign:'center'}}>
+        <div style={{marginLeft:'auto',marginRight:'auto',
+        width:'90%',textAlign:'center',overflowX:'hidden',border:'solid',marginTop:'10px'}}>
             <Row>
                 <Stack direction="horizontal" gap={1}>
                     <h1>Overall</h1>
@@ -31,7 +31,8 @@ const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,a
                
                 {data.info.partKey.map(element=>
                 <SurveyEditorPanelPartElement data={data.questionset[element]} partName={element}
-                 deletePart={deletePart} deleteElement={deleteElement} key={'part-'+element+'-panel'}>
+                 deletePart={deletePart} deleteElement={deleteElement} 
+                 addElement={addElement} key={'part-'+element+'-panel'}>
                  </SurveyEditorPanelPartElement>
                 )}
                 
