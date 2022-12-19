@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Button,Stack,OverlayTrigger,Tooltip,Row} from 'react-bootstrap'
 import SurveyEditorPanelPartElement from "./SurveyEditorPanelPartElement/SurveyEditorPanelPartElement";
 
-const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,addElement}) =>{
+const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,addElement,swap}) =>{
     const [partdata,setPartData]=useState({})
 
     return(
@@ -31,7 +31,7 @@ const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,a
                
                 {data.info.partKey.map(element=>
                 <SurveyEditorPanelPartElement data={data.questionset[element]} partName={element}
-                 deletePart={deletePart} deleteElement={deleteElement} 
+                 deletePart={deletePart} deleteElement={deleteElement} swap={swap}
                  addElement={addElement} key={'part-'+element+'-panel'}>
                  </SurveyEditorPanelPartElement>
                 )}

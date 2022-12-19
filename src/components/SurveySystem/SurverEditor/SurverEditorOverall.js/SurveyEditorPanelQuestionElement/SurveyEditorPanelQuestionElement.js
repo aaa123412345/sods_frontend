@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Button,Stack,OverlayTrigger,Tooltip,Row,Col,ButtonGroup} from 'react-bootstrap'
 
 
-const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement}) =>{
+const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement,swap,canMoveUp,canMoveDown}) =>{
 
    
     const deleteQElement= () => {
@@ -13,6 +13,14 @@ const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement}) =>{
         if(result){
             deleteElement(partName,data.qid)
         }
+    }
+
+    const swapUp = () =>{
+        swap(partName,data.qid-1,data.qid)
+    }
+
+    const swapDown = () =>{
+        swap(partName,data.qid,data.qid+1)
     }
     
 
@@ -31,12 +39,18 @@ const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement}) =>{
                             <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Configure the question</Tooltip>}>
                                 <Button variant="secondary"><FontAwesomeIcon icon={faGear}></FontAwesomeIcon></Button>
                             </OverlayTrigger>
+                            {canMoveUp?
                             <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Move up</Tooltip>}>
-                                <Button variant="secondary"><FontAwesomeIcon icon={faAngleUp}></FontAwesomeIcon></Button>
-                            </OverlayTrigger>
+                                <Button variant="secondary" onClick={swapUp}><FontAwesomeIcon icon={faAngleUp}></FontAwesomeIcon></Button>
+                            </OverlayTrigger>:
+                                ''
+                            }
+                            {canMoveDown?
                             <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Move Down</Tooltip>}>
-                                <Button variant="secondary"><FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon></Button>
-                            </OverlayTrigger>
+                                <Button variant="secondary" onClick={swapDown}><FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon></Button>
+                            </OverlayTrigger>:
+                                ''
+                            }
                             <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remove</Tooltip>}>
                                 <Button variant="danger" onClick={deleteQElement}><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></Button>
                             </OverlayTrigger>

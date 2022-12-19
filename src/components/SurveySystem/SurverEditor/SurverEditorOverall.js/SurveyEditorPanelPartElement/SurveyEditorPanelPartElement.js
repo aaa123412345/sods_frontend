@@ -1,12 +1,12 @@
 import React,{ useState } from "react";
-import SurveyEditorPanelQuestionElement from "../../SurveyEditorPanelQuestionElement/SurveyEditorPanelQuestionElement";
+import SurveyEditorPanelQuestionElement from "../SurveyEditorPanelQuestionElement/SurveyEditorPanelQuestionElement";
 
 import { faPlus,faTrashCan, faSquareCaretUp, faSquareCaretDown} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Button,OverlayTrigger,Tooltip,ButtonGroup, ButtonToolbar,Collapse} from 'react-bootstrap'
 
 
-const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,addElement}) => {
+const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,addElement,swap}) => {
     const [open, setOpen] = useState(true)
 
     function partAddElement(){
@@ -47,9 +47,10 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                     </ButtonToolbar>
                     <div className={open?'d-block':'d-none'}>
                         {
-                            data.map(element =>
+                            data.map((element,index) =>
                             <SurveyEditorPanelQuestionElement 
-                                partName={partName} data={element} 
+                                partName={partName} data={element} swap={swap} 
+                                canMoveUp={index!=0? true:false} canMoveDown={index!=data.length-1?true:false}
                                 deleteElement={deleteElement} key={'part-'+partName+'-qid-'+element.qid}>
                             </SurveyEditorPanelQuestionElement>
                             )

@@ -37,6 +37,7 @@ html{
 .PageContent{
   height: inherit;
   width: inherit;
+  overflow-x: hidden;
 }
 
 
