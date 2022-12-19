@@ -1,12 +1,10 @@
 import React from "react";
 import SECOverall from "./SECOverall";
-import SECPartSetting from "./SECPartSetting";
 import SECElement from "./SECElement";
 import SECPlaceholder from "./SECPlaceholder";
 
 const ComponentDict = {
     overall:SECOverall,
-    part:SECPartSetting,
     element:SECElement,
     none:SECPlaceholder
 }

@@ -246,15 +246,13 @@ const SurveyEditor = () => {
             setConfigType('overall')
             setConfigData(data)
             
-        }else if(type==='part'){
-            setConfigType('part')
-            setConfigData(data)
-            
         }else if(type==='element'){
             setConfigType('element')
             setConfigData(data)
             
         }
+
+
         if(windowsize.width<572){
             handleConfigShow()
         }

@@ -35,9 +35,7 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                                     <FontAwesomeIcon icon={faSquareCaretDown}/>}
                                 </Button>
                         </OverlayTrigger>
-                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Part Configuration</Tooltip>}>
-                            <Button variant="secondary" onClick={()=>setConfig('part',{partName:partName})}><FontAwesomeIcon icon={faGears}></FontAwesomeIcon></Button>
-                        </OverlayTrigger>
+                      
                     </ButtonGroup>
 
                 <div className="h3" style={{color:"black"}}>Part {partName}</div>
