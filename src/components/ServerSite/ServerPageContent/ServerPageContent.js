@@ -49,8 +49,8 @@ const ServerPageContent = (props) => {
     } else if(ready) {
 
       return(
-        <div className="PageContent"> 
-          <ServerNavbar></ServerNavbar>
+        <div className="PageContent" style={items.page.style}> 
+          <ServerNavbar pdata={items.page}></ServerNavbar>
           { items.page.useBootstrap?
           <PageBootstrapHandler data={items.element} path={ props.path} subpath={ props.subpath}></PageBootstrapHandler>:
           items.element.map((element)=> ElementBuilder({data:element,path:props.path,subpath:props.subpath}))

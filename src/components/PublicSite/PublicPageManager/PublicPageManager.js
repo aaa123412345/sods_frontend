@@ -9,7 +9,6 @@ import {useState} from "react";
 
 const PublicPageManager = () => {
     let {path,subpath} = useParams();
-    const [mobile,setMoblie] = useState(false)
     const windowSize = useWindowSize();
    
 

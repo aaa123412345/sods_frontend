@@ -84,7 +84,10 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": true
+        "useBootstrap": true,
+        "title":"Server Wecome",
+        "style":{
+        }
       },
       "element": [
         {
@@ -116,7 +119,11 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": false
+        "useBootstrap": false,
+        "title":"Survey Editor",
+        "style":{
+          "overflowY":"hidden"
+        }
       },
       "element": [
         {
@@ -141,7 +148,10 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": true
+        "useBootstrap": true,
+        "title":"About",
+        "style":{
+        }
       },
       "element": [
         {
@@ -215,7 +225,10 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": true
+        "useBootstrap": true,
+        "title":"Survey",
+        "style":{
+        }
       },
       "element": [
         {
@@ -239,7 +252,10 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": true
+        "useBootstrap": true,
+        "title":"Share",
+        "style":{
+        }
       },
       "element": [
         {
@@ -272,7 +288,10 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": false
+        "useBootstrap": false,
+        "title":"Tourguide",
+        "style":{
+        }
       },
       "element": [
         {
@@ -298,7 +317,10 @@
     "msg": "OK",
     "data": {
       "page": {
-        "useBootstrap": false
+        "useBootstrap": false,
+        "title":"Tourguide",
+        "style":{
+        }
       },
       "element": [
         {

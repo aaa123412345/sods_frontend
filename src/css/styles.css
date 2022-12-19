@@ -15,7 +15,6 @@ html{
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background-color: gray;
 }
 
 #root{
@@ -27,6 +26,7 @@ html{
 #site{
   height: inherit;
   width: inherit;
+  background-color: white;
 }
 
 #content{

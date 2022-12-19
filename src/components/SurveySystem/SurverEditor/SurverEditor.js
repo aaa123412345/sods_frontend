@@ -205,8 +205,8 @@ const SurveyEditor = () => {
     
     if(ready){
         return(
-            <Row style={{backgroundColor:"gray",paddingTop:'10px'}}>
-                <Col sm={7} style={{overflowY:'scroll',height:'650px',border:'solid'}}>
+            <Row style={{backgroundColor:"gray",paddingTop:'10px',height:'100%'}}>
+                <Col sm={7} style={{overflowY:'scroll',height:'650px',border:'solid black'}}>
                     <SurverEditorOverall handleShow={handleShow} data={surveyData}
                      deletePart={deletePart} deleteElement={deleteElement}
                      addElement={addElement} addPart={addPart}

@@ -18,7 +18,7 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
     }
 
     return(
-        <div style={{outlineStyle: 'solid'}} className={"mb-3 mt-3"}>
+        <div style={{border: 'solid black'}} className={"mb-3 mt-3"}>
                 <ButtonToolbar
                     className="justify-content-between mb-1 mt-1"
                     aria-label="Toolbar with Button groups"
@@ -27,33 +27,33 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                         <Button variant="secondary" onClick={() => setOpen(!open)}>
                             {data.length+' '}
                             {open?
-                            <FontAwesomeIcon icon={faSquareCaretDown}/>:
-                            <FontAwesomeIcon icon={faSquareCaretUp}/>}
+                            <FontAwesomeIcon icon={faSquareCaretUp}/>:
+                            <FontAwesomeIcon icon={faSquareCaretDown}/>}
                         </Button>
                 </OverlayTrigger>
 
-                <h3>Part {partName}</h3>
-                <ButtonGroup>
-                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Add a question</Tooltip>}>
-                        <Button variant="secondary" onClick={partAddElement}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></Button>
-                    </OverlayTrigger>
-                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remove a group</Tooltip>}>
-                        <Button variant="danger" onClick={partDeletePart}><FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon></Button>
-                    </OverlayTrigger>
-                </ButtonGroup>
-                </ButtonToolbar>
-                <div className={open?'d-block':'d-none'}>
-                    {
-                        data.map(element =>
-                        <SurveyEditorPanelQuestionElement 
-                            partName={partName} data={element} 
-                            deleteElement={deleteElement} key={'part-'+partName+'-qid-'+element.qid}>
-                        </SurveyEditorPanelQuestionElement>
-                        )
-                    }
-                </div>
+                <div className="h3" style={{color:"black"}}>Part {partName}</div>
+                    <ButtonGroup>
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Add a question</Tooltip>}>
+                            <Button variant="secondary" onClick={partAddElement}><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></Button>
+                        </OverlayTrigger>
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remove a group</Tooltip>}>
+                            <Button variant="danger" onClick={partDeletePart}><FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon></Button>
+                        </OverlayTrigger>
+                    </ButtonGroup>
+                    </ButtonToolbar>
+                    <div className={open?'d-block':'d-none'}>
+                        {
+                            data.map(element =>
+                            <SurveyEditorPanelQuestionElement 
+                                partName={partName} data={element} 
+                                deleteElement={deleteElement} key={'part-'+partName+'-qid-'+element.qid}>
+                            </SurveyEditorPanelQuestionElement>
+                            )
+                        }
+                    </div>
            
-        </div>
+                </div>
     )
 }
 

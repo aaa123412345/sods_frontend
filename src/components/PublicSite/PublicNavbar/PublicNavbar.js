@@ -48,7 +48,7 @@ const PublicNavbar = props =>  {
       } else if(ready) {
 
         return(
-            <CusNavbar data={items} lang={lang} />
+            <CusNavbar data={items} lang={lang} pdata={props.pdata}/>
         )
       }
    

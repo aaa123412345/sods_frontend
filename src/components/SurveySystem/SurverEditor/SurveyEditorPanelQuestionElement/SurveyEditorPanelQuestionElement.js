@@ -10,9 +10,9 @@ const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement}) =>{
     }
 
     return(
-        <Row style={{outlineStyle: 'dotted'}}>
+        <Row style={{ borderTop: 'black solid'}}>
             <Stack direction="horizontal" gap={1}>
-                <Col xs={6} sm={5} lg={5} md={5} xl={8}>
+                <Col xs={6} sm={5} lg={5} md={5} xl={8} style={{color:"black"}}>
                     {"Qid"+data.qid+"msg"+data.msg}
                 </Col>
                 <Col xs={6} sm={7} lg={7} md={7} xl={4}>

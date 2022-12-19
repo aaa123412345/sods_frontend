@@ -50,8 +50,8 @@ const PublicPageContent = (props) => {
     } else if(ready) {
       
       return(
-        <div className="PageContent"> 
-          <PublicNavbar></PublicNavbar>   
+        <div className="PageContent" style={items.page.style}> 
+          <PublicNavbar pdata={items.page}></PublicNavbar>   
           { items.page.useBootstrap?
           <PageBootstrapHandler data={items.element} path={ props.path} subpath={ props.subpath}></PageBootstrapHandler>:
           items.element.map((element)=> ElementBuilder({data:element,path:props.path,subpath:props.subpath}))

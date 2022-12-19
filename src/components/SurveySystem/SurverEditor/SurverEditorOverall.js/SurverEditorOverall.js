@@ -12,10 +12,10 @@ const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,a
     return(
         <>
         <div style={{marginLeft:'auto',marginRight:'auto',
-        width:'90%',textAlign:'center',overflowX:'hidden',border:'solid',marginTop:'10px'}}>
+        width:'90%',textAlign:'center',overflowX:'hidden',border:'double black',marginTop:'10px'}}>
             <Row>
                 <Stack direction="horizontal" gap={1}>
-                    <h1>Overall</h1>
+                    <div className="h1" style={{color:"black"}}>Overall</div>
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Add the Part</Tooltip>}>
                         <Button variant="secondary" onClick={addPart}><FontAwesomeIcon icon={faSquarePlus}></FontAwesomeIcon></Button>
                     </OverlayTrigger>

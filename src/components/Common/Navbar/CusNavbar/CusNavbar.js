@@ -16,7 +16,7 @@ const CusNavbar = (data) => (
       {
         <Navbar key={expand} bg="light" expand={expand} className="py-lg-4 py-md-3">
           <Container fluid>
-            <Navbar.Brand className="fs-1">Title</Navbar.Brand>
+            <Navbar.Brand className="fs-1">{data.pdata.title}</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
