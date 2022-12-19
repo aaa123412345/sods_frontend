@@ -14,7 +14,10 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
     }
 
     function partDeletePart(){
-        deletePart(partName);
+        var result = window.confirm("Delete the Part "+partName+" ?")
+        if(result){
+            deletePart(partName);
+        }
     }
 
     return(
@@ -23,7 +26,7 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                     className="justify-content-between mb-1 mt-1"
                     aria-label="Toolbar with Button groups"
                 >
-                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Collapse</Tooltip>}>
+                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{open?'Collapse':'Expand'}</Tooltip>}>
                         <Button variant="secondary" onClick={() => setOpen(!open)}>
                             {data.length+' '}
                             {open?

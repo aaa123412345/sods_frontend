@@ -1,15 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import { faAngleUp,faAngleDown,faClose,faGear} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {Button,Stack,OverlayTrigger,Tooltip,Row,Col,ButtonGroup} from 'react-bootstrap'
 
+
 const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement}) =>{
-    function deleteQElement(){
-        deleteElement(partName,data.qid)
+
+   
+    const deleteQElement= () => {
+        var result = window.confirm("Delete the Element ("+"Qid"+data.qid+"msg"+data.msg+") in Part "+partName+" ?")
+        if(result){
+            deleteElement(partName,data.qid)
+        }
     }
+    
+
 
     return(
+        <>
+        
         <Row style={{ borderTop: 'black solid'}}>
             <Stack direction="horizontal" gap={1}>
                 <Col xs={6} sm={5} lg={5} md={5} xl={8} style={{color:"black"}}>
@@ -35,6 +45,7 @@ const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement}) =>{
                 </Col>
             </Stack>
         </Row>
+        </>
     )
 }
 

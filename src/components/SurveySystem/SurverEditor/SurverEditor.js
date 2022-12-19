@@ -7,6 +7,7 @@ import SurveyBuilder from "../SurveyBuilder/SurveyBuilder";
 import SurverEditorOverall from "./SurverEditorOverall.js/SurverEditorOverall";
 import SurveyEditorConfigurationPanel from "./SurveyEditorConfigurationPanel/SurveyEditorConfigurationPanel";
 
+
 const SurveyEditor = () => {
     const [show, setShow] = useState(false);
     const [init, setInit] = useState(true);
@@ -85,6 +86,7 @@ const SurveyEditor = () => {
     }
 
     function deleteElement(partID,elementID){
+        
         var dictlv1 = surveyData
         var dictlv2 = surveyData['questionset']
         var dictlv3 = surveyData.questionset[partID]
@@ -166,8 +168,6 @@ const SurveyEditor = () => {
 
     }
 
-    
-
     function removeItemOnce(arr, value) {
         var index = arr.indexOf(value);
         if (index > -1) {
@@ -175,6 +175,8 @@ const SurveyEditor = () => {
         }
         return arr;
     }
+
+    
 
     const items = {
         header:{},
@@ -205,6 +207,8 @@ const SurveyEditor = () => {
     
     if(ready){
         return(
+            <>
+            
             <Row style={{backgroundColor:"gray",paddingTop:'10px',height:'100%'}}>
                 <Col sm={7} style={{overflowY:'scroll',height:'650px',border:'solid black'}}>
                     <SurverEditorOverall handleShow={handleShow} data={surveyData}
@@ -227,10 +231,11 @@ const SurveyEditor = () => {
                 </Offcanvas>
                 
             </Row>
+            </>
         )
     }
     
-
+    
 }
 
 export default SurveyEditor;
