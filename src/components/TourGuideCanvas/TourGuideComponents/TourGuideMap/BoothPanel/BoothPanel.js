@@ -50,7 +50,7 @@ const BoothPanel = (props) => {
         return (
             <Button m={0} mt="50px" transition={"all .1s linear .25s"}
                 variant={themeColor} 
-                onClick={()=>{toggle_booth}} 
+                onClick={toggle_booth} 
                 h={{base: '50px', md: "100px"}} 
                 w={{base: '100px', md: "50px"}}
                 boxShadow="0px 0px 22px rgba(0, 0, 0, .5)"
