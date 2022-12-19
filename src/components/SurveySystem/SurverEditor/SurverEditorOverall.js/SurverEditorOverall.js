@@ -1,13 +1,13 @@
-import React,{useEffect, useState} from "react";
+import React from "react";
 
-import { faListOl,faSquarePlus, faGears} from "@fortawesome/free-solid-svg-icons";
+import { faListOl,faSquarePlus, faUserGear} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {Button,Stack,OverlayTrigger,Tooltip,Row} from 'react-bootstrap'
 import SurveyEditorPanelPartElement from "./SurveyEditorPanelPartElement/SurveyEditorPanelPartElement";
 
-const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,addElement,swap}) =>{
-    const [partdata,setPartData]=useState({})
+const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,addElement,swap,setConfig}) =>{
+   
 
     return(
         <>
@@ -21,7 +21,7 @@ const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,a
                     </OverlayTrigger>
 
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Overall coonfiguration</Tooltip>}>
-                        <Button variant="secondary"><FontAwesomeIcon icon={faGears}></FontAwesomeIcon></Button>
+                        <Button variant="secondary" onClick={()=>setConfig('overall',{})}><FontAwesomeIcon icon={faUserGear}></FontAwesomeIcon></Button>
                     </OverlayTrigger>
                    
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Show Preview </Tooltip>}>
@@ -31,7 +31,7 @@ const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,a
                
                 {data.info.partKey.map(element=>
                 <SurveyEditorPanelPartElement data={data.questionset[element]} partName={element}
-                 deletePart={deletePart} deleteElement={deleteElement} swap={swap}
+                 deletePart={deletePart} deleteElement={deleteElement} swap={swap} setConfig={setConfig}
                  addElement={addElement} key={'part-'+element+'-panel'}>
                  </SurveyEditorPanelPartElement>
                 )}

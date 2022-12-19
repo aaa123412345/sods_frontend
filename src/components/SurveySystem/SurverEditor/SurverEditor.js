@@ -8,18 +8,32 @@ import SurverEditorOverall from "./SurverEditorOverall.js/SurverEditorOverall";
 import SurveyEditorConfigurationPanel from "./SurveyEditorConfigurationPanel/SurveyEditorConfigurationPanel";
 
 import SurveyEditorChecker from "./SurveyEditorChecker";
-
+import useWindowSize from "../../../hooks/useWindowSize";
 const SurveyEditor = () => {
+    //Constant
+    const windowsize = useWindowSize()
+    //page state
     const [show, setShow] = useState(false);
     const [init, setInit] = useState(true);
     const [update, setUpdate] = useState(false);
     const [ready, setReady] = useState(false);
+    const [configshow, setConfigshow] = useState(false);
+
+    //survey create state
     const [nextPID, setNextPID] = useState(1);
     const [nextQID, setNextQID] = useState(1);
-    const [surveySyntax, setSurveySyntax] = useState(false);
-
     const [surveyData, setSurveyData] = useState({});
 
+    //survey syntax
+    const [surveySyntax, setSurveySyntax] = useState(false);
+
+    //survey configuration state
+    const [configType, setConfigType] = useState('none')
+    const [configData, setConfigData] = useState({})
+
+    //Offcanvas Show
+    const handleConfigShow = () => setConfigshow(true);
+    const handleConfigClose = () => setConfigshow(false);
     const handleClose = () => setShow(false);
     const handleShow = () => {
         var CheckResult = SurveyEditorChecker(surveyData)
@@ -35,8 +49,9 @@ const SurveyEditor = () => {
         
     };
 
-    //Basic function
-
+    /*
+    Basic function
+    */
     function deletePart(partID){
         var all = surveyData
         var temp = surveyData['questionset']
@@ -160,7 +175,9 @@ const SurveyEditor = () => {
         
     }
 
-    //Util function
+    /*
+    Util function
+    */
 
     function elementSort(Dict){
         var dictlv1 = Dict
@@ -221,13 +238,46 @@ const SurveyEditor = () => {
         return arr;
     }
 
-    
+    /*
+    configuration setting function
+    */
+    function setConfig(type,data){
+        if(type==='overall'){
+            setConfigType('overall')
+            setConfigData(data)
+            
+        }else if(type==='part'){
+            setConfigType('part')
+            setConfigData(data)
+            
+        }else if(type==='element'){
+            setConfigType('element')
+            setConfigData(data)
+            
+        }
+        if(windowsize.width<572){
+            handleConfigShow()
+        }
+    }
+
+    //Children function
+    function updateConfig(savedData){
+        var result = window.confirm("Save your configuration?")
+        if(result){
+            setSurveyData(savedData)
+        }
+        
+       
+    }
+
+
     //init
     const items = {
-        header:{},
         info:{
             totalpart:0,
-            partKey:[]
+            partKey:[],
+            type:'',
+            title:''
         },
         questionset:{
             
@@ -260,12 +310,13 @@ const SurveyEditor = () => {
                 <Col sm={7} style={{overflowY:'scroll',height:'650px',border:'solid black'}}>
                     <SurverEditorOverall handleShow={handleShow} data={surveyData}
                      deletePart={deletePart} deleteElement={deleteElement}
-                     addElement={addElement} addPart={addPart} swap={swap}
+                     addElement={addElement} addPart={addPart} swap={swap} setConfig={setConfig}
                      ></SurverEditorOverall>
                 </Col>
                 <Col sm={5}>
-                    <SurveyEditorConfigurationPanel></SurveyEditorConfigurationPanel>
-            
+                    <SurveyEditorConfigurationPanel className={'d-none d-sm-block'}
+                    configType={configType} configData={configData} surveyData={surveyData}  
+                    updateConfig={updateConfig}></SurveyEditorConfigurationPanel>
                 </Col>
 
                 <Offcanvas show={show} onHide={handleClose} placement={'end'}>
@@ -276,6 +327,19 @@ const SurveyEditor = () => {
                         {surveySyntax?
                         <SurveyBuilder data={items} testMode={true}></SurveyBuilder>:''
                         }
+                    </Offcanvas.Body>
+                </Offcanvas>
+
+
+                <Offcanvas show={configshow} onHide={handleConfigClose} placement={'end'} className={'d-block d-sm-none'}>
+                    <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>Configuration</Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                       
+                            <SurveyEditorConfigurationPanel configType={configType} configData={configData} 
+                            surveyData={surveyData}  updateConfig={updateConfig}></SurveyEditorConfigurationPanel>
+                        
                     </Offcanvas.Body>
                 </Offcanvas>
                 

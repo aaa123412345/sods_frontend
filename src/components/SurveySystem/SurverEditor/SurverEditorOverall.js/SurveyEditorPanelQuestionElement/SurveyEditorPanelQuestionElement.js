@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Button,Stack,OverlayTrigger,Tooltip,Row,Col,ButtonGroup} from 'react-bootstrap'
 
 
-const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement,swap,canMoveUp,canMoveDown}) =>{
+const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement,swap,canMoveUp,canMoveDown,setConfig}) =>{
 
    
     const deleteQElement= () => {
@@ -37,7 +37,7 @@ const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement,swap,canM
                     <Row style={{marginLeft:0,marginRight:0}}>
                         <ButtonGroup aria-label="Basic example" className="mt-1 mb-1">
                             <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Configure the question</Tooltip>}>
-                                <Button variant="secondary"><FontAwesomeIcon icon={faGear}></FontAwesomeIcon></Button>
+                                <Button variant="secondary" onClick={()=>setConfig('element',{qid:data.qid,partName:partName})}><FontAwesomeIcon icon={faGear}></FontAwesomeIcon></Button>
                             </OverlayTrigger>
                             {canMoveUp?
                             <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Move up</Tooltip>}>

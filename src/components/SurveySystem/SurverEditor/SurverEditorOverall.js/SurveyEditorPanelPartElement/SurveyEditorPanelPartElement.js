@@ -1,12 +1,12 @@
 import React,{ useState } from "react";
 import SurveyEditorPanelQuestionElement from "../SurveyEditorPanelQuestionElement/SurveyEditorPanelQuestionElement";
 
-import { faPlus,faTrashCan, faSquareCaretUp, faSquareCaretDown} from "@fortawesome/free-solid-svg-icons";
+import { faPlus,faTrashCan, faSquareCaretUp, faSquareCaretDown, faGears} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {Button,OverlayTrigger,Tooltip,ButtonGroup, ButtonToolbar,Collapse} from 'react-bootstrap'
+import {Button,OverlayTrigger,Tooltip,ButtonGroup, ButtonToolbar} from 'react-bootstrap'
 
 
-const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,addElement,swap}) => {
+const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,addElement,swap,setConfig}) => {
     const [open, setOpen] = useState(true)
 
     function partAddElement(){
@@ -26,14 +26,19 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                     className="justify-content-between mb-1 mt-1"
                     aria-label="Toolbar with Button groups"
                 >
-                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{open?'Collapse':'Expand'}</Tooltip>}>
-                        <Button variant="secondary" onClick={() => setOpen(!open)}>
-                            {data.length+' '}
-                            {open?
-                            <FontAwesomeIcon icon={faSquareCaretUp}/>:
-                            <FontAwesomeIcon icon={faSquareCaretDown}/>}
-                        </Button>
-                </OverlayTrigger>
+                    <ButtonGroup>
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{open?'Collapse':'Expand'}</Tooltip>}>
+                                <Button variant="dark" onClick={() => setOpen(!open)}>
+                                    {data.length+' '}
+                                    {open?
+                                    <FontAwesomeIcon icon={faSquareCaretUp}/>:
+                                    <FontAwesomeIcon icon={faSquareCaretDown}/>}
+                                </Button>
+                        </OverlayTrigger>
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Part Configuration</Tooltip>}>
+                            <Button variant="secondary" onClick={()=>setConfig('part',{partName:partName})}><FontAwesomeIcon icon={faGears}></FontAwesomeIcon></Button>
+                        </OverlayTrigger>
+                    </ButtonGroup>
 
                 <div className="h3" style={{color:"black"}}>Part {partName}</div>
                     <ButtonGroup>
@@ -49,7 +54,7 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                         {
                             data.map((element,index) =>
                             <SurveyEditorPanelQuestionElement 
-                                partName={partName} data={element} swap={swap} 
+                                partName={partName} data={element} swap={swap} setConfig={setConfig}
                                 canMoveUp={index!=0? true:false} canMoveDown={index!=data.length-1?true:false}
                                 deleteElement={deleteElement} key={'part-'+partName+'-qid-'+element.qid}>
                             </SurveyEditorPanelQuestionElement>

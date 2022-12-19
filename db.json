@@ -4,13 +4,12 @@
     "msg": "OK",
     "data": {
       "info": {
-        "surveyID": "",
-        "type": "",
-        "totalpart": 2
-      },
-      "header": {
+        "surveyID": "S1234567890",
+        "type": "survey",
+        "totalpart": 2,
         "tittle": "XXX survey"
       },
+      
       "questionset": {
         "1": [
           {
