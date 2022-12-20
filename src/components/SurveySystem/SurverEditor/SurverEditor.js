@@ -310,11 +310,9 @@ const SurveyEditor = () => {
         var dictlv2 = surveyData['questionset']
         var dictlv3 = surveyData.questionset[savedData.partName]
 
-        var tDict = dictlv3.find(e => e.qid === savedData.qid)
-
-        Object.entries(savedData.qDict).forEach(([key, value]) => {
-            tDict[key] = value;
-         });
+        var index = dictlv3.findIndex(e => e.qid === savedData.qid)
+        dictlv3[index]= {}
+        dictlv3[index] = savedData.qDict
     }
 
 

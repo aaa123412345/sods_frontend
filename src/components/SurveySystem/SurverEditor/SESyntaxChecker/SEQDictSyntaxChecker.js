@@ -1,32 +1,7 @@
+import { conditions } from "./SEQSyntaxConstant"
 
 
 
-const conditions = {
-    'basic':[
-        {name:"qid",type:"number"},
-        {name:"type",type:"string"},
-        {name:"msg",type:"string"}
-    ]
-    ,'sparttips':[
-
-
-    ]
-    ,'stext':[
-
-    ]
-    ,'sselect':[
-
-    ]
-    ,'sradio':[
-
-    ]
-    ,'schecker':[
-
-    ]
-    ,'srange':[
-
-    ]
-}
 
 //Check single question Dict
 function SEQDictSyntaxChecker(qDict,checkType){

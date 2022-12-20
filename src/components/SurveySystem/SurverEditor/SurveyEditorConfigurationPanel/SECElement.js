@@ -4,6 +4,14 @@ import { faSave} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SEQDictSyntaxChecker from "../SESyntaxChecker/SEQDictSyntaxChecker";
 
+import SECCheckbox from "./SurveyEditorConfigurationComponent/SECCheckbox";
+import SECDropDownSelect from "./SurveyEditorConfigurationComponent/SECDropDownSelect";
+import SECPlaceholder from "./SECPlaceholder";
+import SECRadio from "./SurveyEditorConfigurationComponent/SECRadio";
+import SECRange from "./SurveyEditorConfigurationComponent/SECRange";
+import SECTectfield from "./SurveyEditorConfigurationComponent/SECTextfield";
+import SEQDictSyntaxRemover from "../SESyntaxChecker/SEQDictSyntaxRemover";
+
 const types = ['sparttips','stext','sselect','sradio','schecker','srange']
 const typeDict = {
     sparttips:'Tip',
@@ -11,20 +19,37 @@ const typeDict = {
     sselect:'Dropdown Selector',
     sradio:'Radio',
     schecker:'Checker box',
-    srange:'Value Selector'
+    srange:'Value Selector',
+    '':''
+}
+
+
+
+const ComponentDict ={
+    sparttips:SECPlaceholder,
+    stext:SECTectfield,
+    sselect:SECDropDownSelect,
+    sradio:SECRadio,
+    schecker:SECCheckbox,
+    srange:SECRange,
+    '':SECPlaceholder
 }
 
 const SECElement = ({surveyData,configData,updateConfig,cancelConfig,autoSaveCurConfig}) => {
     
     const [qDict, setQDict] = useState({})
-    const [init, setInit] = useState(true)
+   
+    const [update, setUpdate] = useState(false);
+    const [subElementReady,setSubElementReady] =  useState(true)
 
     function setTypeInData(event){
         //init
         var q = qDict
         //set to Qdict
         q.type = event.target.value
-        setQDict(q)
+        setQDict({qid:q.qid,msg:q.msg,type:q.type})
+        setUpdate(!update)
+        
     }
 
     function setMsgInData(event){
@@ -41,32 +66,48 @@ const SECElement = ({surveyData,configData,updateConfig,cancelConfig,autoSaveCur
     function setExistData(){
         //copy data from surveyData to qDict
         Object.entries(surveyData.questionset[configData.partName].find(e => e.qid === configData.qid)).forEach(([key, value]) => {
-            var t = qDict
-            t[key]=value
-            setQDict(t)
+            //If qDict do not have all data, add back
+            if(!(key in qDict)){
+                var t = qDict
+                t[key]=value
+                setQDict(t)
+            }
 
          });
     }
 
     function checkAndSave(){
-        console.log(qDict)
-        if(SEQDictSyntaxChecker(qDict,qDict.type)&&SEQDictSyntaxChecker(qDict,'basic')){
-
+        
+        if(SEQDictSyntaxChecker(qDict,qDict.type)&&SEQDictSyntaxChecker(qDict,'basic')&&subElementReady){
+            //Clear unneed varible in qDict
+            var t = SEQDictSyntaxRemover(qDict)
             updateConfig({updateType:"element", qid:configData.qid,
-            partName:configData.partName, qDict:qDict})
+            partName:configData.partName, qDict:t})
+
         }else{
             alert("Incomplete setting")
         }
     }
 
+    //for child
+    function setQDictInChild(key,value){
+        var t = qDict
+        t[key]=value
+        setQDict(t)
+    }
+
+    //for child
+    function ChildrenSetOK(ok){
+        setSubElementReady(ok)
+        console.log(ok)
+    }
+
     useEffect(()=>{
-        
-        
             setExistData()
-        
+            
         }
     )
-    
+   
     
     return (
         <div className="h3" style={{color:"black",border:'black solid'}}>
@@ -74,23 +115,32 @@ const SECElement = ({surveyData,configData,updateConfig,cancelConfig,autoSaveCur
             <div style={{width:'80%'}}>
                 <Form className="h5">
                     <Form.Label className="mt-2">Massage/Question</Form.Label>
-                   
-                    
                     <Form.Control
+                        key={configData.partName+configData.qid+'inputMsg'}
                         type="text"
                         id="text"
                         onChange={setMsgInData}
                         placeholder={"Current: "+configData.qDict.msg}
                         required   
                     />
-                    
                     <Form.Label className="mt-2">Type</Form.Label>
-                     <Form.Select aria-label="Default select example" onChange={setTypeInData}>
-                      {<option>{"Current: "+typeDict[configData.qDict.type]}</option>}
+                     <Form.Select  key={configData.partName+configData.qid+'selectType'} onChange={setTypeInData}>
+                      
+                      <option value={configData.qDict.type}>{typeDict[configData.qDict.type]}</option>
+                     
+
                       {types.map((element,index) => element!==configData.qDict.type?
                        <option value={element} key={"Element-config-Type-"+index}>{typeDict[element]}</option>:'')}
                        
                     </Form.Select> 
+                    {React.createElement(ComponentDict[qDict.type===undefined?configData.qDict.type:qDict.type],{
+                        key: "Configuration-element-Panel-Type-"+configData.qDict.type,
+                        partName: configData.partName,
+                        qid: configData.qid,
+                        qDict:qDict,
+                        setQDictInChild: setQDictInChild,
+                        ChildrenSetOK: ChildrenSetOK
+                    })}    
 
                     <Button variant="primary" type="button" className="mt-2" onClick={checkAndSave} style={{marginRight:'10px'}}>
                         <FontAwesomeIcon icon={faSave}></FontAwesomeIcon> {"Save"}

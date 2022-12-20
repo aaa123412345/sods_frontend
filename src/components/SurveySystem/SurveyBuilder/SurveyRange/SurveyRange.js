@@ -17,7 +17,7 @@ const SurveyRange = ({data,parentFunction,qid,savedFormData,curPart}) => {
         
             <Row>
                 <Form.Label >Q{qid.toString()+": "+data.msg}</Form.Label>
-                <Col xs={11} md={11}>
+                <Col xs={9} md={9}>
                  <Form.Range  
                     qid={qid}
                     onChange={setdata} 
@@ -27,7 +27,7 @@ const SurveyRange = ({data,parentFunction,qid,savedFormData,curPart}) => {
                     defaultValue={init?0:savedFormData[curPart][qid]}
                     />
                 </Col>
-                <Col xs={1} md={1}>
+                <Col xs={2} md={2}>
                 {value}
                 </Col>
             </Row>
