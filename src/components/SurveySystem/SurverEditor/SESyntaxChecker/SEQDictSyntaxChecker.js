@@ -40,7 +40,8 @@ function SEQDictSyntaxChecker(qDict,checkType){
             
             if (typeof qDict[cType[i].name] != cType[i].type){
                 //console.log("Type " +typeof qDict[cType[i].name] + "Require: "+cType[i].type)
-                console.log("Type problem")
+                console.log("Type problem in "+qDict+" "+checkType+" Parameter:"+
+                cType[i].name+" "+typeof qDict[cType[i].name]+' require: '+cType[i].type )
                 return false
             }
         }else{

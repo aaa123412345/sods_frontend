@@ -23,6 +23,7 @@ const SurveyEditor = () => {
     const [nextPID, setNextPID] = useState(1);
     const [nextQID, setNextQID] = useState(1);
     const [surveyData, setSurveyData] = useState({});
+    
 
     //survey syntax
     const [surveySyntax, setSurveySyntax] = useState(false);
@@ -30,6 +31,7 @@ const SurveyEditor = () => {
     //survey configuration state
     const [configType, setConfigType] = useState('none')
     const [configData, setConfigData] = useState({})
+    const [autoSaveCurConfig, setAutoSaveCurConfig] = useState(false)
 
     //Offcanvas Show
     const handleConfigShow = () => setConfigshow(true);
@@ -155,7 +157,7 @@ const SurveyEditor = () => {
         var dictlv3 = surveyData.questionset[partID]
         var curQID = nextQID
 
-        var tempElement = {'qid':curQID,'msg':curQID}
+        var tempElement = {'qid':curQID,'msg':'msg'+curQID,'type':''}
 
         //put in dict
         dictlv3.push(tempElement)
@@ -242,30 +244,77 @@ const SurveyEditor = () => {
     configuration setting function
     */
     function setConfig(type,data){
-        if(type==='overall'){
-            setConfigType('overall')
-            setConfigData(data)
-            
-        }else if(type==='element'){
-            setConfigType('element')
-            setConfigData(data)
-            
+        var ok = false
+        if(configType!=='none'&&type!=='none'){
+            var result = window.confirm("Your unsaved configuration will be lost.")
+            if(result){
+                ok=true
+            }
+        }else{
+            ok=true
         }
+        if(ok){
+            if(type==='overall'){
+                setConfigType('overall')
+                setConfigData(data)
+                
+            }else if(type==='element'){
+                //Switch from element to element
+            
+                    data['qDict']= surveyData.questionset[data.partName].find(e => e.qid === data.qid)
+                    setConfigType('element')
+                    setConfigData(data)
+            
+            }
 
-
-        if(windowsize.width<572){
-            handleConfigShow()
+            if(windowsize.width<572){
+                handleConfigShow()
+            }
         }
+    }
+
+    function cancelConfig(){
+        setConfigType('none')
+        setConfigData({})
     }
 
     //Children function
     function updateConfig(savedData){
         var result = window.confirm("Save your configuration?")
         if(result){
-            setSurveyData(savedData)
+            setConfigType('none')
+            setConfigData({})
+            setUpdate(true)
+            if(savedData.updateType === "overall"){
+                updateOverallConfig(savedData)
+            }else if(savedData.updateType === "element"){
+                updateElementConfig(savedData)
+            }
         }
-        
+    }
+
+    function updateOverallConfig(savedData){
+        var dictlv1 = surveyData
+        var dictlv2 = surveyData['info']
+
+        dictlv2.title = savedData.title
+        dictlv2.type = savedData.type
+
+        dictlv1['info'] = dictlv2
        
+        setSurveyData(dictlv1)
+    }
+
+    function updateElementConfig(savedData){
+        var dictlv1 = surveyData
+        var dictlv2 = surveyData['questionset']
+        var dictlv3 = surveyData.questionset[savedData.partName]
+
+        var tDict = dictlv3.find(e => e.qid === savedData.qid)
+
+        Object.entries(savedData.qDict).forEach(([key, value]) => {
+            tDict[key] = value;
+         });
     }
 
 
@@ -274,8 +323,10 @@ const SurveyEditor = () => {
         info:{
             totalpart:0,
             partKey:[],
-            type:'',
-            title:''
+            type:'Survey',
+            title:'',
+            allowGoBack:false
+
         },
         questionset:{
             
@@ -283,24 +334,24 @@ const SurveyEditor = () => {
         }
     }
 
-    
-
     useEffect(()=>{
         if(init){
             setSurveyData(items)
             setReady(true)
             setInit(false)
+        
         }
        
     },[surveyData])
 
     if(update){
         setUpdate(false)
-        console.log(surveyData, nextQID)
+        console.log(surveyData)
     }
     
     
     if(ready){
+        var copyData = surveyData
         return(
             <>
             
@@ -313,17 +364,17 @@ const SurveyEditor = () => {
                 </Col>
                 <Col sm={5}>
                     <SurveyEditorConfigurationPanel className={'d-none d-sm-block'}
-                    configType={configType} configData={configData} surveyData={surveyData}  
-                    updateConfig={updateConfig}></SurveyEditorConfigurationPanel>
+                    configType={configType} configData={configData} surveyData={copyData}  cancelConfig={cancelConfig} 
+                    updateConfig={updateConfig} autoSaveCurConfig={autoSaveCurConfig}></SurveyEditorConfigurationPanel>
                 </Col>
 
-                <Offcanvas show={show} onHide={handleClose} placement={'end'}>
+                <Offcanvas show={show} onHide={handleClose} placement={'end'} style={{color:'black'}}>
                     <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Preview</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         {surveySyntax?
-                        <SurveyBuilder data={items} testMode={true}></SurveyBuilder>:''
+                        <SurveyBuilder data={surveyData} testMode={true}></SurveyBuilder>:''
                         }
                     </Offcanvas.Body>
                 </Offcanvas>
@@ -335,8 +386,8 @@ const SurveyEditor = () => {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                        
-                            <SurveyEditorConfigurationPanel configType={configType} configData={configData} 
-                            surveyData={surveyData}  updateConfig={updateConfig}></SurveyEditorConfigurationPanel>
+                            <SurveyEditorConfigurationPanel configType={configType} configData={configData} cancelConfig={cancelConfig} 
+                            surveyData={copyData}  autoSaveCurConfig={autoSaveCurConfig} updateConfig={updateConfig}></SurveyEditorConfigurationPanel>
                         
                     </Offcanvas.Body>
                 </Offcanvas>

@@ -4,16 +4,24 @@ import { faSave} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SECOverall = ({surveyData,configData,updateConfig}) => {
-    const [data,setdata] = useState(surveyData)
+    
+    const [title,setTitle] = useState("")
+    const [type,setType] = useState("")
 
     function setTitleInData(event){
-        let t = data
-        t.info.title = event.target.value
+       
+        setTitle(event.target.value)
+        
     }
 
     function setTypeInData(event){
-        let t = data
-        t.info.type = event.target.value
+        
+        setType(event.target.value)
+        
+    }
+
+    function handleSave(){
+        updateConfig({updateType:"overall",title:title,type:type})
     }
 
     return (
@@ -26,15 +34,15 @@ const SECOverall = ({surveyData,configData,updateConfig}) => {
                         type="text"
                         id="text"
                         onChange={setTitleInData}
-                        defaultValue={data.info.title}
+                        defaultValue={surveyData.info.title}
                     />
                     <Form.Label className="mt-2">Type</Form.Label>
-                     <Form.Select aria-label="Default select example" onChange={setTypeInData} defaultValue={data.info.type}>
+                     <Form.Select aria-label="Default select example" onChange={setTypeInData} defaultValue={surveyData.info.type}>
                         
                         <option value="Survey" >Survey</option>
                         <option value="Vote" >Vote</option>
                     </Form.Select> 
-                    <Button variant="primary" type="button" className="mt-2" onClick={()=>updateConfig(data)}>
+                    <Button variant="primary" type="button" className="mt-2" onClick={handleSave}>
                         <FontAwesomeIcon icon={faSave}></FontAwesomeIcon> {"Save"}
                     </Button>
                 </Form>

@@ -31,7 +31,7 @@ const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement,swap,canM
         <Row style={{ borderTop: 'black solid'}}>
             <Stack direction="horizontal" gap={1}>
                 <Col xs={6} sm={5} lg={5} md={5} xl={8} style={{color:"black"}}>
-                    {"Qid"+data.qid+"msg"+data.msg}
+                    {"#"+data.qid+": "+data.msg}
                 </Col>
                 <Col xs={6} sm={7} lg={7} md={7} xl={4}>
                     <Row style={{marginLeft:0,marginRight:0}}>
