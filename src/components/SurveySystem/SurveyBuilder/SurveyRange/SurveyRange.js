@@ -1,8 +1,10 @@
 import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-const SurveyRange = ({data,parentFunction,qid}) => {
-    const [value,setValue] = useState(0)
+const SurveyRange = ({data,parentFunction,qid,savedFormData,curPart}) => {
+
+    const [init, setInit] = useState(!(curPart in savedFormData));
+    const [value,setValue] = useState(init?0:savedFormData[curPart][qid])
 
     function setdata(event){
         setValue(event.target.value)
@@ -22,6 +24,7 @@ const SurveyRange = ({data,parentFunction,qid}) => {
                     min={data.min}
                     max={data.max}
                     step={data.step}
+                    defaultValue={init?0:savedFormData[curPart][qid]}
                     />
                 </Col>
                 <Col xs={1} md={1}>

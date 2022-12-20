@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Form,Button } from "react-bootstrap";
 import { faSave} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SEQDictSyntaxChecker from "../SESyntaxChecker/SEQDictSyntaxChecker";
 
 const types = ['sparttips','stext','sselect','sradio','schecker','srange']
 const typeDict = {
@@ -12,41 +13,52 @@ const typeDict = {
     schecker:'Checker box',
     srange:'Value Selector'
 }
-const conditions = {
-    'basic':[
-        {name:"qid",type:"number"},
-        {name:"type",type:"string"},
-        {name:"msg",type:"string"}
-    ]
-    ,'sparttips':[
-
-
-    ]
-    ,'stext':[
-
-    ]
-    ,'sselect':[
-
-    ]
-    ,'sradio':[
-
-    ]
-    ,'schecker':[
-
-    ]
-    ,'srange':[
-
-    ]
-}
 
 const SECElement = ({surveyData,configData,updateConfig}) => {
     const [data,setdata] = useState(surveyData)
+    const [init, setInit] = useState(true)
+
+    const [qDict, setQDict] = useState(surveyData.questionset[configData.partName].find(e => e.qid === configData.qid))
 
 
-    function setTypeInData(){
+    function setTypeInData(event){
+        //init
+        var q = qDict
+        setInit(false)
 
+    
+        //set to Qdict
+        q.type = event.target.value
+        setQDict(q)
+
+        console.log(qDict)
     }
 
+    function setMsgInData(event){
+        var q = qDict
+       
+        q.msg = event.target.value
+        setQDict(q)
+
+        console.log(qDict)
+
+    } 
+
+    function checkAndSave(event){
+        
+        if(SEQDictSyntaxChecker(qDict,qDict.type)){
+            
+            //set whole dict
+            let t = data.questionset[configData.partName].find(e => e.qid === configData.qid)
+            t = qDict
+            
+            updateConfig(data)
+        }else{
+            alert("Incomplete setting")
+        }
+    }
+
+    
     return (
         <div className="h3" style={{color:"black",border:'black solid'}}>
             {'Element (Part:'+configData.partName+' Qid:'+configData.qid+')'}
@@ -56,16 +68,18 @@ const SECElement = ({surveyData,configData,updateConfig}) => {
                     <Form.Control
                         type="text"
                         id="text"
-                        onChange={setTypeInData}
-                        defaultValue={surveyData.questionset[configData.partName].find(e => e.qid === configData.qid).msg}
+                        onChange={setMsgInData}
+                        defaultValue={qDict.msg}
+                        required
                     />
                     <Form.Label className="mt-2">Type</Form.Label>
-                     <Form.Select aria-label="Default select example" onChange={setTypeInData} defaultValue={1}>
+                     <Form.Select aria-label="Default select example" onChange={setTypeInData} defaultValue={qDict.type}>
+                      {init?<option></option>:''}
                       {types.map((element,index) => <option value={element} key={"Element-config-Type-"+index}>{typeDict[element]}</option>)}
                        
                     </Form.Select> 
 
-                    <Button variant="primary" type="button" className="mt-2" onClick={()=>updateConfig(data)}>
+                    <Button variant="primary" type="button" className="mt-2" onClick={checkAndSave}>
                         <FontAwesomeIcon icon={faSave}></FontAwesomeIcon> {"Save"}
                     </Button>
                 </Form>

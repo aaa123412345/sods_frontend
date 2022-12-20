@@ -3,11 +3,10 @@ import { Form } from "react-bootstrap";
 
 const SurveyPartHeader = ({data}) => {
    
-    
   
     return (
         <>
-      
+       
             <Form.Label >{data.msg}</Form.Label>
             
             

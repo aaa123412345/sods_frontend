@@ -43,6 +43,10 @@ const SurveyBuilder = ({data,testMode}) => {
        
       };
 
+    const goBack= () =>{
+        setCurPart(curPart-1)
+    }
+
     const CheckAndNext = (event)=>{
         const form = event.currentTarget.parentNode
         if(!testMode){
@@ -73,14 +77,14 @@ const SurveyBuilder = ({data,testMode}) => {
        
     }) 
 
-    
+   
 
     return (
         
         <Form noValidate validated={validated} onSubmit={handleSubmit} >
-             {data.questionset[curPart.toString()].map((element,index) => <SurveyFormmator
-            data={element} qid={element.qid} parentFunction={onInput} validated={validated} 
-            key={"surveydict-"+(index+1).toString()}></SurveyFormmator>)}
+             {data.questionset[data.info.partKey[curPart-1]].map((element,index) => <SurveyFormmator
+            data={element} qid={element.qid} parentFunction={onInput} validated={validated} savedFormData={formData} 
+            curPart={curPart} key={"surveydict-"+(index+1).toString()}></SurveyFormmator>)}
             
            
              { !testMode&&curPart==totalPart?
@@ -93,6 +97,9 @@ const SurveyBuilder = ({data,testMode}) => {
                     Next Page {curPart+'/'+totalPart}
                 </Button>:''
              }
+             {(testMode||data.info.allowGoBack)&&curPart!=1?<Button type="button" onClick={goBack}>
+                    Pervious Page
+                </Button>:''}
           
         </Form>
       

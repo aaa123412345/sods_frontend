@@ -3,10 +3,10 @@ import { Form,Row} from "react-bootstrap";
 import { useState } from "react";
 
 
-const SurveyCheckbox = ({data,parentFunction,qid,validated}) => {
+const SurveyCheckbox = ({data,parentFunction,qid,validated,savedFormData,curPart}) => {
     
     const [selected, setSelected] = useState([]);
-    const [init, setInit] = useState(true)
+    const [init, setInit] = useState(!(curPart in savedFormData))
     const [ready, setReady] = useState(false);
     
     function setdata(event){
@@ -108,6 +108,7 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated}) => {
                     key={qid.toString()+"-checkbox-option-"+index.toString()}
                     onChange={setdata}
                     required={required}
+                    defaultChecked={init?false:(savedFormData[curPart][qid].find(e => e === option)===undefined?false:true)}
                     />
             )
         }else return(
@@ -123,6 +124,7 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated}) => {
                     required={required}
                     isValid={!required}
                     isInvalid={required}
+                    defaultChecked={init?false:(savedFormData[curPart][qid].find(e => e === option)===undefined?false:true)}
                     />
         )
         /*

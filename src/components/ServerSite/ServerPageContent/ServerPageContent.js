@@ -7,6 +7,8 @@ import ServerNavbar from "../ServerNavbar/ServerNavbar";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 import ElementBuilder from "../../PageBuilder/ElementBuilder/ElementBuilder";
 
+import axios from "axios";
+
 const ServerPageContent = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -16,31 +18,28 @@ const ServerPageContent = (props) => {
     const host = process.env.REACT_APP_SERVER_REST_HOST
     const pathname = props.path
   
+    const getData = async () => {
+      try{
+        const { data } = await axios.get(host+pathname);
+        var rest = jsonExtractor(data);
+        if(rest.response === "success"){
+          setIsLoaded(true);
+          setItems(rest.data);
+          setIsReady(true);
+        }else{
+          
+          setIsLoaded(true);
+          setError(error);
+        }
+      }catch (error){
+          setIsLoaded(true);
+          setError(error);
+      }
+    };
+
     useEffect(() => {
-      fetch(host+pathname)
-        .then(res => res.json())
-        .then(
-          (result) => {
-            var rest = jsonExtractor(result);
-            if(rest.response == "success"){
-              setIsLoaded(true);
-              setItems(rest.data);
-              setIsReady(true);
-            }else{
-              /*Error */
-              setIsLoaded(true);
-              setError(error);
-            }
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-            setIsLoaded(true);
-            setError(error);
-          }
-        )
-    }, [pathname])
+      getData();
+    }, [host,pathname]);
 
     if (error) {
       return <div>Error: {error.message}</div>;

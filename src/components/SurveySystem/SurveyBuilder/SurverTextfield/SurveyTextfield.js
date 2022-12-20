@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 
-const SurveyTextfield = ({data,parentFunction,qid}) => {
-   
+const SurveyTextfield = ({data,parentFunction,qid,savedFormData,curPart}) => {
+    const [init] = useState(!(curPart in savedFormData))
+
     function setdata(event){
         
         parentFunction(event.target.getAttribute("qid"),event.target.value)
     }
 
+    
   
     return (
         <>
@@ -20,6 +22,7 @@ const SurveyTextfield = ({data,parentFunction,qid}) => {
                         qid={qid}
                         onChange={setdata} 
                         required={data.required}
+                        defaultValue={init?'':savedFormData[curPart][qid]}
                     />
                 </Col>
             </Row>

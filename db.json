@@ -7,7 +7,9 @@
         "surveyID": "S1234567890",
         "type": "survey",
         "totalpart": 2,
-        "tittle": "XXX survey"
+        "tittle": "XXX survey",
+        "partKey":["1","2"],
+        "allowGoBack":true
       },
       
       "questionset": {
@@ -227,6 +229,8 @@
         "useBootstrap": true,
         "title":"Survey",
         "style":{
+          "color":"black",
+          "backgroundColor":"white"
         }
       },
       "element": [

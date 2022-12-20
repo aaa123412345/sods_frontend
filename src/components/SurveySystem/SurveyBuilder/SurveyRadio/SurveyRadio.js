@@ -1,9 +1,9 @@
-import React from "react";
-import { Form, Row } from "react-bootstrap";
+import React,{useState} from "react";
+import { Form } from "react-bootstrap";
 
 
-const SurveyRadio = ({data,parentFunction,qid}) => {
-    
+const SurveyRadio = ({data,parentFunction,qid,savedFormData,curPart}) => {
+    const [init] = useState(!(curPart in savedFormData));
 
     
     function setdata(event){
@@ -38,6 +38,7 @@ const SurveyRadio = ({data,parentFunction,qid}) => {
             value={option}
             key={qid.toString()+"-radio-option-"+index.toString()}
             onClick={setdata}
+            defaultChecked={init?false:(savedFormData[curPart][qid]===option?true:false)}
             required={data.required}
             />
         )

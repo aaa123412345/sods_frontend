@@ -15,7 +15,7 @@ const Components = {
     sparttips:SurveyPartHeader
   };
   
- const SurveyElementDict = ({data,qid,parentFunction,validated}) => {
+ const SurveyElementDict = ({data,qid,parentFunction,validated,savedFormData,curPart}) => {
     var tkey = data.type+qid.toString()
     if (typeof Components[data.type] !== "undefined") {
       return React.createElement(Components[data.type], {
@@ -23,7 +23,9 @@ const Components = {
         data: data,
         qid: qid,
         parentFunction: parentFunction,
-        validated:validated
+        validated:validated,
+        savedFormData:savedFormData,
+        curPart:curPart
         
       });
     }

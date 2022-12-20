@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 import SECOverall from "./SECOverall";
 import SECElement from "./SECElement";
 import SECPlaceholder from "./SECPlaceholder";
+
 
 const ComponentDict = {
     overall:SECOverall,
@@ -10,6 +11,8 @@ const ComponentDict = {
 }
 
 const SurveyEditorConfigurationPanel = ({surveyData,configData,configType,updateConfig}) => {
+    
+
     return (
         <div className="h1" style={{color:"black"}}>
             Setting

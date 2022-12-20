@@ -2,9 +2,10 @@ import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 
-const SurveySelector = ({data,parentFunction,qid}) => {
+const SurveySelector = ({data,parentFunction,qid,savedFormData,curPart}) => {
     
-    const [init, setInit] = useState(true);
+    const [init, setInit] = useState(!(curPart in savedFormData));
+    
     
     function setdata(event){
         
@@ -20,7 +21,8 @@ const SurveySelector = ({data,parentFunction,qid}) => {
             <Form.Label >Q{qid.toString()+": "+data.msg}</Form.Label>
             <Row>
                 <Col md={8}>
-                    <Form.Select qid={qid} onChange={setdata} key={"sselect-real-"+qid.toString()} required={data.required}>
+                    <Form.Select qid={qid} onChange={setdata} key={"sselect-real-"+qid.toString()}
+                     required={data.required} defaultValue={init?'':savedFormData[curPart][qid]}>
                         {init?<option></option>:""}
                         {data.option.map((element,index) => optionCreator(index+1, element,qid))}
                     </Form.Select>

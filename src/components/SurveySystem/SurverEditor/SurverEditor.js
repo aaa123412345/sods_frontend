@@ -7,7 +7,7 @@ import SurveyBuilder from "../SurveyBuilder/SurveyBuilder";
 import SurverEditorOverall from "./SurverEditorOverall.js/SurverEditorOverall";
 import SurveyEditorConfigurationPanel from "./SurveyEditorConfigurationPanel/SurveyEditorConfigurationPanel";
 
-import SurveyEditorChecker from "./SurveyEditorChecker";
+import SurveyEditorChecker from "./SESyntaxChecker/SESyntaxChecker";
 import useWindowSize from "../../../hooks/useWindowSize";
 const SurveyEditor = () => {
     //Constant

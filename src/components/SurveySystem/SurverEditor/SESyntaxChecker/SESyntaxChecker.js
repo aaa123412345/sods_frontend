@@ -1,35 +1,10 @@
 
+import SEQDictSyntaxChecker from "./SEQDictSyntaxChecker"
 
 
-const types = ['sparttips','stext','sselect','sradio','schecker','srange']
-const conditions = {
-    'basic':[
-        {name:"qid",type:"number"},
-        {name:"type",type:"string"},
-        {name:"msg",type:"string"}
-    ]
-    ,'sparttips':[
 
-
-    ]
-    ,'stext':[
-
-    ]
-    ,'sselect':[
-
-    ]
-    ,'sradio':[
-
-    ]
-    ,'schecker':[
-
-    ]
-    ,'srange':[
-
-    ]
-}
  //Check whole question Dict
- function SurveyEditorChecker(Dict){
+ function SurveyEditorSyntaxChecker(Dict){
     var Dictlv1 = Dict
     var dictlv2 = Dict['questionset']
     var parts = Dict.info.partKey
@@ -58,13 +33,13 @@ const conditions = {
                 var qDict = partInQuestionset[j]
 
                 //Check common syntax for all question element
-                if(!syntaxQChecker(qDict,'basic')){
+                if(!SEQDictSyntaxChecker(qDict,'basic')){
                     tempMsg.serious.push(qDict.qid)
                     result.ready=false
                 }else{
                     //Check specfic question type syntax for question element
                     if('type' in qDict){
-                        if(!syntaxQChecker(qDict,qDict.type)){
+                        if(!SEQDictSyntaxChecker(qDict,qDict.type)){
                             tempMsg.normal.push(qDict.qid)
                             result.ready=false
                         }
@@ -92,21 +67,6 @@ const conditions = {
 
 }
 
-//Check single question Dict
-function syntaxQChecker(qDict,checkType){
-    var cType = conditions[checkType]
-    console.log(cType,qDict,checkType)
-    for(var i=0;i<cType.length;i++){
-        if(cType[i].name in qDict){
-            if (typeof qDict[cType[i].name] != cType[i].type){
-                return false
-            }
-        }else{
-            return false
-        }
-    }
-    return true
-}
 
 function errorMsgBuilder(tempMsg){
     var msg=''
@@ -138,4 +98,4 @@ function errorMsgBuilder(tempMsg){
     return msg
 }
 
-export default SurveyEditorChecker;
+export default SurveyEditorSyntaxChecker;

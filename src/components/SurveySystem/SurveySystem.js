@@ -2,6 +2,7 @@ import React from "react";
 import SurveyBuilder from "./SurveyBuilder/SurveyBuilder";
 import jsonExtractor from "../Common/RESTjsonextract/RESTjsonextract";
 import { useState,useEffect } from "react";
+import axios from "axios";
 
 
 const SurveySystem = (props) => {
@@ -12,32 +13,28 @@ const SurveySystem = (props) => {
 
     const host = process.env.REACT_APP_SURVEY_DATA+props.subpath
     
+    const getData = async () => {
+      try{
+        const { data } = await axios.get(host);
+        var rest = jsonExtractor(data);
+        if(rest.response === "success"){
+          setIsLoaded(true);
+          setItems(rest.data);
+          setIsReady(true);
+        }else{
+          
+          setIsLoaded(true);
+          setError(error);
+        }
+      }catch (error){
+          setIsLoaded(true);
+          setError(error);
+      }
+    };
+
     useEffect(() => {
-      fetch(host)
-        .then(res => res.json())
-        .then(
-          (result) => {
-            var rest = jsonExtractor(result);
-            if(rest.response == "success"){
-              setIsLoaded(true);
-              setItems(rest.data);
-              setIsReady(true);
-            }else{
-              /*Error */
-              setIsLoaded(true);
-              setError(error);
-            }
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-            setIsLoaded(true);
-            setError(error);
-            
-          }
-        )
-    }, [host])
+      getData();
+    }, [host]);
 
     if (error) {
       return <div>Error: {error.message}</div>;
