@@ -6,17 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Button,OverlayTrigger,Tooltip,ButtonGroup, ButtonToolbar} from 'react-bootstrap'
 
 
-const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,addElement,swap,setConfig}) => {
+const SurveyEditorPanelPartElement = ({partName,data,updateSurveyData,setConfig}) => {
     const [open, setOpen] = useState(true)
 
     function partAddElement(){
-        addElement(partName);
+        updateSurveyData('addElement',{partName:partName})
+       
     }
 
     function partDeletePart(){
         var result = window.confirm("Delete the Part "+partName+" ?")
         if(result){
-            deletePart(partName);
+
+            updateSurveyData('deletePart',{partName:partName})
         }
     }
 
@@ -52,9 +54,9 @@ const SurveyEditorPanelPartElement = ({partName,data,deletePart,deleteElement,ad
                         {
                             data.map((element,index) =>
                             <SurveyEditorPanelQuestionElement 
-                                partName={partName} data={element} swap={swap} setConfig={setConfig}
+                                partName={partName} data={element} setConfig={setConfig}
                                 canMoveUp={index!=0? true:false} canMoveDown={index!=data.length-1?true:false}
-                                deleteElement={deleteElement} key={'part-'+partName+'-qid-'+element.qid}>
+                                updateSurveyData={updateSurveyData} key={'part-'+partName+'-qid-'+element.qid}>
                             </SurveyEditorPanelQuestionElement>
                             )
                         }

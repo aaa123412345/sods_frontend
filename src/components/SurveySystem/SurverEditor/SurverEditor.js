@@ -9,6 +9,8 @@ import SurveyEditorConfigurationPanel from "./SurveyEditorConfigurationPanel/Sur
 
 import SurveyEditorChecker from "./SESyntaxChecker/SESyntaxChecker";
 import useWindowSize from "../../../hooks/useWindowSize";
+import cloneDeep from 'lodash/cloneDeep'
+
 const SurveyEditor = () => {
     //Constant
     const windowsize = useWindowSize()
@@ -23,7 +25,7 @@ const SurveyEditor = () => {
     const [nextPID, setNextPID] = useState(1);
     const [nextQID, setNextQID] = useState(1);
     const [surveyData, setSurveyData] = useState({});
-    
+   
 
     //survey syntax
     const [surveySyntax, setSurveySyntax] = useState(false);
@@ -31,7 +33,7 @@ const SurveyEditor = () => {
     //survey configuration state
     const [configType, setConfigType] = useState('none')
     const [configData, setConfigData] = useState({})
-    const [autoSaveCurConfig, setAutoSaveCurConfig] = useState(false)
+    const [autoReopenConfig, setAutoReopenConfig] = useState({reopen:false,type:'',data:{}})
 
     //Offcanvas Show
     const handleConfigShow = () => setConfigshow(true);
@@ -54,6 +56,31 @@ const SurveyEditor = () => {
     /*
     Basic function
     */
+    function updateSurveyData(mode,data){
+        var ok = true
+        if(configType!=='none'){
+            var ok = confirmBox("Your unsaved configuration will be lost.")
+            if(ok){
+                cancelConfig()
+            }
+        }
+        if(ok){
+            if(mode=="deletePart"){
+                deletePart(data.partName)
+            }
+            else if(mode=="swap"){
+                swap(data.partName,data.indexA,data.indexB)
+            }
+            else if(mode=="deleteElement"){
+                deleteElement(data.partName,data.qid)
+            }
+            else if(mode=="addElement"){
+                addElement(data.partName)
+            }else if(mode=="addPart"){
+                addPart()
+            }
+        }
+    }
     function deletePart(partID){
         var all = surveyData
         var temp = surveyData['questionset']
@@ -240,42 +267,52 @@ const SurveyEditor = () => {
         return arr;
     }
 
+    function confirmBox(string){
+        var result = window.confirm(string)
+        return result
+    }
     /*
     configuration setting function
     */
     function setConfig(type,data){
-        var ok = false
+       
+       
         if(configType!=='none'&&type!=='none'){
-            var result = window.confirm("Your unsaved configuration will be lost.")
-            if(result){
-                ok=true
+            var ok = confirmBox("Your unsaved configuration will be lost.")
+            if(ok){
+                cancelConfig()
+                setAutoReopenConfig({reopen:true,type:type,data:data})
             }
-        }else{
-            ok=true
         }
-        if(ok){
-            if(type==='overall'){
-                setConfigType('overall')
-                setConfigData(data)
-                
-            }else if(type==='element'){
-                //Switch from element to element
+        else{
             
-                    data['qDict']= surveyData.questionset[data.partName].find(e => e.qid === data.qid)
-                    setConfigType('element')
+                if(type==='overall'){
+                    setConfigType('overall')
                     setConfigData(data)
-            
-            }
+                    
+                }else if(type==='element'){
+                    //Switch from element to element
+                
+                        data['qDict']= surveyData.questionset[data.partName].find(e => e.qid === data.qid)
+                        setConfigType('element')
+                        setConfigData(data)
+                
+                }
 
-            if(windowsize.width<572){
-                handleConfigShow()
-            }
+                if(windowsize.width<572){
+                    handleConfigShow()
+                }
+           
         }
     }
 
     function cancelConfig(){
-        setConfigType('none')
+ 
         setConfigData({})
+        setConfigType('none')
+        if(windowsize.width<572){
+            handleConfigClose();
+        }
     }
 
     //Children function
@@ -290,6 +327,9 @@ const SurveyEditor = () => {
             }else if(savedData.updateType === "element"){
                 updateElementConfig(savedData)
             }
+        }
+        if(windowsize.width<572){
+            handleConfigClose();
         }
     }
 
@@ -337,10 +377,20 @@ const SurveyEditor = () => {
             setSurveyData(items)
             setReady(true)
             setInit(false)
-        
         }
        
     },[surveyData])
+
+    //Auto reopen configuration panel
+    useEffect(()=>{
+        
+        if(autoReopenConfig.reopen === true){
+
+            setConfig(autoReopenConfig.type,autoReopenConfig.data)
+            setAutoReopenConfig({reopen:false,type:'',data:{}})
+            
+        }
+    },[configType,configData,autoReopenConfig])
 
     if(update){
         setUpdate(false)
@@ -349,21 +399,20 @@ const SurveyEditor = () => {
     
     
     if(ready){
-        var copyData = surveyData
+        
         return(
             <>
             
             <Row style={{backgroundColor:"gray",paddingTop:'10px',height:'100%'}}>
                 <Col sm={7} style={{overflowY:'scroll',height:'650px',border:'solid black'}}>
                     <SurverEditorOverall handleShow={handleShow} data={surveyData}
-                     deletePart={deletePart} deleteElement={deleteElement}
-                     addElement={addElement} addPart={addPart} swap={swap} setConfig={setConfig}
+                     updateSurveyData={updateSurveyData} setConfig={setConfig}
                      ></SurverEditorOverall>
                 </Col>
-                <Col sm={5}>
+                <Col sm={5} style={{overflowY:'scroll',height:'650px',border:'solid black'}}>
                     <SurveyEditorConfigurationPanel className={'d-none d-sm-block'}
-                    configType={configType} configData={configData} surveyData={copyData}  cancelConfig={cancelConfig} 
-                    updateConfig={updateConfig} autoSaveCurConfig={autoSaveCurConfig}></SurveyEditorConfigurationPanel>
+                    configType={configType} configData={cloneDeep(configData)} surveyData={cloneDeep(surveyData)}  cancelConfig={cancelConfig} 
+                    updateConfig={updateConfig} ></SurveyEditorConfigurationPanel>
                 </Col>
 
                 <Offcanvas show={show} onHide={handleClose} placement={'end'} style={{color:'black'}}>
@@ -378,14 +427,15 @@ const SurveyEditor = () => {
                 </Offcanvas>
 
 
-                <Offcanvas show={configshow} onHide={handleConfigClose} placement={'end'} className={'d-block d-sm-none'}>
-                    <Offcanvas.Header closeButton>
+                <Offcanvas show={configshow} onHide={handleConfigClose} 
+                placement={'end'} className={'d-block d-sm-none'}  style={{width:'100%', overflowY:'scroll',height:'650px',border:'solid black'}}>
+                    <Offcanvas.Header closeButton onClick={cancelConfig}>
                     <Offcanvas.Title>Configuration</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                        
-                            <SurveyEditorConfigurationPanel configType={configType} configData={configData} cancelConfig={cancelConfig} 
-                            surveyData={copyData}  autoSaveCurConfig={autoSaveCurConfig} updateConfig={updateConfig}></SurveyEditorConfigurationPanel>
+                            <SurveyEditorConfigurationPanel configData={cloneDeep(configData)} surveyData={cloneDeep(surveyData)} cancelConfig={cancelConfig} 
+                            configType={configType}  updateConfig={updateConfig}></SurveyEditorConfigurationPanel>
                         
                     </Offcanvas.Body>
                 </Offcanvas>

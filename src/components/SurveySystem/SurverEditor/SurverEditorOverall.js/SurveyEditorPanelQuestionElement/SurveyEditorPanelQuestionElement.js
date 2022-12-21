@@ -5,22 +5,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Button,Stack,OverlayTrigger,Tooltip,Row,Col,ButtonGroup} from 'react-bootstrap'
 
 
-const SurveyEditorPanelQuestionElement = ({partName,data,deleteElement,swap,canMoveUp,canMoveDown,setConfig}) =>{
+const SurveyEditorPanelQuestionElement = ({partName,data,updateSurveyData,canMoveUp,canMoveDown,setConfig}) =>{
 
    
     const deleteQElement= () => {
         var result = window.confirm("Delete the Element ("+"Qid"+data.qid+"msg"+data.msg+") in Part "+partName+" ?")
         if(result){
-            deleteElement(partName,data.qid)
+          
+            updateSurveyData('deleteElement',{partName:partName,qid:data.qid})
         }
     }
 
     const swapUp = () =>{
-        swap(partName,data.qid-1,data.qid)
+        updateSurveyData('swap',{partName:partName,indexA:data.qid-1,indexB:data.qid})
+
     }
 
     const swapDown = () =>{
-        swap(partName,data.qid,data.qid+1)
+        updateSurveyData('swap',{partName:partName,indexA:data.qid,indexB:data.qid+1})
+       
     }
     
 

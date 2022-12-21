@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Button,Stack,OverlayTrigger,Tooltip,Row} from 'react-bootstrap'
 import SurveyEditorPanelPartElement from "./SurveyEditorPanelPartElement/SurveyEditorPanelPartElement";
 
-const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,addElement,swap,setConfig}) =>{
+const SurverEditorOverall = ({handleShow,data,updateSurveyData,setConfig}) =>{
    
 
     return(
@@ -17,7 +17,7 @@ const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,a
                 <Stack direction="horizontal" gap={1}>
                     <div className="h1" style={{color:"black"}}>Overall</div>
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Add the Part</Tooltip>}>
-                        <Button variant="secondary" onClick={addPart}><FontAwesomeIcon icon={faSquarePlus}></FontAwesomeIcon></Button>
+                        <Button variant="secondary" onClick={()=> updateSurveyData('addPart',{})}><FontAwesomeIcon icon={faSquarePlus}></FontAwesomeIcon></Button>
                     </OverlayTrigger>
 
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Overall coonfiguration</Tooltip>}>
@@ -31,8 +31,8 @@ const SurverEditorOverall = ({handleShow,data,deletePart,deleteElement,addPart,a
                
                 {data.info.partKey.map(element=>
                 <SurveyEditorPanelPartElement data={data.questionset[element]} partName={element}
-                 deletePart={deletePart} deleteElement={deleteElement} swap={swap} setConfig={setConfig}
-                 addElement={addElement} key={'part-'+element+'-panel'}>
+                 updateSurveyData={updateSurveyData} setConfig={setConfig}
+                  key={'part-'+element+'-panel'}>
                  </SurveyEditorPanelPartElement>
                 )}
                 

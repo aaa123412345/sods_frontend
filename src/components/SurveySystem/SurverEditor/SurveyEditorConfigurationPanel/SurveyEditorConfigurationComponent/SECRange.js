@@ -9,7 +9,6 @@ const SECRange = ({partName,qid,setQDictInChild,qDict,ChildrenSetOK}) =>{
 
     function updateMax(e){
         var targetValue = parseInt(e.target.value)
-        
         setMax(targetValue)
         setQDictInChild('max',targetValue)
         updateCheck()
@@ -31,9 +30,9 @@ const SECRange = ({partName,qid,setQDictInChild,qDict,ChildrenSetOK}) =>{
 
     function updateCheck(){
         if(max<=min){
-            ChildrenSetOK(false)
+            ChildrenSetOK(false, "Max should bigger than Min")
         }if(step<1){
-            ChildrenSetOK(false)
+            ChildrenSetOK(false, "Step should be a position not zero value")
         }else{
             ChildrenSetOK(true)
         }

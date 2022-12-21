@@ -25,8 +25,8 @@ const SurveyEditorConfigurationPanel = ({surveyData,configData,configType,update
                     
                     { React.createElement(ComponentDict[configType], {
                     key: "Configuration-"+configType+"-Panel",
-                    surveyData:surveyData,
-                    configData:configData,
+                    surveyData:{...surveyData},
+                    configData:{...configData},
                     updateConfig:updateConfig,
                     cancelConfig:cancelConfig,
                     autoSaveCurConfig:autoSaveCurConfig
