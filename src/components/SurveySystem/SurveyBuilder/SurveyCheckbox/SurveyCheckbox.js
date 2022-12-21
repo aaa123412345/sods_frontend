@@ -53,11 +53,11 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated,savedFormData,curPart
         var str=""
         if(data.minSelect == data.maxSelect){
             str += "You should select "+data.minSelect+ " option(s)"
-        }else if(data.minSelect == -1 || data.maxSelect==-1){
-            if(data.minSelect == -1){
-                str+=  "You should select at most"+data.minSelect+ " option(s)"
+        }else if(data.minSelect == 0 || data.maxSelect== data.option.length){
+            if(data.minSelect == 0){
+                str+=  "You should select at most "+data.maxSelect+ " option(s)"
             }else{
-                str+=  "You should select at least"+data.minSelect+ " option(s)"
+                str+=  "You should select at least "+data.minSelect+ " option(s)"
             }
         }else{
             str += "You should select "+data.minSelect+ " to "+data.maxSelect+" option(s)"

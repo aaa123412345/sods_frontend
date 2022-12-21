@@ -21,7 +21,10 @@ export const conditions = {
     ]
     ,'schecker':[
         {name:"required",type:"boolean"},
-        {name:"option",type:"object"}
+        {name:"option",type:"object"},
+        {name:"maxSelect",type:"number"},
+        {name:"minSelect",type:"number"}
+
     ]
     ,'srange':[
         {name:"min",type:"number"},

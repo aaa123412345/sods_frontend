@@ -10,6 +10,7 @@ const SECRange = ({partName,qid,setQDictInChild,qDict,ChildrenSetOK}) =>{
     function updateMax(e){
         var targetValue = parseInt(e.target.value)
         setMax(targetValue)
+        console.log(targetValue)
         setQDictInChild('max',targetValue)
         updateCheck()
     }
@@ -40,15 +41,24 @@ const SECRange = ({partName,qid,setQDictInChild,qDict,ChildrenSetOK}) =>{
 
     useEffect(()=>{
         
-       
         if(!('max' in qDict)){
             setQDictInChild('max',100)
+            setMax(100)
+        }else{
+            setMax(qDict['max'])
         }
         if(!('min' in qDict)){
             setQDictInChild('min',0)
+            setMin(0)
+        }else{
+            setMin(qDict['min'])
         }
+
         if(!('step' in qDict)){
             setQDictInChild('step',1)
+            setStep(1)
+        }else{
+            setStep(qDict['step'])
         }
         setReady(true)
     })
@@ -62,7 +72,7 @@ const SECRange = ({partName,qid,setQDictInChild,qDict,ChildrenSetOK}) =>{
                 style={{'width':'70%'}}
                 onChange={updateMax}
                 max={1000}
-                defaultValue={qDict.max}/>{"  "+qDict.max}
+                defaultValue={max}/>{"  "+max}
             
                 
                 <br></br>
@@ -72,7 +82,7 @@ const SECRange = ({partName,qid,setQDictInChild,qDict,ChildrenSetOK}) =>{
                 key={"SERange-2-"+qid+partName}
                 style={{'width':'70%'}}
                 onChange={updateMin}
-                defaultValue={qDict.min}/>{"  "+qDict.min}
+                defaultValue={min}/>{"  "+min}
             
                 
             
@@ -85,7 +95,7 @@ const SECRange = ({partName,qid,setQDictInChild,qDict,ChildrenSetOK}) =>{
                     style={{'width':'70%'}}
                     max={20}
                     min={1}
-                    defaultValue={qDict.step}/>{"  "+qDict.step}
+                    defaultValue={step}/>{"  "+step}
             
                 <br></br>
             </>

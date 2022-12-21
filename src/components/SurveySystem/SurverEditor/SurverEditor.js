@@ -405,7 +405,7 @@ const SurveyEditor = () => {
             
             <Row style={{backgroundColor:"gray",paddingTop:'10px',height:'100%'}}>
                 <Col sm={7} style={{overflowY:'scroll',height:'650px',border:'solid black'}}>
-                    <SurverEditorOverall handleShow={handleShow} data={surveyData}
+                    <SurverEditorOverall handleShow={handleShow} data={cloneDeep(surveyData)}
                      updateSurveyData={updateSurveyData} setConfig={setConfig}
                      ></SurverEditorOverall>
                 </Col>

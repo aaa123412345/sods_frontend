@@ -98,7 +98,7 @@ const SECElement = ({surveyData,configData,updateConfig,cancelConfig}) => {
         var t = qDict
         t[key]=value
         setQDict(t)
-        console.log(qDict)
+        //console.log(qDict)
     }
 
     //for child
@@ -148,7 +148,7 @@ const SECElement = ({surveyData,configData,updateConfig,cancelConfig}) => {
                             key: "Configuration-element-Panel-Type-"+configData.qDict.type+configData.qid+configData.partName,
                             partName: configData.partName,
                             qid: configData.qid,
-                            qDict:Object.assign({},qDict),
+                            qDict:qDict,
                             setQDictInChild: setQDictInChild,
                             ChildrenSetOK: ChildrenSetOK
                         })}    

@@ -40,8 +40,6 @@ const SECRadio = ({partName,qid,setQDictInChild,qDict,ChildrenSetOK})=>{
         setDeleted(!deleted)
    }
 
-   
-
    function updateOption(event){
         var optionindex = event.target.getAttribute("optionindex")
         var option = event.target.value
