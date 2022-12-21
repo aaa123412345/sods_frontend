@@ -222,6 +222,47 @@
       ]
     }
   },
+  "public-award": {
+    "code": 200,
+    "msg": "OK",
+    "data": {
+      "page": {
+        "useBootstrap": true,
+        "useHeader": true,
+        "title":"Award",
+        "style":{
+        }
+      },
+      "element": [
+        {
+          "type": "crestable",
+          "rank": 1,
+          "subrank": 1,
+          "table": {
+            "head":["Award","Member","Date"],
+            "data":[
+              {"Award":"A Award","Member":"Good Student","Date":"19 May 2010"},
+              {"Award":"B Award","Member":"Teacher","Date":"19 Dec 2020"},
+              {"Award":"V Award","Member":"People","Date":"19 Oct 2030"},
+              {"Award":"D Award","Member":"XXX","Date":"19 May 2040"}
+            ]
+          },
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "style": {
+            "height": 500,
+            "width": 500
+          }
+        }
+      ]
+    }
+  },
   "public-survey": {
     "code": 200,
     "msg": "OK",
@@ -383,27 +424,8 @@
                 "chi": "/public/survey/S1234567890",
                 "eng": "/public/survey/S1234567890"
               }
-            },
-            {
-              "navName": {
-                "chi": "2",
-                "eng": "2"
-              },
-              "path": {
-                "chi": "/public/survey/S0000000001",
-                "eng": "/public/survey/S0000000001"
-              }
-            },
-            {
-              "navName": {
-                "chi": "3",
-                "eng": "3"
-              },
-              "path": {
-                "chi": "/public/survey/MX141241567",
-                "eng": "/public/survey/MX141241567"
-              }
             }
+            
           ]
         },
         {
@@ -445,8 +467,8 @@
             "eng": "c"
           },
           "path": {
-            "chi": "",
-            "eng": ""
+            "chi": "/public/award",
+            "eng": "/public/award"
           },
           "child": []
         },

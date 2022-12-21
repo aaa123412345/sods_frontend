@@ -18,33 +18,33 @@ function App() {
 
 
     return (
-
-        <Provider store={store}>
-            <BrowserRouter>
-                
-                <Chatroom />
-
-                <Routes>
+        <React.StrictMode>
+            <Provider store={store}>
+                <BrowserRouter>
                     
-                <Route>
-                    <Route path="/public/tourguide-vr" element={<VRCanvas />}></Route> 
-                    {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
-                    <Route path='/public/:path' element={<PublicPageManager />}></Route> 
-                    <Route path='/public/:path/:subpath' element={<PublicPageManager />}></Route> 
-                   </Route>
-                    <Route path='/server/:path' element={<ServerPageManager/>}></Route>
-                    <Route path='/server/:path/:subpath' element={<ServerPageManager/>}></Route> 
-                    <Route
-                        path="*"
-                        element={
-                            <Navigate replace to="/public/about" />
-                        }
-                        />
-                </Routes>
-               
-            </BrowserRouter>
-        </Provider>
-        
+                    <Chatroom />
+
+                    <Routes>
+                        
+                    <Route>
+                        <Route path="/public/tourguide-vr" element={<VRCanvas />}></Route> 
+                        {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
+                        <Route path='/public/:path' element={<PublicPageManager />}></Route> 
+                        <Route path='/public/:path/:subpath' element={<PublicPageManager />}></Route> 
+                    </Route>
+                        <Route path='/server/:path' element={<ServerPageManager/>}></Route>
+                        <Route path='/server/:path/:subpath' element={<ServerPageManager/>}></Route> 
+                        <Route
+                            path="*"
+                            element={
+                                <Navigate replace to="/public/about" />
+                            }
+                            />
+                    </Routes>
+                
+                </BrowserRouter>
+            </Provider>
+        </React.StrictMode>
       
     );
   }
