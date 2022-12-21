@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Flex } from '@chakra-ui/react'
-import ItemList from '../../TourGuideComponents/ItemList/ItemList'
+import ItemList from '../../common/ItemList/ItemList'
 import { useSelector } from 'react-redux'
 
 const LeftPanel = () => {

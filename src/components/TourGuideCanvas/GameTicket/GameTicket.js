@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef, createRef } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
 import { Flex, Box, Text, Heading } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 
-import { useDispatch, connect } from 'react-redux'
-import axios from 'axios'
-
 import BadgeSlider from './BadgeSlider/BadgeSlider'
-import { updateStories } from '../../../../redux/tourguide/tourguide.action'
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner'
+
+import { useDispatch, connect } from 'react-redux'
+import { updateStories } from '../../../redux/tourguide/tourguide.action'
 
 const GameTicket = (props) => {
 
-    const { isPreviewMode = false, tourguide, modal } = props
-    const { host, stories, storyProgress, storyIndex, page, themeColor, isAdmin } = tourguide
-    const { isOpen } = modal
+    const { isPreviewMode = false, tourguide } = props
+    const { host, stories, storyProgress, storyIndex, isAdmin } = tourguide
     const dispatch = useDispatch()
 
     const path = "story"
@@ -110,8 +110,11 @@ const GameTicket = (props) => {
                 storyList.map((item, index) => (
                     <StorySection ref={sectionRef[item.id]} key={index}
                         bgImg={check_isUnlocked(index) || isPreviewMode ? `url('/images/${item.bg}')` : 'gray' }>
-                        <StoryBox>
-                            
+                        <StoryBox as={motion.div} 
+                            initial={{ scale: 0.4, opacity: 0, y: 150}}
+                            whileInView={{ scale: 1, opacity: 1, y: 0 }}
+                            transition={{ duration: .4 }}
+                            viewport={{ once: false, amount: 0.5 }} >
                             {check_isUnlocked(index) || isPreviewMode ? <CoverStory item={item}/>:<LockMessage/>}
                         </StoryBox>
                     </StorySection>
@@ -174,10 +177,10 @@ const StoryBox = styled(Flex)`
     flex-direction: column;
     align-items: center; justify-content: center;
 
-    background-color: rgba(255, 255, 255, .1);
-    backdrop-filter: blur(15px);
-    box-shadow: 10px 10px 22px rgba(0, 0, 0, .4);
+    background-color: rgba(0, 0, 0, 1);
+    box-shadow: 10px 10px 50px rgba(0, 0, 0, 1);
     opacity: .9;
+    // backdrop-filter: blur(15px);
 
     width: fit-content; max-width: 70%;
     height: fit-content; min-height: 90px;

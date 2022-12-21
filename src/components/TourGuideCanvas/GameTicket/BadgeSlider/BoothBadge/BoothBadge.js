@@ -64,7 +64,7 @@ const BadgeBorder = styled(Flex)`
   border-radius: 50%;
   border-width: 5px; border-style: solid;
 
-  box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, .2);
+  box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, .5);
 
   cursor: pointer;
 

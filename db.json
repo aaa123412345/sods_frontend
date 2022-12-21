@@ -671,7 +671,7 @@
       }
     }
   },
-  "public-floorplans": {
+  "tourguide-floorplans": {
     "code": 200,
     "msg": "OK",
     "data": [
@@ -687,23 +687,7 @@
       }
     ]
   },
-  "server-floorplans": {
-    "code": 200,
-    "msg": "OK",
-    "data": [
-      {
-        "image": "/images/test-floor-plan-1.jpg",
-        "region": "1 Floor",
-        "id": 1
-      },
-      {
-        "image": "/images/test-floor-plan-2.jpg",
-        "region": "2 Floor",
-        "id": 2
-      }
-    ]
-  },
-  "public-markers": {
+  "tourguide-markers": {
     "code": 200,
     "msg": "OK",
     "data": [
@@ -724,20 +708,7 @@
       }
     ]
   },
-  "server-markers": {
-    "code": 200,
-    "msg": "OK",
-    "data": [
-      {
-        "region": "1 Floor",
-        "y": 39.15974948308411,
-        "x": 24.591738712776177,
-        "booth": null,
-        "id": 1
-      }
-    ]
-  },
-  "public-booths": {
+  "tourguide-booths": {
     "code": 200,
     "msg": "OK",
     "data": [
@@ -768,72 +739,7 @@
       }
     ]
   },
-  "server-booths": {
-    "code": 200,
-    "msg": "OK",
-    "data": []
-  },
-  "public-ar-treasure": {
-    "code": 200,
-    "msg": "OK",
-    "data": [
-      {
-        "booth": null,
-        "name": "What is the school name?",
-        "id": 111
-      },
-      {
-        "booth": null,
-        "name": "Who establish this school?",
-        "id": 112
-      }
-    ]
-  },
-  "server-ar-treasure": {
-    "code": 200,
-    "msg": "OK",
-    "data": [
-      {
-        "booth": null,
-        "name": "What is the school name?",
-        "id": 111
-      },
-      {
-        "booth": null,
-        "name": "Who establish this school?",
-        "id": 112
-      }
-    ]
-  },
-  "public-story": {
-    "code": 200,
-    "msg": "OK",
-    "data": [
-      {
-        "title": "Jacky Study F.1 Now",
-        "content": "Jacky is a shy student. He is afraid to talk to other classmates. One day, Miss Cheung has introduced him to join the music team. Jacky then joined the team.",
-        "bg": "/test-school-photo.jpg",
-        "id": 1
-      },
-      {
-        "title": "Jacky Become Happy",
-        "content": "After joining the team, Jacky met many friends and usually play basketball with them. He would like to say thank you to Miss Cheung, since Miss Cheung has given him a good recommendation for him to improve his social communication skill. ",
-        "bg": "/test-school-photo-01.jpeg",
-        "id": 2
-      },
-      {
-        "title": "Love Go To School ",
-        "content": "Mary is a student who love go to school, because our school can provide a fruitful school life to her. ",
-        "id": 3
-      },
-      {
-        "title": "Our School Life is Fruitful",
-        "content": "Our School is very very good.",
-        "id": 4
-      }
-    ]
-  },
-  "server-story": {
+  "tourguide-story": {
     "code": 200,
     "msg": "OK",
     "data": [

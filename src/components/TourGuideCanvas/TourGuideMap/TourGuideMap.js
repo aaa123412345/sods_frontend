@@ -8,10 +8,10 @@ import { useDispatch, connect } from 'react-redux';
 
 import ImageMarker from 'react-image-marker';
 import BoothPanel from './BoothPanel/BoothPanel'
-import MyButton from '../EditorButton/EditorButton';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
-import { markerConvertor } from '../../../../helpers/markerJsonConvertor';
+import EditorButton from '../common/EditorButton/EditorButton';
+import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 import FloorSelector from './FloorSelector/FloorSelector';
+import { markerConvertor } from '../../../helpers/markerJsonConvertor';
 
 const TourGuideMap = (props) => {
 
@@ -175,7 +175,7 @@ const TourGuideMap = (props) => {
         }
 
         return (
-            <MyButton
+            <EditorButton
                 text={itemNumber}
                 onClick={handle_onClick}
                 isCircle={true}

@@ -12,8 +12,8 @@ import { updateHost, updateThemeColor } from '../../redux/tourguide/tourguide.ac
 import useSessionStorage from '../../hooks/useSessionStorage'
 
 import TourGuideEditor from './TourGuideEditor/TourGuideEditor'
-import TourGuideMap from './TourGuideComponents/TourGuideMap/TourGuideMap'
-import GameTicket from './TourGuideComponents/GameTicket/GameTicket'
+import TourGuideMap from './TourGuideMap/TourGuideMap'
+import GameTicket from './GameTicket/GameTicket'
 import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -33,7 +33,7 @@ const TourGuideCanvas = (props) => {
     const [isMap, setIsMap] = useState(true)
 
     // constant 
-    const host = isAdmin ? process.env.REACT_APP_SERVER_REST_HOST : process.env.REACT_APP_PUBLIC_REST_HOST
+    const host = process.env.REACT_APP_TOURGUIDE_REST_HOST 
     // const degree = isAdmin ? '0' : '-90'
 
     const change_editMode = () => {

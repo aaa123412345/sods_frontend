@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { Flex, Box, Heading, Button, useColorModeValue, useColorMode } from '@chakra-ui/react'
 
-import EditorModal from '../TourGuideComponents/EditorModal/EditorModal'
+import EditorModal from '../common/EditorModal/EditorModal'
 import RightPanel from './RightPanel/RightPanel'
 import LeftPanel from './LeftPanel/LeftPanel'
 
@@ -15,7 +15,7 @@ import { updatePage } from '../../../redux/tourguide/tourguide.action'
  
 const TourGuideEditor = (props) => {
 
-    const { tourguide, modal, form } = props
+    const { tourguide, modal } = props
     const { themeColor, page } = tourguide
     const { modalIndex } = modal
     const dispatch = useDispatch()

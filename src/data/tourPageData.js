@@ -1,6 +1,6 @@
-import TourGuideMap from "../components/TourGuideCanvas/TourGuideComponents/TourGuideMap/TourGuideMap";
-import ItemList from "../components/TourGuideCanvas/TourGuideComponents/ItemList/ItemList";
-import GameTicket from "../components/TourGuideCanvas/TourGuideComponents/GameTicket/GameTicket";
+import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
+import ItemList from "../components/TourGuideCanvas/common/ItemList/ItemList";
+import GameTicket from "../components/TourGuideCanvas/GameTicket/GameTicket";
 
 const tourPageData = [
 

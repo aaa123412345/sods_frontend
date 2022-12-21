@@ -50,7 +50,7 @@ const BadgeSlider = (props) => {
     return (
        <Container>
 
-            <BadgeLevelBar />
+            {/* <BadgeLevelBar /> */}
 
             <Slide>
             {
@@ -103,8 +103,8 @@ const Slide = styled(Flex)`
 
     padding-bottom: .5em; padding-top: .5em;
     padding-right: 10%;
-    background: rgba(0, 0, 0, .3);
-    box-shadow: 0px -8px 22px 0px rgba(0,0,0, .5);
+    // background: rgba(0, 0, 0, .3);
+    // box-shadow: 0px -8px 22px 0px rgba(0,0,0, .5);
 
     overflow-x: scroll;
 
@@ -122,6 +122,6 @@ const BadgeContainer = styled(Flex)`
 const Line = styled(Box)`
 
     width: 100%; height: 10px;
-    box-shadow: 0px 12px 12px -12px rgba(255, 255, 255, .5);
+    box-shadow: 0px 12px 12px rgba(0, 0, 0, .5);
     
 `

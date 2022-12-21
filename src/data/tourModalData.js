@@ -1,10 +1,12 @@
 import { faAlignLeft, faBook, faGamepad, faKey, faLocationDot, faTent } from "@fortawesome/free-solid-svg-icons";
 import { faImages, faMap } from "@fortawesome/free-regular-svg-icons";
-import TextInput from "../components/TourGuideCanvas/TourGuideComponents/Inputs/TextInput/TextInput";
-import ImageUploader from "../components/TourGuideCanvas/TourGuideComponents/Inputs/ImageUploader/ImageUploader";
-import NumberInput from "../components/TourGuideCanvas/TourGuideComponents/Inputs/NumberInput/NumberInput";
-import DropDownList from "../components/TourGuideCanvas/TourGuideComponents/Inputs/DropDownList/DropDownList";
-import TourGuideMap from "../components/TourGuideCanvas/TourGuideComponents/TourGuideMap/TourGuideMap";
+
+import TextInput from "../components/TourGuideCanvas/common/Inputs/TextInput/TextInput";
+import ImageUploader from "../components/TourGuideCanvas/common/Inputs/ImageUploader/ImageUploader";
+import NumberInput from "../components/TourGuideCanvas/common/Inputs/NumberInput/NumberInput";
+import DropDownList from "../components/TourGuideCanvas/common/Inputs/DropDownList/DropDownList";
+import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
+
 import { updateBooth, updateFloorplan, updateStory, updateGame } from "../redux/form/form.action";
 
 const tourModalData = [

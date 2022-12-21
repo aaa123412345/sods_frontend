@@ -5,14 +5,16 @@ import styled from 'styled-components'
 import { Flex, Heading, useToast } from '@chakra-ui/react'
 
 import ItemButton from './ItemButton/ItemButton'
-import Toolbar from '../../TourGuideComponents/Toolbar/Toolbar'
-import FunctionalFooter from '../../TourGuideComponents/FunctionalFooter/FunctionalFooter'
+import Toolbar from '../Toolbar/Toolbar'
+import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+
 import { errorToast } from '../../../../constants/toastStyle'
+import useSessionStorage from '../../../../hooks/useSessionStorage'
+
 import { useDispatch, connect } from 'react-redux'
 import { updateBooths, updateFloorplans, updateRegionIndex, updateStories, updateStoryIndex } from '../../../../redux/tourguide/tourguide.action'
-import useSessionStorage from '../../../../hooks/useSessionStorage'
-import { jsonFilter } from '../../../../helpers/jsonFilter'
+
 
 const ItemList = (props) => {
 

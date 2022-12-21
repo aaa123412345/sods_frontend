@@ -5,7 +5,7 @@ import { Flex, useColorModeValue } from '@chakra-ui/react'
 import { faMapLocationDot, faPen, faTent } from '@fortawesome/free-solid-svg-icons'
 
 import tourPageData from '../../../../data/tourPageData'
-import Toolbar from '../../TourGuideComponents/Toolbar/Toolbar'
+import Toolbar from '../../common/Toolbar/Toolbar'
 import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
 import { updateFloorplan, updateStory } from '../../../../redux/form/form.action'
