@@ -1,5 +1,5 @@
 export const initVRTourState = {
 
-    isShow: false
+    isShow: true // for testing; you may change it to false first; 
 
 }
