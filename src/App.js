@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 import { Provider } from "react-redux";
 import { store } from './redux/store'
 import Chatroom from "./components/Chatroom/Chatroom";
+import VRCanvas from "./components/TourGuideCanvas/VRCanvas/VRCanvas";
 
 
 
@@ -21,7 +22,8 @@ function App() {
         <Provider store={store}>
             <BrowserRouter>
                 
-                <Chatroom/>
+                <Chatroom />
+                <VRCanvas /> {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
 
                 <Routes>
                     
