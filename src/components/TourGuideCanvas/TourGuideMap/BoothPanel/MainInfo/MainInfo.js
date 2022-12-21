@@ -4,13 +4,42 @@ import styled from 'styled-components'
 
 import { Flex, Heading, Text, Button } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationDot, faUser } from '@fortawesome/free-solid-svg-icons'
-import { connect } from 'react-redux'
+import { faLocationDot, faUser, faVrCardboard } from '@fortawesome/free-solid-svg-icons'
+import { connect, useDispatch } from 'react-redux'
+import EditorButton from '../../../common/EditorButton/EditorButton'
+import { updateVRBoothID } from '../../../../../redux/vrTour/vtTour.action'
 
 const MainInfo = (props) => {
   
     const { setPage, boothInfo, tourguide } = props
     const { themeColor } = tourguide
+    const dispatch = useDispatch()
+
+    const goto_minigame = () => {
+
+    }
+
+    const goto_vrTour = () => {
+        dispatch(updateVRBoothID(boothInfo.id))
+        window.location.replace('tourguide-vr');
+    }
+
+    const opendayDate = new Date("2022-12-25").toDateString()
+    const today = new Date()
+
+    const currentAction = opendayDate !== today.toDateString() ? 'vr' : 'game'
+
+    const actionBtnConfig = {
+        game: {
+            text: "Let's Play Mini Game",
+            onClick: goto_minigame
+        }, 
+        vr: {
+            text: "Let's Start VR Tour",
+            onClick: goto_vrTour
+        }, 
+    }
+
 
     const IconText = (props) => {
 
@@ -29,7 +58,7 @@ const MainInfo = (props) => {
 
     }
 
-    console.log("mainInfo: ", boothInfo)
+    // console.log("mainInfo: ", boothInfo)
 
     if(boothInfo === null || boothInfo === undefined)
     return (
@@ -49,6 +78,9 @@ const MainInfo = (props) => {
             <Heading size={'sm'} color={themeColor} mt="1.5em">Description</Heading>
             <Text mt=".5em">{boothInfo["description"]}</Text>
             {/* <Button variant={'gray'} borderRadius={25} onClick={()=>setPage(1)}>More</Button> */}
+            <EditorButton icon={faVrCardboard} text={actionBtnConfig[currentAction].text} bgColor={themeColor} cssStyle={{margin: '1em 0'}}
+                onClick={actionBtnConfig[currentAction].onClick}/>
+
         </Container>
     )
 }

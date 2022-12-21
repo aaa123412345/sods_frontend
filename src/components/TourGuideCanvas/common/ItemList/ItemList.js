@@ -9,7 +9,7 @@ import Toolbar from '../Toolbar/Toolbar'
 import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
-import { errorToast } from '../../../../constants/toastStyle'
+import { errorToast } from '../../../../constants/constants'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
 
 import { useDispatch, connect } from 'react-redux'

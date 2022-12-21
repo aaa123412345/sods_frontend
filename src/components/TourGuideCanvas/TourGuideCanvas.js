@@ -16,7 +16,6 @@ import TourGuideMap from './TourGuideMap/TourGuideMap'
 import GameTicket from './GameTicket/GameTicket'
 import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import VRCanvas from './VRCanvas/VRCanvas'
 
 const TourGuideCanvas = (props) => {
 
