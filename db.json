@@ -766,5 +766,24 @@
         "id": 4
       }
     ]
+  },
+  "tourguide-vr-tour": {
+    "code": 200,
+    "msg": "OK",
+    "data": {
+      "id": 1,
+      "speechZH": "依間係課室，平日同學都會喺度學習，依度具備一個儲物櫃，比同學擺放佢地嘅課本。",
+      "speechEN": "This is a classroom. Students are always learning at here. There is a locker for students to store their books.",
+      "image": "/images/test-classroom.jpg",
+      "booth": {
+        "region": "1 Floor",
+        "name": "Let's Code",
+        "venue": "1/F, Rm 304, Computer Lab Room",
+        "description": "This is the place for students to learn computer science knowledge.",
+        "passcode": 1234,
+        "gameType": null,
+        "id": 1
+      }
+    }
   }
 }

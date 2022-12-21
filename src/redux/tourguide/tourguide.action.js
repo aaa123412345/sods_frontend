@@ -2,6 +2,7 @@
 
 export const UPDATE_PAGE = "UPDATE_PAGE"
 export const UPDATE_THEME_COLOR = "UPDATE_THEMECOLOR"
+export const UPDATE_LANGUAGE = "UPDATE_LANGUAGE"
 export const UPDATE_HOST = "UPDATE_HOST"
 export const UPDATE_REGION_INDEX = "UPDATE_REGION_INDEX"
 export const UPDATE_STORY_INDEX = "UPDATE_STORY_INDEX"
@@ -19,6 +20,10 @@ export const updatePage = (page) => {
 
 export const updateThemeColor = (color) => {
     return { type: UPDATE_THEME_COLOR, color }
+}
+
+export const updateLanguage = (lang) => {
+    return { type: UPDATE_LANGUAGE, lang }
 }
 
 export const updateHost = (host) => {

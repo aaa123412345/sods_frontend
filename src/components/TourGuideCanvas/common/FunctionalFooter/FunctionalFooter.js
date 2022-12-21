@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Box, Flex, useToast } from '@chakra-ui/react'
 import MyButton from '../EditorButton/EditorButton'
 import { useDispatch, connect } from 'react-redux'
-import { errorToast } from '../../../../constants/toastStyle'
+import { errorToast } from '../../../../constants/constants'
 import { resetData } from '../../../../redux/form/form.action'
 import { closeModal } from '../../../../redux/modal/modal.action'
 

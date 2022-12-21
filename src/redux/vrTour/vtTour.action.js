@@ -1,15 +1,10 @@
 // action type
 
-export const SHOW_VR_TOUR = "SHOW_VR_TOUR"
-export const HIDE_VR_TOUR = "HIDE_VR_TOUR"
+export const UPDATE_VR_BOOTH_ID = "UPDATE_VR_BOOTH_ID"
 
 // action creator
 
-export const showVRTour = () => {
-    return { type: SHOW_VR_TOUR }
-}
 
-export const hideVRTour = () => {
-    return { type: HIDE_VR_TOUR }
+export const updateVRBoothID = (boothID) => {
+    return { type: UPDATE_VR_BOOTH_ID, boothID }
 }
-
