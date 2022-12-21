@@ -339,6 +339,8 @@ const SurveyEditor = () => {
 
         dictlv2.title = savedData.title
         dictlv2.type = savedData.type
+        dictlv2.header = savedData.header
+        dictlv2.allowGoBack = savedData.allowGoBack
 
         dictlv1['info'] = dictlv2
        
@@ -363,6 +365,7 @@ const SurveyEditor = () => {
             partKey:[],
             type:'Survey',
             title:'',
+            header:'',
             allowGoBack:false
 
         },

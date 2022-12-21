@@ -130,10 +130,13 @@ const SECElement = ({surveyData,configData,updateConfig,cancelConfig}) => {
                             key={configData.partName+configData.qid+'inputMsg'}
                             type="text"
                             id="text"
+                            as="textarea"
+                            rows={3}
                             onChange={setMsgInData}
                             placeholder={"Current: "+configData.qDict.msg}
                             required   
                         />
+                        
                         <Form.Label className="mt-2">Type</Form.Label>
                         <Form.Select  key={configData.partName+configData.qid+'selectType'} onChange={setTypeInData}>
                         

@@ -25,6 +25,15 @@ const SurveyEditorPanelQuestionElement = ({partName,data,updateSurveyData,canMov
         updateSurveyData('swap',{partName:partName,indexA:data.qid,indexB:data.qid+1})
        
     }
+
+    function StringPreview(str,maxWords){
+        var s = "..."
+        if(str.length > maxWords){
+            return str.slice(0,maxWords)+s
+        }else{
+            return str
+        }
+    }
     
 
 
@@ -34,7 +43,7 @@ const SurveyEditorPanelQuestionElement = ({partName,data,updateSurveyData,canMov
         <Row style={{ borderTop: 'black solid'}}>
             <Stack direction="horizontal" gap={1}>
                 <Col xs={6} sm={5} lg={5} md={5} xl={8} style={{color:"black"}}>
-                    {"#"+data.qid+": "+data.msg}
+                    {"#"+data.qid+": "+StringPreview(data.msg,20)}
                 </Col>
                 <Col xs={6} sm={7} lg={7} md={7} xl={4}>
                     <Row style={{marginLeft:0,marginRight:0}}>
