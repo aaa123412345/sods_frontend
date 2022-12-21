@@ -26,9 +26,8 @@ function App() {
 
                 <Routes>
                     
-                   <Route>
-                    {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
-                    <Route path="/public/tourguide" element={<VRCanvas />}></Route> 
+                <Route>
+                    <Route path="/public/tourguide-vr" element={<VRCanvas />}></Route> {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
                     <Route path='/public/:path' element={<PublicPageManager />}></Route> 
                     <Route path='/public/:path/:subpath' element={<PublicPageManager />}></Route> 
                    </Route>

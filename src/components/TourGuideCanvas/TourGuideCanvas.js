@@ -74,7 +74,7 @@ const TourGuideCanvas = (props) => {
             <OuterContainer>
 
 
-                {/* { isMap && <TourGuideMap /> }
+                { isMap && <TourGuideMap /> }
 
                 { !isMap && !isAdmin && <GameTicket /> }
 
@@ -97,7 +97,7 @@ const TourGuideCanvas = (props) => {
                         
                     </Float>
 
-                } */}
+                }
 
             </OuterContainer>
             
