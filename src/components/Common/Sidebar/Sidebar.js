@@ -13,7 +13,7 @@ import SidebarDropdown from './SidebarDropdown/SidebarDropdown';
 const Sidebar = ({data,lang,setDisplay}) =>  {
 
     return (
-        <div className="sidenav" style={{display: setDisplay?'block':'none'}}>
+        <div className="sidenav" style={{display: setDisplay?'block':'none', color:'black'}}>
             {data.navdata.map((data,index) => data["child"].length == 0? 
             <SidebarChoice data={data} lang={lang} key={"sidebar-choice-"+index} />:
             <SidebarDropdown data={data} lang={lang} key={"sidebar-choice-"+index} sindex={index}/>)}
