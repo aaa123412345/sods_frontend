@@ -150,6 +150,7 @@
     "data": {
       "page": {
         "useBootstrap": true,
+        "useHeader": true,
         "title":"About",
         "style":{
         }
@@ -227,6 +228,7 @@
     "data": {
       "page": {
         "useBootstrap": true,
+        "useHeader": true,
         "title":"Survey",
         "style":{
           "color":"black",
@@ -256,6 +258,7 @@
     "data": {
       "page": {
         "useBootstrap": true,
+        "useHeader": true,
         "title":"Share",
         "style":{
         }
@@ -292,6 +295,7 @@
     "data": {
       "page": {
         "useBootstrap": false,
+        "useHeader": false,
         "title":"Tourguide",
         "style":{
         }

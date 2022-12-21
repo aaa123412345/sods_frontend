@@ -7,6 +7,7 @@ import PublicNavbar from "../PublicNavbar/PublicNavbar";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 import ElementBuilder from "../../PageBuilder/ElementBuilder/ElementBuilder";
 import axios from "axios";
+import PublicHeader from "../PublicHeader/PublicHeader";
 
 const PublicPageContent = (props) => {
     const [error, setError] = useState(null);
@@ -47,8 +48,10 @@ const PublicPageContent = (props) => {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else if(ready) {
-      
+      console.log(items.page)
       return(
+        <>
+        {items.page.useHeader?<PublicHeader/>:''}
         <div className="PageContent" style={items.page.style}> 
           <PublicNavbar pdata={items.page}></PublicNavbar>   
           { items.page.useBootstrap?
@@ -56,6 +59,7 @@ const PublicPageContent = (props) => {
           items.element.map((element)=> ElementBuilder({data:element,path:props.path,subpath:props.subpath}))
           }
         </div>
+        </>
       )
     }
 }
