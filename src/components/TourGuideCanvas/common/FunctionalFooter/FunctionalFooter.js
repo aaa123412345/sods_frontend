@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -14,13 +14,12 @@ import { submitLabel } from '../../../../constants/constants'
 const FunctionalFooter = (props) => {
 
     const { 
-        isShow, onClose, 
-        path, method, name, data = null, 
-        tourguide, form, modal, id
+        isShow, path, method, name, 
+        data = null, onClose, 
+        tourguide, form, id
     } = props
 
-    const { themeColor, host } = tourguide   
-    const { isError } = modal
+    const { themeColor, host } = tourguide 
     const dispatch = useDispatch()
 
     // chakra hooks
@@ -30,53 +29,50 @@ const FunctionalFooter = (props) => {
 
     const check_validation = (data) => {
 
-        let errorList = []
         let errorExist = false
 
-        console.log(data)
-        Object.entries(data).map(([key, value], index)=>{
-            console.log(key, ": ", value)
-            if(value.length === 0){
-                errorList.push(index)
-                errorExist = true
-            }
-        })
+        if(method === 'delete')
+            errorExist = data === null || data.length === 0
+        else{
+
+            Object.entries(data).map(([key, value], index)=>{
+                // WILL CHECK OTHER TYPE LATER
+                if(value.length === 0)
+                    errorExist = true
+            })
+
+        }
 
         setCanSubmit(!errorExist)
-        dispatch(updateErrorList(errorList))
 
     }
 
-    const handle_method = (method, isText = false) => {
+    const close_and_reset = () => {
+    
+        dispatch(resetData())
+        dispatch(closeModal())
 
-        check_validation(form[name])
+    }
 
-        if(canSubmit){
-            console.log('submit')
-        }else{
-            console.log('invalid')
-        }
+    const handle_method = (method) => {
 
-        // if(isError && isText === false)
-        //     return 
-        // else {
-            
-        //     switch (method){
-        //         case "post":
-        //             return isText ? "Create" : handle_create()
-        //         case "delete":
-        //             return isText ? "Delete" : handle_delete()
-        //         case "put":
-        //             return isText ? "Update" : handle_update()
-        //         default:
-        //             return;
+        switch (method){
 
-        //     }  
+            case "post":
+                return handle_create()
+            case "delete":
+                return handle_delete()
+            case "put":
+                return handle_update()
+            default:
+                return;
+        }  
 
-        // }
     }
 
     const handle_delete = () => {
+
+        // delete action only occurs in iteml list instead of modal.
 
         if(data !== null){
     
@@ -100,10 +96,9 @@ const FunctionalFooter = (props) => {
 
         axios.post(host+path, {...data})
         .then((res)=>{toast(toast_generator("Created", name))})
-        .catch(err=>{toast(toast_generator)})
+        .catch(err=>{toast(toast_generator())})
 
-        dispatch(resetData())
-        dispatch(closeModal())
+        close_and_reset()
 
     }
 
@@ -113,12 +108,17 @@ const FunctionalFooter = (props) => {
 
         axios.put(host+path+`/${id}`, {...data})
         .then((res)=>toast(toast_generator("Updated", path)))
-        .catch(err=>toast(toast_generator))
-        
-        dispatch(resetData())
-        dispatch(closeModal())
+        .catch(err=>toast(toast_generator()))
+
+        close_and_reset()
 
     }    
+
+    useEffect(()=>{
+
+        check_validation(method === 'delete' ? data : form[name])
+
+    },[form])
 
     return !isShow ? <></> :  (
         <PanelFooter>
@@ -126,8 +126,10 @@ const FunctionalFooter = (props) => {
             <Flex justifyContent='space-between'>
 
                 <MyButton text={'Cancel'} onClick={onClose}/>
-                <MyButton text={submitLabel[method]} onClick={()=>{handle_method(method)}}
-                    bgColor={method === 'delete' ? "danger" : themeColor} />
+                <MyButton text={submitLabel[method]} 
+                    onClick={()=>{handle_method(method)}}
+                    bgColor={method === 'delete' ? "danger" : themeColor} 
+                    isDisabled={!canSubmit}/>
 
             </Flex>
 
