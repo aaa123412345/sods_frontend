@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
 import { Box, Flex,Heading, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -12,6 +13,8 @@ import { booth as boothTemplate , floorplan as floorplanTemplate } from '../../.
 import { resetData } from '../../../../redux/form/form.action'
 import { closeModal, updateModal } from '../../../../redux/modal/modal.action'
 
+const MotionFlex = motion(Flex); 
+
 const EditorModal = (props) => {
 
     const { pages, form, modal }  = props
@@ -19,6 +22,7 @@ const EditorModal = (props) => {
     const { isOpen, path, method, name, id, page } = modal
 
     const dispatch = useDispatch()
+
 
     // session storage
     const [modalSession, setModalSession] = useSessionStorage('modal', modal)
@@ -28,6 +32,7 @@ const EditorModal = (props) => {
     // chakra hooks
     const bg = useColorModeValue("white", "black")
     const progressBg = useColorModeValue("gray", "gray.100")
+
 
     const close_modal = () => {
 
@@ -49,9 +54,11 @@ const EditorModal = (props) => {
     },[])
 
     return !isOpen ? <></> : (
-        <Overlay alignItems={{base: 'flex-end', md: 'center'}}>
+        <Overlay alignItems={{base: 'flex-end', md: 'center'}} 
+            as={MotionFlex} initial={{opacity: 0}} animate={{opacity: 1}} transition={{ duration: .25 }}>
 
-            <Modal bg={bg} borderRadius={{base: '18px 18px 0px 0px', md: 25}}
+            <Modal as={MotionFlex} initial={{y: 200}} animate={{y: 0}} transition={{ duration: .25 }}
+                bg={bg} borderRadius={{base: '18px 18px 0px 0px', md: 25}}
                 w={{base: '100%', md: '80%'}} h={{base: '90%', md: '70%'}}>
 
                 {/* <ProgressBar bg={progressBg} w="100%">
@@ -99,7 +106,7 @@ export default connect(
     null
 )(EditorModal)
 
-const Overlay = styled(Flex)`
+const Overlay = styled(MotionFlex)`
 
     position: fixed; z-index: 1000;
     top: 0; left: 0;
@@ -110,7 +117,7 @@ const Overlay = styled(Flex)`
 
 `
 
-const Modal = styled(Flex)`
+const Modal = styled(MotionFlex)`
 
     align-items: flex-end;
     flex-direction: column;
