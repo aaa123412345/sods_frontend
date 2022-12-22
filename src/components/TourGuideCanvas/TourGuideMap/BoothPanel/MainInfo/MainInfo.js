@@ -8,15 +8,25 @@ import { faLocationDot, faUser, faVrCardboard } from '@fortawesome/free-solid-sv
 import { connect, useDispatch } from 'react-redux'
 import EditorButton from '../../../common/EditorButton/EditorButton'
 import { updateVRBoothID } from '../../../../../redux/vrTour/vtTour.action'
+import { openQRScanner } from '../../../../../redux/tourguide/tourguide.action'
 
 const MainInfo = (props) => {
   
-    const { setPage, boothInfo, tourguide } = props
+    // const { setPage, boothInfo, tourguide } = props
+    const { setPage, tourguide } = props
     const { themeColor } = tourguide
     const dispatch = useDispatch()
 
-    const goto_minigame = () => {
+    // testing boothInfo
+    const boothInfo = {
+        name: "New Booth",
+        venue: "1 Floor, rm 102",
+        description: "na"
+    }
 
+    const goto_scanner = () => {
+        console.log('open scanner')
+        dispatch(openQRScanner())
     }
 
     const goto_vrTour = () => {
@@ -24,15 +34,15 @@ const MainInfo = (props) => {
         window.location.replace('tourguide-vr');
     }
 
-    const opendayDate = new Date("2022-12-25").toDateString()
+    const opendayDate = new Date().toDateString()
     const today = new Date()
 
     const currentAction = opendayDate !== today.toDateString() ? 'vr' : 'game'
 
     const actionBtnConfig = {
         game: {
-            text: "Let's Play Mini Game",
-            onClick: goto_minigame
+            text: "Let's get a stamp",
+            onClick: goto_scanner
         }, 
         vr: {
             text: "Let's Start VR Tour",

@@ -16,6 +16,7 @@ import TourGuideMap from './TourGuideMap/TourGuideMap'
 import GameTicket from './GameTicket/GameTicket'
 import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import QRCodeScanner from './QRCodeScanner/QRCodeScanner'
 
 const TourGuideCanvas = (props) => {
 
@@ -34,7 +35,7 @@ const TourGuideCanvas = (props) => {
 
     // constant 
     const host = process.env.REACT_APP_TOURGUIDE_REST_HOST 
-    // const degree = isAdmin ? '0' : '-90'
+    // const host = "https://150fdc63-ebcf-489f-b8c1-5f868cc433e3.mock.pstmn.io/"
 
     const change_editMode = () => {
 
@@ -97,6 +98,8 @@ const TourGuideCanvas = (props) => {
                     </Float>
 
                 }
+
+                <QRCodeScanner />
 
             </OuterContainer>
             

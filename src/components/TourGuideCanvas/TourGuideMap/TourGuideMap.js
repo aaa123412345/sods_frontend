@@ -5,6 +5,7 @@ import { Flex, Box, Image } from '@chakra-ui/react'
 
 import axios from 'axios';
 import { useDispatch, connect } from 'react-redux';
+import { updateFloorplans } from '../../../redux/tourguide/tourguide.action';
 
 import ImageMarker from 'react-image-marker';
 import BoothPanel from './BoothPanel/BoothPanel'
@@ -73,12 +74,12 @@ const TourGuideMap = (props) => {
 
         // axios.get(host+path+`/${marker.region}/${marker.top}/${marker.left}`)
         // .then(res=>{
-            // let booth = res.data.data[0].booth
+        //     let booth = res.data.data[0].booth
         //     setCurrentBooth(res.data.data[0].booth)
         //     setIsShowBooth(true)
-                // axios.post(host+'booth-visit-record', {id: booth.id, startTime: Date.now()})
-                // .then(res=>console.log(res))
-                // .catch(err=>console.log(err))
+        //         axios.post(host+'booth-visit-record', {id: booth.id, startTime: Date.now()})
+        //         .then(res=>console.log(res))
+        //         .catch(err=>console.log(err))
 
         // })
         // .catch(err=>console.log(err))
@@ -125,30 +126,48 @@ const TourGuideMap = (props) => {
 
     useEffect(()=>{
 
-        const refreshId = setTimeout(()=>{
-            const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex].region : ""
-            const queryStr = "?region=" + regionStr
-
-            console.log(floorplans[regionIndex] !== undefined ? floorplans[regionIndex].image : "")
-
-            axios.get(host+path+queryStr)
+        if(floorplans.length === 0){
+            axios.get(host+'floorplans')
             .then((res)=>{
-
                 let data = res.data.data
-                data = markerConvertor(data)
-                setMarkers(data)
-                setError(null)
-                setIsLoading(false)
-        
+                dispatch(updateFloorplans(data))
+                console.log('get floorplans')
             })
             .catch(err=>{
-                setMarkers([])
                 setError(error)
                 setIsLoading(true)
             })
-        }, 1000)
 
-        return ()=> clearTimeout(refreshId)
+        }
+        else{
+            const refreshId = setTimeout(()=>{
+                const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex].region : ""
+                const queryStr = "?region=" + regionStr
+    
+                console.log(floorplans)
+                console.log(floorplans[regionIndex] !== undefined ? floorplans[regionIndex].image : "")
+    
+                axios.get(host+path+queryStr)
+                .then((res)=>{
+    
+                    let data = res.data.data
+                    data = markerConvertor(data)
+                    setMarkers(data)
+                    setError(null)
+                    setIsLoading(false)
+            
+                })
+                .catch(err=>{
+                    setMarkers([])
+                    setError(error)
+                    setIsLoading(true)
+                })
+            }, 1000)
+
+            return ()=> clearTimeout(refreshId)
+        }
+
+
 
     }, [regionIndex, floorplans])
 
@@ -195,6 +214,7 @@ const TourGuideMap = (props) => {
     return (
 
         <React.Fragment>
+
             { isClientView && <FloorSelector />}
 
             <ScrollMap borderRadius={isAssignBooth && 25}>

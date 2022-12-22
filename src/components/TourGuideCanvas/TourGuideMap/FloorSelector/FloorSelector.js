@@ -39,6 +39,7 @@ const FloorSelector = (props) => {
             dispatch(updateFloorplans(data))
             setError(null)
             setIsLoading(false)
+            console.log('get floorplans')
     
         })
         .catch(err=>{
