@@ -9,6 +9,7 @@ import { connect, useDispatch } from 'react-redux'
 import EditorButton from '../../../common/EditorButton/EditorButton'
 import { updateVRBoothID } from '../../../../../redux/vrTour/vtTour.action'
 import { openQRModal } from '../../../../../redux/modal/modal.action'
+import { useTranslation } from 'react-i18next'
 
 const MainInfo = (props) => {
   
@@ -16,6 +17,8 @@ const MainInfo = (props) => {
     const { setPage, tourguide } = props
     const { themeColor } = tourguide
     const dispatch = useDispatch()
+
+    const { t, i18n } = useTranslation()
 
     // testing boothInfo
     const boothInfo = {
@@ -40,11 +43,11 @@ const MainInfo = (props) => {
 
     const actionBtnConfig = {
         game: {
-            text: "Let's get a stamp",
+            text: t('floorplan.stamp-btn'),
             onClick: goto_scanner
         }, 
         vr: {
-            text: "Let's Start VR Tour",
+            text: t('floorplan.vr-btn'),
             onClick: goto_vrTour
         }, 
     }
@@ -73,7 +76,7 @@ const MainInfo = (props) => {
     return (
         <Container>
             <Flex alignItems='center' justifyContent="center" flex="1">
-                <Text>Please select a booth within the floor plan. </Text>
+                <Text>{t('floorplan.remind-message')}</Text>
             </Flex>
         </Container>
     )
@@ -84,7 +87,7 @@ const MainInfo = (props) => {
             <Heading m={'.5em 0'} color={themeColor} size="lg">{boothInfo['name']}</Heading>
             {/* <IconText icon={faUser} text={boothInfo['visitorNum'] + " visitor(s) now"}/> */}
             <IconText icon={faLocationDot} text={boothInfo['venue']}/> 
-            <Heading size={'sm'} color={themeColor} mt="1.5em">Description</Heading>
+            <Heading size={'sm'} color={themeColor} mt="1.5em">{t('tourguide.description')}</Heading>
             <Text mt=".5em">{boothInfo["description"]}</Text>
             {/* <Button variant={'gray'} borderRadius={25} onClick={()=>setPage(1)}>More</Button> */}
             <EditorButton icon={faVrCardboard} text={actionBtnConfig[currentAction].text} bgColor={themeColor} cssStyle={{margin: '1em 0'}}

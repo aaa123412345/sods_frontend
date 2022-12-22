@@ -11,6 +11,7 @@ import tourModalData from '../../../data/tourModalData'
 import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../hooks/useSessionStorage'
 import { updatePage } from '../../../redux/tourguide/tourguide.action'
+import { useTranslation } from 'react-i18next'
 
  
 const TourGuideEditor = (props) => {
@@ -19,6 +20,8 @@ const TourGuideEditor = (props) => {
     const { themeColor, page } = tourguide
     const { modalIndex } = modal
     const dispatch = useDispatch()
+
+    const { t, i18n } = useTranslation()
 
     // chakra hooks
     const bg = useColorModeValue("white", "black")
@@ -49,9 +52,9 @@ const TourGuideEditor = (props) => {
     const EditorHeader = () => {
         return (
             <HeaderContainer bg={headerBg}>
-                <Heading size="sm" mr="1em">Editor Type</Heading>
-                <Button variant={page <= 1 ? themeColor : 'gray'} onClick={()=>change_page(0)}>Tour Guide</Button> 
-                <Button variant={page === 2 ? themeColor : 'gray'} onClick={()=>change_page(2)}>Game Ticket</Button>
+                <Heading size="sm" mr="1em">{t('tourguideEditor.editor-type')}</Heading>
+                <Button variant={page <= 1 ? themeColor : 'gray'} onClick={()=>change_page(0)}>{t('tourguideEditor.tourguide')}</Button> 
+                <Button variant={page === 2 ? themeColor : 'gray'} onClick={()=>change_page(2)}>{t('tourguideEditor.cover-story')}</Button>
             </HeaderContainer>
         )
     }

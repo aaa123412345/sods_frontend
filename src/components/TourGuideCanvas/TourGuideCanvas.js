@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { useTranslation } from 'react-i18next';
+
 import styled from 'styled-components'
 
 import { ChakraProvider } from '@chakra-ui/react'
@@ -7,7 +9,7 @@ import { newTheme } from '../../theme/theme'
 import { Flex, Box, Button, Text } from '@chakra-ui/react'
 
 import { connect, useDispatch } from 'react-redux'
-import { updateHost, updateThemeColor } from '../../redux/tourguide/tourguide.action'
+import { updateHost, updateLanguage, updateThemeColor } from '../../redux/tourguide/tourguide.action'
 
 import useSessionStorage from '../../hooks/useSessionStorage'
 
@@ -17,14 +19,18 @@ import GameTicket from './GameTicket/GameTicket'
 import QRCodeModal from './QRCodeModal/QRCodeModal'
 import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 const TourGuideCanvas = (props) => {
 
     const { block, tourguide } = props
     const { themeColor, isAdmin } = block
+    const { language } = tourguide 
 
     // redux
     const { page } = tourguide
     const dispatch = useDispatch()
+
+    const { t, i18n } = useTranslation()
 
     // session storage
     const [mapModeSession, setMapModeSession] = useSessionStorage('mapMode', !isAdmin)
@@ -46,8 +52,8 @@ const TourGuideCanvas = (props) => {
     const render_label = () => {
 
         if(isAdmin)
-            return isMap ? "Edit" : "Preview" 
-        return isMap ? "My Ticket" : "Map"
+            return isMap ? "edit": "preview" 
+        return isMap ? "my-ticket" : "map"
 
     }
 
@@ -57,6 +63,22 @@ const TourGuideCanvas = (props) => {
             return isMap ? faEdit : faEye
         return isMap ? faTicket : faMap
 
+    }
+
+    const switch_lang = (currentLang) => {
+
+        let lang = currentLang === 'zh' ? 'en' : 'zh'
+        i18n.changeLanguage(lang);
+        dispatch(updateLanguage(lang))
+
+    }
+
+    const SwitchLanuageButton = () => {
+        return (
+            <Button position={'absolute'} top="0" left="0" zIndex="1000"
+                w="100px" h="100px"
+                onClick={()=>switch_lang(language)}>{language}</Button>
+        )
     }
 
     useEffect(()=>{
@@ -71,7 +93,6 @@ const TourGuideCanvas = (props) => {
         <ChakraProvider resetCSS theme={newTheme}>
 
             <OuterContainer>
-
 
                 { isMap && <TourGuideMap /> }
 
@@ -90,7 +111,7 @@ const TourGuideCanvas = (props) => {
                         <Button variant={themeColor} borderRadius={25} m="0"
                             w="150ppx" minW="150px" maxW="150px"
                             onClick={change_editMode}>
-                                <Text>{render_label()}</Text>
+                                <Text>{t(`floorplan.${render_label()}`)}</Text>
                                 <FontAwesomeIcon icon={render_icon()} style={{marginLeft: 16}}/>
                         </Button>
                         
@@ -98,10 +119,12 @@ const TourGuideCanvas = (props) => {
 
                 }
 
+                <SwitchLanuageButton />
+
                 <QRCodeModal />
 
             </OuterContainer>
-            
+
         </ChakraProvider>
     )
 

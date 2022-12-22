@@ -1,0 +1,19 @@
+{
+
+    "floorplan": "平面圖",
+    "booth": "攤位",
+    "floorplans": "平面圖",
+    "booths": "攤位",
+    "story": "故事",
+    "description": "簡介",
+    "create": "新增",
+    "update": "更新",
+    "delete": "刪除",
+    "cancel": "取消",
+    "created": "已新增",
+    "updated": "已更新",
+    "deleted": "已刪除",
+    "error": "錯誤",
+    "try-again": "請重新載入一次"
+
+}

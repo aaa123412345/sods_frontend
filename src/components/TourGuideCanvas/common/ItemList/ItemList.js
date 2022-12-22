@@ -15,6 +15,7 @@ import { useDispatch, connect } from 'react-redux'
 import { updateBooths, updateFloorplans, updateRegionIndex, updateStories, updateStoryIndex } from '../../../../redux/tourguide/tourguide.action'
 import { toast_generator } from '../../../../helpers/toastGenerator'
 
+import { useTranslation } from 'react-i18next'
 
 const ItemList = (props) => {
 
@@ -30,6 +31,8 @@ const ItemList = (props) => {
   } = tourguide
   const { isOpen } = modal
   const dispatch = useDispatch()
+
+  const { t, i18n } = useTranslation()
 
   // session storage
   const [regionIndexSession, setRegionIndexSession] = useSessionStorage('regionIndex', 0)
@@ -169,7 +172,7 @@ const ItemList = (props) => {
         isDeleteMode={isDeleteMode} 
         setIsDeleteMode={setIsDeleteMode} />
 
-      <Title size="sm">{heading}</Title>
+      <Title size="sm">{t(`${heading}`)}</Title>
 
       <ScrollContent flexDir={{base: 'row', md: isCategoryList?"column":"row"}}
         flexWrap={{md: isCategoryList ? 'no-wrap':"wrap"}}

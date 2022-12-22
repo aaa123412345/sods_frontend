@@ -20,7 +20,7 @@ export const modelFloatingAnim = {
 // functional footer
 
 export const submitLabel = {
-    post: "Create",
-    put: "Update",
-    delete: "Delete"
+    post: "create",
+    put: "update",
+    delete: "delete"
 }

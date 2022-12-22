@@ -10,15 +10,14 @@ const TextInput = (props) => {
     const { 
         index, isTextArea = false, 
         faIcon, label, names, placeholder, 
-        form, modal, update
+        form, update
     } = props
-    const { errorList } = modal
     const dispatch = useDispatch()
 
     const data = form[names.form]
 
     const [isErr, setIsErr] = useState(false)
-    const border = isErr || errorList.includes(index) ? 'red' : 'gray'
+    const border = isErr ? 'red' : 'gray'
 
     const handle_onChange = (e) => {
 

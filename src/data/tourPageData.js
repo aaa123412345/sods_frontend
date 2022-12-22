@@ -31,7 +31,7 @@ const tourPageData = [
                     isCategoryList: false,
                     isRegionFilter: true,
                     modalIndex: 1,
-                    heading: "Booth(s)",
+                    heading: "tourguide.booth",
                     path: "booths",
                     name: 'booth',
                     labelName: "name"

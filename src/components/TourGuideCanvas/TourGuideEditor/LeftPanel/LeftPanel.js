@@ -3,21 +3,24 @@ import styled from 'styled-components'
 import { Flex } from '@chakra-ui/react'
 import ItemList from '../../common/ItemList/ItemList'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 const LeftPanel = () => {
 
   const { page } = useSelector(state => state.tourguide)
 
+  const { t, i18n } = useTranslation()
+
   const propsList = [
     {
       modalIndex: 0, 
-      heading: "Region(s)",
+      heading: t('tourguideEditor.region'),
       path: "floorplans",
       name: "floorplan"
     },
     {
       modalIndex: 4, 
-      heading: "Cover Story",
+      heading: t('tourguideEditor.cover-story'),
       path: "story",
       name: "story"
     }

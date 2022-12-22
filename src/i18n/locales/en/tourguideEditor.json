@@ -1,0 +1,9 @@
+{
+    "region": "Region(s)", 
+    "cover-story": "Cover Story", 
+    "editor-type": "Editor Type",
+    "preview-ticket": "Preview Story Cover", 
+    "edit-story": "Edit Story",
+    "edit-region": "Edit Region",
+    "tourguide": "Tour Guide"
+}

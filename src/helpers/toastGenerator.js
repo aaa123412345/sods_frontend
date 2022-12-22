@@ -7,8 +7,8 @@ const sucessToast = {
 
 const errorToast = {
 
-    title: 'Error',
-    description: "Please try again.",
+    title: "Error",
+    description: "Please Try Again",
     status: 'error',
     containerStyle:{bg:"error"}
 

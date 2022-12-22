@@ -9,11 +9,16 @@ import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMap } from '@fortawesome/free-solid-svg-icons'
 
+import { useTranslation } from 'react-i18next';
+
+
 const FloorSelector = (props) => {
 
     const { tourguide } = props
     const { host, themeColor, floorplans, regionIndex } = tourguide
     const dispatch = useDispatch()
+
+    const { t, i18n } = useTranslation()
 
     const bg = useColorModeValue('white', 'black')
 
@@ -64,7 +69,7 @@ const FloorSelector = (props) => {
             <Heading size="sm" m=".5em">
                 <FontAwesomeIcon icon={faMap} />
                 <br/>
-                Floor Plan(s)
+                {t('floorplan.floorplan')}
             </Heading>
 
             <Scroll>

@@ -10,6 +10,7 @@ import { updateErrorList } from '../../../../redux/modal/modal.action'
 import { closeModal } from '../../../../redux/modal/modal.action'
 import { toast_generator } from '../../../../helpers/toastGenerator'
 import { submitLabel } from '../../../../constants/constants'
+import { useTranslation } from 'react-i18next'
 
 const FunctionalFooter = (props) => {
 
@@ -21,6 +22,8 @@ const FunctionalFooter = (props) => {
 
     const { themeColor, host } = tourguide 
     const dispatch = useDispatch()
+
+    const { t, i18n } = useTranslation()
 
     // chakra hooks
     const toast = useToast({duration: 3000, isClosable: true})
@@ -79,7 +82,7 @@ const FunctionalFooter = (props) => {
             data.forEach((id)=>{
                 
                 axios.delete(host+path+'/'+id)
-                .then((res)=>toast(toast_generator("Deleted", path)))
+                .then((res)=>toast(toast_generator(t("tourguide.deleted"), t(`${path}`))))
                 .catch(err=>toast(toast_generator()))
     
             })
@@ -95,7 +98,7 @@ const FunctionalFooter = (props) => {
         let data = form[name]
 
         axios.post(host+path, {...data})
-        .then((res)=>{toast(toast_generator("Created", name))})
+        .then((res)=>{toast(toast_generator(t("trouguide.created"), t(`${name}`)))})
         .catch(err=>{toast(toast_generator())})
 
         close_and_reset()
@@ -107,7 +110,7 @@ const FunctionalFooter = (props) => {
         let data = form[name]
 
         axios.put(host+path+`/${id}`, {...data})
-        .then((res)=>toast(toast_generator("Updated", path)))
+        .then((res)=>toast(toast_generator(t("tourguide.updated"), t(`${path}`))))
         .catch(err=>toast(toast_generator()))
 
         close_and_reset()
@@ -125,8 +128,8 @@ const FunctionalFooter = (props) => {
 
             <Flex justifyContent='space-between'>
 
-                <MyButton text={'Cancel'} onClick={onClose}/>
-                <MyButton text={submitLabel[method]} 
+                <MyButton text={t('cancel')} onClick={onClose}/>
+                <MyButton text={t(`${submitLabel[method]}`)} 
                     onClick={()=>{handle_method(method)}}
                     bgColor={method === 'delete' ? "danger" : themeColor} 
                     isDisabled={!canSubmit}/>

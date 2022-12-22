@@ -10,6 +10,7 @@ import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
 import { updateFloorplan, updateStory } from '../../../../redux/form/form.action'
 import { openModal } from '../../../../redux/modal/modal.action'
+import { useTranslation } from 'react-i18next'
 
 const RightPanel = (props) => {
 
@@ -17,6 +18,8 @@ const RightPanel = (props) => {
     const { page, regionIndex, storyIndex, floorplans, stories } = tourguide
     const { floorplan, story } = form
     const dispatch = useDispatch()
+
+    const { t, i18n } = useTranslation()
 
     // session storage
     const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
@@ -27,7 +30,7 @@ const RightPanel = (props) => {
     const bg = useColorModeValue('gray.10', 'gray.100')
     
     // constants
-    const categories = [{label: "Floor Plan", icon: faMapLocationDot}, {label: "Booth", icon: faTent}]
+    const categories = [{label: t('tourguide.floorplan'), icon: faMapLocationDot}, {label: t('tourguide.booth'), icon: faTent}]
     const isTicketEditor = page === 2
 
     // react hooks
@@ -69,8 +72,8 @@ const RightPanel = (props) => {
         
             <Toolbar type={2} 
                 categoryList={isTicketEditor ? undefined : categories}
-                heading={isTicketEditor ? "Preview Ticket Cover" : undefined}
-                optionList={ [{text: `Edit ${isTicketEditor ? "Story" : 'Region'}`, faIcon: faPen, onClick: onOpen}]} />
+                heading={isTicketEditor ? t('tourguideEditor.preview-ticket') : undefined}
+                optionList={ [{text: t(`tourguideEditor.edit-${isTicketEditor ? "story" : 'region'}`), faIcon: faPen, onClick: onOpen}]} />
 
 
             <Content bg={bg} ref={contentRef}>
