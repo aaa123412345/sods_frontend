@@ -11,8 +11,6 @@ export const UPDATE_BOOTHS = "UPDATE_BOOTHS"
 export const UPDATE_STORIES = "UPDATE_STORIES"
 export const UPDATE_STORY_PROGRESS = "UPDATE_STORY_PROGRESS"
 export const UPDATE_GAMES = "UPDATE_GAMES"
-export const OPEN_QR_SCANNER = "OPEN_QR_SCANNER"
-export const CLOSE_QR_SCANNER = "CLOSE_QR_SCANNER"
 
 // action creator
 
@@ -58,12 +56,4 @@ export const updateStoryProgress = (progress) => {
 
 export const updateGames = (games) => {
     return { type: UPDATE_GAMES, games }
-}
-
-export const openQRScanner = () => {
-    return { type: OPEN_QR_SCANNER }
-}
-
-export const closeQRScanner = () => {
-    return { type: CLOSE_QR_SCANNER }
 }

@@ -6,6 +6,7 @@ export const initModalState = {
     method: '',
     name: "",
     id: null,
-    errorList: [],
+    isQRCode: false,
+    qrID: null
 
 }

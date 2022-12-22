@@ -11,7 +11,6 @@ export const initTourguideState = {
     booths: [],
     games: [],
     storyProgress: 2,
-    stories: [],
-    isOpenScanner: false
+    stories: []
 
 }

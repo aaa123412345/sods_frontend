@@ -1,4 +1,4 @@
-import { CLOSE_QR_SCANNER, OPEN_QR_SCANNER, UPDATE_BOOTHS, UPDATE_FLOORPLANS, UPDATE_GAMES, UPDATE_HOST, UPDATE_LANGUAGE, UPDATE_PAGE, UPDATE_REGION_INDEX, UPDATE_STORIES, UPDATE_STORY_INDEX, UPDATE_STORY_PROGRESS, UPDATE_THEME_COLOR } from "./tourguide.action"
+import { UPDATE_BOOTHS, UPDATE_FLOORPLANS, UPDATE_GAMES, UPDATE_HOST, UPDATE_LANGUAGE, UPDATE_PAGE, UPDATE_REGION_INDEX, UPDATE_STORIES, UPDATE_STORY_INDEX, UPDATE_STORY_PROGRESS, UPDATE_THEME_COLOR } from "./tourguide.action"
 import { initTourguideState } from "./tourguide.state"
 
 const tourguideReducer = (state = initTourguideState, action) => {
@@ -26,10 +26,6 @@ const tourguideReducer = (state = initTourguideState, action) => {
             return { ...state, stories: action.stories }
         case UPDATE_STORY_PROGRESS:
             return { ...state, storyProgress: action.storyProgress }
-        case OPEN_QR_SCANNER: 
-            return { ...state, isOpenScanner: true }
-        case CLOSE_QR_SCANNER: 
-            return { ...state, isOpenScanner: false }
         default:
             return state
     }

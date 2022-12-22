@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import { Flex, Text, Heading, CardHeader, Popover, PopoverTrigger, PopoverContent, Button, useColorModeValue } from '@chakra-ui/react'
 import axios from 'axios'
 import { connect, useDispatch } from 'react-redux'
-import MyButton from '../../../../EditorButton/EditorButton'
 import CardIcon from '../CardIcon/CardIcon'
 import useSessionStorage from '../../../../../../../hooks/useSessionStorage'
-import { faTent, faPen, faLocationDot } from '@fortawesome/free-solid-svg-icons'
-import { updateModal, openModal } from '../../../../../../../redux/modal/modal.action'
+import { faTent, faPen, faLocationDot, faQrcode } from '@fortawesome/free-solid-svg-icons'
+import { updateModal, openModal, updateQRID, openQRModal } from '../../../../../../../redux/modal/modal.action'
 import { updateBooth } from '../../../../../../../redux/form/form.action'
+import EditorButton from '../../../../EditorButton/EditorButton'
 
 
 const CardHeaderBar = (props) => {
@@ -61,6 +61,12 @@ const CardHeaderBar = (props) => {
         })
         .catch(err=>console.log(err))
     
+    }
+
+    const open_QRModal = () => {
+        console.log('id: ', data.id)
+        dispatch(updateQRID(data.id))
+        dispatch(openQRModal())
     }
     
     // const open_MarkerModal = () => {
@@ -138,8 +144,9 @@ const CardHeaderBar = (props) => {
                     </PopoverTrigger>
                     <PopoverContent w="100%" h="fit-content" bg="transparent" borderColor="transparent">
                         {/* <MyButton text='Marker' faIcon={faMapPin} onClick={open_MarkerModal}/> */}
-                        <MyButton text='Booth' faIcon={faTent} onClick={open_BoothModal}/>
+                        <EditorButton text='Booth' faIcon={faTent} onClick={open_BoothModal}/>
                         {/* <MyButton text='Mini Game' faIcon={faGamepad} onClick={open_GameModal}/> */}
+                        <EditorButton text="QR Code" faIcon={faQrcode} onClick={open_QRModal}/>
                     </PopoverContent>
                 </Popover>
                 

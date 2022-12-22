@@ -14,10 +14,9 @@ import useSessionStorage from '../../hooks/useSessionStorage'
 import TourGuideEditor from './TourGuideEditor/TourGuideEditor'
 import TourGuideMap from './TourGuideMap/TourGuideMap'
 import GameTicket from './GameTicket/GameTicket'
+import QRCodeModal from './QRCodeModal/QRCodeModal'
 import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import QRCodeScanner from './QRCodeScanner/QRCodeScanner'
-
 const TourGuideCanvas = (props) => {
 
     const { block, tourguide } = props
@@ -99,7 +98,7 @@ const TourGuideCanvas = (props) => {
 
                 }
 
-                <QRCodeScanner />
+                <QRCodeModal />
 
             </OuterContainer>
             

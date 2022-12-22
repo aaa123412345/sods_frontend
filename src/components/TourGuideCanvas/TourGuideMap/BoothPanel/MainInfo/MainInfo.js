@@ -8,7 +8,7 @@ import { faLocationDot, faUser, faVrCardboard } from '@fortawesome/free-solid-sv
 import { connect, useDispatch } from 'react-redux'
 import EditorButton from '../../../common/EditorButton/EditorButton'
 import { updateVRBoothID } from '../../../../../redux/vrTour/vtTour.action'
-import { openQRScanner } from '../../../../../redux/tourguide/tourguide.action'
+import { openQRModal } from '../../../../../redux/modal/modal.action'
 
 const MainInfo = (props) => {
   
@@ -25,8 +25,7 @@ const MainInfo = (props) => {
     }
 
     const goto_scanner = () => {
-        console.log('open scanner')
-        dispatch(openQRScanner())
+        dispatch(openQRModal())
     }
 
     const goto_vrTour = () => {

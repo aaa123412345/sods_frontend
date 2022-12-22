@@ -1,31 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
-import { Box, Flex,Heading, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex,Heading, Image, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import EditorButton from '../common/EditorButton/EditorButton'
 import { useDispatch, connect } from 'react-redux'
-import { closeQRScanner } from '../../../redux/tourguide/tourguide.action'
 
 import { QrReader } from 'react-qr-reader'
+import QRCode from 'qrcode';
+import { closeQRModal } from '../../../redux/modal/modal.action'
 
 const MotionFlex = motion(Flex); 
 
 const QRCodeScanner = (props) => {
 
-    const { tourguide }  = props
-    const { isOpenScanner } = tourguide
+    const { modal }  = props
+    const { isQRCode, qrID } = modal
 
     const dispatch = useDispatch()
 
     // chakra hooks
     const bg = useColorModeValue("white", "black")
 
+    const [qrCode, setQRCode] = useState(null) 
+
     const close_modal = () => {
 
-        dispatch(closeQRScanner())
+        dispatch(closeQRModal())
 
     }
 
@@ -34,9 +37,27 @@ const QRCodeScanner = (props) => {
             window.location.replace('game/'+result?.text); // result is boothID
         if (!!error) 
           console.info(error);
-      }
+    }
 
-    return !isOpenScanner ? <></> : (
+    useEffect(()=>{
+        setQRCode(null)
+    }, [qrID])
+
+    useEffect(()=>{
+
+        if(qrCode === null && qrID !== null){
+
+            QRCode.toDataURL(qrID.toString())
+            .then(code => {
+                setQRCode(code)
+                console.log('code: ', code)
+            })
+            .catch(err => {console.error(err)})
+        }
+            
+    },[qrCode, qrID])
+
+    return !isQRCode ? <></> : (
         <Overlay as={MotionFlex} initial={{opacity: 0}} animate={{opacity: 1}} transition={{ duration: .25 }}>
 
             <Modal as={MotionFlex} initial={{y: 200}} animate={{y: 0}} transition={{ duration: .25 }}
@@ -49,11 +70,16 @@ const QRCodeScanner = (props) => {
 
                 <Content>
 
-                    <QrReader
-                        delay={300}
-                        style={{ width: '100%' }}
-                        onResult={(result, error) => onResult(result, error)}
-                        />
+                    {
+                        qrID !== null ?
+                        <QRCodeImage src={qrCode} borderRadius={25} />
+                        :
+                        <QrReader
+                            delay={300}
+                            style={{ width: '100%' }}
+                            onResult={(result, error) => onResult(result, error)}
+                            />
+                    }
                 
                 </Content>
 
@@ -113,5 +139,12 @@ const Content = styled(Box)`
     width: 100%;
     height: 100%;
     box-shadow: 0px -25px 25px -25px rgba(0, 0, 0, .2) inset;
+
+`
+
+const QRCodeImage = styled(Image)`
+
+    margin: 1em auto; 
+    width: 100%; height: 100%;
 
 `
