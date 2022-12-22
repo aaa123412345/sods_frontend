@@ -1,4 +1,4 @@
-import { CLOSE_MODAL, OPEN_MODAL, UPDATE_MODAL } from './modal.action'
+import { CLEAR_ERROR_LIST, CLOSE_MODAL, OPEN_MODAL, UPDATE_ERROR_LIST, UPDATE_MODAL } from './modal.action'
 import { initModalState } from './modal.state'
 
 const modalReducer = (state = initModalState, action) => {
@@ -14,6 +14,10 @@ const modalReducer = (state = initModalState, action) => {
             return { ...state, isOpen: false }
         case UPDATE_MODAL:
             return { ...state, ...action.config }
+        case UPDATE_ERROR_LIST:
+            return { ...state, errorList: action.errorList }
+        case CLEAR_ERROR_LIST:
+            return { ...state, errorList: [] }
         default:
             return state
     }

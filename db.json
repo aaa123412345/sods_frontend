@@ -8,10 +8,12 @@
         "type": "survey",
         "totalpart": 2,
         "tittle": "XXX survey",
-        "partKey":["1","2"],
-        "allowGoBack":true
+        "partKey": [
+          "1",
+          "2"
+        ],
+        "allowGoBack": true
       },
-      
       "questionset": {
         "1": [
           {
@@ -86,9 +88,8 @@
     "data": {
       "page": {
         "useBootstrap": true,
-        "title":"Server Wecome",
-        "style":{
-        }
+        "title": "Server Wecome",
+        "style": {}
       },
       "element": [
         {
@@ -121,9 +122,9 @@
     "data": {
       "page": {
         "useBootstrap": false,
-        "title":"Survey Editor",
-        "style":{
-          "overflowY":"hidden"
+        "title": "Survey Editor",
+        "style": {
+          "overflowY": "hidden"
         }
       },
       "element": [
@@ -151,9 +152,8 @@
       "page": {
         "useBootstrap": true,
         "useHeader": true,
-        "title":"About",
-        "style":{
-        }
+        "title": "About",
+        "style": {}
       },
       "element": [
         {
@@ -229,9 +229,8 @@
       "page": {
         "useBootstrap": true,
         "useHeader": true,
-        "title":"Award",
-        "style":{
-        }
+        "title": "Award",
+        "style": {}
       },
       "element": [
         {
@@ -239,12 +238,32 @@
           "rank": 1,
           "subrank": 1,
           "table": {
-            "head":["Award","Member","Date"],
-            "data":[
-              {"Award":"A Award","Member":"Good Student","Date":"19 May 2010"},
-              {"Award":"B Award","Member":"Teacher","Date":"19 Dec 2020"},
-              {"Award":"V Award","Member":"People","Date":"19 Oct 2030"},
-              {"Award":"D Award","Member":"XXX","Date":"19 May 2040"}
+            "head": [
+              "Award",
+              "Member",
+              "Date"
+            ],
+            "data": [
+              {
+                "Award": "A Award",
+                "Member": "Good Student",
+                "Date": "19 May 2010"
+              },
+              {
+                "Award": "B Award",
+                "Member": "Teacher",
+                "Date": "19 Dec 2020"
+              },
+              {
+                "Award": "V Award",
+                "Member": "People",
+                "Date": "19 Oct 2030"
+              },
+              {
+                "Award": "D Award",
+                "Member": "XXX",
+                "Date": "19 May 2040"
+              }
             ]
           },
           "bootstrap": {
@@ -270,10 +289,10 @@
       "page": {
         "useBootstrap": true,
         "useHeader": true,
-        "title":"Survey",
-        "style":{
-          "color":"black",
-          "backgroundColor":"white"
+        "title": "Survey",
+        "style": {
+          "color": "black",
+          "backgroundColor": "white"
         }
       },
       "element": [
@@ -300,9 +319,8 @@
       "page": {
         "useBootstrap": true,
         "useHeader": true,
-        "title":"Share",
-        "style":{
-        }
+        "title": "Share",
+        "style": {}
       },
       "element": [
         {
@@ -336,10 +354,9 @@
     "data": {
       "page": {
         "useBootstrap": false,
-        "useHeader": false,
-        "title":"Tourguide",
-        "style":{
-        }
+        "useHeader": true,
+        "title": "Tourguide",
+        "style": {}
       },
       "element": [
         {
@@ -366,9 +383,8 @@
     "data": {
       "page": {
         "useBootstrap": false,
-        "title":"Tourguide",
-        "style":{
-        }
+        "title": "Tourguide",
+        "style": {}
       },
       "element": [
         {
@@ -425,7 +441,6 @@
                 "eng": "/public/survey/S1234567890"
               }
             }
-            
           ]
         },
         {
@@ -702,14 +717,14 @@
     "msg": "OK",
     "data": [
       {
-        "image": "/images/test-floor-plan-1.jpg",
         "region": "1 Floor",
+        "image": "/images/test-floor-plan-1.jpg",
         "id": 1
       },
       {
-        "image": "/images/test-floor-plan-2.jpg",
         "region": "2 Floor",
-        "id": 2
+        "image": "/images/test-floor-plan-2.jpg",
+        "id": 1
       }
     ]
   },

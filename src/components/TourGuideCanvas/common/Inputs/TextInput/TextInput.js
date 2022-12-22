@@ -1,19 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect, useDispatch } from 'react-redux'
+import { updateIsError } from '../../../../../redux/modal/modal.action'
 
 const TextInput = (props) => {
 
     const { 
-        isTextArea = false, 
+        index, isTextArea = false, 
         faIcon, label, names, placeholder, 
-        form, update
+        form, modal, update
     } = props
+    const { errorList } = modal
     const dispatch = useDispatch()
 
     const data = form[names.form]
+
+    const [isErr, setIsErr] = useState(false)
+    const border = isErr || errorList.includes(index) ? 'red' : 'gray'
 
     const handle_onChange = (e) => {
 
@@ -21,9 +26,9 @@ const TextInput = (props) => {
         let newData = {...data}
         newData[names.field] = value
         dispatch(update(newData))
-
+        setIsErr(value.length === 0)
+        
     }
-
 
     return (
 
@@ -37,7 +42,8 @@ const TextInput = (props) => {
             {
 
                 isTextArea?
-                <CustomInputField
+                <CustomInputField 
+                    borderColor={border}
                     borderRadius={25}
                     name={names.field}
                     value={data[names.field]} 
@@ -46,6 +52,7 @@ const TextInput = (props) => {
                     />
                 :
                 <CustomInputField
+                    borderColor={border}
                     borderRadius={25}
                     name={names.field}
                     value={data[names.field]} 
@@ -61,7 +68,8 @@ const TextInput = (props) => {
 
 const mapStateToProps = state => {
     return {
-      form: state.form
+      form: state.form,
+      modal: state.modal
     };
 };
 const mapDispatchToProps = dispatch => ({

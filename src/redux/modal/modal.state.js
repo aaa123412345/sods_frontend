@@ -6,6 +6,6 @@ export const initModalState = {
     method: '',
     name: "",
     id: null,
-    isError: false,
+    errorList: [],
 
 }

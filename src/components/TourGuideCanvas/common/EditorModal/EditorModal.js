@@ -11,7 +11,7 @@ import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
 import { booth as boothTemplate , floorplan as floorplanTemplate } from '../../../../data/formTemplates'
 import { resetData } from '../../../../redux/form/form.action'
-import { closeModal, updateModal } from '../../../../redux/modal/modal.action'
+import { clearErrorList, closeModal, updateModal } from '../../../../redux/modal/modal.action'
 
 const MotionFlex = motion(Flex); 
 
@@ -43,6 +43,7 @@ const EditorModal = (props) => {
             setBoothSession(boothTemplate)
 
         dispatch(resetData())
+        dispatch(clearErrorList())
         dispatch(closeModal())
 
     }
@@ -76,6 +77,7 @@ const EditorModal = (props) => {
                     pages[page].components.map((modalElement, index) => {
                         return React.createElement(modalElement.type, {
                             key: index,
+                            index: index,
                             ...modalElement.props      
                         })
                     })

@@ -9,11 +9,11 @@ import Toolbar from '../Toolbar/Toolbar'
 import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
-import { errorToast } from '../../../../constants/constants'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
 
 import { useDispatch, connect } from 'react-redux'
 import { updateBooths, updateFloorplans, updateRegionIndex, updateStories, updateStoryIndex } from '../../../../redux/tourguide/tourguide.action'
+import { toast_generator } from '../../../../helpers/toastGenerator'
 
 
 const ItemList = (props) => {
@@ -141,7 +141,7 @@ const ItemList = (props) => {
         setIsLoading(false)
       })
       .catch(err=>{
-        toast(errorToast)
+        toast(toast_generator())
         setError(error)
         setIsLoading(true)
       })

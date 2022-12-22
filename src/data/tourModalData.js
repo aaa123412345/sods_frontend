@@ -15,26 +15,27 @@ const tourModalData = [
 
         index: 0,
         name: "Floor Plan",
-        assignRequests: null,
         pages: [
             {
                 heading: "Your Floor Plan",
                 components: [
           
                     {
+                        index: 0,
                         type: TextInput,
                         props: {
                             faIcon: faLocationDot,
                             label: "Region Name",
+                            placeholder: "1 Floor",
                             names: {
                                 form: "floorplan",
                                 field: "region",
                             },
-                            placeholder: "1 Floor",
                             update: (data) => updateFloorplan(data)
                         }
                     },
                     {
+                        index: 1,
                         type: ImageUploader, 
                         props: {
                             faIcon: faMap,
@@ -51,26 +52,29 @@ const tourModalData = [
     {
         index: 1, 
         name: "Booth",
-        assignRequests: null,
         pages: [
             {
                 heading: "Your Booth Details",
                 components: [
 
                     {
+
+                        index: 0,
                         type: TextInput,
                         props: {
                             faIcon: faTent,
                             label: "Booth Name",
+                            placeholder: "Mathematic Booth",
                             names: {
                                 form: "booth",
                                 field: "name",
                             },
-                            placeholder: "Mathematic Booth",
                             update: (data) => updateBooth(data)
                         }
                     },
                     {
+
+                        index: 1,
                         type: TextInput,
                         props: {
                             faIcon: faLocationDot,
@@ -84,6 +88,8 @@ const tourModalData = [
                         }
                     },
                     {
+
+                        index: 2,
                         type: TextInput,
                         props: {
                             isTextArea: true,
@@ -98,6 +104,7 @@ const tourModalData = [
                         }
                     },
                     {
+                        index: 3,
                         type: NumberInput,
                         props: {
                             faIcon: faKey,
@@ -118,12 +125,13 @@ const tourModalData = [
     {
         index: 2, 
         name: "Booth",
-        assignRequests: null,
         pages: [
             {
                 heading: "Where is Your Booth?",
                 components: [
                     {
+
+                        index: 0,
                         type: TourGuideMap, 
                         props: {
                             isMarkable: false, 
@@ -137,13 +145,13 @@ const tourModalData = [
     {
         index: 3, 
         name: "Booth",
-        assignRequests: null,
         pages: [
             {
                 heading: "Your Mini Game",
                 components: [
         
                     {
+                        index: 0,
                         type: DropDownList,
                         props: {
                             fetchTarget: {
@@ -162,6 +170,7 @@ const tourModalData = [
                         }
                     },
                     {
+                        index: 1,
                         type: DropDownList,
                         props: {
                             fetchTarget: {
@@ -187,13 +196,13 @@ const tourModalData = [
 
         index: 4,
         name: "Story",
-        assignRequests: null,
         pages: [
             {
                 heading: "Your Story",
                 components: [
           
                     {
+                        index: 0,
                         type: TextInput,
                         props: {
                             faIcon: faBook,
@@ -207,6 +216,7 @@ const tourModalData = [
                         }
                     },
                     {
+                        index: 1,
                         type: TextInput,
                         props: {
                             isTextArea: true,
@@ -221,6 +231,7 @@ const tourModalData = [
                         }
                     },
                     {
+                        index: 2,
                         type: ImageUploader, 
                         props: {
                             faIcon: faImages,

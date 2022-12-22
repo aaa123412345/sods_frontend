@@ -1,13 +1,3 @@
-// modal
-export const errorToast = {
-
-    title: 'Error',
-    description: "Please try again.",
-    status: 'error',
-    containerStyle:{bg:"error"}
-
-}
-
 // vr tour
 
 export const introductionZH =  "大家好！我係導遊機械人，大家想聆聽導遊簡介可以點按我一下。依家我將會介紹依個學校設施比大家"
@@ -25,4 +15,12 @@ export const modelFloatingAnim = {
     from: '0 0 -3',
     to: '.25 .25 -3'
 
+}
+
+// functional footer
+
+export const submitLabel = {
+    post: "Create",
+    put: "Update",
+    delete: "Delete"
 }
