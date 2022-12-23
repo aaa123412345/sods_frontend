@@ -26,13 +26,12 @@ const ItemList = (props) => {
   } = props
 
   const { 
-    themeColor, host, storyIndex, regionIndex, page,
-    floorplans, booths, stories 
+    themeColor, host, storyIndex, regionIndex, page, floorplans
   } = tourguide
   const { isOpen } = modal
   const dispatch = useDispatch()
 
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   // session storage
   const [regionIndexSession, setRegionIndexSession] = useSessionStorage('regionIndex', 0)
@@ -133,12 +132,11 @@ const ItemList = (props) => {
     const refreshId = setTimeout(()=>{  
 
       let targetFloor = floorplans[regionIndex]
-      const regionStr = targetFloor !== undefined ? targetFloor.region : ""
+      const regionStr = targetFloor !== undefined ? targetFloor.region['en'] : ""
       const queryStr = isRegionFilter ? "?region=" +  regionStr : ""
       axios.get(host+path+queryStr)
       .then((res)=>{
         let data = res.data.data
-        // data = isRegionFilter && regionStr !== "" ? jsonFilter(data, "region", regionStr) : data
         update_data(data)
         setError(null)
         setIsLoading(false)

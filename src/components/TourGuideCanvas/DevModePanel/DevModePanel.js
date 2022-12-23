@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, connect } from 'react-redux'
-import { updateLanguage, updateThemeColor } from '../../../redux/tourguide/tourguide.action'
-
+import { updateThemeColor } from '../../../redux/tourguide/tourguide.action'
+import useLocalStorage from '../../../hooks/useLocalStorage'
 
 const DevModePanel = (props) => {
 
     const { tourguide } = props
-    const { themeColor, language } = tourguide
+    const { themeColor } = tourguide
 
     const dispatch = useDispatch()
 
@@ -19,7 +19,10 @@ const DevModePanel = (props) => {
 
     const { colorMode, toggleColorMode } = useColorMode()
 
+    const [langStorage, setLangStorage] = useLocalStorage("i18n-lang", 'zh')
+
     const bg = useColorModeValue('white', 'black')
+    const isShowStorage = false
 
     const [isShow, setIsShow] = useState(false)
 
@@ -31,7 +34,12 @@ const DevModePanel = (props) => {
 
         let lang = currentLang === 'zh' ? 'en' : 'zh'
         i18n.changeLanguage(lang);
-        dispatch(updateLanguage(lang))
+        setLangStorage(lang)
+        // dispatch(updateLanguage(lang))
+        
+        // avoid warnings
+        if(isShowStorage)
+            console.log(langStorage)
 
     }
 
@@ -42,9 +50,9 @@ const DevModePanel = (props) => {
     const SwitchLanuageButton = () => {
         return (
             <Button variant={themeColor} w="90px" h="50px"
-                onClick={()=>switch_lang(language)}>
+                onClick={()=>switch_lang(langStorage)}>
                     <FontAwesomeIcon icon={faGlobe} style={{marginRight: 5}} />
-                    {language === "zh" ? "Eng" : "繁"}
+                    {langStorage === "zh" ? "Eng" : "繁"}
             </Button>
         )
     }
@@ -59,7 +67,7 @@ const DevModePanel = (props) => {
             <Flex w="90%" flexWrap={'wrap'} >
                 {
                     variants.map((color, index) => (
-                        <Button h='50' w="100%" variant={color} 
+                        <Button h='50' w="100%" key={index} variant={color} 
                             flexBasis="30%" flexGrow="0" flexShrink="0"
                             onClick={()=>switch_color(color)}>
                             {color}

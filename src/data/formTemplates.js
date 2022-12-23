@@ -1,16 +1,15 @@
 export const floorplan = { 
 
-    region: "" 
+    region: { zh: "", en: "" }
 
 }
 
 export const booth = {
 
-    region: "",
-    name: "",
-    venue: "",
-    description: "",
-    passcode: '0000'
+    region: { zh: "", en: ""},
+    name: { zh: "", en: "" },
+    venue: { zh: "", en: "" },
+    description: { zh: "", en: "" }
 
 }
 
@@ -24,8 +23,8 @@ export const marker = {
 
 export const story = {
 
-    title: "",
-    content: ""
+    title: { zh: "", en: ""},
+    content: { zh: "", en: "" }
 
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
-import { Flex, Box, Image } from '@chakra-ui/react'
+import { Box, Image } from '@chakra-ui/react'
 
 import axios from 'axios';
 import { useDispatch, connect } from 'react-redux';
@@ -41,9 +41,9 @@ const TourGuideMap = (props) => {
 
         if(isMarkable){
             
-            let newMarkers = [...markers, marker]
-            let newData = { region: floorplans[regionIndex].region, booth: null, ...marker }
-            newData = markerConvertor(newData, false)
+            // let newMarkers = [...markers, marker]
+            // let newData = { region: floorplans[regionIndex].region, booth: null, ...marker }
+            // newData = markerConvertor(newData, false)
 
             // axios.post(host+path, newData)
             // .then(res=>setMarkers(newMarkers))
@@ -57,9 +57,9 @@ const TourGuideMap = (props) => {
 
         if(isMarkable){
 
-            let markerToDelete = markerConvertor(markers[index], false)
-            let newMarkers = markers
-            newMarkers.splice(index, 1)
+            // let markerToDelete = markerConvertor(markers[index], false)
+            // let newMarkers = markers
+            // newMarkers.splice(index, 1)
 
             // console.log("markerToDelete: ", `/${markerToDelete.region}/${markerToDelete.y}/${markerToDelete.x}`)
             // axios.delete(host+path+`/${markerToDelete.region}/${markerToDelete.y}/${markerToDelete.x}`)
@@ -141,7 +141,7 @@ const TourGuideMap = (props) => {
         }
         else{
             const refreshId = setTimeout(()=>{
-                const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex].region : ""
+                const regionStr = floorplans[regionIndex] !== undefined ? floorplans[regionIndex].region['en'] : ""
                 const queryStr = "?region=" + regionStr
     
                 console.log(floorplans)

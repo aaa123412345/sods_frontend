@@ -13,6 +13,7 @@ import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner'
 import { useDispatch, connect } from 'react-redux'
 import { updateStories } from '../../../../redux/tourguide/tourguide.action'
 import { useTranslation } from 'react-i18next'
+import { langGetter } from '../../../../helpers/langGetter'
 
 const StorySplider = (props) => {
 
@@ -21,7 +22,8 @@ const StorySplider = (props) => {
     const dispatch = useDispatch()
 
     const path = "story"
-    const { t, i18n } = useTranslation()
+    const lang = langGetter()
+    const { t } = useTranslation()
 
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -51,10 +53,11 @@ const StorySplider = (props) => {
 
     const CoverStory = (props) => {
         const {item} = props
+        console.log(item)
         return (
             <React.Fragment>
-                <Heading size="md" mb="1em" color="white">{item.title}</Heading>
-                <Text color="white">{item.content}</Text>
+                <Heading size="md" mb="1em" color="white">{item.title[lang]}</Heading>
+                <Text color="white">{item.content[lang]}</Text>
             </React.Fragment>
         )
     }
@@ -78,7 +81,7 @@ const StorySplider = (props) => {
             setError(null)
         }
 
-    },[])
+    },[isAdmin])
 
     useEffect(()=>{
 

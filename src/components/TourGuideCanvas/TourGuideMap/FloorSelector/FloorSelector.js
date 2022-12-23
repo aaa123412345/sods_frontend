@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Flex, Box, Heading, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Heading, useColorModeValue } from '@chakra-ui/react'
 import { updateFloorplans, updateRegionIndex } from '../../../../redux/tourguide/tourguide.action'
 import axios from 'axios'
 import { useDispatch, connect } from 'react-redux'
@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMap } from '@fortawesome/free-solid-svg-icons'
 
 import { useTranslation } from 'react-i18next';
+import { langGetter } from '../../../../helpers/langGetter'
 
 
 const FloorSelector = (props) => {
@@ -18,11 +19,12 @@ const FloorSelector = (props) => {
     const { host, themeColor, floorplans, regionIndex } = tourguide
     const dispatch = useDispatch()
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const bg = useColorModeValue('white', 'black')
 
     const path = 'floorplans'
+    const lang = langGetter()
 
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -44,7 +46,6 @@ const FloorSelector = (props) => {
             dispatch(updateFloorplans(data))
             setError(null)
             setIsLoading(false)
-            console.log('get floorplans')
     
         })
         .catch(err=>{
@@ -53,6 +54,7 @@ const FloorSelector = (props) => {
         })
 
     },[])
+
 
     console.log("regionIndex: ", regionIndex)
 
@@ -82,7 +84,7 @@ const FloorSelector = (props) => {
                         cssStyle={{width: "150px", minWidth: '150px'}}
                         bgColor={themeColor}
                         isSelected={index === regionIndex}
-                        text={floorplan.region} 
+                        text={floorplan.region[lang]} 
                         onClick={()=>{select_region(index)}} />
                 ))
             }

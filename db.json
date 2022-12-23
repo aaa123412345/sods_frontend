@@ -717,12 +717,18 @@
     "msg": "OK",
     "data": [
       {
-        "region": "1 Floor",
+        "region": {
+          "en": "1 Floor",
+          "zh": "1樓"
+        },
         "image": "/images/test-floor-plan-1.jpg",
         "id": 1
       },
       {
-        "region": "2 Floor",
+        "region": {
+          "en": "2 Floor",
+          "zh": "2樓"
+        },
         "image": "/images/test-floor-plan-2.jpg",
         "id": 1
       }
@@ -733,16 +739,33 @@
     "msg": "OK",
     "data": [
       {
-        "region": "1 Floor",
+        "region": {
+          "region": {
+            "en": "1 Floor",
+            "zh": "1樓"
+          },
+          "image": "/images/test-floor-plan-1.jpg",
+          "id": 1
+        },
         "y": 39.15974948308411,
         "x": 24.591738712776177,
         "booth": {
-          "region": "1 Floor",
-          "name": "Let's Code",
-          "venue": "1/F, Rm 304, Computer Lab Room",
-          "description": "This is the place for students to learn computer science knowledge.",
-          "passcode": 1234,
-          "gameType": null,
+          "region": {
+            "en": "1 Floor",
+            "zh": "1樓"
+          },
+          "name": {
+            "en": "Let's Code",
+            "zh": "齊來Coding"
+          },
+          "venue": {
+            "en": "1/F, Room 107, Computer Lab",
+            "zh": "1樓, 107室, 電腦室"
+          },
+          "description": {
+            "en": "Students are always learning Coding here.",
+            "zh": "這裏是學生平日學習電腦的地方。"
+          },
           "id": 1
         },
         "id": 1
@@ -754,29 +777,23 @@
     "msg": "OK",
     "data": [
       {
-        "region": "1 Floor",
-        "name": "Let's Code",
-        "venue": "1/F, Rm 304, Computer Lab Room",
-        "description": "This is the place for students to learn computer science knowledge.",
-        "passcode": 1234,
-        "gameType": null,
+        "region": {
+          "en": "1 Floor",
+          "zh": "1樓"
+        },
+        "name": {
+          "en": "Let's Code",
+          "zh": "齊來Coding"
+        },
+        "venue": {
+          "en": "1/F, Room 107, Computer Lab",
+          "zh": "1樓, 107室, 電腦室"
+        },
+        "description": {
+          "en": "Students are always learning Coding here.",
+          "zh": "這裏是學生平日學習電腦的地方。"
+        },
         "id": 1
-      },
-      {
-        "region": "2 Floor",
-        "name": "English Time",
-        "venue": "1/F, Rm 305, English Lab Room",
-        "description": "This is the place for students to learn computer science knowledge.",
-        "passcode": 1234,
-        "id": 2
-      },
-      {
-        "region": "1 Floor",
-        "name": "Math Booth",
-        "venue": "1/F, Rm 109, 1A Classroom",
-        "description": "This is the booth to show you how students learn Maths with us in daily class. ",
-        "passcode": "0000",
-        "id": 3
       }
     ]
   },
@@ -785,26 +802,28 @@
     "msg": "OK",
     "data": [
       {
-        "title": "Jacky Study F.1 Now",
-        "content": "Jacky is a shy student. He is afraid to talk to other classmates. One day, Miss Cheung has introduced him to join the music team. Jacky then joined the team.",
+        "title": {
+          "en": "First Day of School",
+          "zh": "第一天上學"
+        },
+        "content": {
+          "en": "Mary is a shy student; and one day, Miss Chan had suggested her to ...",
+          "zh": "馬莉莉是個很害羞的學生，一天，陳老師建議他去……"
+        },
         "bg": "/test-school-photo.jpg",
         "id": 1
       },
       {
-        "title": "Jacky Become Happy",
-        "content": "After joining the team, Jacky met many friends and usually play basketball with them. He would like to say thank you to Miss Cheung, since Miss Cheung has given him a good recommendation for him to improve his social communication skill. ",
+        "title": {
+          "en": "First Day of School",
+          "zh": "第一天上學"
+        },
+        "content": {
+          "en": "Mary is a shy student; and one day, Miss Chan had suggested her to ...",
+          "zh": "馬莉莉是個很害羞的學生，一天，陳老師建議他去……"
+        },
         "bg": "/test-school-photo-01.jpeg",
         "id": 2
-      },
-      {
-        "title": "Love Go To School ",
-        "content": "Mary is a student who love go to school, because our school can provide a fruitful school life to her. ",
-        "id": 3
-      },
-      {
-        "title": "Our School Life is Fruitful",
-        "content": "Our School is very very good.",
-        "id": 4
       }
     ]
   },
@@ -817,12 +836,22 @@
       "speechEN": "This is a classroom. Students are always learning at here. There is a locker for students to store their books.",
       "image": "/images/test-classroom.jpg",
       "booth": {
-        "region": "1 Floor",
-        "name": "Let's Code",
-        "venue": "1/F, Rm 304, Computer Lab Room",
-        "description": "This is the place for students to learn computer science knowledge.",
-        "passcode": 1234,
-        "gameType": null,
+        "region": {
+          "en": "1 Floor",
+          "zh": "1樓"
+        },
+        "name": {
+          "en": "Let's Code",
+          "zh": "齊來Coding"
+        },
+        "venue": {
+          "en": "1/F, Room 107, Computer Lab",
+          "zh": "1樓, 107室, 電腦室"
+        },
+        "description": {
+          "en": "Students are always learning Coding here.",
+          "zh": "這裏是學生平日學習電腦的地方。"
+        },
         "id": 1
       }
     }

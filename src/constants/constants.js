@@ -24,3 +24,10 @@ export const submitLabel = {
     put: "update",
     delete: "delete"
 }
+
+// modal
+
+export const placeholderLang = {
+    en: "English version: ",
+    zh: "中文版本： "
+}

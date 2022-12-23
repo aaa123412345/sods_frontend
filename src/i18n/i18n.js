@@ -2,8 +2,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-// import useLocalStorage from '../hooks/useLocalStorage'
-
 import tourguideEN from './locales/en/tourguide.json';
 import tourguideZH from './locales/zh/tourguide.json'
 import floorplanEN from './locales/en/floorplan.json';
@@ -15,9 +13,7 @@ import tourguideEditorZH from './locales/zh/tourguideEditor.json'
 import modalEN from './locales/en/modal.json';
 import modalZH from './locales/zh/modal.json'
 
-
-// const [langSession, setLangSession] = useLocalStorage('language', 'en')
-// const userLang = langSession === 'en' ? "en" : "zh"
+const userLang = JSON.parse(window.localStorage.getItem('i18n-lang')) === "zh" ? 'zh' : 'en'
 
 export const supportedLanguages = ["en", "zh"]
 
@@ -44,8 +40,8 @@ const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
-  lang: 'zh', // default
-  fallbackLng: 'zh', // when no lanuage choice can be provided (e.g. jp)
+  lang: 'en', // default
+  fallbackLng: userLang, // user language 
   interpolation: {
     escapeValue: false,
   },

@@ -4,6 +4,7 @@ import { Flex, Input, Text, Textarea } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { placeholderLang } from '../../../../../constants/constants'
 
 const TextInput = (props) => {
 
@@ -19,17 +20,19 @@ const TextInput = (props) => {
     const data = form[names.form]
 
     const [isErr, setIsErr] = useState(false)
+    const supportedLang = ['zh', 'en']
     const border = isErr ? 'red' : 'gray'
 
-    const handle_onChange = (e) => {
+    const handle_onChange = (e, lang) => {
 
         const value = e.target.value
         let newData = {...data}
-        newData[names.field] = value
+        newData[names.field][lang] = value
         dispatch(update(newData))
         setIsErr(value.length === 0)
         
     }
+
 
     return (
 
@@ -42,25 +45,23 @@ const TextInput = (props) => {
             
             {
 
-                isTextArea?
-                <Textarea m="1em 0"
-                    borderColor={border}
-                    borderRadius={25}
-                    name={names.field}
-                    value={data[names.field]} 
-                    onChange={e=>handle_onChange(e)}
-                    placeholder={t(`modal.${placeholder}`)} 
-                />
-                :
-                <CustomInputField
-                    borderColor={border}
-                    borderRadius={25}
-                    name={names.field}
-                    value={data[names.field]} 
-                    onChange={e=>handle_onChange(e)}
-                    placeholder={t(`modal.${placeholder}`)} 
-                    />
+                supportedLang.map((lang, index) => {
+
+                    return isTextArea?
+                    <Textarea key={index} m=".5em 0" borderColor={border} borderRadius={25}
+                        value={data[names.field][lang]} 
+                        onChange={e=>handle_onChange(e, lang)}
+                        placeholder={placeholderLang[lang]+placeholder[lang]} />
+                    :
+                    <CustomInputField key={index} borderColor={border} borderRadius={25}
+                        value={data[names.field][lang]} 
+                        onChange={e=>handle_onChange(e, lang)}
+                        placeholder={placeholderLang[lang]+placeholder[lang]} />
+                })
+
             }
+            
+
            
         </TextFieldContainer>
 
@@ -93,7 +94,7 @@ const TextFieldContainer = styled(Flex)`
 
 const CustomInputField = styled(Input)`
 
-    margin: 1em 0;
+    margin: .5em 0;
     width: 100%; height: fit-content; 
     padding: .5em 1em; 
 

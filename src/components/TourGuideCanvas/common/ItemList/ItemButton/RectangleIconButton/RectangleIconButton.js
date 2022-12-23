@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Text } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faMap } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
+import { langGetter } from '../../../../../../helpers/langGetter'
 
 const RectangleIconButton = (props) => {
 
@@ -12,6 +13,18 @@ const RectangleIconButton = (props) => {
     const { page } = useSelector(state => state.tourguide)
 
     const isFloorEditor = page <= 1 
+
+    const lang = langGetter()
+
+    const name = isFloorEditor ? 'region' : 'title'
+
+    const [text, setText] = useState('')
+
+    useEffect(()=>{
+        setText('')
+        if(data[name] !== undefined)
+            setText(data[name][lang])
+    }, [data, lang, name])
 
     return (
         <StyledButton
@@ -24,7 +37,7 @@ const RectangleIconButton = (props) => {
                 icon={isFloorEditor ? faMap : faBook} 
                 style={{position: 'absolute', left: '1em'}}/>
 
-            <StyledText>{data[isFloorEditor ? 'region' : 'title']}</StyledText>
+            <StyledText>{text}</StyledText>
 
         </StyledButton>
     )

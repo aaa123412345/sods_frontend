@@ -25,7 +25,10 @@ const tourModalData = [
                         props: {
                             faIcon: faLocationDot,
                             label: "label-region-name",
-                            placeholder: "placeholder-floor",
+                            placeholder: {
+                                zh: "1樓",
+                                en: "1 Floor"
+                            },
                             names: {
                                 form: "floorplan",
                                 field: "region",
@@ -63,7 +66,10 @@ const tourModalData = [
                         props: {
                             faIcon: faTent,
                             label: "label-booth-name",
-                            placeholder: "placeholder-booth",
+                            placeholder: {
+                                zh: "數學攤位",
+                                en: "Mathematic Booth"
+                            },
                             names: {
                                 form: "booth",
                                 field: "name",
@@ -82,7 +88,10 @@ const tourModalData = [
                                 form: "booth",
                                 field: "venue",
                             },
-                            placeholder: "placeholder-venue",
+                            placeholder: {
+                                zh: "1樓, 101室, 1A 課室",
+                                en: "1/F, Room 101, 1A Classroom"
+                            },
                             update: (data) => updateBooth(data)
                         }
                     },
@@ -98,7 +107,10 @@ const tourModalData = [
                                 form: "booth",
                                 field: "description",
                             },
-                            placeholder: "placeholder-description",
+                            placeholder: {
+                                zh: "這裏是學生平日學習數學的地方。",
+                                en: "Students are always learning Maths here."
+                            },
                             update: (data) => updateBooth(data)
                         }
                     }
@@ -196,7 +208,10 @@ const tourModalData = [
                                 form: "story",
                                 field: "title",
                             },
-                            placeholder: "placeholder-story",
+                            placeholder: {
+                                zh: "第一天上學",
+                                en: "First Day of School"
+                            },
                             update: (data) => updateStory(data)
                         }
                     },
@@ -211,7 +226,10 @@ const tourModalData = [
                                 form: "story",
                                 field: "content",
                             },
-                            placeholder: "placeholder-story-content",
+                            placeholder: {
+                                zh: "馬莉莉是個很害羞的學生，一天，陳老師建議他去……",
+                                en: "Mary is a shy student; and one day, Miss Chan had suggested her to ..."
+                            },
                             update: (data) => updateStory(data)
                         }
                     },
