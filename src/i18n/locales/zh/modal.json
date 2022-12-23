@@ -1,3 +1,25 @@
 {
+    "hint-upload": "拖放/點擊上載圖片",
+
+    "heading-floorplan": "你的平面圖",
+    "label-region-name": "區域名稱",
+    "label-upload-map": "上載平面圖",
+    "placeholder-floor": "1樓",
+
+    "heading-booth": "你的攤位簡介",
+    "label-booth-name": "攤位名稱",
+    "label-venue": "地點",
+    "label-description": "簡介",
+    "placeholder-booth": "數學攤位",
+    "placeholder-venue": "1樓, 101室, 1A 課室",
+    "placeholder-description": "這裏是學生平日學習數學的地方。",
+
+
+    "heading-story": "你的故事",
+    "label-story-title": "故事標題",
+    "label-story-content": "故事內容",
+    "label-upload-cover": "上載封面相片",
+    "placeholder-story": "第一天上學",
+    "placeholder-story-content": "馬莉莉是個很害羞的學生，一天，陳老師建議他去……"
     
 }

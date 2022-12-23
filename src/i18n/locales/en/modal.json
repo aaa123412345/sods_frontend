@@ -1,3 +1,24 @@
 {
+    "hint-upload": "Drag or Click to Upload Image",
+
+    "heading-floorplan": "Your Floor Plan",
+    "label-region-name": "Region Name",
+    "label-upload-map": "Upload Floor Plan",
+    "placeholder-floor": "1 Floor",
+
+    "heading-booth": "Your Booth Details",
+    "label-booth-name": "Booth Name",
+    "label-venue": "Venue",
+    "label-description": "Description",
+    "placeholder-booth": "Mathematic Booth",
+    "placeholder-venue": "1/F, Room 101, 1A Classroom",
+    "placeholder-description": "Students are always learning Maths here.",
+
+    "heading-story": "Your Story",
+    "label-story-title": "Story Title",
+    "label-story-content": "Story Content",
+    "label-upload-cover": "Upload Cover Image",
+    "placeholder-story": "First Day of School",
+    "placeholder-story-content": "Mary is a shy student; and one day, Miss Chan had suggested her to ..."
     
 }

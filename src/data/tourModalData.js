@@ -17,7 +17,7 @@ const tourModalData = [
         name: "Floor Plan",
         pages: [
             {
-                heading: "Your Floor Plan",
+                heading: "heading-floorplan",
                 components: [
           
                     {
@@ -25,8 +25,8 @@ const tourModalData = [
                         type: TextInput,
                         props: {
                             faIcon: faLocationDot,
-                            label: "Region Name",
-                            placeholder: "1 Floor",
+                            label: "label-region-name",
+                            placeholder: "placeholder-floor",
                             names: {
                                 form: "floorplan",
                                 field: "region",
@@ -39,7 +39,7 @@ const tourModalData = [
                         type: ImageUploader, 
                         props: {
                             faIcon: faMap,
-                            label: "Upload Floor Plan"
+                            label: "label-upload-map"
                         }
                     }
                            
@@ -54,7 +54,7 @@ const tourModalData = [
         name: "Booth",
         pages: [
             {
-                heading: "Your Booth Details",
+                heading: "heading-booth",
                 components: [
 
                     {
@@ -63,8 +63,8 @@ const tourModalData = [
                         type: TextInput,
                         props: {
                             faIcon: faTent,
-                            label: "Booth Name",
-                            placeholder: "Mathematic Booth",
+                            label: "label-booth-name",
+                            placeholder: "placeholder-booth",
                             names: {
                                 form: "booth",
                                 field: "name",
@@ -78,12 +78,12 @@ const tourModalData = [
                         type: TextInput,
                         props: {
                             faIcon: faLocationDot,
-                            label: "Venue",
+                            label: "label-venue",
                             names: {
                                 form: "booth",
                                 field: "venue",
                             },
-                            placeholder: "1/F, Rm 304, Computer Room",
+                            placeholder: "placeholder-venue",
                             update: (data) => updateBooth(data)
                         }
                     },
@@ -94,29 +94,15 @@ const tourModalData = [
                         props: {
                             isTextArea: true,
                             faIcon: faAlignLeft,
-                            label: "Description",
+                            label: "label-description",
                             names: {
                                 form: "booth",
                                 field: "description",
                             },
-                            placeholder: "This is the place for students to learn Maths.",
+                            placeholder: "placeholder-description",
                             update: (data) => updateBooth(data)
                         }
-                    },
-                    {
-                        index: 3,
-                        type: NumberInput,
-                        props: {
-                            faIcon: faKey,
-                            label: "Passcode",
-                            names: {
-                                form: "booth",
-                                field: "passcode",
-                            },
-                            placeholder: 1234,
-                            update: (data) => updateBooth(data)
-                        }
-                    },
+                    }
                     
                 ]
             },
@@ -198,7 +184,7 @@ const tourModalData = [
         name: "Story",
         pages: [
             {
-                heading: "Your Story",
+                heading: "heading-story",
                 components: [
           
                     {
@@ -206,12 +192,12 @@ const tourModalData = [
                         type: TextInput,
                         props: {
                             faIcon: faBook,
-                            label: "Story Title",
+                            label: "label-story-title",
                             names: {
                                 form: "story",
                                 field: "title",
                             },
-                            placeholder: "A Day of School",
+                            placeholder: "placeholder-story",
                             update: (data) => updateStory(data)
                         }
                     },
@@ -221,12 +207,12 @@ const tourModalData = [
                         props: {
                             isTextArea: true,
                             faIcon: faAlignLeft,
-                            label: "Story Content",
+                            label: "label-story-content",
                             names: {
                                 form: "story",
                                 field: "content",
                             },
-                            placeholder: "Mary is a shy student, and one day, Miss Chan had chatted with her about ...",
+                            placeholder: "placeholder-story-content",
                             update: (data) => updateStory(data)
                         }
                     },
@@ -235,7 +221,7 @@ const tourModalData = [
                         type: ImageUploader, 
                         props: {
                             faIcon: faImages,
-                            label: "Upload Cover Image"
+                            label: "label-upload-cover"
                         }
                     }
                            

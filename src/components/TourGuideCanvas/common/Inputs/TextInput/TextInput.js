@@ -4,6 +4,7 @@ import { Flex, Input, Text, Textarea } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect, useDispatch } from 'react-redux'
 import { updateIsError } from '../../../../../redux/modal/modal.action'
+import { useTranslation } from 'react-i18next'
 
 const TextInput = (props) => {
 
@@ -13,6 +14,8 @@ const TextInput = (props) => {
         form, update
     } = props
     const dispatch = useDispatch()
+
+    const { t } = useTranslation()
 
     const data = form[names.form]
 
@@ -35,20 +38,20 @@ const TextInput = (props) => {
 
             <Flex alignItems='center'>
                 <FontAwesomeIcon icon={faIcon} />
-                <Text ml=".5em" fontWeight="bold">{label}</Text>
+                <Text ml=".5em" fontWeight="bold">{t(`modal.${label}`)}</Text>
             </Flex>
             
             {
 
                 isTextArea?
-                <CustomInputField 
+                <Textarea m="1em 0"
                     borderColor={border}
                     borderRadius={25}
                     name={names.field}
                     value={data[names.field]} 
                     onChange={e=>handle_onChange(e)}
-                    placeholder={placeholder} 
-                    />
+                    placeholder={t(`modal.${placeholder}`)} 
+                />
                 :
                 <CustomInputField
                     borderColor={border}
@@ -56,7 +59,7 @@ const TextInput = (props) => {
                     name={names.field}
                     value={data[names.field]} 
                     onChange={e=>handle_onChange(e)}
-                    placeholder={placeholder} 
+                    placeholder={t(`modal.${placeholder}`)} 
                     />
             }
            

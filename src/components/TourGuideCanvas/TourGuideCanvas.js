@@ -17,20 +17,20 @@ import TourGuideEditor from './TourGuideEditor/TourGuideEditor'
 import TourGuideMap from './TourGuideMap/TourGuideMap'
 import GameTicket from './GameTicket/GameTicket'
 import QRCodeModal from './QRCodeModal/QRCodeModal'
-import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
+import DevModePanel from './DevModePanel/DevModePanel'
+import { faEdit, faEye, faMap, faTicket, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const TourGuideCanvas = (props) => {
 
     const { block, tourguide } = props
     const { themeColor, isAdmin } = block
-    const { language } = tourguide 
 
     // redux
     const { page } = tourguide
     const dispatch = useDispatch()
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     // session storage
     const [mapModeSession, setMapModeSession] = useSessionStorage('mapMode', !isAdmin)
@@ -65,22 +65,6 @@ const TourGuideCanvas = (props) => {
 
     }
 
-    const switch_lang = (currentLang) => {
-
-        let lang = currentLang === 'zh' ? 'en' : 'zh'
-        i18n.changeLanguage(lang);
-        dispatch(updateLanguage(lang))
-
-    }
-
-    const SwitchLanuageButton = () => {
-        return (
-            <Button position={'absolute'} top="0" left="0" zIndex="1000"
-                w="100px" h="100px"
-                onClick={()=>switch_lang(language)}>{language}</Button>
-        )
-    }
-
     useEffect(()=>{
 
         setIsMap(mapModeSession)
@@ -108,7 +92,7 @@ const TourGuideCanvas = (props) => {
                         left={!isAdmin&&-5} top={!isAdmin&&200} 
                         transform={`rotateZ(${isAdmin?'0':'-90'}deg)`}>
 
-                        <Button variant={themeColor} borderRadius={25} m="0"
+                        <Button variant={tourguide.themeColor} borderRadius={25} m="0"
                             w="150ppx" minW="150px" maxW="150px"
                             onClick={change_editMode}>
                                 <Text>{t(`floorplan.${render_label()}`)}</Text>
@@ -119,7 +103,7 @@ const TourGuideCanvas = (props) => {
 
                 }
 
-                <SwitchLanuageButton />
+                <DevModePanel />
 
                 <QRCodeModal />
 

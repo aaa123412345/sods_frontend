@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+
+import { useTranslation } from 'react-i18next'
+
 import { Flex, Box, Text, Image, useColorModeValue } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +10,8 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons'
 const ImageUploader = (props) => {
 
     const { faIcon, label } = props
+
+    const { t } = useTranslation()
 
     const previewImage = '/images/icons8-add-image-96.png'
 
@@ -34,7 +39,7 @@ const ImageUploader = (props) => {
 
             <Flex alignItems='center'>
                 <FontAwesomeIcon icon={faIcon} />
-                <Text ml=".5em" fontWeight="bold">{label}</Text>
+                <Text ml=".5em" fontWeight="bold">{t(`modal.${label}`)}</Text>
             </Flex>
 
             <ImagePreview bg={bg} borderRadius={25}>
@@ -47,7 +52,7 @@ const ImageUploader = (props) => {
                         &&
                         <>
                             <FontAwesomeIcon icon={faUpload} size={'7x'}/>
-                            <Text mt="1em">Drag or Click to Upload Image</Text>
+                            <Text mt="1em">{t('modal.hint-upload')}</Text>
                         </>
 
                     }

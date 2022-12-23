@@ -26,7 +26,6 @@ const TourGuideEditor = (props) => {
     // chakra hooks
     const bg = useColorModeValue("white", "black")
     const headerBg = useColorModeValue("gray.10", "gray.100")
-    const { colorMode, toggleColorMode } = useColorMode()
 
     // session storage
     const [pageSession, setPageSession] = useSessionStorage('page', 0)
@@ -40,14 +39,6 @@ const TourGuideEditor = (props) => {
     useEffect(()=>{
         dispatch(updatePage(pageSession))
     },[])
-
-    const DarkLightModeButton = () => {
-        return (
-            <ModeButton onClick={toggleColorMode} variant="gray" position="absolute">
-                { colorMode === 'light'? "Light":"Dark"} Mode
-            </ModeButton>
-        )
-    }
 
     const EditorHeader = () => {
         return (
@@ -71,8 +62,6 @@ const TourGuideEditor = (props) => {
                 <RightPanel />
 
                 <EditorModal pages={tourModalData[modalIndex].pages}/>
-
-                <DarkLightModeButton/>
 
             </Container>
 
@@ -109,13 +98,5 @@ const Container = styled(Flex)`
     min-height: calc(100% - 80px + 14px);
     position: relative;
     width: inherit;
-
-`
-
-const ModeButton = styled(Button)`
-
-    z-index: 999;
-    right: 5px;
-    bottom: 5px;
 
 `

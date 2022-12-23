@@ -19,7 +19,7 @@ const RightPanel = (props) => {
     const { floorplan, story } = form
     const dispatch = useDispatch()
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     // session storage
     const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)

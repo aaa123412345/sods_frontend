@@ -6,7 +6,6 @@ import { Box, Flex, useToast } from '@chakra-ui/react'
 import MyButton from '../EditorButton/EditorButton'
 import { useDispatch, connect } from 'react-redux'
 import { resetData } from '../../../../redux/form/form.action'
-import { updateErrorList } from '../../../../redux/modal/modal.action'
 import { closeModal } from '../../../../redux/modal/modal.action'
 import { toast_generator } from '../../../../helpers/toastGenerator'
 import { submitLabel } from '../../../../constants/constants'
@@ -128,8 +127,8 @@ const FunctionalFooter = (props) => {
 
             <Flex justifyContent='space-between'>
 
-                <MyButton text={t('cancel')} onClick={onClose}/>
-                <MyButton text={t(`${submitLabel[method]}`)} 
+                <MyButton text={t('tourguide.cancel')} onClick={onClose}/>
+                <MyButton text={t(`tourguide.${submitLabel[method]}`)} 
                     onClick={()=>{handle_method(method)}}
                     bgColor={method === 'delete' ? "danger" : themeColor} 
                     isDisabled={!canSubmit}/>

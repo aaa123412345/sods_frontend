@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
+import { useTranslation } from 'react-i18next'
+
 import { Box, Flex,Heading, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
@@ -23,6 +25,7 @@ const EditorModal = (props) => {
 
     const dispatch = useDispatch()
 
+    const { t } = useTranslation()
 
     // session storage
     const [modalSession, setModalSession] = useSessionStorage('modal', modal)
@@ -67,7 +70,7 @@ const EditorModal = (props) => {
                 </ProgressBar> */}
 
                 <ModalHeader>
-                    <Heading>{pages[page].heading}</Heading>
+                    <Heading>{t(`modal.${pages[page].heading}`)}</Heading>
                     <MyButton faIcon={faXmark} isCircle={true} onClick={close_modal}/>
                 </ModalHeader>
 
