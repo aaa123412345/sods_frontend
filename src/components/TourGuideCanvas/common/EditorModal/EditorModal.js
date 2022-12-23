@@ -9,9 +9,12 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import MyButton from '../EditorButton/EditorButton'
 import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
-import { useDispatch, connect } from 'react-redux'
+
 import useSessionStorage from '../../../../hooks/useSessionStorage'
+
 import { booth as boothTemplate , floorplan as floorplanTemplate } from '../../../../data/formTemplates'
+
+import { useDispatch, connect } from 'react-redux'
 import { resetData } from '../../../../redux/form/form.action'
 import { clearErrorList, closeModal, updateModal } from '../../../../redux/modal/modal.action'
 
@@ -27,6 +30,8 @@ const EditorModal = (props) => {
 
     const { t } = useTranslation()
 
+    const isShowSession = false
+
     // session storage
     const [modalSession, setModalSession] = useSessionStorage('modal', modal)
     const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
@@ -34,7 +39,7 @@ const EditorModal = (props) => {
 
     // chakra hooks
     const bg = useColorModeValue("white", "black")
-    const progressBg = useColorModeValue("gray", "gray.100")
+    // const progressBg = useColorModeValue("gray", "gray.100")
 
 
     const close_modal = () => {
@@ -49,13 +54,19 @@ const EditorModal = (props) => {
         dispatch(clearErrorList())
         dispatch(closeModal())
 
+        // avoid compiled warnings
+        if(isShowSession){
+            console.log(floorplanSession)
+            console.log(boothSession)
+        }
+
     }
 
     useEffect(()=>{
 
         dispatch(updateModal(modalSession))
 
-    },[])
+    },[dispatch, modalSession])
 
     return !isOpen ? <></> : (
         <Overlay alignItems={{base: 'flex-end', md: 'center'}} 
@@ -152,9 +163,9 @@ const Content = styled(Box)`
 
 `
 
-const ProgressBar = styled(Flex)``
-const Progress = styled(Flex)`
+// const ProgressBar = styled(Flex)``
+// const Progress = styled(Flex)`
 
-    transition: all .1s linear .25s;
+//     transition: all .1s linear .25s;
 
-`
+// `

@@ -21,6 +21,8 @@ const RightPanel = (props) => {
 
     const { t } = useTranslation()
 
+    const isShowSession = false
+
     // session storage
     const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
     const [storySession, setStorySession] = useSessionStorage('story', story)
@@ -41,14 +43,16 @@ const RightPanel = (props) => {
         let floorplanPayload = {...floorplans[regionIndex]}
         let storyPayload = {...stories[storyIndex]} 
 
+        let modalIndex = isTicketEditor ? 4 : 0
+        let path = isTicketEditor ? 'story':'floorplans'
+        let name = isTicketEditor ? 'story' : 'floorplan'
+        let id = isTicketEditor ? storyPayload.id : floorplanPayload.id
+
         let modalPayload = {
 
-            page: 0,
-            modalIndex: isTicketEditor ? 4 : 0,
-            path: isTicketEditor ? 'story':'floorplans',
-            method: "put",
-            name: isTicketEditor ? 'story' : 'floorplan',
-            id: isTicketEditor ? storyPayload.id : floorplanPayload.id
+            page: 0, modalIndex: modalIndex,
+            path: path, method: "put",
+            name: name, id: id
 
         }
         
@@ -58,6 +62,12 @@ const RightPanel = (props) => {
         }else{
             setFloorplanSession(floorplanPayload)
             dispatch(updateFloorplan(floorplanPayload))
+        }
+
+        // avoid compiled warnings
+        if(isShowSession){
+            console.log(floorplanSession)
+            console.log(storySession)
         }
 
         setModalSession({...modalSession, ...modalPayload})
@@ -71,8 +81,8 @@ const RightPanel = (props) => {
             
         
             <Toolbar type={2} 
-                categoryList={isTicketEditor ? undefined : categories}
                 heading={isTicketEditor ? t('tourguideEditor.preview-ticket') : undefined}
+                categoryList={isTicketEditor ? undefined : categories}
                 optionList={ [{text: t(`tourguideEditor.edit-${isTicketEditor ? "story" : 'region'}`), faIcon: faPen, onClick: onOpen}]} />
 
 
@@ -81,12 +91,7 @@ const RightPanel = (props) => {
                 {
                     tourPageData[page].components.map((component, index) => {
 
-                        var props = {
-
-                            key: index, 
-                            ...component.props,
-                            
-                        }
+                        var props = { key: index, ...component.props }
 
                         // extra properties
                         if(page === 0){

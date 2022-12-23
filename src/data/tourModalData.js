@@ -1,9 +1,8 @@
-import { faAlignLeft, faBook, faGamepad, faKey, faLocationDot, faTent } from "@fortawesome/free-solid-svg-icons";
+import { faAlignLeft, faBook, faGamepad, faLocationDot, faTent } from "@fortawesome/free-solid-svg-icons";
 import { faImages, faMap } from "@fortawesome/free-regular-svg-icons";
 
 import TextInput from "../components/TourGuideCanvas/common/Inputs/TextInput/TextInput";
 import ImageUploader from "../components/TourGuideCanvas/common/Inputs/ImageUploader/ImageUploader";
-import NumberInput from "../components/TourGuideCanvas/common/Inputs/NumberInput/NumberInput";
 import DropDownList from "../components/TourGuideCanvas/common/Inputs/DropDownList/DropDownList";
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
 

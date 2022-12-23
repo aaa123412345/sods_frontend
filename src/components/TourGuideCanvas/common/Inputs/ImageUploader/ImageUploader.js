@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { useTranslation } from 'react-i18next'
 
-import { Flex, Box, Text, Image, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Text, Image, useColorModeValue } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
@@ -12,8 +12,6 @@ const ImageUploader = (props) => {
     const { faIcon, label } = props
 
     const { t } = useTranslation()
-
-    const previewImage = '/images/icons8-add-image-96.png'
 
     const [image, setImage] = useState("")
 

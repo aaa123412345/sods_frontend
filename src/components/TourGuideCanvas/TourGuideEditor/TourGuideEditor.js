@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { Flex, Box, Heading, Button, useColorModeValue, useColorMode } from '@chakra-ui/react'
+import { Flex, Heading, Button, useColorModeValue } from '@chakra-ui/react'
 
 import EditorModal from '../common/EditorModal/EditorModal'
 import RightPanel from './RightPanel/RightPanel'
@@ -21,7 +21,7 @@ const TourGuideEditor = (props) => {
     const { modalIndex } = modal
     const dispatch = useDispatch()
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     // chakra hooks
     const bg = useColorModeValue("white", "black")
@@ -38,7 +38,7 @@ const TourGuideEditor = (props) => {
 
     useEffect(()=>{
         dispatch(updatePage(pageSession))
-    },[])
+    },[dispatch, pageSession])
 
     const EditorHeader = () => {
         return (
@@ -56,13 +56,9 @@ const TourGuideEditor = (props) => {
             <EditorHeader />
             
             <Container bg={bg} flexDir={{base: 'column', md: 'row'}}>
-            
                 <LeftPanel />
-                
                 <RightPanel />
-
                 <EditorModal pages={tourModalData[modalIndex].pages}/>
-
             </Container>
 
         </React.Fragment>

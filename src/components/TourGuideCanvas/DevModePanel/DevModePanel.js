@@ -15,7 +15,7 @@ const DevModePanel = (props) => {
 
     const dispatch = useDispatch()
 
-    const { t, i18n } = useTranslation()
+    const { i18n } = useTranslation()
 
     const { colorMode, toggleColorMode } = useColorMode()
 

@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect, useDispatch } from 'react-redux'
-import { updateIsError } from '../../../../../redux/modal/modal.action'
 import { useTranslation } from 'react-i18next'
 
 const TextInput = (props) => {
 
     const { 
-        index, isTextArea = false, 
+        isTextArea = false, 
         faIcon, label, names, placeholder, 
         form, update
     } = props

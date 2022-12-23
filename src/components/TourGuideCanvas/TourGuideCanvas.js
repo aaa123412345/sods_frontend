@@ -9,7 +9,7 @@ import { newTheme } from '../../theme/theme'
 import { Flex, Box, Button, Text } from '@chakra-ui/react'
 
 import { connect, useDispatch } from 'react-redux'
-import { updateHost, updateLanguage, updateThemeColor } from '../../redux/tourguide/tourguide.action'
+import { updateHost, updateThemeColor } from '../../redux/tourguide/tourguide.action'
 
 import useSessionStorage from '../../hooks/useSessionStorage'
 
@@ -18,7 +18,7 @@ import TourGuideMap from './TourGuideMap/TourGuideMap'
 import GameTicket from './GameTicket/GameTicket'
 import QRCodeModal from './QRCodeModal/QRCodeModal'
 import DevModePanel from './DevModePanel/DevModePanel'
-import { faEdit, faEye, faMap, faTicket, faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const TourGuideCanvas = (props) => {
@@ -71,7 +71,7 @@ const TourGuideCanvas = (props) => {
         dispatch(updateThemeColor(themeColor))
         dispatch(updateHost(host))
 
-    }, [window.location.pathname])
+    }, [isMap, dispatch, host, mapModeSession, themeColor])
 
     return (
         <ChakraProvider resetCSS theme={newTheme}>
@@ -95,8 +95,8 @@ const TourGuideCanvas = (props) => {
                         <Button variant={tourguide.themeColor} borderRadius={25} m="0"
                             w="150ppx" minW="150px" maxW="150px"
                             onClick={change_editMode}>
+                                <FontAwesomeIcon icon={render_icon()} style={{marginRight: '.5em'}}/>
                                 <Text>{t(`floorplan.${render_label()}`)}</Text>
-                                <FontAwesomeIcon icon={render_icon()} style={{marginLeft: 16}}/>
                         </Button>
                         
                     </Float>
