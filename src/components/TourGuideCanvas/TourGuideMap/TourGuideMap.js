@@ -13,6 +13,7 @@ import EditorButton from '../common/EditorButton/EditorButton';
 import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 import FloorSelector from './FloorSelector/FloorSelector';
 import { markerConvertor } from '../../../helpers/markerJsonConvertor';
+import AnimatedPage from '../common/AnimatedPage/AnimatedPage';
 
 const TourGuideMap = (props) => {
 
@@ -213,7 +214,7 @@ const TourGuideMap = (props) => {
 
     return (
 
-        <React.Fragment>
+        <AnimatedPage>
 
             { isClientView && <FloorSelector />}
 
@@ -260,7 +261,7 @@ const TourGuideMap = (props) => {
             }
 
             </ScrollMap>
-        </React.Fragment>
+        </AnimatedPage>
     
 
     

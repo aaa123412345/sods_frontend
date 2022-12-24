@@ -56,8 +56,8 @@ const Ticket = (props) => {
             <Content variants={slide} initial="hidden" animate="visible" exit="exit" transition={{duration: .5}}>
                 <Grid templateColumns={{base: 'repeat(2, 1fr)', md:'repeat(4, 1fr)'}} gap={0}>
                         {booths.map((booth, index)=>(
-                            <GridItem>
-                                <Stamp key={index} boothData={booth} isCollected={simData.includes(booth.id)}/>
+                            <GridItem key={index} >
+                                <Stamp boothData={booth} isCollected={simData.includes(booth.id)}/>
                             </GridItem>
                         ))}
                 </Grid>

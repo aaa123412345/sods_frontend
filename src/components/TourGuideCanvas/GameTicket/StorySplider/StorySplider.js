@@ -15,6 +15,8 @@ import { updateStories } from '../../../../redux/tourguide/tourguide.action'
 import { useTranslation } from 'react-i18next'
 import { langGetter } from '../../../../helpers/langGetter'
 
+const MotionBox = motion(Box)
+
 const StorySplider = (props) => {
 
     const { isPreviewMode = false, tourguide } = props
@@ -111,7 +113,8 @@ const StorySplider = (props) => {
 
             {
                 storyList.map((item, index) => (
-                    <StorySection ref={sectionRef[item.id]} key={index}
+                    <StorySection 
+                        ref={sectionRef[item.id]} key={index}
                         bgImg={check_isUnlocked(index) || isPreviewMode ? `url('/images/${item.bg}')` : 'gray' }>
                         <StoryBox as={motion.div} 
                             initial={{ scale: 0.4, opacity: 0, y: 150}}
@@ -150,7 +153,6 @@ const StyledCanvas = styled(Flex)`
 
 `
 
-
 const Slider = styled(Flex)`
 
     position: relative;
@@ -164,7 +166,7 @@ const Slider = styled(Flex)`
 const StorySection = styled(Box)`
 
     position: relative;
-    height: 100%; min-height: 100%;
+    height: 100%; 
 
     scroll-snap-align: center;
     flex-basis: 100%; flex-grow: 0; flex-shrink: 0;

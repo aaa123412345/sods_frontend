@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faMap } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
 import { langGetter } from '../../../../../../helpers/langGetter'
+import { motion } from 'framer-motion'
+
+
+const MotionButton = motion(Button)
 
 const RectangleIconButton = (props) => {
 
@@ -27,7 +31,7 @@ const RectangleIconButton = (props) => {
     }, [data, lang, name])
 
     return (
-        <StyledButton
+        <StyledButton initial={{y: 50, opacity: 0}} animate={{y: 0, opacity: 1}} exit={{y: 50, opacity: 0}}
             variant={variant}
             borderRadius={8}
             onClick={onClick}
@@ -45,7 +49,7 @@ const RectangleIconButton = (props) => {
 
 export default RectangleIconButton
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(MotionButton)`
 
   position: relative;
   margin: .5em 1em;

@@ -75,10 +75,9 @@ const BoothPanel = (props) => {
             <Panel bg={bg}  overflow="hidden"
                 transform={{base: `translateY(${isShowBooth? "0" : "350"}px)`, md:`translateX(${isShowBooth? "0" : "350"}px)`}}
                 w={{base: '100%', md: isShowBooth?'350px':'0px'}}
-                h={{base: isShowBooth?"350px":"0px", md: '100%'}}>
+                h={{base: isShowBooth?"350px":"0px", md: '100vh'}}>
 
                 {   page === 0 && <MainInfo setPage={setPage} boothInfo={currentBooth} themeColor={themeColor} /> }
-                {/* {   page === 1 && <MoreInfo setPage={setPage} moreInfo={moreInfo} themeColor={themeColor} /> } */}
 
             </Panel>
 
@@ -101,7 +100,7 @@ export default connect(
 const Float = styled(Flex)`
 
     position: absolute;
-    right: 0; bottom: 0;
+    right: 0; bottom: calc(-80px - 1em);
 
 `
 

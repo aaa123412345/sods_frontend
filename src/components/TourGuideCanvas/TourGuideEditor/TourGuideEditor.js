@@ -12,6 +12,7 @@ import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../hooks/useSessionStorage'
 import { updatePage } from '../../../redux/tourguide/tourguide.action'
 import { useTranslation } from 'react-i18next'
+import AnimatedPage from '../common/AnimatedPage/AnimatedPage'
 
  
 const TourGuideEditor = (props) => {
@@ -51,7 +52,7 @@ const TourGuideEditor = (props) => {
     }
 
     return (
-        <React.Fragment>
+        <AnimatedPage>
             
             <EditorHeader />
             
@@ -61,7 +62,7 @@ const TourGuideEditor = (props) => {
                 <EditorModal pages={tourModalData[modalIndex].pages}/>
             </Container>
 
-        </React.Fragment>
+        </AnimatedPage>
     )
 
 }
@@ -91,7 +92,8 @@ const HeaderContainer = styled(Flex)`
 const Container = styled(Flex)`
 
     height: fit-content; 
-    min-height: calc(100% - 80px + 14px);
+    // min-height: calc(100% - 80px + 14px);
+    min-height: calc(100% - 80px);
     position: relative;
     width: inherit;
 

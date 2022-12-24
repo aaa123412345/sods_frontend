@@ -17,6 +17,8 @@ import { toast_generator } from '../../../../helpers/toastGenerator'
 
 import { useTranslation } from 'react-i18next'
 
+import { AnimatePresence, motion } from 'framer-motion'
+
 const ItemList = (props) => {
 
   const { 
@@ -176,6 +178,7 @@ const ItemList = (props) => {
         flexWrap={{md: isCategoryList ? 'no-wrap':"wrap"}}
         overflowX={{base: 'scroll', md: "hidden"}}
         overflowY={{base: 'hidden', md: "scroll"}}>
+        <AnimatePresence>
         {
           items !== undefined && 
           items.map((item, index) => (
@@ -184,6 +187,7 @@ const ItemList = (props) => {
               onClick={()=>(select_item(index))}/>
           ))
         }
+        </AnimatePresence>
       </ScrollContent>
 
       <FunctionalFooter 
