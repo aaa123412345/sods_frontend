@@ -18,7 +18,7 @@ const Ticket = (props) => {
     const { host, themeColor } = tourguide
     
     const [booths, setBooths] = useState([])
-    const [isShow, setIsShow] = useState(true)
+    const [isShow, setIsShow] = useState(false)
     
     const { t } = useTranslation()
 
@@ -92,8 +92,8 @@ export default connect(
 
 const Card = styled(MotionBox)`
 
-    position: absolute; z-index: 1000; right: -15px;
-    width: fit-content; height: 80vh;
+    position: absolute; z-index: 1000; right: -15px; top: 100px;
+    width: fit-content; height: 70vh;
     border-radius: 25px 0px 0px 25px;
     box-shadow: 0px 5px 22px rgba(0, 0, 0, .4);
     cursor: pointer;

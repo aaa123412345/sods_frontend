@@ -62,7 +62,7 @@ const StyledButton = styled(MotionButton)`
 
 const StyledText = styled(Text)`
 
-    max-width: 120px;
+    max-width: 90px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

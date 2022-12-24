@@ -92,8 +92,8 @@ const HeaderContainer = styled(Flex)`
 const Container = styled(Flex)`
 
     height: fit-content; 
-    // min-height: calc(100% - 80px + 14px);
     min-height: calc(100% - 80px);
+    max-height: calc(100% - 80px);
     position: relative;
     width: inherit;
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Flex, Heading, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Box, Heading, useColorModeValue } from '@chakra-ui/react'
 import { updateFloorplans, updateRegionIndex } from '../../../../redux/tourguide/tourguide.action'
 import axios from 'axios'
 import { useDispatch, connect } from 'react-redux'
@@ -66,7 +66,8 @@ const FloorSelector = (props) => {
 
     return (
         
-        <FloorSelectorPanel bg={bg}>
+        <FloorSelectorPanel bg={bg} paddingRight={{base: '90px', md: "180px"}}>
+
 
             <Heading size="sm" m=".5em">
                 <FontAwesomeIcon icon={faMap} />
@@ -90,6 +91,7 @@ const FloorSelector = (props) => {
             }
 
             </Scroll>
+
         </FloorSelectorPanel>
         
     )

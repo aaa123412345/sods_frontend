@@ -174,12 +174,20 @@ const ItemList = (props) => {
 
       <Title size="sm">{t(`${heading}`)}</Title>
 
-      <ScrollContent flexDir={{base: 'row', md: isCategoryList?"column":"row"}}
-        flexWrap={{md: isCategoryList ? 'no-wrap':"wrap"}}
-        overflowX={{base: 'scroll', md: "hidden"}}
-        overflowY={{base: 'hidden', md: "scroll"}}>
+      <ScrollContent flexDir={{base: 'column', md: isCategoryList?"column":"row"}}
+        flexWrap={{base: "no-wrap", md: isCategoryList ? "no-wrap":"wrap"}}
+        overflowX="hidden" overflowY="scroll">
         <AnimatePresence>
         {
+          items !== undefined && 
+          items.map((item, index) => (
+            <ItemButton key={index} type={path} data={item}
+              variant={handle_active(index) ? isDeleteMode ? 'danger': themeColor : 'gray'}
+              onClick={()=>(select_item(index))}/>
+          ))
+        }
+        {
+          path === 'booths' &&
           items !== undefined && 
           items.map((item, index) => (
             <ItemButton key={index} type={path} data={item}
@@ -190,7 +198,7 @@ const ItemList = (props) => {
         </AnimatePresence>
       </ScrollContent>
 
-      <FunctionalFooter 
+      <FunctionalFooter
         isShow={isDeleteMode} 
         onClose={()=>{setIsDeleteMode(false); setSelectedItems([])}}
         path={path} method='delete' data={selectedItems}
@@ -217,9 +225,8 @@ export default connect(
 const ScrollContent = styled(Flex)`
 
   position: relative;
-  height: 100%; width: 100%;
+  width: 100%; flex: 1;
   padding: 1em 0em;
-  overflow: scroll;
 
 `
 

@@ -95,15 +95,13 @@ const TourGuideCanvas = (props) => {
 
                         ((page !== 2 && isAdmin) || !isAdmin)
                         &&
-                        <Float right={isAdmin&&5} bottom={isAdmin&&5}
-                            left={!isAdmin&&5} top={!isAdmin&&100} 
-                            key={4}>
+                        <Float key={4} right={5} top={5}>
 
                             <Button variant={tourguide.themeColor} borderRadius={25} m="0"
-                                w="150ppx" minW="150px" maxW="150px"
+                                w={{base: "60px", md: '150px'}}
                                 onClick={change_editMode}>
-                                    <FontAwesomeIcon icon={render_icon()} style={{marginRight: '.5em'}}/>
-                                    <Text>{t(`floorplan.${render_label()}`)}</Text>
+                                    <FontAwesomeIcon icon={render_icon()} />
+                                    <Text display={{base: 'none', md: 'block'}} marginLeft='.5em'>{t(`floorplan.${render_label()}`)}</Text>
                             </Button>
                             
                         </Float>
