@@ -794,6 +794,63 @@
           "zh": "這裏是學生平日學習電腦的地方。"
         },
         "id": 1
+      },
+      {
+        "region": {
+          "en": "1 Floor",
+          "zh": "1樓"
+        },
+        "name": {
+          "en": "Let's Code",
+          "zh": "齊來Coding"
+        },
+        "venue": {
+          "en": "1/F, Room 107, Computer Lab",
+          "zh": "1樓, 107室, 電腦室"
+        },
+        "description": {
+          "en": "Students are always learning Coding here.",
+          "zh": "這裏是學生平日學習電腦的地方。"
+        },
+        "id": 2
+      },
+      {
+        "region": {
+          "en": "1 Floor",
+          "zh": "1樓"
+        },
+        "name": {
+          "en": "Let's Code",
+          "zh": "齊來Coding"
+        },
+        "venue": {
+          "en": "1/F, Room 107, Computer Lab",
+          "zh": "1樓, 107室, 電腦室"
+        },
+        "description": {
+          "en": "Students are always learning Coding here.",
+          "zh": "這裏是學生平日學習電腦的地方。"
+        },
+        "id": 3
+      },
+      {
+        "region": {
+          "en": "1 Floor",
+          "zh": "1樓"
+        },
+        "name": {
+          "en": "Let's Code",
+          "zh": "齊來Coding"
+        },
+        "venue": {
+          "en": "1/F, Room 107, Computer Lab",
+          "zh": "1樓, 107室, 電腦室"
+        },
+        "description": {
+          "en": "Students are always learning Coding here.",
+          "zh": "這裏是學生平日學習電腦的地方。"
+        },
+        "id": 4
       }
     ]
   },

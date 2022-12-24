@@ -1,5 +1,8 @@
 {
         
-    "locking-message": "Let's visit booth and unlock story!"
+    "locking-message": "Let's visit booth and unlock story!",
+    "show-ticket": "Show Ticket",
+    "hide-ticket": "Hide Ticket",
+    "heading-ticket": "Ticket"
     
 }

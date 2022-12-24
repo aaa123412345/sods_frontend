@@ -53,7 +53,6 @@ const StorySplider = (props) => {
 
     const CoverStory = (props) => {
         const {item} = props
-        console.log(item)
         return (
             <React.Fragment>
                 <Heading size="md" mb="1em" color="white">{item.title[lang]}</Heading>

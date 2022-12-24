@@ -7,7 +7,6 @@ const formReducer = (state = initFormState, action) => {
         case UPDATE_FLOORPLAN:
             return { ...state, floorplan: action.floorplan }
         case UPDATE_BOOTH:
-            console.log("reducer: ", action.booth)
             return { ...state, booth: action.booth}
         case UPDATE_STORY:
             return { ...state, story: action.story }

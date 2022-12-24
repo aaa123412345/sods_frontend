@@ -34,6 +34,7 @@ const TourGuideCanvas = (props) => {
 
     // session storage
     const [mapModeSession, setMapModeSession] = useSessionStorage('mapMode', !isAdmin)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     // react hooks
     const [isMap, setIsMap] = useState(true)
@@ -68,10 +69,13 @@ const TourGuideCanvas = (props) => {
     useEffect(()=>{
 
         setIsMap(mapModeSession)
-        dispatch(updateThemeColor(themeColor))
-        dispatch(updateHost(host))
+        if(!isLoaded){
+            dispatch(updateThemeColor(themeColor))
+            dispatch(updateHost(host))
+            setIsLoaded(true)
+        }
 
-    }, [isMap, dispatch, host, mapModeSession, themeColor])
+    }, [isMap])
 
     return (
         <ChakraProvider resetCSS theme={newTheme}>
@@ -89,8 +93,8 @@ const TourGuideCanvas = (props) => {
                     ((page !== 2 && isAdmin) || !isAdmin)
                     &&
                     <Float right={isAdmin&&5} bottom={isAdmin&&5}
-                        left={!isAdmin&&-5} top={!isAdmin&&200} 
-                        transform={`rotateZ(${isAdmin?'0':'-90'}deg)`}>
+                        left={!isAdmin&&5} top={!isAdmin&&100} 
+                        >
 
                         <Button variant={tourguide.themeColor} borderRadius={25} m="0"
                             w="150ppx" minW="150px" maxW="150px"
@@ -103,7 +107,7 @@ const TourGuideCanvas = (props) => {
 
                 }
 
-                <DevModePanel />
+                {/* <DevModePanel /> */}
 
                 <QRCodeModal />
 

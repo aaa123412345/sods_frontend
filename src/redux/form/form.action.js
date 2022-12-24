@@ -13,7 +13,6 @@ export const updateFloorplan = (floorplan) => {
 }
 
 export const updateBooth = (booth) => {
-    console.log("action.js: ", booth)
     return { type: UPDATE_BOOTH, booth }
 }
 

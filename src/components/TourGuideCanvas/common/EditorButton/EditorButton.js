@@ -12,7 +12,8 @@ const EditorButton = (props) => {
         isCircle = false,
         isOutline = false,
         isWhiteBorder = false,
-        cssStyle = null
+        cssStyle = null,
+        circleDiameter = 45
     } = props
 
     const outline = isOutline ? "Outline" : ""
@@ -44,7 +45,7 @@ const EditorButton = (props) => {
 
     return (
         <Button ref={buttonRef}
-            w={isCircle? '45px':"100%"} maxW="250px" h="42.5px" 
+            w={isCircle? circleDiameter+"px":"100%"} maxW="250px" h={isCircle ? circleDiameter+"px" : '40px' } 
             borderRadius={isCircle ? "50%":25}
             border={isWhiteBorder?'5px solid white': ""}
             variant={currentColor.concat(outline)}

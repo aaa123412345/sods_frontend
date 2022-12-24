@@ -1,5 +1,8 @@
 {
         
-    "locking-message": "請參觀學校來解鎖故事"
+    "locking-message": "請參觀學校來解鎖故事",
+    "show-ticket": "顯示遊戲券",
+    "hide-ticket": "隱藏遊戲券",
+    "heading-ticket": "遊戲券"
     
 }
