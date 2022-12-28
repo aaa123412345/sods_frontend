@@ -7,7 +7,7 @@ import {useParams} from "react-router-dom"
 
 
 const PublicPageManager = () => {
-    let {path,subpath} = useParams();
+    let {path,subpath,lang} = useParams();
     const windowSize = useWindowSize();
    
 
@@ -21,7 +21,7 @@ const PublicPageManager = () => {
             <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
             
           
-          <PublicPageContent path={path} subpath={subpath}/>
+          <PublicPageContent path={path} subpath={subpath} lang={lang}/>
           </div>
         </div>
         )

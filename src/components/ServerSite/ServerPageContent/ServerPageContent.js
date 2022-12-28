@@ -2,7 +2,7 @@ import React from "react";
 
 
 import { useState,useEffect } from "react";
-import PageBootstrapHandler from "../../PageBuilder/BootstrapHandler/BootstrapHandler";
+import PageBootstrapHandler from "../../PageBuilder/LayoutHandler/LayoutHandler";
 import ServerNavbar from "../ServerNavbar/ServerNavbar";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 import ElementBuilder from "../../PageBuilder/ElementBuilder/ElementBuilder";

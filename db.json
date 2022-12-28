@@ -82,7 +82,7 @@
       }
     }
   },
-  "server-serverWecome": {
+  "server-serverWelcome": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -412,14 +412,14 @@
       
         "navdata": 
         [
-          {"path": "/public/about", "child": [], "navName": "About us"},
-         {"path": "", "child": [{"path": "/public/survey/S1234567890", "navName": "1"}], "navName": "Survey"}, 
+        {"path": "/public/eng/about", "child": [], "navName": "About us"},
+         {"path": "", "child": [{"path": "/public/eng/survey/S1234567890", "navName": "1"}], "navName": "Survey"}, 
          {"path": "", "child": [], "navName": "STEM"}, 
-         {"path": "/public/share", "child": [], "navName": "Student's Sharing"}, 
+         {"path": "/public/eng/share", "child": [], "navName": "Student's Sharing"}, 
          {"path": "", "child": [], "navName": "Extracurricular activities"}, 
-         {"path": "/public/award", "child": [], "navName": "Competition results"}, 
-         {"path": "/public/tourguide", "child": [], "navName": "Tourguide"}, 
-         {"path": "/server/serverWecome", "child": [], "navName": "Server"}
+         {"path": "/public/eng/award", "child": [], "navName": "Competition results"}, 
+         {"path": "/public/eng/tourguide", "child": [], "navName": "Tourguide"}, 
+         {"path": "/server/eng/serverWecome", "child": [], "navName": "Server"}
          ]
         }
   },
@@ -427,187 +427,24 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      "navdata": [
-        {
-          "navName": {
-            "chi": "統計頁面",
-            "eng": "About us"
-          },
-          "path": {
-            "chi": "",
-            "eng": ""
-          },
-          "child": []
-        },
-        {
-          "navName": {
-            "chi": "CMS管理",
-            "eng": "Subject"
-          },
-          "path": {
-            "chi": "",
-            "eng": ""
-          },
-          "child": [
-            {
-              "navName": {
-                "chi": "頁面設計",
-                "eng": "Chinese"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            },
-            {
-              "navName": {
-                "chi": "路由設定",
-                "eng": "English"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            },
-            {
-              "navName": {
-                "chi": "樣板存取",
-                "eng": "Science"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            }
-          ]
-        },
-        {
-          "navName": {
-            "chi": "問卷系統",
-            "eng": "Subject"
-          },
-          "path": {
-            "chi": "",
-            "eng": ""
-          },
-          "child": [
-            {
-              "navName": {
-                "chi": "查詢已有問卷/投票",
-                "eng": "Chinese"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            },
-            {
-              "navName": {
-                "chi": "設計問卷/投票",
-                "eng": "Chinese"
-              },
-              "path": {
-                "chi": "/server/surveyeditor",
-                "eng": "/server/surveyeditor"
-              }
-            },
-            {
-              "navName": {
-                "chi": "修改問卷/投票",
-                "eng": "English"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            },
-            {
-              "navName": {
-                "chi": "刪除問卷/投票",
-                "eng": "Science"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            }
-          ]
-        },
-        {
-          "navName": {
-            "chi": "時段預留系統",
-            "eng": "Subject"
-          },
-          "path": {
-            "chi": "",
-            "eng": ""
-          },
-          "child": [
-            {
-              "navName": {
-                "chi": "查詢已有記錄",
-                "eng": "Chinese"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            },
-            {
-              "navName": {
-                "chi": "新增時段",
-                "eng": "English"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            },
-            {
-              "navName": {
-                "chi": "修改時段",
-                "eng": "Science"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            },
-            {
-              "navName": {
-                "chi": "移除時段",
-                "eng": "Science"
-              },
-              "path": {
-                "chi": "",
-                "eng": ""
-              }
-            }
-          ]
-        },
-        {
-          "navName": {
-            "chi": "導賞團編輯器",
-            "eng": "Tourguide Editor"
-          },
-          "path": {
-            "chi": "/server/tourguide",
-            "eng": "/server/tourguide"
-          },
-          "child": []
-        },
-        {
-          "navName": {
-            "chi": "回到前台網頁",
-            "eng": "Server"
-          },
-          "path": {
-            "chi": "/",
-            "eng": "/"
-          },
-          "child": []
-        }
-      ]
+      "navdata": 
+        [
+        {"path": "/server/eng/serverWelcome", "child": [], "navName": "Surver Welcome"},
+         {"path": "", "navName": "CMS System", 
+          "child": [{"navName":"Page Design","path":""},
+                   {"navName":"Page Routing","path":""},
+                   {"navName":"Template","path":""}]}, 
+
+         {"path": "", "navName": "Survey System", 
+         "child": [{"navName":"Survey Management","path":""},
+                   {"navName":"Survey Editor","path":"/server/eng/surveyeditor"}]}, 
+
+         {"path": "/server/tourguide", "child": [], "navName": "Tourguide Editor"},
+         {"path": "/public/eng/about", "child": [], "navName": "Go Public"}
+        ]
+    
+       
+      
     }
   },
   "public-publicheader": {

@@ -1,14 +1,14 @@
 import React from "react";
 
-import BoostrapColHandler from "../BootstrapColHandler/BootstrapColHandler";
-import Row from 'react-bootstrap/Row';
+import BoostrapColHandler from "../LayoutColHandler/LayoutColHandler";
+import { Row } from "react-bootstrap";
 
 
-const BoostrapRowHandler = (data) => {
+const LayoutRowHandler = (data) => {
     
 
     return(
-       <Row>
+        <Row>
             {data['data'].map((element,index) =>  React.createElement(BoostrapColHandler,
                 {
                     data:element,
@@ -17,9 +17,9 @@ const BoostrapRowHandler = (data) => {
                     subpath: data.subpath
                 }
                 ))}
-       </Row>
+        </Row>
     )
 }
 
 
-export default BoostrapRowHandler;
+export default LayoutRowHandler;

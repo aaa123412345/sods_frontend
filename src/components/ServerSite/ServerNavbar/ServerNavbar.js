@@ -5,7 +5,7 @@ import { useState,useEffect } from "react";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
 const ServerNavbar = props =>  {
-    var lang = 'chi'
+    
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -47,7 +47,7 @@ const ServerNavbar = props =>  {
       } else if(ready) {
 
         return(
-            <CusNavbar data={items} lang={lang} pdata={props.pdata} />
+            <CusNavbar data={items} pdata={props.pdata} />
         )
       }
    

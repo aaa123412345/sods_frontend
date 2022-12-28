@@ -1,11 +1,10 @@
 import React from "react";
-import PageElementBuilder from "../ElementBuilder/ElementBuilder";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import BoostrapRowHandler from "../BootstrapRowHandler/BootstrapRowHandler";
 
-const BoostrapHandler = (data) => {
+import Container from 'react-bootstrap/Container';
+
+import BoostrapRowHandler from "../LayoutRowHandler/LayoutRowHandler";
+
+const LayoutHandler = (data) => {
     
    
     const groupedData= dataRowGrouper(data['data'])
@@ -38,4 +37,4 @@ function dataRowGrouper(data){
     return result;
 }
 
-export default BoostrapHandler;
+export default LayoutHandler;

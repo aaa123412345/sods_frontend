@@ -5,7 +5,7 @@ import { useState,useEffect } from "react";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
 const ServerSidebar = props =>  {
-    var lang = 'chi'
+    
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -47,7 +47,7 @@ const ServerSidebar = props =>  {
       } else if(ready) {
 
         return(
-            <Sidebar data={items} lang={lang} setDisplay={props.setDisplay} />
+            <Sidebar data={items} setDisplay={props.setDisplay} />
         )
       }
     
