@@ -409,108 +409,19 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      "navdata": [
-        {
-          "navName": {
-            "chi": "關於我們",
-            "eng": "About us"
-          },
-          "path": {
-            "chi": "/public/about",
-            "eng": "/public/about"
-          },
-          "child": []
-        },
-        {
-          "navName": {
-            "chi": "問卷調查",
-            "eng": "Survey"
-          },
-          "path": {
-            "chi": "",
-            "eng": ""
-          },
-          "child": [
-            {
-              "navName": {
-                "chi": "1",
-                "eng": "1"
-              },
-              "path": {
-                "chi": "/public/survey/S1234567890",
-                "eng": "/public/survey/S1234567890"
-              }
-            }
-          ]
-        },
-        {
-          "navName": {
-            "chi": "STEM學習",
-            "eng": "STEM"
-          },
-          "path": {
-            "chi": "",
-            "eng": ""
-          },
-          "child": []
-        },
-        {
-          "navName": {
-            "chi": "學生心聲",
-            "eng": "Student's Sharing"
-          },
-          "path": {
-            "chi": "/public/share",
-            "eng": "/public/share"
-          },
-          "child": []
-        },
-        {
-          "navName": {
-            "chi": "課外活動",
-            "eng": "c"
-          },
-          "path": {
-            "chi": "",
-            "eng": ""
-          },
-          "child": []
-        },
-        {
-          "navName": {
-            "chi": "比賽成積",
-            "eng": "c"
-          },
-          "path": {
-            "chi": "/public/award",
-            "eng": "/public/award"
-          },
-          "child": []
-        },
-        {
-          "navName": {
-            "chi": "導賞團",
-            "eng": "Tourguide"
-          },
-          "path": {
-            "chi": "/public/tourguide",
-            "eng": "/public/tourguide"
-          },
-          "child": []
-        },
-        {
-          "navName": {
-            "chi": "前往後台頁面",
-            "eng": "Server"
-          },
-          "path": {
-            "chi": "/server/serverWecome",
-            "eng": "/server/serverWecome"
-          },
-          "child": []
+      
+        "navdata": 
+        [
+          {"path": "/public/about", "child": [], "navName": "About us"},
+         {"path": "", "child": [{"path": "/public/survey/S1234567890", "navName": "1"}], "navName": "Survey"}, 
+         {"path": "", "child": [], "navName": "STEM"}, 
+         {"path": "/public/share", "child": [], "navName": "Student's Sharing"}, 
+         {"path": "", "child": [], "navName": "Extracurricular activities"}, 
+         {"path": "/public/award", "child": [], "navName": "Competition results"}, 
+         {"path": "/public/tourguide", "child": [], "navName": "Tourguide"}, 
+         {"path": "/server/serverWecome", "child": [], "navName": "Server"}
+         ]
         }
-      ]
-    }
   },
   "server-servernavdata": {
     "code": 200,

@@ -7,7 +7,6 @@ import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
 
 const PublicSidebar = props =>  {
-    var lang = 'chi'
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -49,7 +48,7 @@ const PublicSidebar = props =>  {
       } else if(ready) {
 
         return(
-          <Sidebar data={items} lang={lang} setDisplay={props.setDisplay}/>
+          <Sidebar data={items}  setDisplay={props.setDisplay}/>
         )
       }
     

@@ -11,13 +11,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 
-const SidebarDropdown = ({data,lang,sindex}) => {
+const SidebarDropdown = ({data,sindex}) => {
     const [toggle,setToggle] = useState(false)
     const iconStyle = {display: 'inline'}
     return(
         <>
         <button className="dropdown-btn" onClick={() => setToggle(!toggle)}>
-            {data.navName[lang]}
+            {data.navName}
             <span style= {{float:'right'}}>
                 {toggle?
                 <FontAwesomeIcon icon={faAngleUp} />:
@@ -27,7 +27,7 @@ const SidebarDropdown = ({data,lang,sindex}) => {
         </button>
 
         {toggle? <div className="dropdown-container">
-            {data.child.map((data,index)=> <SidebarChoice data={data} lang={lang} key={"sidebar-choice-"+sindex+"-"+index}/> )}
+            {data.child.map((data,index)=> <SidebarChoice data={data} key={"sidebar-choice-"+sindex+"-"+index}/> )}
            
         </div>:<span/>
        

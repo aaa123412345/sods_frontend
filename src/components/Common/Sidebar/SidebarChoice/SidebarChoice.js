@@ -1,11 +1,11 @@
 import React from "react";
 import {Link} from 'react-router-dom'
 
-const SidebarChoice = ({data,lang}) => {
+const SidebarChoice = ({data}) => {
 
    
     return(
-        <Link to={data.path[lang]}>{data.navName[lang]}</Link>
+        <Link to={data.path}>{data.navName}</Link>
        
     )
 }
