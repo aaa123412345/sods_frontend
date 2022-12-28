@@ -1,11 +1,11 @@
 import React from "react";
 import { NavDropdown } from "react-bootstrap";
 
-const CusNavbarDropdownElement = ({data,lang}) => {
+const CusNavbarDropdownElement = ({data}) => {
 
    
     return(
-        <NavDropdown.Item href={data.path[lang]}>{data.navName[lang]}</NavDropdown.Item>
+        <NavDropdown.Item href={data.path}>{data.navName}</NavDropdown.Item>
 
     )
 }

@@ -8,7 +8,7 @@ const CusNavbarbuilder = ({data}) =>  {
    
 
     const navd = data.data.navdata
-    const lang = data.lang
+    
     /*
     {data.navdata.map((data,index) => data["child"].length == 0? 
             <NavChoice data={data} lang={lang} key={"navbar-choice-"+index} />:
@@ -17,8 +17,8 @@ const CusNavbarbuilder = ({data}) =>  {
     return (
         <>
              {navd.map((data,index) => data["child"].length == 0? 
-            <NavChoice data={data} lang={lang} key={"navbar-choice-"+index} />:
-            <NavbarDropdown data={data} lang={lang} key={"navbar-dropdown-"+index} sindex={index}/>)}
+            <NavChoice data={data}  key={"navbar-choice-"+index} />:
+            <NavbarDropdown data={data}  key={"navbar-dropdown-"+index} sindex={index}/>)}
         </>
     )
     

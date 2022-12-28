@@ -5,7 +5,7 @@ import CusNavbarDropdownElement from "../CusNavbarDropdownElement/CusNavbarDropd
 
 
 
-const CusNavbarDropdown = ({data,lang,sindex}) => {
+const CusNavbarDropdown = ({data,sindex}) => {
     
 /*
  <NavDropdown title={data.Navname[lang]} id="navbarScrollingDropdown">
@@ -15,8 +15,8 @@ const CusNavbarDropdown = ({data,lang,sindex}) => {
 
     return(
         <>
-           <NavDropdown title={data.navName[lang]} id="navbarScrollingDropdown">
-              {data.child.map((Element,index) => <CusNavbarDropdownElement data={Element} lang={lang} key={"navbar-dropdown-"+sindex.toString()+"-element-"+index.toString()}></CusNavbarDropdownElement>)}
+           <NavDropdown title={data.navName} id="navbarScrollingDropdown">
+              {data.child.map((Element,index) => <CusNavbarDropdownElement data={Element}  key={"navbar-dropdown-"+sindex.toString()+"-element-"+index.toString()}></CusNavbarDropdownElement>)}
             </NavDropdown>
         </>
     )
