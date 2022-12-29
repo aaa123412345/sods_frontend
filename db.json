@@ -145,6 +145,7 @@
       ]
     }
   },
+  
   "public-about": {
     "code": 200,
     "msg": "OK",
@@ -419,7 +420,7 @@
          {"path": "", "child": [], "navName": "Extracurricular activities"}, 
          {"path": "/public/eng/award", "child": [], "navName": "Competition results"}, 
          {"path": "/public/eng/tourguide", "child": [], "navName": "Tourguide"}, 
-         {"path": "/server/eng/serverWecome", "child": [], "navName": "Server"}
+         {"path": "/server/eng/serverWelcome", "child": [], "navName": "Server"}
          ]
         }
   },

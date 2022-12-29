@@ -3,11 +3,10 @@ import React from "react";
 import PublicSidebar from "../PublicSidebar/PubllicSidebar";
 import useWindowSize from "../../../hooks/useWindowSize";
 import {useParams} from "react-router-dom"
-import PageContent from "../../PageBuilder/PageContent/PageContent";
 
 
 
-const PublicPageManager = () => {
+const UserPageManager = () => {
     let {path,subpath,lang} = useParams();
     const windowSize = useWindowSize();
    
@@ -20,10 +19,7 @@ const PublicPageManager = () => {
             <PublicSidebar setDisplay = {windowSize.width>768 ? true:false}/>
 
             <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
-            
-            <PageContent host={process.env.REACT_APP_PUBLIC_REST_HOST} 
-            path={path} subpath={subpath} lang={lang} mode={'public'}></PageContent>
-          
+              <UserPageConetent></UserPageConetent>
           </div>
         </div>
         )
@@ -31,6 +27,6 @@ const PublicPageManager = () => {
     }
 }
 
-//<PublicPageContent path={path} subpath={subpath} lang={lang}/>
 
-export default PublicPageManager;
+
+export default UserPageManager;

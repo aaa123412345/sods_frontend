@@ -12,6 +12,7 @@ import VRCanvas from "./components/VRCanvas/VRCanvas";
 
 
 
+
 function App() {
 
    
@@ -27,10 +28,12 @@ function App() {
                     <Routes>
                         
                     <Route>
+                       
                         <Route path="/public/tourguide-vr" element={<VRCanvas />}></Route> 
                         {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
                         <Route path='/public/:lang/:path' element={<PublicPageManager />}></Route> 
                         <Route path='/public/:lang/:path/:subpath' element={<PublicPageManager />}></Route> 
+
                     </Route>
                         <Route path='/server/:lang/:path' element={<ServerPageManager/>}></Route>
                         <Route path='/server/:lang/:path/:subpath' element={<ServerPageManager/>}></Route> 

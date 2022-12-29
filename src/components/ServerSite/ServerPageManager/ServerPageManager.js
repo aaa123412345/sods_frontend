@@ -2,16 +2,16 @@ import React from "react";
 import ServerSidebar from "../ServerSidebar/ServerSidebar";
 import useWindowSize from "../../../hooks/useWindowSize";
 import {useParams} from "react-router-dom"
-import {useState} from "react";
 
-import ServerPageContent from "../ServerPageContent/ServerPageContent";
+
+import PageContent from "../../PageBuilder/PageContent/PageContent";
 
 
 
 const ServerPageManager = (props) => {
     
-    let {path,subpath} = useParams();
-    const [mobile,setMoblie] = useState(false)
+    let {path,subpath,lang} = useParams();
+
     const windowSize = useWindowSize();
 
     if (typeof windowSize.width !== 'undefined'){
@@ -23,7 +23,9 @@ const ServerPageManager = (props) => {
 
             <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
                
-                <ServerPageContent path={path} subpath={subpath}/>
+                
+                <PageContent host={process.env.REACT_APP_SERVER_REST_HOST} 
+            path={path} subpath={subpath} lang={lang} mode={'private'}></PageContent>
           
           </div>
         </div>

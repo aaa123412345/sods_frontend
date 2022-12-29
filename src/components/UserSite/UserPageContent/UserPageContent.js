@@ -1,5 +1,5 @@
 import React from "react";
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+import { CircularProgress} from '@chakra-ui/react'
 
 import { useState,useEffect } from "react";
 import PageBootstrapHandler from "../../PageBuilder/LayoutHandler/LayoutHandler";
@@ -10,7 +10,7 @@ import axios from "axios";
 import PublicHeader from "../PublicHeader/PublicHeader";
 
 
-const PublicPageContent = (props) => {
+const UserPageContent = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -76,10 +76,4 @@ const PublicPageContent = (props) => {
     }
 }
 
-export default PublicPageContent;
-
-
-  
-
-  
-
+export default UserPageContent;
