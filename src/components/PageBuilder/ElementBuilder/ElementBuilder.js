@@ -7,6 +7,7 @@ import SurveySystem from "../../SurveySystem/SurveySystem";
 import SurveyEditor from "../../SurveySystem/SurverEditor/SurverEditor";
 import CResposiveTable from "../../Common/LayoutElement/CResposiveTable/CResposiveTable";
 import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
+import LoginPage from "../../LoginSystem/LoginPage";
 
 const Components = {
   ctext: CText,
@@ -16,7 +17,8 @@ const Components = {
   ctourguide: TourGuideCanvas,
   survey: SurveySystem,
   surveyeditor: SurveyEditor,
-  crestable:CResposiveTable
+  crestable:CResposiveTable,
+  cloginpage:LoginPage
 };
 
 export default block => {

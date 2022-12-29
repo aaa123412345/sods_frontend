@@ -1,4 +1,63 @@
 {
+
+  "user-login": {
+    "code": 200,
+    "msg": "OK",
+    "data": {
+      "page": {
+        "useBootstrap": false,
+        "useHeader": true,
+        "title": "Login",
+        "style": {"overflowY":"hidden"}
+      },
+      "element": [
+        {
+          "type": "cloginpage",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "themeColor": "blue",
+          "isAdmin": false
+        }
+      ]
+    }
+  },
+  "user-register": {
+    "code": 200,
+    "msg": "OK",
+    "data": {
+      "page": {
+        "useBootstrap": false,
+        "useHeader": true,
+        "title": "Tourguide",
+        "style": {}
+      },
+      "element": [
+        {
+          "type": "ctourguide",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "themeColor": "blue",
+          "isAdmin": false
+        }
+      ]
+    }
+  },
   "surveydata-S1234567890": {
     "code": 200,
     "msg": "OK",
@@ -145,6 +204,7 @@
       ]
     }
   },
+
   
   "public-about": {
     "code": 200,
@@ -413,14 +473,15 @@
       
         "navdata": 
         [
-        {"path": "/public/eng/about", "child": [], "navName": "About us"},
+         {"path": "/public/eng/about", "child": [], "navName": "About us"},
          {"path": "", "child": [{"path": "/public/eng/survey/S1234567890", "navName": "1"}], "navName": "Survey"}, 
          {"path": "", "child": [], "navName": "STEM"}, 
          {"path": "/public/eng/share", "child": [], "navName": "Student's Sharing"}, 
          {"path": "", "child": [], "navName": "Extracurricular activities"}, 
          {"path": "/public/eng/award", "child": [], "navName": "Competition results"}, 
          {"path": "/public/eng/tourguide", "child": [], "navName": "Tourguide"}, 
-         {"path": "/server/eng/serverWelcome", "child": [], "navName": "Server"}
+         {"path": "/server/eng/serverWelcome", "child": [], "navName": "Server"},
+         {"path": "/user/eng/login", "child": [], "navName": "Login"}
          ]
         }
   },

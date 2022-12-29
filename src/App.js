@@ -1,6 +1,7 @@
 import React from "react";
 import PublicPageManager from "./components/PublicSite/PublicPageManager/PublicPageManager";
 import ServerPageManager from "./components/ServerSite/ServerPageManager/ServerPageManager";
+import UserPageManager from "./components/UserSite/UserPageManager/UserPageManager";
 
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 
@@ -33,6 +34,9 @@ function App() {
                         {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
                         <Route path='/public/:lang/:path' element={<PublicPageManager />}></Route> 
                         <Route path='/public/:lang/:path/:subpath' element={<PublicPageManager />}></Route> 
+
+                        <Route path='/user/:lang/:path' element={<UserPageManager />}></Route> 
+                        <Route path='/user/:lang/:path/:subpath' element={<UserPageManager />}></Route> 
 
                     </Route>
                         <Route path='/server/:lang/:path' element={<ServerPageManager/>}></Route>
