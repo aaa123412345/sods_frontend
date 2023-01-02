@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 
 import { useTranslation } from 'react-i18next'
@@ -26,6 +27,12 @@ const ImageUploader = (props) => {
             )
         }
         reader.readAsDataURL(e.target.files[0])
+
+        console.log(e.target.files[0])
+
+        // axios.post('http://localhost:8080/images', {image: e.target.files[0]})
+        // .then(res=>console.log('succuess'))
+        // .catch(err=>console.log('error'))
 
     }
 

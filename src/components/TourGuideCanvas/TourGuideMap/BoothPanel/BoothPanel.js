@@ -100,7 +100,7 @@ export default connect(
 const Float = styled(Flex)`
 
     position: absolute;
-    right: 0; bottom: calc(-80px - 1em);
+    right: 0; bottom: 0;
 
 `
 

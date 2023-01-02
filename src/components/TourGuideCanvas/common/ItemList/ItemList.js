@@ -186,15 +186,6 @@ const ItemList = (props) => {
               onClick={()=>(select_item(index))}/>
           ))
         }
-        {
-          path === 'booths' &&
-          items !== undefined && 
-          items.map((item, index) => (
-            <ItemButton key={index} type={path} data={item}
-              variant={handle_active(index) ? isDeleteMode ? 'danger': themeColor : 'gray'}
-              onClick={()=>(select_item(index))}/>
-          ))
-        }
         </AnimatePresence>
       </ScrollContent>
 

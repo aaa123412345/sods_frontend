@@ -78,45 +78,38 @@ const TourGuideCanvas = (props) => {
 
     }, [isMap])
 
+    const ModeSwitcher = () => {
+
+        return (
+            <Float key={4} right={5} top={5}>
+                <Button variant={tourguide.themeColor} borderRadius={25} m="0" w={{base: "60px", md: '150px'}}
+                    onClick={change_editMode}>
+                        <FontAwesomeIcon icon={render_icon()} />
+                        <Text display={{base: 'none', md: 'block'}} marginLeft='.5em'>{t(`floorplan.${render_label()}`)}</Text>
+                </Button>
+            </Float>
+        )
+    }
+
     return (
         <ChakraProvider resetCSS theme={newTheme}>
+            <AnimatePresence>
+                <OuterContainer key={window.location.pathname}> 
 
-            <OuterContainer> 
+                    { isMap && <TourGuideMap /> }
 
-                <AnimatePresence>
+                    { !isMap && !isAdmin && <GameTicket /> }
 
-                    { isMap && <TourGuideMap key={1}/> }
+                    { !isMap && isAdmin && <TourGuideEditor /> }
 
-                    { !isMap && !isAdmin && <GameTicket key={2}/> }
+                    <QRCodeModal />
+                    
+                    { ((page !== 2 && isAdmin) || !isAdmin) && <ModeSwitcher /> }
 
-                    { !isMap && isAdmin && <TourGuideEditor key={3}/> }
-
-                    {
-
-                        ((page !== 2 && isAdmin) || !isAdmin)
-                        &&
-                        <Float key={4} right={5} top={5}>
-
-                            <Button variant={tourguide.themeColor} borderRadius={25} m="0"
-                                w={{base: "60px", md: '150px'}}
-                                onClick={change_editMode}>
-                                    <FontAwesomeIcon icon={render_icon()} />
-                                    <Text display={{base: 'none', md: 'block'}} marginLeft='.5em'>{t(`floorplan.${render_label()}`)}</Text>
-                            </Button>
-                            
-                        </Float>
-
-                    }
-
-                    <QRCodeModal key={5}/>
-
-                </AnimatePresence>
-
-                {/* <DevModePanel /> */}
-
-
-            </OuterContainer>
-
+                    {/* <DevModePanel /> */}
+                
+                </OuterContainer>
+            </AnimatePresence>
         </ChakraProvider>
     )
 

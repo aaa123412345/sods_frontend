@@ -1,28 +1,33 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
-import { Box, Flex, Heading, Text, theme, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Popover, PopoverTrigger, PopoverContent, PopoverBody, Box } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import EditorButton from '../../../../EditorButton/EditorButton'
-import { faAlignLeft, faGlobe, faLocationDot, faPen, faQrcode, faTent } from '@fortawesome/free-solid-svg-icons'
+import { faAlignLeft, faEllipsisVertical, faGlobe, faLocationDot, faPen, faQrcode, faTent } from '@fortawesome/free-solid-svg-icons'
 import { langGetter } from '../../../../../../../helpers/langGetter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect, useDispatch  } from 'react-redux'
 import { openModal, openQRModal, updateQRID } from '../../../../../../../redux/modal/modal.action'
 import { updateBooth } from '../../../../../../../redux/form/form.action'
 import useSessionStorage from '../../../../../../../hooks/useSessionStorage'
+import { useTranslation } from 'react-i18next'
 
-const HeaderBar = (props) => {
+const OptionsMenu = (props) => {
 
-    const { data, switchCardLang, tourguide, form, modal } = props 
+    const { data, tourguide, form, modal } = props 
     const { host } = tourguide
     const { booth } = form
 
     const dispatch = useDispatch()
 
+    const { t } = useTranslation()
+
     // session storage
     const [boothSession, setBoothSession] = useSessionStorage('booth', booth)
     const [modalSession, setModalSession] = useSessionStorage('modal', modal)
+
+    const initRef = useRef()
 
     const open_BoothModal = () => {
 
@@ -60,18 +65,22 @@ const HeaderBar = (props) => {
     
     }
 
-    const open_QRModal = () => {
-        console.log('id: ', data.id)
-        dispatch(updateQRID(data.id))
-        dispatch(openQRModal())
-    }
+
 
     return (
-      <Bar initial={{opacity: 0, y: -10}} animate={{opacity: 1, y: 0}} exit={{opacity: 0, y: 10}}>
-        <EditorButton faIcon={faPen} isCircle onClick={open_BoothModal}/>
-        <EditorButton faIcon={faQrcode} isCircle onClick={open_QRModal}/>
-        <EditorButton faIcon={faGlobe} onClick={switchCardLang} isCircle/>
-      </Bar>
+        <Box position="relative">
+            <Popover>
+                <PopoverTrigger>
+                    <EditorButton faIcon={faEllipsisVertical} isCircle cssStyle={{margin: 0, zIndex: 1000}}/>
+                </PopoverTrigger>
+                <PopoverContent mt="45px" right="50%" w="fit-content" bg="transparent" borderColor="transparent">
+                    <PopoverBody>
+                        <EditorButton faIcon={faPen} text={t('tourguideEditor.edit-booth')} onClick={open_BoothModal}/>
+                    </PopoverBody>
+                </PopoverContent>
+            </Popover>
+        </Box>
+    
     )
 
 }
@@ -87,7 +96,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   null
-)(HeaderBar)
+)(OptionsMenu)
 
 const MotionFlex = motion(Flex)
 
