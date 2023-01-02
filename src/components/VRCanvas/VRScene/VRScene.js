@@ -3,23 +3,23 @@ import 'aframe'
 import * as THREE from 'three' 
 import { Scene, Entity } from 'aframe-react'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { connect } from 'react-redux';
 import { modelFloatingAnim } from '../../../constants/constants'
 
 const VRScene = (props) => {
 
-    const { vrImage, speak } = props
+    const { vrImage, isSpeaking } = props
 
     const [actions, setActions] = useState([]) // need to store all actions; 0: idle; 1: speck
     const [storedMixer, setStoredMixer] = useState(null) // need to store mixer 
     const [isLoaded, setIsLoaded] = useState(false)
+    const [prevSpeaking, setPrevSpeaking] = useState(isSpeaking)
 
-    const boxRef = useRef(null)
+    // const boxRef = useRef(null)
         
     const modelUrl = '/assets/robot-export-v05.gltf'
     var mixer = null // for useEffect to render animation
     var clock = new THREE.Clock(); // for useEffect to render animation
-    var isSpeaking = false
+    // var isSpeaking = false
 
     const loader = new GLTFLoader()
 
@@ -30,11 +30,12 @@ const VRScene = (props) => {
         if(storedMixer !== null){
 
             storedMixer.stopAllAction() // prev action: action[0]
+            actions[index === 1 ? 0 : 1].fadeOut(.1);
             const action = actions[index] // next action: actions[1]
             console.log('actions: ', actions)
+            // action.reset();
             console.log('action: ', action)
-            action.reset();
-            action.fadeIn(.25)
+            action.fadeIn(.1)
             action.play()
 
         }
@@ -95,31 +96,41 @@ const VRScene = (props) => {
 
     useEffect(()=>{
             
-        if(isLoaded && boxRef.current !== undefined) {
-            boxRef.current.addEventListener('click', function (e) { 
-                if(!isSpeaking){
-                    isSpeaking = true    
-                    speak();
-                    play_anim(1)
-                }
-            });   
+        // if(isLoaded && boxRef.current !== undefined) {
+        //     boxRef.current.addEventListener('click', function (e) { 
+        //         if(!isSpeaking){
+        //             isSpeaking = true    
+        //             speak();
+        //             play_anim(1)
+        //         }
+        //     });   
 
-        }
+        // }
 
-        const id = setTimeout(()=>{
-            play_anim(0)
-            isSpeaking = false
-        }, 20000)
+        // const id = setTimeout(()=>{
+        //     play_anim(0)
+        //     isSpeaking = false
+        // }, 20000)
 
-        return ()=>clearTimeout(id)
+        // return ()=>clearTimeout(id)
 
     },[isLoaded])
+
+    useEffect(()=>{
+
+        if(prevSpeaking !== isSpeaking){
+            play_anim(isSpeaking?1:0)
+            setPrevSpeaking(isSpeaking)
+        }
+
+
+    },[isSpeaking])
 
     return (
         
         <Scene>
-            <a-text  position="0 1 -2.5" color="white" value="Could you explain again?" rotation="0 0 0"></a-text>
-            <a-box ref={boxRef} position="1.28 1 -2.6" scale=" 2.8 .5 .1" color="black" rotation="0 0 0"></a-box>
+            {/* <a-text position="0 1 -2.5" color="white" value="Begin" rotation="0 0 0"></a-text> */}
+            {/* <a-box ref={boxRef} position="1.28 1 -2.6" scale=" 2.8 .5 .1" color="black" rotation="0 0 0"></a-box> */}
             <Entity id="robot"  position="0 0 -3" animation__floating={modelFloatingAnim} />
             {
                 vrImage === null || vrImage === undefined ? 
@@ -127,21 +138,12 @@ const VRScene = (props) => {
                 :
                 <Entity primitive='a-sky' src={vrImage}/>
             }
-            <a-camera>
+            {/* <a-camera>
                 <a-cursor></a-cursor>
-            </a-camera>
+            </a-camera> */}
         </Scene>
         
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        vrTour: state.vrTour
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    null
-)(VRScene)
+export default VRScene

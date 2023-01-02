@@ -5,5 +5,8 @@
     "preview-ticket": "預覽故事",
     "edit-story": "編輯故事",
     "edit-region": "編輯平面圖",
-    "tourguide": "導賞指南"
+    "edit-booth": "編輯攤位",
+    "tourguide": "導賞指南",
+    "no-vr-image": "沒有VR 相片",
+    "no-vr-speech": "沒有用於VR 的講稿"
 }

@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Box, Flex, Heading, Text, theme, useColorModeValue } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { faAlignLeft, faGlobe, faLocationDot, faPen, faQrcode, faTent } from '@fortawesome/free-solid-svg-icons'
+import { faAlignLeft, faComment, faGlobe, faLocationDot, faPen, faQrcode, faTent } from '@fortawesome/free-solid-svg-icons'
 import { langGetter } from '../../../../../../helpers/langGetter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
-import HeaderBar from './HeaderBar/HeaderBar'
+import OptionsMenu from './OptionsMenu/OptionsMenu'
+import CardButtons from './CardButtons/CardButtons'
+import { useTranslation } from 'react-i18next'
 
 const BoothInfoCard = (props) => {
 
@@ -19,9 +21,12 @@ const BoothInfoCard = (props) => {
     exit: { y: 100, opacity: 0 }
   }
 
-  const bg = useColorModeValue('white', 'black')
+  // const bg = useColorModeValue('white', 'black')
+  const bg = useColorModeValue('gray.10', 'gray.100')
+  const color = useColorModeValue('black', 'white')
   const lang = langGetter()
 
+  const { t } = useTranslation()
   const [cardLang, setCardLang] = useState(lang)
 
   const switch_cardLang = () => {
@@ -30,15 +35,12 @@ const BoothInfoCard = (props) => {
 
   const Row = (props) => {
     
-    const { icon, text, isHeading } = props
+    const { icon, text, color="gray" } = props
 
     return (
-      <Flex alignItems={isHeading?'center':""}>
-        { !isHeading && <FontAwesomeIcon icon={icon} />}
-        {
-          isHeading ? <Heading>{text}</Heading>
-          : <Text marginLeft=".5em">{text}</Text>
-        }
+      <Flex alignItems='flex-start' color={color} lineHeight="1.5">
+        <FontAwesomeIcon icon={icon} />
+        <Text marginLeft=".5em">{text}</Text>
       </Flex>
     )
 
@@ -46,15 +48,28 @@ const BoothInfoCard = (props) => {
 
   return (
     <Card variants={animations} initial='initial' animate="animate" exit='exit' transition={{duration: .25}}
-        whileHover={{scale: 1.05}} whileTap={{scale: .95}}
         onClick={onClick} bg={variant==="gray"?bg:variant} color={variant==="gray"?"black":"white"} >
-        <HeaderBar data={data} switchCardLang={switch_cardLang} />
-        <Box p=".5em">
-          <Row icon={faTent} text={data.name[cardLang]} isHeading/>
-          <Line bg={themeColor}/>
+        
+      <CardHead bg={bg}>
+        <Box>
+          <Heading size="md" lineHeight="1.5" color={color}>{data.name[cardLang]}</Heading>
           <Row icon={faLocationDot} text={data.venue[cardLang]}/>
-          <Row icon={faAlignLeft} text={data.description[cardLang]}/>
         </Box>
+        <OptionsMenu data={data}  />
+      </CardHead>
+
+      <CardContent>
+        <VRImageBox bg='white'>
+          <Text p="1em">{t('tourguideEditor.no-vr-image')}</Text>
+        </VRImageBox>
+        <FontAwesomeIcon icon={faAlignLeft}/>
+        <Text color={color}>{data.description[cardLang]} </Text>
+        <FontAwesomeIcon icon={faComment}/>
+        <Text color={color}>{t('tourguideEditor.no-vr-speech')}</Text>
+      </CardContent>
+
+      <CardButtons data={data} switchCardLang={switch_cardLang} />
+
     </Card>
   )
 }
@@ -72,23 +87,39 @@ export default connect(
   null
 )(BoothInfoCard)
 
-const MotionFlex = motion(Flex)
 const MotionBox = motion(Box)
 
 const Card = styled(MotionBox)`
 
-  margin: 1em; padding: .5em;
-  border-radius: 8px;
-  box-shadow: 5px 5px 22px rgba(0, 0, 0, .15);
-  width: 300px;
-  overflow: hidden; 
+  position: relative; margin: 1em; 
+  border-radius: 25px;
+  box-shadow: 0px 0px 22px rgba(0, 0, 0, .2);
+  width: 300px; height: fit-content;
   cursor: pointer;
 
 `
 
-const Line = styled(Flex)`
+const CardHead = styled(Flex)`
 
-  height: 5px; flex: 1;
-  margin: .5em 0;
+  padding: 1em;
+  justify-content: space-between; 
+  align-items: flex-start;
+  box-shadow: 0px 22px 22px -22px rgba(0, 0, 0, .1);
+  border-radius: 25px 25px 0px 0px;
+
+`
+
+const CardContent = styled(Box)`
+
+  height: max-content;
+  padding:  1em;
+  height: 100%;
+`
+
+const VRImageBox = styled(Box)`
+
+  width: 100%;
+  border-radius: 25px;
+  margin-bottom: .5em;
 
 `

@@ -1,27 +1,29 @@
-import React, { useState, useEffect, useRef  } from 'react'
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components';
 import 'aframe'
-import { connect } from 'react-redux';
 import VRScene from './VRScene/VRScene';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { errorEN, errorZH, introductionEN, introductionZH } from '../../constants/constants';
-import axios from 'axios';
-import LoadingSpinner from '../TourGuideCanvas/common/LoadingSpinner/LoadingSpinner';
 
 const VRCanvas = (props) => {
 
-  const { vrTour, tourguide } = props
-  const { host, language } = tourguide
-  const { vrBoothID } = vrTour
+  // const { vrTour, tourguide } = props
+  // const { host, language } = tourguide
+  // const { vrBoothID } = vrTour
 
-  const path = "vr-tour"
+  // const path = "vr-tour"
 
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+  // const [error, setError] = useState(null)
+  // const [isLoading, setIsLoading] = useState(true)
   const [speech, setSpeech] = useState(null)
+  const [isReady, setIsReady] = useState(false)
+  const [isSpeaking, setIsSpeaking] = useState(window.speechSynthesis.speaking)
 
-  const onEnd = () => {};
+  const language = "en"
 
-  const { speak, speaking, voices } = useSpeechSynthesis({onEnd});
+  // const onEnd = () => {};
+
+  const { speak, speaking, voices } = useSpeechSynthesis();
 
 
   const speak_speechIn = (lang = "zh") => {
@@ -34,55 +36,84 @@ const VRCanvas = (props) => {
     sentences = speech[lang].split(regex)
     
     sentences.forEach((sentence, index) => {
-      speak({text: sentence, voice: voices[langIndex]})
+        speak({text: sentence, voice: voices[langIndex]})
     })
-    
+      
   }
+
+  const handle_initVR = () => {
+    setIsReady(true)
+  } 
 
   useEffect(() => {
 
-    axios.get(host+path)
-    .then(res=>{
-      let data = res.data.data
-      setIsLoading(false)
-      setError(null)
-      let speech_zh = introductionZH.concat(data.speechZH)
-      let speech_en = introductionEN.concat(data.speechEN)
-      let speech = { zh: speech_zh, en: speech_en }
-      setSpeech(speech)
-    })
-    .catch(err=>{
-      setError(err)
-      setIsLoading(false)
-      console.log(err)
-    })
+    // axios.get(host+path)
+    // .then(res=>{
+    // let data = res.data.data
+    //     setIsLoading(false)
+    //     setError(null)
+    // let speech_zh = introductionZH.concat(data.speechZH)
+    // let speech_en = introductionEN.concat(data.speechEN)
+    // let speech = { zh: speech_zh, en: speech_en }
+    // setSpeech(speech)
+    // })
+    // .catch(err=>{
+    //     setError(err)
+    //     setIsLoading(false)
+    //     console.log(err)
+    // })
 
-  }, [vrBoothID])
+  }, [])
 
-  if(error !== null)
-    return <div>{error.message}</div>
-    
-  if(isLoading || speech === null)
-    return <LoadingSpinner />
+  useEffect(()=>{
+
+    const id = setTimeout(()=>{
+        speak_speechIn()
+    }, 3000)
+
+    return () => clearTimeout(id)
+
+  },[isReady])
+
+  // if(error !== null)
+  //     return <div>{error.message}</div>
+      
+  // if(isLoading || speech === null)
+  //     return <LoadingSpinner />
+
+  useEffect(()=>{
+
+    const id = setInterval(()=>{
+        
+        setIsSpeaking(window.speechSynthesis.speaking)
+        
+    },1000)
+
+    return ()=>clearInterval(id)
+
+  }, [isSpeaking])
 
   return (
-  
-    
+      
     <div style={{position: 'absolute', height: '100%', width: '100%', zIndex: 2000, background: 'black'}}>
-      <VRScene speak={()=>speak_speechIn(language)} />
+    { 
+        !isReady ? 
+        <ReadyButton onClick={()=>handle_initVR()}>Click to Ready</ReadyButton> 
+        :
+        <VRScene isSpeaking={isSpeaking}/>
+        
+    }
     </div>
   
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    tourguide: state.tourguide,
-    vrTour: state.vrTour
-  };
-};
+export default VRCanvas
 
-export default connect(
-  mapStateToProps,
-  null
-)(VRCanvas)
+const ReadyButton = styled.button`
+    width: 100%; height: 100%;
+    background: white;
+    color: black;
+    font-size: 5rem;
+    cursor: pointer;
+`

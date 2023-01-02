@@ -5,5 +5,8 @@
     "preview-ticket": "Preview Story Cover", 
     "edit-story": "Edit Story",
     "edit-region": "Edit Region",
-    "tourguide": "Tour Guide"
+    "edit-booth": "Edit Booth",
+    "tourguide": "Tour Guide",
+    "no-vr-image": "No VR image",
+    "no-vr-speech": "No Speech for VR"
 }
