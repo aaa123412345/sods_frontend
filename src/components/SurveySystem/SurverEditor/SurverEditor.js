@@ -299,7 +299,7 @@ const SurveyEditor = () => {
                 
                 }
 
-                if(windowsize.width<572){
+                if(windowsize.width<992){
                     handleConfigShow()
                 }
            
@@ -407,17 +407,18 @@ const SurveyEditor = () => {
             <>
             
             <Row style={{backgroundColor:"gray",paddingTop:'10px',height:'100%'}}>
-                <Col sm={7} style={{overflowY:'scroll',height:'650px',border:'solid black'}}>
+                <Col lg={6} style={{overflowY:'scroll',height:'600px',border:'solid black'}}>
                     <SurverEditorOverall handleShow={handleShow} data={cloneDeep(surveyData)}
                      updateSurveyData={updateSurveyData} setConfig={setConfig}
                      ></SurverEditorOverall>
                 </Col>
-                <Col sm={5} style={{overflowY:'scroll',height:'650px',border:'solid black'}}>
-                    <SurveyEditorConfigurationPanel className={'d-none d-sm-block'}
+                <Col lg={6} style={{overflowY:'scroll',height:'600px',border:'solid black'}} className={'d-none d-lg-block'}>
+                    <SurveyEditorConfigurationPanel 
                     configType={configType} configData={cloneDeep(configData)} surveyData={cloneDeep(surveyData)}  cancelConfig={cancelConfig} 
                     updateConfig={updateConfig} ></SurveyEditorConfigurationPanel>
                 </Col>
 
+                                {/*Preview*/}
                 <Offcanvas show={show} onHide={handleClose} placement={'end'} style={{color:'black'}}>
                     <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Preview</Offcanvas.Title>
@@ -429,9 +430,9 @@ const SurveyEditor = () => {
                     </Offcanvas.Body>
                 </Offcanvas>
 
-
+                             {/*Config moblie version*/}
                 <Offcanvas show={configshow} onHide={handleConfigClose} 
-                placement={'end'} className={'d-block d-sm-none'}  style={{width:'100%', overflowY:'scroll',height:'650px',border:'solid black'}}>
+                placement={'end'} className={'d-block d-md-none'}  style={{width:'100%', overflowY:'scroll',height:'650px',border:'solid black'}}>
                     <Offcanvas.Header closeButton onClick={cancelConfig}>
                     <Offcanvas.Title>Configuration</Offcanvas.Title>
                     </Offcanvas.Header>
@@ -444,6 +445,10 @@ const SurveyEditor = () => {
                 </Offcanvas>
                 
             </Row>
+            
+            <Row style={{backgroundColor:"gray",height:"100px"}}>
+
+            </Row >
             </>
         )
     }
