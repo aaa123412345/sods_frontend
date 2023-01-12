@@ -3,7 +3,7 @@ import CImage from "../../Common/LayoutElement/CImage/CImage";
 import CMultipleText from "../../Common/LayoutElement/CMultipleText/CMultipleText";
 import CText from "../../Common/LayoutElement/CText/CText";
 import CVideo from "../../Common/LayoutElement/CVideo/CVideo";
-import SurveySystem from "../../SurveySystem/SurveySystem";
+
 import SurveyEditor from "../../SurveySystem/SurverEditor/SurverEditor";
 import CResposiveTable from "../../Common/LayoutElement/CResposiveTable/CResposiveTable";
 import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
@@ -15,7 +15,6 @@ const Components = {
   cvideo: CVideo,
   cmultipletext: CMultipleText,
   ctourguide: TourGuideCanvas,
-  survey: SurveySystem,
   surveyeditor: SurveyEditor,
   crestable:CResposiveTable,
   cloginpage:LoginPage

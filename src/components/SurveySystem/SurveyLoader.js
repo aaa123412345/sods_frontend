@@ -5,7 +5,7 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 
 
-const SurveySystem = (props) => {
+const SurveyLoader = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -50,6 +50,6 @@ const SurveySystem = (props) => {
 
     
 }
-export default SurveySystem;
+export default SurveyLoader;
 
 //SurveySystem => SurveyBuilder => SurveyFormmator => SurveyElementDict => SurveyCoomponent

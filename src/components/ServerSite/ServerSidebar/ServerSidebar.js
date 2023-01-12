@@ -11,7 +11,7 @@ const ServerSidebar = props =>  {
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
     
-    const host = process.env.REACT_APP_SERVER_REST_HOST
+    const host = process.env.REACT_APP_PAGE_IMPORTANT_ELEMENT_REST_HOST
     const pathname = "servernavdata"
 
     useEffect(() => {

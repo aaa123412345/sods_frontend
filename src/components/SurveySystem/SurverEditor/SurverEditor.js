@@ -40,15 +40,25 @@ const SurveyEditor = () => {
     const handleConfigClose = () => setConfigshow(false);
     const handleClose = () => setShow(false);
     const handleShow = () => {
-        var CheckResult = SurveyEditorChecker(surveyData)
-         console.log(CheckResult)
-        if(CheckResult.ready){
-            setSurveySyntax(true)
-            setShow(true)
-           
-        }else{
-            setSurveySyntax(false)
-            setShow(false)
+        var ok = true
+        if(configType!=='none'){
+            ok = confirmBox("Your unsaved configuration will be lost.")
+            if(ok){
+                cancelConfig()
+            }
+        }
+
+        if(ok){
+            var CheckResult = SurveyEditorChecker(surveyData)
+            console.log(CheckResult)
+            if(CheckResult.ready){
+                setSurveySyntax(true)
+                setShow(true)
+            
+            }else{
+                setSurveySyntax(false)
+                setShow(false)
+            }
         }
         
     };
@@ -445,7 +455,7 @@ const SurveyEditor = () => {
                 </Offcanvas>
                 
             </Row>
-            
+
             <Row style={{backgroundColor:"gray",height:"100px"}}>
 
             </Row >

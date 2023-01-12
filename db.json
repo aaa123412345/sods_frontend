@@ -466,7 +466,7 @@
       ]
     }
   },
-  "public-publicnavdata": {
+  "pageimportant-publicnavdata": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -485,7 +485,7 @@
          ]
         }
   },
-  "server-servernavdata": {
+  "pageimportant-servernavdata": {
     "code": 200,
     "msg": "OK",
     "data": {
@@ -509,7 +509,7 @@
       
     }
   },
-  "public-publicheader": {
+  "pageimportant-publicheader": {
     "code": 200,
     "msg": "OK",
     "data": {
