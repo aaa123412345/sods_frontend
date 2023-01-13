@@ -1,7 +1,7 @@
 import React from "react";
 import { CircularProgress} from '@chakra-ui/react'
 
-import { useState,useEffect } from "react";
+import { useState,useEffect,useContext } from "react";
 import PageBootstrapHandler from "../../PageBuilder/LayoutHandler/LayoutHandler";
 
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
@@ -12,15 +12,21 @@ import PublicHeader from "../../PublicSite/PublicHeader/PublicHeader";
 import PublicNavbar from "../../PublicSite/PublicNavbar/PublicNavbar";
 import ServerNavbar from "../../ServerSite/ServerNavbar/ServerNavbar";
 
+import AuthHandler from "../../Common/AuthHandler/AuthHandler";
+import { Navigate } from 'react-router-dom';
+
+import {UserContext} from '../../../App'
+
+
 
 const PageContent = ({host,path,subpath,lang,mode}) => {
+    
+    const user = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
-  
-    
     const getData = async () => {
       try{
        
@@ -47,9 +53,6 @@ const PageContent = ({host,path,subpath,lang,mode}) => {
       }
     };
       
-
-    
-
     useEffect(() => {
       getData()
     }, [host,path,lang]);
@@ -60,10 +63,17 @@ const PageContent = ({host,path,subpath,lang,mode}) => {
     } else if (!isLoaded) {
       return <CircularProgress isIndeterminate color='green.300' />;
     } else if(ready) {
-      
+      if(!AuthHandler(items.page.auth,user)){
+        alert("You do not have permission to visit this page.")
+        //Do not have login so no permission
+        if(user.userID === '') return (<Navigate replace to={"/user/"+lang+"/login"} />)
+        //User do not have permission
+        else return(<Navigate replace to={"/public/"+lang+"/about"} />)
+      }
+
       return(
         <>
-
+      
         {items.page.useHeader&&mode==="public"?<PublicHeader/>:''}
         <div className="PageContent" style={items.page.style}> 
             

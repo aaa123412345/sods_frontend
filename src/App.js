@@ -19,7 +19,7 @@ export const UserContextUpdate = createContext()
 function App() {
     const [user, setUser] = useState({
         userID:'',
-        rolePermission:[],
+        rolePermission:['system:root'],
         token:'',
         userType:''
     });

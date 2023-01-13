@@ -8,7 +8,8 @@
         "useBootstrap": false,
         "useHeader": true,
         "title": "Login",
-        "style": {"overflowY":"hidden"}
+        "style": {"overflowY":"hidden"},
+        "auth":"anonymous"
       },
       "element": [
         {
@@ -37,7 +38,8 @@
         "useBootstrap": false,
         "useHeader": true,
         "title": "Tourguide",
-        "style": {}
+        "style": {},
+        "auth":"anonymous"
       },
       "element": [
         {
@@ -212,7 +214,8 @@
         "useBootstrap": true,
         "useHeader": true,
         "title": "Template",
-        "style": {"backgroundColor":"white"}
+        "style": {"backgroundColor":"white"},
+        "auth":"anonymous"
       },
       "element": [
         {
@@ -383,7 +386,8 @@
         "useBootstrap": true,
         "useHeader": true,
         "title": "About",
-        "style": {}
+        "style": {},
+        "auth":"anonymous"
       },
       "element": [
         {
@@ -460,7 +464,8 @@
         "useBootstrap": true,
         "useHeader": true,
         "title": "Award",
-        "style": {}
+        "style": {},
+        "auth":"anonymous"
       },
       "element": [
         {
@@ -523,7 +528,8 @@
         "style": {
           "color": "black",
           "backgroundColor": "white"
-        }
+        },
+        "auth":"anonymous"
       },
       "element": [
         {
@@ -550,7 +556,8 @@
         "useBootstrap": true,
         "useHeader": true,
         "title": "Share",
-        "style": {}
+        "style": {},
+        "auth":"anonymous"
       },
       "element": [
         {
@@ -586,7 +593,8 @@
         "useBootstrap": false,
         "useHeader": true,
         "title": "Tourguide",
-        "style": {}
+        "style": {},
+        "auth":"anonymous"
       },
       "element": [
         {
@@ -639,19 +647,18 @@
     "code": 200,
     "msg": "OK",
     "data": {
-      
         "navdata": 
         [
-         {"path": "/public/eng/about", "child": [], "navName": "About us"},
-         {"path": "", "child": [{"path": "/public/eng/survey/S1234567890", "navName": "1"}], "navName": "Survey"}, 
-         {"path": "", "child": [], "navName": "STEM"}, 
-         {"path": "/public/eng/share", "child": [], "navName": "Student's Sharing"}, 
-         {"path": "", "child": [], "navName": "Extracurricular activities"}, 
-         {"path": "/public/eng/award", "child": [], "navName": "Competition results"}, 
-         {"path": "/public/eng/tourguide", "child": [], "navName": "Tourguide"}, 
-         {"path": "/server/eng/serverWelcome", "child": [], "navName": "Server"},
-         {"path": "/public/eng/template", "child": [], "navName": "Template"},
-         {"path": "/user/eng/login", "child": [], "navName": "Login"}
+         {"path": "/public/eng/about", "child": [], "navName": "About us","auth":"anonymous"},
+         {"path": "", "child": [{"path": "/public/eng/survey/S1234567890", "navName": "1","auth":"anonymous"}], "navName": "Survey","auth":"anonymous"}, 
+         {"path": "", "child": [], "navName": "STEM","auth":"anonymous"}, 
+         {"path": "/public/eng/share", "child": [], "navName": "Student's Sharing","auth":"anonymous"}, 
+         {"path": "", "child": [], "navName": "Extracurricular activities","auth":"anonymous"}, 
+         {"path": "/public/eng/award", "child": [], "navName": "Competition results","auth":"anonymous"}, 
+         {"path": "/public/eng/tourguide", "child": [], "navName": "Tourguide","auth":"anonymous"}, 
+         {"path": "/server/eng/serverWelcome", "child": [], "navName": "Server","auth":"system:root"},
+         {"path": "/public/eng/template", "child": [], "navName": "Template","auth":"anonymous"},
+         {"path": "/user/eng/login", "child": [], "navName": "Login","auth":"anonymous"}
          ]
         }
   },
@@ -662,17 +669,17 @@
       "navdata": 
         [
         {"path": "/server/eng/serverWelcome", "child": [], "navName": "Surver Welcome"},
-         {"path": "", "navName": "CMS System", 
-          "child": [{"navName":"Page Design","path":""},
-                   {"navName":"Page Routing","path":""},
-                   {"navName":"Template","path":""}]}, 
+         {"path": "", "navName": "CMS System", "auth":"system:root",
+          "child": [{"navName":"Page Design","path":"","auth":"system:root"},
+                   {"navName":"Page Routing","path":"","auth":"system:root"},
+                   {"navName":"Template","path":"","auth":"system:root"}]}, 
 
-         {"path": "", "navName": "Survey System", 
-         "child": [{"navName":"Survey Management","path":""},
-                   {"navName":"Survey Editor","path":"/server/eng/surveyeditor"}]}, 
+         {"path": "", "navName": "Survey System","auth":"system:root", 
+         "child": [{"navName":"Survey Management","path":"","auth":"system:root"},
+                   {"navName":"Survey Editor","path":"/server/eng/surveyeditor","auth":"system:root"}]}, 
 
-         {"path": "/server/tourguide", "child": [], "navName": "Tourguide Editor"},
-         {"path": "/public/eng/about", "child": [], "navName": "Go Public"}
+         {"path": "/server/tourguide", "child": [], "navName": "Tourguide Editor","auth":"system:root"},
+         {"path": "/public/eng/about", "child": [], "navName": "Go Public","auth":"anonymous"}
         ]
     
        

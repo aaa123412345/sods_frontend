@@ -1,11 +1,17 @@
-import React from "react";
+import React,{useContext} from "react";
 import {Link} from 'react-router-dom'
 
-const SidebarChoice = ({data}) => {
+import {UserContext} from '../../../../App'
+import AuthHandler from "../../AuthHandler/AuthHandler";
 
-   
+const SidebarChoice = ({data}) => {
+    const user = useContext(UserContext)
+    
     return(
-        <Link to={data.path}>{data.navName}</Link>
+        <>
+            {AuthHandler(data.auth,user)?<Link to={data.path}>{data.navName}</Link>:''}
+        </>
+        
        
     )
 }
