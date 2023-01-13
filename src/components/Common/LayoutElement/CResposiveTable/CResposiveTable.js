@@ -18,9 +18,12 @@ const CResposiveTable = (props) => {
     )
 
     function DesktopTable(content,pkey){
-        var styleNum = content.tableStyle.dataStyleNum;
+        var styleNum = content.tableStyle.dataStyleNum
+        var hover = content.tableStyle.whole.hover
+        var striped = content.tableStyle.whole.striped
+        var bordered = content.tableStyle.whole.bordered
         return(
-            <Table hover={true} striped={true} bordered={true} key={pkey + "desktop-table"}>
+            <Table key={pkey + "desktop-table"} hover={hover} striped={striped} bordered={bordered}>
                 <thead key={pkey + "desktop-table-head"}>
                     {tableHead(content.tableStyle.head,content.key,pkey)}
                 </thead>

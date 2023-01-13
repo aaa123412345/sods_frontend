@@ -272,8 +272,7 @@
             "xxl": 6
           },
           "style": {
-            "height": 500,
-            "width": 500
+           
           },
           "autoplay": true,
           "muted": true,
@@ -294,8 +293,7 @@
             "xxl": 6
           },
           "style": {
-            "height": 500,
-            "width": 500
+           
           }
         },
         {
@@ -333,6 +331,7 @@
             ,
             "tableStyle":{
             "dataStyleNum":2,
+            "whole":{"hover":true,"striped":true,"bordered":true},
             "head":{"backgroundColor":"black","color":"white"},
             "data":[{"backgroundColor":"white","color":"black"},{"backgroundColor":"gray","color":"black"}]}
           },
