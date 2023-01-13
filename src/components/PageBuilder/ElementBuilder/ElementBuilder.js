@@ -27,7 +27,8 @@ export default block => {
       key: tkey,
       block: block.data,
       path:block.path,
-      subpath:block.subpath
+      subpath:block.subpath,
+      keyPass : tkey
     });
   }
   return React.createElement(

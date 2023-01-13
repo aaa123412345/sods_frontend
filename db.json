@@ -334,7 +334,7 @@
             "tableStyle":{
             "dataStyleNum":2,
             "head":{"backgroundColor":"black","color":"white"},
-            "data":[{"backgroundColor":"white"},{"backgroundColor":"gray"}]}
+            "data":[{"backgroundColor":"white","color":"black"},{"backgroundColor":"gray","color":"black"}]}
           },
           "bootstrap": {
             "xs": 12,
