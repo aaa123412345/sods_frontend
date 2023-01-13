@@ -5,8 +5,6 @@ export const conditions = {
         {name:"msg",type:"string"}
     ]
     ,'sparttips':[
-
-
     ]
     ,'stext':[
         {name:"required",type:"boolean"}
