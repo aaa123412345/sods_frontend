@@ -24,7 +24,7 @@ const SurverEditorOverall = ({handleShow,data,updateSurveyData,setConfig}) =>{
                         <Button variant="secondary" onClick={()=>setConfig('overall',{})}><FontAwesomeIcon icon={faUserGear}></FontAwesomeIcon></Button>
                     </OverlayTrigger>
                    
-                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Show Preview </Tooltip>}>
+                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Show Preview and upload survey</Tooltip>}>
                         <Button variant="secondary" onClick={handleShow}><FontAwesomeIcon icon={faListOl}></FontAwesomeIcon></Button>
                     </OverlayTrigger>
                 </Stack>

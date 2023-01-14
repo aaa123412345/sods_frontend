@@ -17,6 +17,7 @@ export const UserContextUpdate = createContext()
 
 
 function App() {
+    //Set the default permission here for testing
     const [user, setUser] = useState({
         userID:'',
         rolePermission:['system:root'],

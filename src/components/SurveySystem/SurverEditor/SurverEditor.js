@@ -1,20 +1,34 @@
 import React from "react";
 import { useState,useEffect } from 'react';
+import { Row,Col,Offcanvas, Button } from "react-bootstrap";
+import useWindowSize from "../../../hooks/useWindowSize";
+import cloneDeep from 'lodash/cloneDeep'
 
-import { Row,Col,Offcanvas } from "react-bootstrap";
+//import user context and related component
+import {UserContext} from '../../../App'
+import { useContext } from "react";
+import axios from 'axios';
+import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
+import { Navigate } from 'react-router-dom';
 
+//import children component
 import SurveyBuilder from "../SurveyBuilder/SurveyBuilder";
 import SurverEditorOverall from "./SurverEditorOverall.js/SurverEditorOverall";
 import SurveyEditorConfigurationPanel from "./SurveyEditorConfigurationPanel/SurveyEditorConfigurationPanel";
-
 import SurveyEditorChecker from "./SESyntaxChecker/SESyntaxChecker";
-import useWindowSize from "../../../hooks/useWindowSize";
-import cloneDeep from 'lodash/cloneDeep'
+
+
+
 
 const SurveyEditor = () => {
     //Constant
     const windowsize = useWindowSize()
+    
+    //user information
+    const user = useContext(UserContext)
+
     //page state
+    const [redirect, setRedirect] = useState(false);
     const [show, setShow] = useState(false);
     const [init, setInit] = useState(true);
     const [update, setUpdate] = useState(false);
@@ -62,6 +76,8 @@ const SurveyEditor = () => {
         }
         
     };
+
+   
 
     /*
     Basic function
@@ -367,6 +383,37 @@ const SurveyEditor = () => {
         dictlv3[index] = savedData.qDict
     }
 
+    const surveyUpload = async() =>{
+        try{
+            const { data } = await axios({
+              method: 'post',
+              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST,
+              data: surveyData,
+              headers:{
+                'token':user.token
+              }
+            })
+           
+            var rest = jsonExtractor(data);
+            if(rest.response === "success"){
+              console.log(rest.data)
+              setRedirect(true)
+              alert("Upload Success")
+    
+              
+            }else if (rest.response === "undefineerror"){
+              console.log("The authentication server is down")
+              alert("The service is not avaliable. Please try to login later")
+            }else{
+              console.log(rest)
+              alert("Upload fail")
+            }
+          }catch (error){
+           
+            alert("The survey uploading service is not avaliable at this moment")
+          }
+    }
+
 
     //init
     const items = {
@@ -415,7 +462,7 @@ const SurveyEditor = () => {
         
         return(
             <>
-            
+            {redirect?<Navigate replace to="/server/eng/surveymanager" />:''}
             <Row style={{backgroundColor:"gray",paddingTop:'10px',height:'100%'}}>
                 <Col lg={6} style={{overflowY:'scroll',height:'600px',border:'solid black'}}>
                     <SurverEditorOverall handleShow={handleShow} data={cloneDeep(surveyData)}
@@ -429,14 +476,19 @@ const SurveyEditor = () => {
                 </Col>
 
                                 {/*Preview*/}
-                <Offcanvas show={show} onHide={handleClose} placement={'end'} style={{color:'black'}}>
+                <Offcanvas show={show} onHide={handleClose} placement={'end'} style={{color:'black',minWidth:'672px'}}>
                     <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Preview</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         {surveySyntax?
-                        <SurveyBuilder data={surveyData} testMode={true}></SurveyBuilder>:''
+                        <>
+                            <SurveyBuilder data={surveyData} testMode={true}></SurveyBuilder>
+                            <Button className="mt-5" onClick={()=>{surveyUpload()}}>Click me to upload the survey to server</Button>
+                        </>
+                        :''
                         }
+
                     </Offcanvas.Body>
                 </Offcanvas>
 
@@ -450,6 +502,7 @@ const SurveyEditor = () => {
                        
                             <SurveyEditorConfigurationPanel configData={cloneDeep(configData)} surveyData={cloneDeep(surveyData)} cancelConfig={cancelConfig} 
                             configType={configType}  updateConfig={updateConfig}></SurveyEditorConfigurationPanel>
+                            
                         
                     </Offcanvas.Body>
                 </Offcanvas>

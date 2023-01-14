@@ -206,6 +206,36 @@
       ]
     }
   },
+  "server-surveymanager": {
+    "code": 200,
+    "msg": "OK",
+    "data": {
+      "page": {
+        "useBootstrap": false,
+        "title": "Survey Manager",
+        "style": {
+          "overflowY": "hidden"
+        }
+      },
+      "element": [
+        {
+          "type": "surveymanager",
+          "rank": 1,
+          "subrank": 1,
+          "bootstrap": {
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12,
+            "xxl": 12
+          },
+          "style": {}
+        }
+      ]
+    }
+  },
+ 
   "public-template": {
     "code": 200,
     "msg": "OK",
@@ -304,6 +334,7 @@
           "rank": 3,
           "subrank": 1,
           "content": {
+          
             "key": [
               "Award",
               "Member",
@@ -314,6 +345,7 @@
                 "Award": "A Award",
                 "Member": "Good Student",
                 "Date": "19 May 2010"
+               
               },
               {
                 "Award": "B Award",
@@ -675,7 +707,7 @@
                    {"navName":"Template","path":"","auth":"system:root"}]}, 
 
          {"path": "", "navName": "Survey System","auth":"system:root", 
-         "child": [{"navName":"Survey Management","path":"","auth":"system:root"},
+         "child": [{"navName":"Survey Management","path":"/server/eng/surveymanager","auth":"system:root"},
                    {"navName":"Survey Editor","path":"/server/eng/surveyeditor","auth":"system:root"}]}, 
 
          {"path": "/server/tourguide", "child": [], "navName": "Tourguide Editor","auth":"system:root"},
