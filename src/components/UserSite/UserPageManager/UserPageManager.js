@@ -15,7 +15,7 @@ const UserPageManager = () => {
         return(
           <div id="site" >
      
-            <PublicSidebar setDisplay = {windowSize.width>768 ? true:false}/>
+            <PublicSidebar lang={lang} setDisplay = {windowSize.width>768 ? true:false}/>
 
             <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
             <PageContent host={process.env.REACT_APP_USER_REST_HOST} 

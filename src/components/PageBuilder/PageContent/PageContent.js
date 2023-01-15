@@ -27,17 +27,34 @@ const PageContent = ({host,path,subpath,lang,mode}) => {
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
+   
+
     const getData = async () => {
+      var useLanguage = process.env.REACT_APP_USE_LANGUAGE;
+      var url;
+      var headers = {}
       try{
+        if(useLanguage){
+          url = host+lang+'/'+path
+        }else{
+          url = host+path
+        }
+        //console.log(url)
+        if(user.userID !== ''){
+          headers['token'] = user.token
+        }
        
+
         const { data } = await axios({
           method: 'get',
-          url: host+path,
-          data: ''
+          url: url,
+          data: '',
+          headers:headers
         })
         
-       
+        
         var rest = jsonExtractor(data);
+
         if(rest.response === "success"){
           setIsLoaded(true);
           setItems(rest.data);
@@ -54,7 +71,9 @@ const PageContent = ({host,path,subpath,lang,mode}) => {
     };
       
     useEffect(() => {
-      getData()
+      
+        getData()
+      
     }, [host,path,lang]);
 
 
@@ -64,7 +83,7 @@ const PageContent = ({host,path,subpath,lang,mode}) => {
       return <CircularProgress isIndeterminate color='green.300' />;
     } else if(ready) {
       if(!AuthHandler(items.page.auth,user)){
-        alert("You do not have permission to visit this page.")
+        alert("You do not have permission to visit this page")
         //Do not have login so no permission
         if(user.userID === '') return (<Navigate replace to={"/user/"+lang+"/login"} />)
         //User do not have permission
@@ -74,11 +93,11 @@ const PageContent = ({host,path,subpath,lang,mode}) => {
       return(
         <>
       
-        {items.page.useHeader&&mode==="public"?<PublicHeader/>:''}
+        {items.page.useHeader&&mode==="public"?<PublicHeader lang={lang}/>:''}
         <div className="PageContent" style={items.page.style}> 
             
-            {mode==="public"? <PublicNavbar pdata={items.page}></PublicNavbar>:
-              <ServerNavbar pdata={items.page}></ServerNavbar>
+            {mode==="public"? <PublicNavbar pdata={items.page} lang={lang}></PublicNavbar>:
+              <ServerNavbar pdata={items.page} lang={lang}></ServerNavbar>
             }
           
 

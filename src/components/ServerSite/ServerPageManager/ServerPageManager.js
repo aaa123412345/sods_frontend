@@ -19,7 +19,7 @@ const ServerPageManager = (props) => {
         return(
           <div id="site" >
      
-            <ServerSidebar setDisplay = {windowSize.width>768 ? true:false}/>
+            <ServerSidebar lang={lang} setDisplay = {windowSize.width>768 ? true:false}/>
 
             <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
                

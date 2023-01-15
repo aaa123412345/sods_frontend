@@ -11,6 +11,7 @@ import Chatroom from "./components/Chatroom/Chatroom";
 import VRCanvas from "./components/VRCanvas/VRCanvas";
 
 import { useState, createContext, useEffect } from "react";
+import { EnvironmentProvider } from "@chakra-ui/react";
 
 export const UserContext = createContext()
 export const UserContextUpdate = createContext()
@@ -18,9 +19,11 @@ export const UserContextUpdate = createContext()
 
 function App() {
     //Set the default permission here for testing
+    const permission = []
+    permission.push(process.env.REACT_APP_DEFAULT_PERMISSION)
     const [user, setUser] = useState({
         userID:'',
-        rolePermission:['system:root'],
+        rolePermission: permission,
         token:'',
         userType:''
     });

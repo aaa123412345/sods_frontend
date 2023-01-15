@@ -5,6 +5,12 @@ Usage:
 
 use two cmd
 
+p.s. 
+.env for local test with json server
+.env.local test with spring server
+remove .env.local to test with json server
+
+
 1. json-server db.json
 //Start the temporary Json Server for RestAPI in local
 run in http://localhost:3000/

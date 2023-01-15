@@ -2,7 +2,7 @@ import React from "react";
 import { useState,useEffect } from "react";
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
-const PublicHeader = () => {
+const PublicHeader = ({lang}) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -12,7 +12,15 @@ const PublicHeader = () => {
     const pathname = "publicheader"
 
     useEffect(() => {
-        fetch(host+pathname)
+        var useLanguage = process.env.REACT_APP_USE_LANGUAGE;
+        var url;
+      
+        if(useLanguage){
+          url = host+lang+'/'+pathname
+        }else{
+          url = host+pathname
+        }
+        fetch(url)
           .then(res => res.json())
           .then(
             (result) => {

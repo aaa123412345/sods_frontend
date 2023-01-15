@@ -15,7 +15,15 @@ const ServerNavbar = props =>  {
     const pathname = "servernavdata"
 
     useEffect(() => {
-        fetch(host+pathname)
+        var useLanguage = process.env.REACT_APP_USE_LANGUAGE;
+        var url;
+      
+        if(useLanguage){
+          url = host+props.lang+'/'+pathname
+        }else{
+          url = host+pathname
+        }
+        fetch(url)
           .then(res => res.json())
           .then(
             (result) => {
