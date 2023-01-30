@@ -11,7 +11,6 @@ import Chatroom from "./components/Chatroom/Chatroom";
 import VRCanvas from "./components/VRCanvas/VRCanvas";
 
 import { useState, createContext, useEffect } from "react";
-import { EnvironmentProvider } from "@chakra-ui/react";
 
 export const UserContext = createContext()
 export const UserContextUpdate = createContext()
@@ -42,16 +41,17 @@ function App() {
                     <Provider store={store}>
                         <BrowserRouter>
                             
-                            <Chatroom />
+                            {/* <Chatroom /> */}
 
                             <Routes>
                                 
                             <Route>
                             
-                                <Route path="/public/tourguide-vr" element={<VRCanvas />}></Route> 
+                                <Route path="/public/:lang/tourguide-vr/:id" element={<VRCanvas />}></Route> 
                                 {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
                                 <Route path='/public/:lang/:path' element={<PublicPageManager />}></Route> 
                                 <Route path='/public/:lang/:path/:subpath' element={<PublicPageManager />}></Route> 
+                                <Route path='/public/:lang/:path/:subpath/:subsubpath' element={<PublicPageManager />}></Route> 
 
                                 <Route path='/user/:lang/:path' element={<UserPageManager />}></Route> 
                                 <Route path='/user/:lang/:path/:subpath' element={<UserPageManager />}></Route> 

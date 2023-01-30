@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ChakraProvider,Box } from '@chakra-ui/react'
 import { connect,  } from 'react-redux'
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
-import EditorButton from '../TourGuideCanvas/common/EditorButton/EditorButton'
+import CustomButton from '../TourGuideCanvas/common/EditorButton/CustomButton'
 import { newTheme } from '../../theme/theme'
 
 const Chatroom = (props) => {
@@ -21,7 +21,7 @@ const Chatroom = (props) => {
 
             <Container bottom={{base: '90px', md: '50px'}}>
 
-                <EditorButton faIcon={faCircleQuestion} bgColor={themeColor} isCircle circleDiameter={60} />                               
+                <CustomButton faIcon={faCircleQuestion} bgColor={themeColor} isCircle circleDiameter={60} />                               
 
             </Container>
    

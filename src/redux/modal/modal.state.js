@@ -5,6 +5,7 @@ export const initModalState = {
     path: '',
     method: '',
     name: "",
+    byteData: null,
     id: null,
     isQRCode: false,
     qrID: null

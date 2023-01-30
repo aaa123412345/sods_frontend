@@ -1,9 +1,10 @@
-import { floorplan, booth, marker, story, game } from "../../data/formTemplates"
+import { floorplan, booth, marker, story, vr } from "../../data/formTemplates"
 
 export const initFormState = {
     floorplan: floorplan,
     booth: booth,
+    vr: vr,
     marker: marker,
     story: story,
-    game: game,
+    file: null,
 }

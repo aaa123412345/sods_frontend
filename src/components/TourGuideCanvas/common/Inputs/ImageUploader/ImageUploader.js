@@ -1,20 +1,24 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import styled from 'styled-components'
 
 import { useTranslation } from 'react-i18next'
 
-import { Flex, Text, Image, useColorModeValue } from '@chakra-ui/react'
+import { Flex, FormLabel, Text, Image, useColorModeValue } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch } from 'react-redux'
+import { updateFile } from '../../../../../redux/form/form.action'
+import { connect } from 'react-redux'
 
 const ImageUploader = (props) => {
 
-    const { faIcon, label } = props
+    const { faIcon, label, modal, setFile } = props
+    const { byteData } = modal
 
     const { t } = useTranslation()
 
-    const [image, setImage] = useState("")
+    const base64str = 'data:image/*;base64,'
+    const [image, setImage] = useState(byteData !== null ? base64str+byteData : "")
 
     const upload_image = (e) => {
 
@@ -22,17 +26,14 @@ const ImageUploader = (props) => {
         reader.onload = () => {
             if(reader.readyState === 2){
                 setImage(reader.result)
-            }else(
+            }else
                 setImage("")
-            )
         }
         reader.readAsDataURL(e.target.files[0])
+        // update(e.target.files[0])
+        setFile(e.target.files[0])
 
-        console.log(e.target.files[0])
-
-        // axios.post('http://localhost:8080/images', {image: e.target.files[0]})
-        // .then(res=>console.log('succuess'))
-        // .catch(err=>console.log('error'))
+        console.log(image)
 
     }
 
@@ -42,13 +43,13 @@ const ImageUploader = (props) => {
         
         <Flex mt='1em' flexDir='column'>
 
-            <Flex alignItems='center'>
-                <FontAwesomeIcon icon={faIcon} />
-                <Text ml=".5em" fontWeight="bold">{t(`modal.${label}`)}</Text>
-            </Flex>
+            <FormLabel ml=".5em" fontWeight="bold">
+                <FontAwesomeIcon icon={faIcon} style={{marginRight: '.5em'}} />
+                {t(`modal.${label}`)}
+            </FormLabel>
 
             <ImagePreview bg={bg} borderRadius={25}>
-                <Image src={image}/>
+                <Image src={image} cursor="pointer"/>
                 <ImageInput type="file" name="image-upload" id="image-input" accept="image/*"
                     onChange={e=>upload_image(e)}/>
                 <Label htmlFor="image-input">
@@ -69,7 +70,21 @@ const ImageUploader = (props) => {
     )
 }
 
-export default ImageUploader
+const mapStateToProps = state => {
+    return {
+      form: state.form,
+      modal: state.modal
+    };
+};
+
+const mapDispatchToProps = dispatch => ({
+    update: (file) => dispatch(updateFile(file))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ImageUploader)
 
 const ImageInput = styled.input.attrs({ 
     type: 'file'

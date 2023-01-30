@@ -1,57 +1,51 @@
 import React, { useState, useEffect }  from 'react'
-import axios from 'axios'
 import styled from 'styled-components'
 
-import { Flex, Heading, useToast } from '@chakra-ui/react'
+import { Flex, Heading } from '@chakra-ui/react'
 
 import ItemButton from './ItemButton/ItemButton'
 import Toolbar from '../Toolbar/Toolbar'
 import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 import useSessionStorage from '../../../../hooks/useSessionStorage'
 
 import { useDispatch, connect } from 'react-redux'
-import { updateBooths, updateFloorplans, updateRegionIndex, updateStories, updateStoryIndex } from '../../../../redux/tourguide/tourguide.action'
-import { toast_generator } from '../../../../helpers/toastGenerator'
+import { updateBooths, updateItemIndex } from '../../../../redux/tourguide/tourguide.action'
 
 import { useTranslation } from 'react-i18next'
 
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
+import axios from 'axios'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import { updateBooth } from '../../../../redux/form/form.action'
 
 const ItemList = (props) => {
 
   const { 
-    isCategoryList, isRegionFilter = false, 
+    data, isCategoryList, isFloorFilter,
     modalIndex, heading, path, name,
     tourguide, modal
   } = props
 
-  const { 
-    themeColor, host, storyIndex, regionIndex, page, floorplans
-  } = tourguide
-  const { isOpen } = modal
+  const { host, themeColor, itemIndex, floorplans, page } = tourguide
   const dispatch = useDispatch()
 
   const { t } = useTranslation()
 
   // session storage
-  const [regionIndexSession, setRegionIndexSession] = useSessionStorage('regionIndex', 0)
-  const [storyIndexSession, setStoryIndexSession] = useSessionStorage('storyIndex', 0)
-
-  // chakra hooks
-  const toast = useToast({ duration: 3000, isClosable: true })
+  const [itemIndexSession, setItemIndexSession] = useSessionStorage('itemIndex', 0)
 
   // react state
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
   const [isDeleteMode, setIsDeleteMode] = useState(false)
-  const [items, setItems] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
+  const [items, setItems] = useState()
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const handle_active = (index) => {
 
-    let isSameIndex = (regionIndex === index && path === "floorplans") || (storyIndex === index && path === "story")
+    let isSameIndex = itemIndex === index
 
     if(isDeleteMode)
       return selectedItems.includes(items[index].id) ? true : false 
@@ -76,16 +70,8 @@ const ItemList = (props) => {
   }
 
   const update_page = (index) => {
-
-    if(path === 'floorplans'){
-      setRegionIndexSession(index)
-      dispatch(updateRegionIndex(index))
-    }
-
-    if(path === 'story'){
-      setStoryIndexSession(index)
-      dispatch(updateStoryIndex(index))
-    }
+    setItemIndexSession(index)
+    dispatch(updateItemIndex(index))
   }
 
   const select_item = (index) => {
@@ -98,63 +84,48 @@ const ItemList = (props) => {
     
   }
 
-  const update_data = (data) => {
+  useEffect(()=>{
+    update_page(itemIndexSession)
+  },[])
 
-    if(path==="floorplans")
-      dispatch(updateFloorplans(data))
-    if(path==="booths")
-      dispatch(updateBooths(data))
-    if(path==="story")
-      dispatch(updateStories(data))
-    
-    setItems(data)
-
-  }
+  useEffect(()=>{
+    setItems(data !== null ? data : [])
+  },[page, data])
 
   useEffect(()=>{
 
-    if(path === "floorplans")
-      update_page(regionIndexSession)
-    if(path === "story")
-      update_page(storyIndexSession)
+    if(isFloorFilter && floorplans.length !== 0 ){
 
-  },[])
+      const delayID = setTimeout(()=>{
+        
+        let floorplanID = floorplans[itemIndex].id
+        axios.get(host+path+"?floorplan-id="+floorplanID)
+        .then(res=>{
+          let data = res.data.data
+          // console.log(data)
+          setItems(data)
+          dispatch(updateBooths(data))
+          setIsLoading(false)
+          setError(null)
+        })
+        .catch(err=>{
+          setIsLoading(true)
+          setError(err)
+        })
+
+      },1000)
+
+      return () => clearTimeout(delayID)
+
+    }else
+      setIsLoading(false)
+
+  }, [itemIndex, modal.isOpen])
 
   useEffect(()=>{
     setSelectedItems([])
   },[isDeleteMode])
 
-  useEffect(()=>{
-    setItems([])
-    setIsLoading(true)
-  }, [page])
-
-  useEffect(()=>{
-    
-    const refreshId = setTimeout(()=>{  
-
-      let targetFloor = floorplans[regionIndex]
-      const regionStr = targetFloor !== undefined ? targetFloor.region['en'] : ""
-      const queryStr = isRegionFilter ? "?region=" +  regionStr : ""
-      axios.get(host+path+queryStr)
-      .then((res)=>{
-        let data = res.data.data
-        update_data(data)
-        setError(null)
-        setIsLoading(false)
-      })
-      .catch(err=>{
-        toast(toast_generator())
-        setError(error)
-        setIsLoading(true)
-      })
-
-    }, 1000)
-
-
-    return () => clearTimeout(refreshId)
-
-  },[regionIndex, isOpen, isDeleteMode, page])
 
   if(error !== null)
     return <div>{error.message}</div>
@@ -179,6 +150,7 @@ const ItemList = (props) => {
         overflowX="hidden" overflowY="scroll">
         <AnimatePresence>
         {
+          
           items !== undefined && 
           items.map((item, index) => (
             <ItemButton key={index} type={path} data={item}

@@ -10,7 +10,7 @@ import LeftPanel from './LeftPanel/LeftPanel'
 import tourModalData from '../../../data/tourModalData'
 import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../hooks/useSessionStorage'
-import { updatePage } from '../../../redux/tourguide/tourguide.action'
+import { updateItemIndex, updatePage } from '../../../redux/tourguide/tourguide.action'
 import { useTranslation } from 'react-i18next'
 import AnimatedPage from '../common/AnimatedPage/AnimatedPage'
 
@@ -31,8 +31,8 @@ const TourGuideEditor = (props) => {
     // session storage
     const [pageSession, setPageSession] = useSessionStorage('page', 0)
 
-
     const change_page = (page) => {
+        dispatch(updateItemIndex(0))
         dispatch(updatePage(page))
         setPageSession(page)
     }

@@ -1,5 +1,4 @@
 import React from 'react'
-import BoothCard from './BoothCard/BoothCard'
 import RectangleIconButton from './RectangleIconButton/RectangleIconButton'
 import BoothInfoCard from './BoothInfoCard/BoothInfoCard'
 

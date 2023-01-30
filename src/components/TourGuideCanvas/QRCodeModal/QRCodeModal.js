@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { Box, Flex,Heading, Image, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import EditorButton from '../common/EditorButton/EditorButton'
+import EditorButton from '../common/EditorButton/CustomButton'
 import { useDispatch, connect } from 'react-redux'
 
 import { QrReader } from 'react-qr-reader'

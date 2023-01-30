@@ -6,7 +6,7 @@ import ImageUploader from "../components/TourGuideCanvas/common/Inputs/ImageUplo
 import DropDownList from "../components/TourGuideCanvas/common/Inputs/DropDownList/DropDownList";
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
 
-import { updateBooth, updateFloorplan, updateStory, updateGame } from "../redux/form/form.action";
+import { updateBooth, updateFloorplan, updateStory, updateVR } from "../redux/form/form.action";
 
 const tourModalData = [
 
@@ -60,8 +60,16 @@ const tourModalData = [
                 components: [
 
                     {
-
                         index: 0,
+                        type: TourGuideMap,
+                        props: {
+                            isAssignBooth: true,
+                            isMarkable: false
+                        }
+                    },
+                    {
+
+                        index: 1,
                         type: TextInput,
                         props: {
                             faIcon: faTent,
@@ -79,7 +87,7 @@ const tourModalData = [
                     },
                     {
 
-                        index: 1,
+                        index: 2,
                         type: TextInput,
                         props: {
                             faIcon: faLocationDot,
@@ -97,7 +105,7 @@ const tourModalData = [
                     },
                     {
 
-                        index: 2,
+                        index: 3,
                         type: TextInput,
                         props: {
                             isTextArea: true,
@@ -144,49 +152,67 @@ const tourModalData = [
         name: "Booth",
         pages: [
             {
-                heading: "Your Mini Game",
+                heading: "heading-booth",
                 components: [
-        
+
                     {
-                        index: 0,
-                        type: DropDownList,
+
+                        index: 1,
+                        type: TextInput,
                         props: {
-                            fetchTarget: {
-                                name: "games",
-                                type: "UPDATE_GAMES"
+                            faIcon: faTent,
+                            label: "label-booth-name",
+                            placeholder: {
+                                zh: "數學攤位",
+                                en: "Mathematic Booth"
                             },
-                            faIcon: faGamepad,
-                            label: "Game Type",
-                            defaultList: ["AR Treasure", "Greedy Snake", "Candy Crush"],
                             names: {
-                                form: "game",
-                                field: "gameType",
+                                form: "booth",
+                                field: "name",
                             },
-                            placeholder: "Select a Game Type ",
-                            update: (data) => updateGame(data)
+                            update: (data) => updateBooth(data)
                         }
                     },
                     {
-                        index: 1,
-                        type: DropDownList,
+
+                        index: 2,
+                        type: TextInput,
                         props: {
-                            fetchTarget: {
-                                name: "games",
-                                type: "UPDATE_GAMES"
-                            },
-                            faIcon: faGamepad,
-                            label: "Available Game",
+                            faIcon: faLocationDot,
+                            label: "label-venue",
                             names: {
                                 form: "booth",
-                                field: "gameID",
+                                field: "venue",
                             },
-                            placeholder: "Select a Game",
-                            update: (data) => updateGame(data)
+                            placeholder: {
+                                zh: "1樓, 101室, 1A 課室",
+                                en: "1/F, Room 101, 1A Classroom"
+                            },
+                            update: (data) => updateBooth(data)
+                        }
+                    },
+                    {
+
+                        index: 3,
+                        type: TextInput,
+                        props: {
+                            isTextArea: true,
+                            faIcon: faAlignLeft,
+                            label: "label-description",
+                            names: {
+                                form: "booth",
+                                field: "description",
+                            },
+                            placeholder: {
+                                zh: "這裏是學生平日學習數學的地方。",
+                                en: "Students are always learning Maths here."
+                            },
+                            update: (data) => updateBooth(data)
                         }
                     }
                     
                 ]
-            }
+            },
         ]
     },
     {
@@ -247,6 +273,59 @@ const tourModalData = [
             }
         ]
         
+    },
+    {
+
+        index: 5,
+        name: "Delete",
+        pages: [
+            {
+                heading: "heading-delete",
+                components: []
+
+            }
+        ]
+        
+    },
+    {
+        index: 6, 
+        name: "Booth",
+        pages: [
+            {
+                heading: "heading-vr",
+                components: [
+
+                    {
+
+                        index: 0,
+                        type: TextInput,
+                        props: {
+                            isTextArea: true,
+                            faIcon: faTent,
+                            label: "label-vr-speech",
+                            placeholder: {
+                                zh: "大家好！今日我將會介紹…",
+                                en: "Welcome everybody! Today I would like to introduce..."
+                            },
+                            names: {
+                                form: "booth",
+                                field: "speech",
+                            },
+                            update: (data) => updateBooth(data)
+                        }
+                    },
+                    {
+                        index: 1,
+                        type: ImageUploader, 
+                        props: {
+                            faIcon: faMap,
+                            label: "label-upload-360image"
+                        }
+                    }
+                    
+                ]
+            },
+        ]
     },
 
 ]

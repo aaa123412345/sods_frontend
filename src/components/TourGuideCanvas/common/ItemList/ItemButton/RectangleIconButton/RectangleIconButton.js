@@ -18,7 +18,7 @@ const RectangleIconButton = (props) => {
 
     const isFloorEditor = page <= 1 
 
-    const lang = langGetter()
+    const lang = langGetter().toUpperCase()
 
     const name = isFloorEditor ? 'region' : 'title'
 
@@ -26,8 +26,8 @@ const RectangleIconButton = (props) => {
 
     useEffect(()=>{
         setText('')
-        if(data[name] !== undefined)
-            setText(data[name][lang])
+        if(data[name + lang] !== undefined)
+            setText(data[name + lang])
     }, [data, lang, name])
 
     return (

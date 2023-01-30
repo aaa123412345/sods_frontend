@@ -3,6 +3,7 @@
     "locking-message": "請參觀學校來解鎖故事",
     "show-ticket": "顯示遊戲券",
     "hide-ticket": "隱藏遊戲券",
-    "heading-ticket": "遊戲券"
+    "heading-ticket": "遊戲券", 
+    "hint": "掃描攤位二維碼觸發小遊戲，以收集印章。收集一定數量的印章後，將為您解鎖特定禮物。"
     
 }

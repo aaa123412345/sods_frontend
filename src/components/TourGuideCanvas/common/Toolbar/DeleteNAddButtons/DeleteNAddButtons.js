@@ -1,12 +1,13 @@
 import { Flex } from '@chakra-ui/react';
 import { faAdd, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import MyButton from '../../EditorButton/EditorButton';
+import MyButton from '../../EditorButton/CustomButton';
 
 import useSessionStorage from '../../../../../hooks/useSessionStorage';
 import { useDispatch, connect } from 'react-redux';
 import { updateBooth } from '../../../../../redux/form/form.action';
 import { openModal } from '../../../../../redux/modal/modal.action';
+import { useTranslation } from 'react-i18next';
 
 const DeleteNAddButtons = (props) => {
 
@@ -18,6 +19,8 @@ const DeleteNAddButtons = (props) => {
     const { themeColor, floorplans, regionIndex } = tourguide
     const { booth } = form
     const dispatch = useDispatch()
+
+    const { t } = useTranslation()
 
     // session storage
     const [modalSession, setModalSession] = useSessionStorage('modal', modal)
@@ -37,14 +40,6 @@ const DeleteNAddButtons = (props) => {
             page: 0
         }
         
-        if(path === 'booths' && floorplans.length !== 0 ){
-            
-            let currentFloor = floorplans[regionIndex].region
-            dispatch(updateBooth({...booth, region: currentFloor}))
-            setBoothSession({...boothSession, region: currentFloor})
-            
-        }
-        
         setModalSession({...modalSession, ...payload})
         dispatch(openModal(payload))
         
@@ -55,20 +50,20 @@ const DeleteNAddButtons = (props) => {
         <Flex justifyContent={'flex-start'} m="1em .5em">
             <MyButton 
                 faIcon={faAdd} 
-                isCircle={true} 
+                text={t(`tourguideEditor.create-${path}`)}
                 bgColor={themeColor} 
                 isDisabled={isDeleteMode || isNoRegionDefined}
                 onClick = {open_modal}
                 />
 
-            <MyButton 
+            {/* <MyButton 
                 faIcon={faTrash} 
                 isCircle={true} 
                 bgColor='danger'
                 isSelected={isDeleteMode} 
                 onClick={()=>{setIsDeleteMode(!isDeleteMode)}}
                 isDisabled={isNoRegionDefined}
-            />
+            /> */}
         </Flex>
     
     )

@@ -6,6 +6,8 @@
     "label-upload-map": "Upload Floor Plan",
     "placeholder-floor": "1 Floor",
 
+    "heading-where-booth": "Where is the Booth Located?",
+
     "heading-booth": "Your Booth Details",
     "label-booth-name": "Booth Name",
     "label-venue": "Venue",
@@ -19,6 +21,12 @@
     "label-story-content": "Story Content",
     "label-upload-cover": "Upload Cover Image",
     "placeholder-story": "First Day of School",
-    "placeholder-story-content": "Mary is a shy student; and one day, Miss Chan had suggested her to ..."
+    "placeholder-story-content": "Mary is a shy student; and one day, Miss Chan had suggested her to ...",
+
+    "heading-delete": "Do you want to delete?", 
+    
+    "heading-vr": "VR Tour", 
+    "label-vr-speech": "Speech for Tour", 
+    "label-upload-360image": "Upload 360 Degree Image"
     
 }

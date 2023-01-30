@@ -6,6 +6,8 @@
     "label-upload-map": "上載平面圖",
     "placeholder-floor": "1樓",
 
+    "heading-where-booth": "那裏是您的攤位？",
+
     "heading-booth": "你的攤位簡介",
     "label-booth-name": "攤位名稱",
     "label-venue": "地點",
@@ -20,6 +22,12 @@
     "label-story-content": "故事內容",
     "label-upload-cover": "上載封面相片",
     "placeholder-story": "第一天上學",
-    "placeholder-story-content": "馬莉莉是個很害羞的學生，一天，陳老師建議他去……"
+    "placeholder-story-content": "馬莉莉是個很害羞的學生，一天，陳老師建議他去……",
+
+    "heading-delete": "您是否要刪除？", 
+
+    "heading-vr": "VR 導賞", 
+    "label-vr-speech": "介紹演講", 
+    "label-upload-360image": "上載360全景圖片"
     
 }

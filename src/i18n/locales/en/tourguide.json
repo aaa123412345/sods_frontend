@@ -14,7 +14,9 @@
     "updated": "Updated",
     "deleted": "Deleted",
     "error": "Error", 
-    "try-again": "Please try again."
+    "try-again": "Please try again.", 
+    "loading-vr": "Loading VR Scene", 
+    "exit": "Exit"
 
 
 }

@@ -3,10 +3,20 @@
     "cover-story": "Cover Story", 
     "editor-type": "Editor Type",
     "preview-ticket": "Preview Story Cover", 
+    "create-story": "Create Story",
+    "create-booths": "Create Booth",
+    "create-floorplans": "Create Region",
+    "delete-story": "Delete Story",
+    "delete-region": "Delete Region",
     "edit-story": "Edit Story",
     "edit-region": "Edit Region",
     "edit-booth": "Edit Booth",
+    "edit-vr": "Edit VR",
+    "assign-marker": "Assign Marker",
+    "delete-booth": "Delete Booth",
     "tourguide": "Tour Guide",
     "no-vr-image": "No VR image",
-    "no-vr-speech": "No Speech for VR"
+    "no-vr-available": "VR Tour setting is not ready", 
+    "active-booth": "Active", 
+    "inactive-booth": "inactive"
 }

@@ -13,7 +13,14 @@ import tourguideEditorZH from './locales/zh/tourguideEditor.json'
 import modalEN from './locales/en/modal.json';
 import modalZH from './locales/zh/modal.json'
 
-const userLang = JSON.parse(window.localStorage.getItem('i18n-lang')) === "zh" ? 'zh' : 'en'
+const userLang = window.localStorage.getItem('i18n-lang') === "zh" ? 'zh' : 'en'
+
+const langToUrl = (userLang) => {
+  return userLang === 'zh' ? 'chi' : 'eng'
+}
+
+if(!window.location.pathname.includes(`/${langToUrl(userLang)}/`))
+  window.localStorage.setItem('i18n-lang', JSON.stringify(userLang === 'zh' ? 'en' : 'zh'))
 
 export const supportedLanguages = ["en", "zh"]
 
