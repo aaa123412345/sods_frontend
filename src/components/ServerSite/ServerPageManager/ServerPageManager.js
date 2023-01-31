@@ -10,7 +10,7 @@ import PageContent from "../../PageBuilder/PageContent/PageContent";
 
 const ServerPageManager = (props) => {
     
-    let {path,subpath,lang} = useParams();
+  let {path,subpath,lang,subsubpath} = useParams();
 
     const windowSize = useWindowSize();
 

@@ -19,13 +19,15 @@ import {UserContext} from '../../../App'
 
 
 
-const PageContent = ({host,path,subpath,lang,mode}) => {
+const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
     
     const user = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
+    
+    
 
    
 
@@ -82,6 +84,7 @@ const PageContent = ({host,path,subpath,lang,mode}) => {
     } else if (!isLoaded) {
       return <CircularProgress isIndeterminate color='green.300' />;
     } else if(ready) {
+      
       if(!AuthHandler(items.page.auth,user)){
         alert("You do not have permission to visit this page")
         //Do not have login so no permission

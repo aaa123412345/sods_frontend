@@ -8,10 +8,10 @@ import PageContent from "../../PageBuilder/PageContent/PageContent";
 
 
 const PublicPageManager = () => {
-    let {path,subpath,lang} = useParams();
+    let {path,subpath,lang,subsubpath} = useParams();
     const windowSize = useWindowSize();
    
-
+   
     if (typeof windowSize.width !== 'undefined'){
     
         return(
@@ -22,7 +22,7 @@ const PublicPageManager = () => {
             <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
             
             <PageContent host={process.env.REACT_APP_PUBLIC_REST_HOST} 
-            path={path} subpath={subpath} lang={lang} mode={'public'}></PageContent>
+            path={path} subpath={subpath} subsubpath={subsubpath} lang={lang} mode={'public'}></PageContent>
           
           </div>
         </div>

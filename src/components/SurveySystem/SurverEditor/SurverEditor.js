@@ -26,6 +26,7 @@ const SurveyEditor = () => {
     
     //user information
     const user = useContext(UserContext)
+    const urlParams = new URLSearchParams(window.location.search);
 
     //page state
     const [redirect, setRedirect] = useState(false);
@@ -39,6 +40,7 @@ const SurveyEditor = () => {
     const [nextPID, setNextPID] = useState(1);
     const [nextQID, setNextQID] = useState(1);
     const [surveyData, setSurveyData] = useState({});
+    const [editorMode, setEditorMode] = useState('create'); // 'create' or 'update'
    
 
     //survey syntax
@@ -384,34 +386,43 @@ const SurveyEditor = () => {
     }
 
     const surveyUpload = async() =>{
+        var method
+        var url
+        if(editorMode === 'create'){
+            method = 'post'
+            url = process.env.REACT_APP_SURVEY_SYSTEM_HOST
+        } else if(editorMode === 'update'){
+            method = 'put'
+            url = process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/'+urlParams.get('surveyID')
+        }
         try{
             const { data } = await axios({
-              method: 'post',
-              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST,
-              data: surveyData,
-              headers:{
+            method: method,
+            url: url,
+            data: surveyData,
+            headers:{
                 'token':user.token
-              }
+            }
             })
-           
+        
             var rest = jsonExtractor(data);
             if(rest.response === "success"){
-              console.log(rest.data)
-              setRedirect(true)
-              alert("Upload Success")
+            console.log(rest.data)
+            setRedirect(true)
+            alert("Upload Success")
     
-              
+            
             }else if (rest.response === "undefineerror"){
-              console.log("The authentication server is down")
-              alert("The service is not avaliable. Please try to login later")
+            console.log("The authentication server is down")
+            alert("The service is not avaliable. Please try to login later")
             }else{
-              console.log(rest)
-              alert("Upload fail")
+            console.log(rest)
+            alert("Upload fail")
             }
-          }catch (error){
-           
+        }catch (error){
+        
             alert("The survey uploading service is not avaliable at this moment")
-          }
+        }
     }
 
 
@@ -431,12 +442,53 @@ const SurveyEditor = () => {
 
         }
     }
+    //init with specfic survey
+    const getSurveyData = async(id) =>{
+        
+        try{
+            const { data } = await axios({
+              method: 'get',
+              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/'+id,
+              headers:{
+                'token':user.token
+              },
+             
+            })
+           
+            var rest = jsonExtractor(data);
+            //console.log(data)
+            
+            if(rest.response === "success"){
+              
+              setSurveyData(rest.data)
+              setReady(true)
+              setInit(false)
+              setEditorMode('update')
+            }else if (rest.response === "undefineerror"){
+              console.log("The authentication server is down")
+              alert("The service is not avaliable. Please try to login later")
+            }else{
+              console.log(rest)
+              alert("Get data fail")
+            }
+          }catch (error){
+           
+            alert("The survey uploading service is not avaliable at this moment")
+          }
+    }
+
 
     useEffect(()=>{
         if(init){
-            setSurveyData(items)
-            setReady(true)
-            setInit(false)
+            if(urlParams.has('surveyID')){
+                getSurveyData(urlParams.get('surveyID'))
+            }
+            else{
+                setSurveyData(items)
+                setReady(true)
+                setInit(false)
+                setEditorMode('create')
+            }
         }
        
     },[surveyData])
@@ -459,6 +511,7 @@ const SurveyEditor = () => {
     
     
     if(ready){
+        
         
         return(
             <>

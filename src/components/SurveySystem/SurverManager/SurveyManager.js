@@ -1,11 +1,13 @@
 import React,{useEffect, useState} from "react";
 import {Table,Row,Col} from 'react-bootstrap';
+import { Link } from "react-router-dom"; 
 
 //import user context and related component
 import {UserContext} from '../../../App'
 import { useContext } from "react";
 import axios from 'axios';
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
+import JSONBIG from 'json-bigint'
 
 const SurveyManager = (props) => {
     
@@ -15,6 +17,7 @@ const SurveyManager = (props) => {
     const [surveydata, setSurveyData] = useState({});
 
     const getAllSurvey = async() =>{
+       
         try{
             const { data } = await axios({
               method: 'get',
@@ -22,6 +25,8 @@ const SurveyManager = (props) => {
               headers:{
                 'token':user.token
               }
+             
+            
             })
            
             var rest = jsonExtractor(data);
@@ -96,7 +101,7 @@ const SurveyManager = (props) => {
             )
         }
         function tableData(style,data,index,keyPass){
-            console.log(data)
+           
             return(
                 <tr style={style} key={keyPass + "-table-data-"+index+"-tr"}>
                    <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['surveyId']} </td>
@@ -104,7 +109,9 @@ const SurveyManager = (props) => {
                    <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createUserId']} </td>
                    <td key={keyPass + "-table-data-"+index+"-td-"+4}> {data['updateTime']} </td>
                    <td key={keyPass + "-table-data-"+index+"-td-"+5}> {data['updateUserId']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+6}> Action</td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+6}>
+                    <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Go</Link>
+                    </td>
                 </tr>
             )
         }
@@ -135,7 +142,9 @@ const SurveyManager = (props) => {
                     <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createUserId']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+4}> {data['updateTime']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+5}> {data['updateUserId']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+6}> Action</span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+6}> 
+                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Go</Link>
+                    </span>
                 </Col>
                    
             </Row>
