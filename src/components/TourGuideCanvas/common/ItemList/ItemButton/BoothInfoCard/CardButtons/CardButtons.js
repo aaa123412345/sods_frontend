@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Flex, useColorModeValue } from '@chakra-ui/react'
-import EditorButton from '../../../../EditorButton/EditorButton'
+import EditorButton from '../../../../EditorButton/CustomButton'
 import { faQrcode, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { updateQRID, openQRModal } from '../../../../../../../redux/modal/modal.action'
 import { useDispatch } from 'react-redux'

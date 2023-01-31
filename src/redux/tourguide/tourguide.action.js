@@ -2,11 +2,11 @@
 
 export const UPDATE_PAGE = "UPDATE_PAGE"
 export const UPDATE_THEME_COLOR = "UPDATE_THEMECOLOR"
-export const UPDATE_LANGUAGE = "UPDATE_LANGUAGE"
-export const UPDATE_HOST = "UPDATE_HOST"
 export const UPDATE_REGION_INDEX = "UPDATE_REGION_INDEX"
 export const UPDATE_STORY_INDEX = "UPDATE_STORY_INDEX"
+export const UPDATE_ITEM_INDEX = "UPDATE_ITEM_INDEX"
 export const UPDATE_FLOORPLANS = "UPDATE_FLOORPLANS"
+export const UPDATE_MARKERS = "UPDATE_MARKERS"
 export const UPDATE_BOOTHS = "UPDATE_BOOTHS"
 export const UPDATE_STORIES = "UPDATE_STORIES"
 export const UPDATE_STORY_PROGRESS = "UPDATE_STORY_PROGRESS"
@@ -22,14 +22,6 @@ export const updateThemeColor = (color) => {
     return { type: UPDATE_THEME_COLOR, color }
 }
 
-export const updateLanguage = (lang) => {
-    return { type: UPDATE_LANGUAGE, lang }
-}
-
-export const updateHost = (host) => {
-    return { type: UPDATE_HOST, host}
-}
-
 export const updateRegionIndex = (index) => {
     return { type: UPDATE_REGION_INDEX, index }
 }
@@ -38,8 +30,16 @@ export const updateStoryIndex = (index) => {
     return { type: UPDATE_STORY_INDEX, index }
 }
 
+export const updateItemIndex = (index) => {
+    return { type: UPDATE_ITEM_INDEX, index}
+}
+
 export const updateFloorplans = (floorplans) => {
     return { type: UPDATE_FLOORPLANS, floorplans }
+}
+
+export const updateMarkers = (markers) => {
+    return { type: UPDATE_MARKERS, markers }
 }
 
 export const updateBooths = (booths) => {

@@ -1,3 +1,9 @@
+// common
+
+export const tourHost = process.env.REACT_APP_TOURGUIDE_SYSTEM_HOST
+export const refreshTime = 60 * 1000 // 1 min
+export const mobileBreakPoint = 48 * 16 // 46 em * 16 px (1em = 16px)
+
 // vr tour
 
 export const introductionZH =  "大家好！我係導遊機械人，大家想聆聽導遊簡介可以點按相關問題一下。依家我將會介紹依個學校設施比大家。"

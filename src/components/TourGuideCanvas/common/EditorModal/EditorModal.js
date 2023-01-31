@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
 import { useTranslation } from 'react-i18next'
 
-import { Box, Flex,Heading, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex,FormControl,Heading, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import MyButton from '../EditorButton/EditorButton'
+import MyButton from '../EditorButton/CustomButton'
 import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
 
 import useSessionStorage from '../../../../hooks/useSessionStorage'
@@ -15,10 +15,8 @@ import useSessionStorage from '../../../../hooks/useSessionStorage'
 import { booth as boothTemplate , floorplan as floorplanTemplate } from '../../../../data/formTemplates'
 
 import { useDispatch, connect } from 'react-redux'
-import { resetData } from '../../../../redux/form/form.action'
+import { resetData, updateBooth, updateFloorplan } from '../../../../redux/form/form.action'
 import { clearErrorList, closeModal, updateModal } from '../../../../redux/modal/modal.action'
-
-const MotionFlex = motion(Flex); 
 
 const EditorModal = (props) => {
 
@@ -41,6 +39,7 @@ const EditorModal = (props) => {
     const bg = useColorModeValue("white", "black")
     // const progressBg = useColorModeValue("gray", "gray.100")
 
+    const [file, setFile] = useState(null)
 
     const close_modal = () => {
 
@@ -65,8 +64,14 @@ const EditorModal = (props) => {
     useEffect(()=>{
 
         dispatch(updateModal(modalSession))
+        dispatch(updateFloorplan(floorplanSession))
+        dispatch(updateBooth(boothSession))
 
-    },[dispatch, modalSession])
+    },[])
+
+    // useEffect(()=>{setFloorplanSession(floorplan)}, [floorplan])
+
+    // useEffect(()=>{setBoothSession(booth)}, [booth])
 
     return !isOpen ? <></> : (
         <Overlay alignItems={{base: 'flex-end', md: 'center'}} 
@@ -74,7 +79,7 @@ const EditorModal = (props) => {
 
             <Modal as={MotionFlex} initial={{y: 200}} animate={{y: 0}} transition={{ duration: .25 }}
                 bg={bg} borderRadius={{base: '18px 18px 0px 0px', md: 25}}
-                w={{base: '100%', md: '80%'}} h={{base: '90%', md: '70%'}}>
+                w={method==="delete"?"fit-content":{base: '100%', md: '80%'}} h={method==="delete"?"fit-content":{base: '90%', md: '70%'}}>
 
                 {/* <ProgressBar bg={progressBg} w="100%">
                     <Progress h="10px" w={`${(page + 1)/pages.length * 100}%`} bg={themeColor}></Progress>
@@ -85,24 +90,36 @@ const EditorModal = (props) => {
                     <MyButton faIcon={faXmark} isCircle={true} onClick={close_modal}/>
                 </ModalHeader>
 
-                <Content w={{base: '90%', md: '70%'}}>
-                    
                 {
-                    pages[page].components.map((modalElement, index) => {
-                        return React.createElement(modalElement.type, {
-                            key: index,
-                            index: index,
-                            ...modalElement.props      
-                        })
-                    })
+                    
+                    pages[page].components.length !== 0 && 
+                    <Content w={{base: '90%', md: '70%'}}>
+                        
+                        <FormControl>
+                        
+                        {
+                            pages[page].components.map((modalElement, index) => {
+                                return React.createElement(modalElement.type, {
+                                    key: index,
+                                    index: index,
+                                    ...modalElement.props, 
+                                    setFile: setFile      
+                                })
+                            })
+                        }
+                        </FormControl>
+                        
+                    </Content>
+
                 }
-                </Content>
 
                 <FunctionalFooter 
                     isShow={isOpen} onClose={close_modal}
                     totalPage={pages.length} page={page}
                     method={method} path={path} name={name} id={id}
+                    file={file}
                     />
+
 
             </Modal>
         </Overlay>
@@ -121,6 +138,8 @@ export default connect(
     mapStateToProps,
     null
 )(EditorModal)
+
+const MotionFlex = motion(Flex); 
 
 const Overlay = styled(MotionFlex)`
 

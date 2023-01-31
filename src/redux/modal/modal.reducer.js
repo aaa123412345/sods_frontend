@@ -11,7 +11,7 @@ const modalReducer = (state = initModalState, action) => {
                 isError: false
             }
         case CLOSE_MODAL:
-            return { ...state, isOpen: false }
+            return { ...state, isOpen: false, byteData: null }
         case UPDATE_MODAL:
             return { ...state, ...action.config }
         case UPDATE_ERROR_LIST:

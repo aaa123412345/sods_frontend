@@ -3,7 +3,7 @@ import {
     Flex, Popover, PopoverTrigger, Heading,
     PopoverContent, Button
 } from '@chakra-ui/react'
-import MyButton from '../../EditorButton/EditorButton';
+import MyButton from '../../EditorButton/CustomButton';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, connect } from 'react-redux';

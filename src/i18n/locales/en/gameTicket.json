@@ -3,6 +3,7 @@
     "locking-message": "Let's visit booth and unlock story!",
     "show-ticket": "Show Ticket",
     "hide-ticket": "Hide Ticket",
-    "heading-ticket": "Ticket"
+    "heading-ticket": "Ticket", 
+    "hint": "Scan booth QR code to trigger mini game and collect a stamp. After collecting a certain number of stamp, specific gift will be unlocked for you. "
     
 }

@@ -3,10 +3,20 @@
     "cover-story": "封面故事", 
     "editor-type": "編緝類別",
     "preview-ticket": "預覽故事",
+    "create-story": "新增故事",
+    "create-booths": "新增攤位",
+    "create-floorplans": "新增平面圖",
+    "delete-story": "刪除故事",
+    "delete-region": "刪除平面圖",
     "edit-story": "編輯故事",
     "edit-region": "編輯平面圖",
     "edit-booth": "編輯攤位",
+    "edit-vr": "編輯VR",
+    "assign-marker": "指定標記",
+    "delete-booth": "刪除攤位",
     "tourguide": "導賞指南",
     "no-vr-image": "沒有VR 相片",
-    "no-vr-speech": "沒有用於VR 的講稿"
+    "no-vr-available": "VR 導賞設定尚未完成",
+    "active-booth": "已發佈", 
+    "inactive-booth": "尚未發佈"
 }

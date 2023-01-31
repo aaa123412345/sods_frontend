@@ -1,23 +1,20 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Flex, Box, Text } from '@chakra-ui/react';
 import { connect } from 'react-redux';
-import { langGetter } from '../../../../../helpers/langGetter';
+import styled from 'styled-components'
+import { Flex, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 
 const MotionStamp = motion(Flex)
 
 const Stamp = (props) => {
 
-    const { boothData, isCollected, tourguide } = props
+    const { label, isCollected, tourguide } = props
     const { themeColor } = tourguide
-
-    const lang = langGetter()
 
     return (
         <StampContainer bg='gray.10'>
-            <StampBorder bg={isCollected ? themeColor : 'gray'} whileHover={{scale: 1.2, duration: .2}}>
-                <Text textAlign='center' color="white">{boothData.name[lang]}</Text>
+            <StampBorder bg={isCollected ? themeColor : 'gray'} whileHover={{scale: 1.1, duration: .2}}>
+                <Text textAlign='center' color="white">{label}</Text>
             </StampBorder>
         </StampContainer>
     )
@@ -51,5 +48,6 @@ const StampBorder = styled(MotionStamp)`
     width: 80%; height: 80%;
     border-radius: 50%;
     overflow: hidden;
+    cursor: pointer;
 
 `

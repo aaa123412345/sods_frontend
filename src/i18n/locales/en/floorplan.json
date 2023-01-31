@@ -6,7 +6,8 @@
     "map": "Map",
     "floorplan": "Floor Plan(s)", 
     "remind-message": "Please select a booth within the floor plan.", 
-    "stamp-btn": "Let's get a stamp", 
-    "vr-btn": "Let's Start VR Tour"
+    "stamp-btn": "Stamp", 
+    "vr-btn": "VR Mode",
+    "map-not-ready": "Tour Guideline is preparing. You may browse another pages first."
 
 }

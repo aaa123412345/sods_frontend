@@ -1,11 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
+import axios from 'axios'
+
 import 'aframe'
-import VRScene from './VRScene/VRScene';
-import { useSpeechSynthesis } from 'react-speech-kit';
-import { errorEN, errorZH, introductionEN, introductionZH } from '../../constants/constants';
+import { Scene, Entity } from 'aframe-react'
+
+import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
+
+import { tourHost } from '../../constants/constants'
+import { langGetter } from '../../helpers/langGetter'
+
+// import { useSpeechSynthesis } from 'react-speech-kit';
+// import { errorEN, errorZH, introductionEN, introductionZH } from '../../constants/constants';
 
 const VRCanvas = (props) => {
+
+  const { lang, id } = useParams()
+
+  const { t } = useTranslation()
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  const [vrImage, setVRImage] = useState(null)
+
+  const navigate = useNavigate()
 
   // const { vrTour, tourguide } = props
   // const { host, language } = tourguide
@@ -15,37 +38,40 @@ const VRCanvas = (props) => {
 
   // const [error, setError] = useState(null)
   // const [isLoading, setIsLoading] = useState(true)
-  const [speech, setSpeech] = useState(null)
-  const [isReady, setIsReady] = useState(false)
-  const [isSpeaking, setIsSpeaking] = useState(window.speechSynthesis.speaking)
 
-  const language = "en"
+  // const [speech, setSpeech] = useState(null)
+  // const [isReady, setIsReady] = useState(false)
+  // const [isSpeaking, setIsSpeaking] = useState(window.speechSynthesis.speaking)
+
+  // const language = "en"
 
   // const onEnd = () => {};
 
-  const { speak, speaking, voices } = useSpeechSynthesis();
+  // const { speak, speaking, voices } = useSpeechSynthesis();
 
 
-  const speak_speechIn = (lang = "zh") => {
+  // const speak_speechIn = (lang = "zh") => {
 
-    console.log('triggered: ', speech)
-    let sentences = []
-    let regex = lang === 'zh' ? /[^\u4e00-\u9fa5]/ : /[.,!?]/
-    let langIndex = lang === "zh" ? 17 : 2
+  //   let speech = "Good afternoon, I am a open day robot. Nice to meet you. Let's me introduce this facility to you first. "
+  //   console.log('triggered: ', speech)
+  //   let sentences = []
+  //   let regex = lang === 'zh' ? /[^\u4e00-\u9fa5]/ : /[.,!?]/
+  //   let langIndex = lang === "zh" ? 17 : 2
 
-    sentences = speech[lang].split(regex)
+  //   // sentences = speech[lang].split(regex)
+  //   sentences = speech.split(regex)
     
-    sentences.forEach((sentence, index) => {
-        speak({text: sentence, voice: voices[langIndex]})
-    })
+  //   sentences.forEach((sentence, index) => {
+  //       speak({text: sentence, voice: voices[langIndex]})
+  //   })
       
-  }
+  // }
 
-  const handle_initVR = () => {
-    setIsReady(true)
-  } 
+  // const handle_initVR = () => {
+  //   setIsReady(true)
+  // } 
 
-  useEffect(() => {
+  // useEffect(() => {
 
     // axios.get(host+path)
     // .then(res=>{
@@ -63,17 +89,17 @@ const VRCanvas = (props) => {
     //     console.log(err)
     // })
 
-  }, [])
+  // }, [])
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    const id = setTimeout(()=>{
-        speak_speechIn()
-    }, 3000)
+  //   const id = setTimeout(()=>{
+  //       speak_speechIn(language)
+  //   }, 3000)
 
-    return () => clearTimeout(id)
+  //   return () => clearTimeout(id)
 
-  },[isReady])
+  // },[isReady])
 
   // if(error !== null)
   //     return <div>{error.message}</div>
@@ -81,28 +107,60 @@ const VRCanvas = (props) => {
   // if(isLoading || speech === null)
   //     return <LoadingSpinner />
 
+  // useEffect(()=>{
+
+  //   const id = setInterval(()=>{
+        
+  //       setIsSpeaking(window.speechSynthesis.speaking)
+        
+  //   },1000)
+
+  //   return ()=>clearInterval(id)
+
+  // }, [isSpeaking])
+
   useEffect(()=>{
 
-    const id = setInterval(()=>{
-        
-        setIsSpeaking(window.speechSynthesis.speaking)
-        
-    },1000)
+    let url = `${tourHost}/booths/${id}`
+    axios.get(url)
+    .then((res)=>{
+      setError(null)
+      setVRImage(res.data.data.imageUrl)
+        // console.log("updated from " + url + " successfully;")
+    })
+    .catch((err)=>{setError(err)})
+    .finally(()=>{setIsLoading(false)})
 
-    return ()=>clearInterval(id)
+    window.localStorage.setItem('i18n-lang', JSON.stringify(lang === 'eng' ? 'en' : 'zh'))
 
-  }, [isSpeaking])
+  }, [])
+
+  if(error)
+      return <div>{error.message}</div>
+
+  if(isLoading)
+    return <div>{t('tourguide.loading-vr')}</div>
+
 
   return (
       
     <div style={{position: 'absolute', height: '100%', width: '100%', zIndex: 2000, background: 'black'}}>
-    { 
+    {/* { 
         !isReady ? 
         <ReadyButton onClick={()=>handle_initVR()}>Click to Ready</ReadyButton> 
         :
         <VRScene isSpeaking={isSpeaking}/>
         
-    }
+    } */}
+
+      <ExitButton onClick={()=>{ navigate(`/public/${langGetter() === 'en' ? 'eng': 'chi'}/tourguide/booths/${id}`)}}>
+        <FontAwesomeIcon icon={faXmarkCircle} />
+        {" " + t('tourguide.exit')}
+      </ExitButton>
+
+      <Scene>
+        <Entity primitive='a-sky' src={'/images/test-360-classroom.jpg'}/>
+      </Scene>
     </div>
   
   )
@@ -110,10 +168,27 @@ const VRCanvas = (props) => {
 
 export default VRCanvas
 
-const ReadyButton = styled.button`
-    width: 100%; height: 100%;
-    background: white;
-    color: black;
-    font-size: 5rem;
-    cursor: pointer;
+// const ReadyButton = styled.button`
+//     width: 100%; height: 100%;
+//     background: white;
+//     color: black;
+//     font-size: 5rem;
+//     cursor: pointer;
+// `
+
+const ExitButton = styled.button`
+
+  position: fixed; z-index: 999;
+  top: 1em; left: 1em;
+  background: white;
+  color: black;
+  font-size: 1.5rem;
+  border-radius: 25px;
+  padding: .1em .5em;
+  border-style: none;
+
+  &:hover{
+    opacity: .5;
+  }
+
 `

@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import styled from 'styled-components'
 
 import { Flex, useColorModeValue } from '@chakra-ui/react'
-import { faMapLocationDot, faPen, faTent } from '@fortawesome/free-solid-svg-icons'
+import { faMapLocationDot, faPen, faTent, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import tourPageData from '../../../../data/tourPageData'
 import Toolbar from '../../common/Toolbar/Toolbar'
@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 const RightPanel = (props) => {
 
     const { tourguide, modal, form } = props
-    const { page, regionIndex, storyIndex, floorplans, stories } = tourguide
+    const { page, itemIndex, floorplans, stories } = tourguide
     const { floorplan, story } = form
     const dispatch = useDispatch()
 
@@ -38,21 +38,22 @@ const RightPanel = (props) => {
     // react hooks
     const contentRef = useRef(null)
 
-    const onOpen = () => {
+    const onOpen = (isDelete = false) => {
 
-        let floorplanPayload = {...floorplans[regionIndex]}
-        let storyPayload = {...stories[storyIndex]} 
+        let floorplanPayload = {...floorplans[itemIndex]}
+        let storyPayload = {...stories[itemIndex]} 
+        let payload = isTicketEditor ? storyPayload : floorplanPayload
 
         let modalIndex = isTicketEditor ? 4 : 0
         let path = isTicketEditor ? 'story':'floorplans'
         let name = isTicketEditor ? 'story' : 'floorplan'
-        let id = isTicketEditor ? storyPayload.id : floorplanPayload.id
 
         let modalPayload = {
 
-            page: 0, modalIndex: modalIndex,
-            path: path, method: "put",
-            name: name, id: id
+            page: 0, modalIndex: isDelete?5:modalIndex,
+            path: path, method: isDelete?"delete":"put",
+            name: name, id: payload.id, 
+            byteData: payload.imageData
 
         }
         
@@ -83,7 +84,9 @@ const RightPanel = (props) => {
             <Toolbar type={2} 
                 heading={isTicketEditor ? t('tourguideEditor.preview-ticket') : undefined}
                 categoryList={isTicketEditor ? undefined : categories}
-                optionList={ [{text: t(`tourguideEditor.edit-${isTicketEditor ? "story" : 'region'}`), faIcon: faPen, onClick: onOpen}]} />
+                optionList={ [
+                    {text: t(`tourguideEditor.edit-${isTicketEditor ? "story" : 'region'}`), faIcon: faPen, onClick: ()=>onOpen(false)},
+                    {text: t(`tourguideEditor.delete-${isTicketEditor ? "story" : 'region'}`), faIcon: faTrash, onClick: ()=>onOpen(true)}]} />
 
 
             <Content bg={bg} ref={contentRef}>
@@ -96,7 +99,7 @@ const RightPanel = (props) => {
                         // extra properties
                         if(page === 0){
                             props['height'] = contentRef.current === null ? null : contentRef.current.offsetHeight
-                            props['regionIndex'] = regionIndex
+                            props['itemIndex'] = itemIndex
                         }
 
                         return React.createElement(component.type, {...props})

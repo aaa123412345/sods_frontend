@@ -7,6 +7,7 @@
     "floorplan": "平面圖",
     "remind-message": "請從平面圖中選擇攤位。",
     "stamp-btn": "馬上取得印章", 
-    "vr-btn": "開始 VR 探索"
+    "vr-btn": "開始 VR 探索",
+    "map-not-ready": "導賞指南正在準備中，您可以先瀏覽其他頁面。"
     
 }

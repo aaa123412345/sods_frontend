@@ -15,6 +15,9 @@ const errorToast = {
 }
 
 export const toast_generator = (method = undefined, name = undefined) => {
+
+    console.log("method: ", method)
+    console.log("name: ", name)
     
     if(method === undefined || name === undefined)
         return errorToast

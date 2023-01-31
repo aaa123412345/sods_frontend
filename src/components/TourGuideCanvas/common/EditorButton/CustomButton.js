@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Button, Text } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import useWindowSize from '../../../../hooks/useWindowSize'
 
-const EditorButton = (props) => {
+const CustomButton = (props) => {
 
     const { 
         text, faIcon, onClick, 
@@ -22,26 +23,25 @@ const EditorButton = (props) => {
     const buttonRef = useRef(null)
     const [isHide, setIsHide] = useState(false)
 
-    const update_buttonFont = () => {
+    const windowSize = useWindowSize()
 
+    const update_buttonFont = () => {
+        
         let button = buttonRef.current
 
-        if(!isCircle){
-            if(button !== undefined && button.offsetWidth < 150)
-                setIsHide(true)
-            else
-                setIsHide(false)
-        }
-
+        if(button !== undefined && button.offsetWidth < 150)
+            setIsHide(true)
+        else
+            setIsHide(false)
+        
     }
 
-    useEffect(()=>{
+    useEffect(()=>{ 
+        
+        if(!isCircle)
+            update_buttonFont()
 
-        window.addEventListener('resize', update_buttonFont)
-        return () => window.removeEventListener('resize', update_buttonFont)
-
-
-    }, [isHide])
+     }, [isHide, windowSize])
 
     return (
         <Button ref={buttonRef}
@@ -63,5 +63,5 @@ const EditorButton = (props) => {
     )
 }
 
-export default EditorButton
+export default CustomButton
 

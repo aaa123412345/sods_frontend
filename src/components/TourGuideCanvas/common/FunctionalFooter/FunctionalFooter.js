@@ -3,30 +3,32 @@ import axios from 'axios'
 import styled from 'styled-components'
 
 import { Box, Flex, useToast } from '@chakra-ui/react'
-import MyButton from '../EditorButton/EditorButton'
+import MyButton from '../EditorButton/CustomButton'
 import { useDispatch, connect } from 'react-redux'
 import { resetData } from '../../../../redux/form/form.action'
 import { closeModal } from '../../../../redux/modal/modal.action'
 import { toast_generator } from '../../../../helpers/toastGenerator'
 import { submitLabel } from '../../../../constants/constants'
 import { useTranslation } from 'react-i18next'
+import { conforms } from 'lodash'
+import useSessionStorage from '../../../../hooks/useSessionStorage'
 
 const FunctionalFooter = (props) => {
 
     const { 
-        isShow, path, method, name, 
-        data = null, onClose, 
-        tourguide, form, id
+        isShow, path, method, name, onClose, 
+        tourguide, form, id, file, modal
     } = props
 
     const { themeColor, host } = tourguide 
     const dispatch = useDispatch()
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     // chakra hooks
     const toast = useToast({duration: 3000, isClosable: true})
 
+    const [modalSession, setModalSession] = useSessionStorage('modal', modal)
     const [canSubmit, setCanSubmit] = useState(false)
 
     const check_validation = (data) => {
@@ -34,17 +36,21 @@ const FunctionalFooter = (props) => {
         let errorExist = false
 
         if(method === 'delete')
-            errorExist = data === null || data.length === 0
+            errorExist = false
+        else if(name === "marker")
+            errorExist = form['marker'].x === null || form['marker'].y === null || form['marker'].floorID === null
         else{
 
-            Object.entries(data).map(([key, value], index)=>{
-                // WILL CHECK OTHER TYPE LATER
-                if(value.length === 0)
-                    errorExist = true
-            })
+            // Object.entries(data).map(([key, value], index)=>{
+            //     // WILL CHECK OTHER TYPE LATER
+            //     console.log(key, ": ", value)
+            //     if(value.length === 0)
+            //         errorExist = true
+            // })
 
         }
 
+        // console.log('errorExist: ', errorExist)
         setCanSubmit(!errorExist)
 
     }
@@ -52,6 +58,7 @@ const FunctionalFooter = (props) => {
     const close_and_reset = () => {
     
         dispatch(resetData())
+        setModalSession({...modalSession, isOpen: false, btyeData: null})
         dispatch(closeModal())
 
     }
@@ -74,31 +81,32 @@ const FunctionalFooter = (props) => {
 
     const handle_delete = () => {
 
-        // delete action only occurs in iteml list instead of modal.
-
-        if(data !== null){
-    
-            data.forEach((id)=>{
-                
-                axios.delete(host+path+'/'+id)
-                .then((res)=>toast(toast_generator(t("tourguide.deleted"), t(`${path}`))))
-                .catch(err=>toast(toast_generator()))
-    
-            })
-
-            onClose()
-
-        }
+        axios.delete(host+path+'/'+id)
+        .then((res)=>toast(toast_generator(t("tourguide.deleted"), t(`tourguide.${path}`))))
+        .catch(err=>toast(toast_generator()))
+        
+        close_and_reset()
         
     }
 
     const handle_create = () => {
 
         let data = form[name]
+        let extraPath = ""
 
-        axios.post(host+path, {...data})
-        .then((res)=>{toast(toast_generator(t("trouguide.created"), t(`${name}`)))})
-        .catch(err=>{toast(toast_generator())})
+        let formData = new FormData()
+        formData.append(name, JSON.stringify({...data}))
+        formData.append("image", file)
+
+        if(path === "booths")
+            extraPath = `markers/${form['marker'].floorID}/${form['marker'].y}/${form['marker'].x}/tourguide-`            
+
+        let url = host+extraPath+path
+
+        console.log("formData: ", formData)
+        axios.post(url, formData)
+        .then((res)=>{toast(toast_generator(t("tourguide.created"), t(`tourguide.${name}`)))})
+        .catch(err=>{console.log(err.message); toast(toast_generator())})
 
         close_and_reset()
 
@@ -108,17 +116,28 @@ const FunctionalFooter = (props) => {
 
         let data = form[name]
 
-        axios.put(host+path+`/${id}`, {...data})
-        .then((res)=>toast(toast_generator(t("tourguide.updated"), t(`${path}`))))
-        .catch(err=>toast(toast_generator()))
-
+        if(name === "marker"){
+            axios.put(host+path+`/${id}/tourguide-markers/${data.floorID}/${data.y}/${data.x}`)
+            .then((res)=>toast(toast_generator(t("tourguide.updated"), t(`tourguide.${path}`))))
+            .catch(err=>toast(toast_generator()))
+        }
+        else{
+            let formData = new FormData()
+            formData.append(name, JSON.stringify({...data}))
+            formData.append("image", file)
+    
+            axios.put(host+path+`/${id}`, formData)
+            .then((res)=>toast(toast_generator(t("tourguide.updated"), t(`tourguide.${path}`))))
+            .catch(err=>toast(toast_generator()))
+        }
+            
         close_and_reset()
 
     }    
 
     useEffect(()=>{
 
-        check_validation(method === 'delete' ? data : form[name])
+        check_validation(method === 'delete' ? null : form[name])
 
     },[form])
 

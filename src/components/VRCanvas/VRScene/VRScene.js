@@ -129,18 +129,14 @@ const VRScene = (props) => {
     return (
         
         <Scene>
-            {/* <a-text position="0 1 -2.5" color="white" value="Begin" rotation="0 0 0"></a-text> */}
-            {/* <a-box ref={boxRef} position="1.28 1 -2.6" scale=" 2.8 .5 .1" color="black" rotation="0 0 0"></a-box> */}
             <Entity id="robot"  position="0 0 -3" animation__floating={modelFloatingAnim} />
-            {
+            {/* {
                 vrImage === null || vrImage === undefined ? 
                 <Entity primitive='a-sky' color="#303041" />
                 :
                 <Entity primitive='a-sky' src={vrImage}/>
-            }
-            {/* <a-camera>
-                <a-cursor></a-cursor>
-            </a-camera> */}
+            } */}
+            <Entity primitive='a-sky' src={'/images/test-360-classroom.jpg'}/>
         </Scene>
         
     )

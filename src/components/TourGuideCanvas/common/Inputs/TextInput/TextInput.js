@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Flex, Input, Text, Textarea } from '@chakra-ui/react'
+import { Flex, Input, Text, FormLabel, Textarea } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -9,9 +9,7 @@ import { placeholderLang } from '../../../../../constants/constants'
 const TextInput = (props) => {
 
     const { 
-        isTextArea = false, 
-        faIcon, label, names, placeholder, 
-        form, update
+        isTextArea = false, faIcon, label, names, placeholder, form, update
     } = props
     const dispatch = useDispatch()
 
@@ -27,21 +25,21 @@ const TextInput = (props) => {
 
         const value = e.target.value
         let newData = {...data}
-        newData[names.field][lang] = value
+        let name = names.field + lang.toUpperCase()
+        newData[name] = value
         dispatch(update(newData))
         setIsErr(value.length === 0)
         
     }
 
-
     return (
 
         <TextFieldContainer>
-
-            <Flex alignItems='center'>
-                <FontAwesomeIcon icon={faIcon} />
-                <Text ml=".5em" fontWeight="bold">{t(`modal.${label}`)}</Text>
-            </Flex>
+                
+            <FormLabel ml=".5em" fontWeight="bold">
+                <FontAwesomeIcon icon={faIcon} style={{marginRight: '.5em'}} />
+                {t(`modal.${label}`)}
+            </FormLabel>
             
             {
 
@@ -49,19 +47,17 @@ const TextInput = (props) => {
 
                     return isTextArea?
                     <Textarea key={index} m=".5em 0" borderColor={border} borderRadius={25}
-                        value={data[names.field][lang]} 
+                        value={data[names.field + lang.toUpperCase()]} 
                         onChange={e=>handle_onChange(e, lang)}
                         placeholder={placeholderLang[lang]+placeholder[lang]} />
                     :
                     <CustomInputField key={index} borderColor={border} borderRadius={25}
-                        value={data[names.field][lang]} 
+                        value={data[names.field + lang.toUpperCase()]} 
                         onChange={e=>handle_onChange(e, lang)}
                         placeholder={placeholderLang[lang]+placeholder[lang]} />
                 })
 
             }
-            
-
            
         </TextFieldContainer>
 
@@ -88,7 +84,6 @@ const TextFieldContainer = styled(Flex)`
     margin-top: 1em; 
     flex-direction: column; 
     align-items: flex-start;
-
 
 `
 

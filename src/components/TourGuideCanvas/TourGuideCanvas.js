@@ -1,124 +1,110 @@
 import React, { useState, useEffect } from 'react'
-
-import { useTranslation } from 'react-i18next';
-
-import styled from 'styled-components'
-
-import { ChakraProvider } from '@chakra-ui/react'
-import { newTheme } from '../../theme/theme'
-import { Flex, Box, Button, Text } from '@chakra-ui/react'
+import { useParams, Navigate } from 'react-router-dom'
 
 import { connect, useDispatch } from 'react-redux'
-import { updateHost, updateThemeColor } from '../../redux/tourguide/tourguide.action'
 
-import useSessionStorage from '../../hooks/useSessionStorage'
+import axios from 'axios'
 
 import TourGuideEditor from './TourGuideEditor/TourGuideEditor'
 import TourGuideMap from './TourGuideMap/TourGuideMap'
 import GameTicket from './GameTicket/GameTicket'
+import StorySlider from './StorySplider/StorySplider'
 import QRCodeModal from './QRCodeModal/QRCodeModal'
-import DevModePanel from './DevModePanel/DevModePanel'
-import { faEdit, faEye, faMap, faTicket } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { AnimatePresence } from 'framer-motion';
+import Wrapper from './common/Wrapper/Wrapper'
+import LoadingSpinner from './common/LoadingSpinner/LoadingSpinner'
+import { tourHost } from '../../constants/constants'
+import { updateFloorplans, updateStories, updateBooths, updateMarkers } from '../../redux/tourguide/tourguide.action'
+import BoothPage from './BoothPage/BoothPage'
 
 const TourGuideCanvas = (props) => {
 
-    const { block, tourguide } = props
-    const { themeColor, isAdmin } = block
+    const { block, tourguide, modal } = props
+    const { isAdmin } = block
 
-    // redux
-    const { page } = tourguide
+    const { lang, path, subpath } = useParams()
+
     const dispatch = useDispatch()
 
-    const { t } = useTranslation()
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
-    // session storage
-    const [mapModeSession, setMapModeSession] = useSessionStorage('mapMode', !isAdmin)
-    const [isLoaded, setIsLoaded] = useState(false)
+    const render_feature = () => {
 
-    // react hooks
-    const [isMap, setIsMap] = useState(true)
+        switch(subpath){
 
-    // constant 
-    const host = process.env.REACT_APP_TOURGUIDE_REST_HOST 
-    // const host = "https://150fdc63-ebcf-489f-b8c1-5f868cc433e3.mock.pstmn.io/"
+            case "floorplans":
+                return <TourGuideMap />
 
-    const change_editMode = () => {
+            case "booths":
+                return <BoothPage />
 
-        setIsMap(!isMap)
-        setMapModeSession(!isMap)
+            case "ticket":
+                return <GameTicket />
+
+            case 'story': 
+                return <StorySlider />
+
+            case "floorplan-editor" || "booth-editor" || "story-editor":
+                return <TourGuideEditor />
+
+            default: 
+                return path === 'tourguide' && <Navigate replace to={`/public/${lang}/tourguide/${isAdmin?"floorplan-editor":"floorplans"}`} /> 
+    
+        }
 
     }
 
-    const render_label = () => {
+    const get_data = (path, updateFunction) => {
 
-        if(isAdmin)
-            return isMap ? "edit": "preview" 
-        return isMap ? "my-ticket" : "map"
-
-    }
-
-    const render_icon = () => {
-
-        if(isAdmin)
-            return isMap ? faEdit : faEye
-        return isMap ? faTicket : faMap
-
+        setIsLoading(true)
+        let url = `${tourHost}/${path}`
+        axios.get(url)
+        .then((res)=>{
+            dispatch(updateFunction(res.data.data))
+            // console.log("updated from " + url + " successfully;")
+        })
+        .catch((err)=>{setError(err)})
     }
 
     useEffect(()=>{
 
-        setIsMap(mapModeSession)
-        if(!isLoaded){
-            dispatch(updateThemeColor(themeColor))
-            dispatch(updateHost(host))
-            setIsLoaded(true)
-        }
+        setError(null)
+        // load all data first
+        get_data("floorplans", (data) => updateFloorplans(data))
+        get_data("booths", (data) => updateBooths(data))
+        get_data("markers", (data) => updateMarkers(data))
+        get_data("stories", (data) => updateStories(data))
+        setIsLoading(false)
+        
+    }, [])
 
-    }, [isMap])
+    useEffect(()=>{
 
-    const ModeSwitcher = () => {
+        window.localStorage.setItem('i18n-lang', JSON.stringify(lang === 'eng' ? 'en' : 'zh'))
 
-        return (
-            <Float key={4} right={5} top={5}>
-                <Button variant={tourguide.themeColor} borderRadius={25} m="0" w={{base: "60px", md: '150px'}}
-                    onClick={change_editMode}>
-                        <FontAwesomeIcon icon={render_icon()} />
-                        <Text display={{base: 'none', md: 'block'}} marginLeft='.5em'>{t(`floorplan.${render_label()}`)}</Text>
-                </Button>
-            </Float>
-        )
-    }
+    }, [])
+
+    if(error)
+        return <div>{error.message}</div>
+
+    if(isLoading)
+        return <LoadingSpinner />
 
     return (
-        <ChakraProvider resetCSS theme={newTheme}>
-            <AnimatePresence>
-                <OuterContainer key={window.location.pathname}> 
 
-                    { isMap && <TourGuideMap /> }
+        <Wrapper isUseChakra={subpath !== "vr-tour"} isUseContainer>
+            {(() => render_feature())()}
+            <QRCodeModal />
+        </Wrapper>
 
-                    { !isMap && !isAdmin && <GameTicket /> }
-
-                    { !isMap && isAdmin && <TourGuideEditor /> }
-
-                    <QRCodeModal />
-                    
-                    { ((page !== 2 && isAdmin) || !isAdmin) && <ModeSwitcher /> }
-
-                    {/* <DevModePanel /> */}
-                
-                </OuterContainer>
-            </AnimatePresence>
-        </ChakraProvider>
     )
 
 }
 
-
 const mapStateToProps = state => {
     return {
-        tourguide: state.tourguide
+        tourguide: state.tourguide, 
+        modal: state.modal
     };
 };
 
@@ -126,18 +112,3 @@ export default connect(
     mapStateToProps,
     null
 )(TourGuideCanvas)
-
-const OuterContainer = styled(Flex)`
-
-    position: relative;
-    flex-direction: column;
-    height: 100vh;
-    max-width: 100vw; width: 100%;
-
-
-`
-const Float = styled(Box)`
-
-    position: absolute; z-index: 999;
-    
-`

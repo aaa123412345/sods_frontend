@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { Flex } from '@chakra-ui/react'
 import ItemList from '../../common/ItemList/ItemList'
-import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { connect } from 'react-redux'
 
-const LeftPanel = () => {
+const LeftPanel = (props) => {
 
-  const { page } = useSelector(state => state.tourguide)
+  const { tourguide } = props
+  const { page, floorplans, stories } = tourguide
 
   const { t, i18n } = useTranslation()
 
@@ -32,23 +33,35 @@ const LeftPanel = () => {
     <Container>
 
       <ItemList 
-          type={0} 
-          isCategoryList={true}
-          modalIndex={propsList[index].modalIndex}
-          heading={propsList[index].heading}
-          path={propsList[index].path}
-          name={propsList[index].name} />
-            
+        data={page <= 1 ? floorplans : stories}
+        type={0} 
+        isCategoryList={true}
+        modalIndex={propsList[index].modalIndex}
+        heading={propsList[index].heading}
+        path={propsList[index].path}
+        name={propsList[index].name} />
+          
     </Container>
   )
 }
 
-export default LeftPanel
+const mapStateToProps = state => {
+  return {
+      tourguide: state.tourguide,
+      modal: state.modal,
+      form: state.form
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(LeftPanel)
 
 const Container = styled(Flex)`
 
-    position: relative;
-    flex-direction: column;
-    min-width: 220px
+  position: relative;
+  flex-direction: column;
+  min-width: 220px
 
 `

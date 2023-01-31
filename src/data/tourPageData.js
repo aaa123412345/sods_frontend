@@ -28,13 +28,13 @@ const tourPageData = [
             {
                 type: ItemList,
                 props: {
+                    isFloorFilter: true,
                     isCategoryList: false,
-                    isRegionFilter: true,
                     modalIndex: 1,
                     heading: "tourguide.booth",
                     path: "booths",
                     name: 'booth',
-                    labelName: "name"
+                    labelName: "name", 
                 }
             }
         ]

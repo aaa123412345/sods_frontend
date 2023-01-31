@@ -1,78 +1,46 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import styled from 'styled-components'
-import { Flex, Box, Heading, useColorModeValue } from '@chakra-ui/react'
-import { updateFloorplans, updateRegionIndex } from '../../../../redux/tourguide/tourguide.action'
-import axios from 'axios'
+import { Box, Flex, Heading, useColorModeValue } from '@chakra-ui/react'
+
 import { useDispatch, connect } from 'react-redux'
-import EditorButton from '../../common/EditorButton/EditorButton'
-import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner'
+import { updateItemIndex } from '../../../../redux/tourguide/tourguide.action'
+import { useTranslation } from 'react-i18next';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMap } from '@fortawesome/free-solid-svg-icons'
 
-import { useTranslation } from 'react-i18next';
+import CustomButton from '../../common/EditorButton/CustomButton'
 import { langGetter } from '../../../../helpers/langGetter'
 
 
 const FloorSelector = (props) => {
 
     const { tourguide } = props
-    const { host, themeColor, floorplans, regionIndex } = tourguide
+    const { themeColor, floorplans, itemIndex} = tourguide
     const dispatch = useDispatch()
 
     const { t } = useTranslation()
 
+    const navigate = useNavigate()
+
     const bg = useColorModeValue('white', 'black')
-
-    const path = 'floorplans'
-    const lang = langGetter()
-
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const lang = langGetter().toUpperCase()
 
     const select_region = (index) => {
 
-        console.log(index)
-        dispatch(updateRegionIndex(index))
-
+        dispatch(updateItemIndex(index))
+        navigate(`/public/${lang === "EN" ? "eng" : "chi"}/tourguide/floorplans/${floorplans[itemIndex]?.id ?? ""}`)
 
     }
-
-    useEffect(()=>{
-
-        axios.get(host+path)
-        .then((res)=>{
-
-            let data = res.data.data
-            dispatch(updateFloorplans(data))
-            setError(null)
-            setIsLoading(false)
-    
-        })
-        .catch(err=>{
-            setError(error)
-            setIsLoading(true)
-        })
-
-    },[])
-
-
-    console.log("regionIndex: ", regionIndex)
-
-    if(error !== null)
-        return <div>{error.message}</div>
-
-    if(isLoading)
-        return <LoadingSpinner />
 
     return (
         
         <FloorSelectorPanel bg={bg} paddingRight={{base: '90px', md: "180px"}}>
 
-
-            <Heading size="sm" m=".5em">
-                <FontAwesomeIcon icon={faMap} />
-                <br/>
-                {t('floorplan.floorplan')}
+            <Heading size="sm" p=".5em">
+                <FontAwesomeIcon icon={faMap} />{" "}{t('floorplan.floorplan')}
             </Heading>
 
             <Scroll>
@@ -81,11 +49,11 @@ const FloorSelector = (props) => {
                 floorplans !== undefined 
                 &&
                 floorplans.map((floorplan, index)=>(
-                    <EditorButton key={index} 
-                        cssStyle={{width: "150px", minWidth: '150px'}}
+                    <CustomButton key={index} 
+                        cssStyle={{minWidth: '70px'}}
                         bgColor={themeColor}
-                        isSelected={index === regionIndex}
-                        text={floorplan.region[lang]} 
+                        isSelected={index === itemIndex}
+                        text={floorplan[`region${lang}`]} 
                         onClick={()=>{select_region(index)}} />
                 ))
             }
@@ -108,15 +76,17 @@ export default connect(
     null
 )(FloorSelector)
 
-const FloorSelectorPanel = styled(Flex)`
+const FloorSelectorPanel = styled(Box)`
 
-    padding: .5em; z-index: 1000;
+    margin: 0;
+    z-index: 1000;
     width: 100%;
     height: fit-content; 
     box-shadow: 0px 22px 22px -22px rgba(0, 0, 0, .4);
 `
 
 const Scroll = styled(Flex)`
+
     max-width: 90%;
     overflow-y: hidden;
     overflow-x: scroll

@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Box, Flex, Heading, Text, theme, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, useColorModeValue, Image } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { faAlignLeft, faComment, faGlobe, faLocationDot, faPen, faQrcode, faTent } from '@fortawesome/free-solid-svg-icons'
+import { faAlignLeft, faBan, faCircle, faComment, faGlobe, faLocationDot, faPen, faQrcode, faTent } from '@fortawesome/free-solid-svg-icons'
 import { langGetter } from '../../../../../../helpers/langGetter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
 import OptionsMenu from './OptionsMenu/OptionsMenu'
 import CardButtons from './CardButtons/CardButtons'
 import { useTranslation } from 'react-i18next'
+import _ from 'lodash';
 
 const BoothInfoCard = (props) => {
 
   const { variant, onClick, data, tourguide } = props 
-  const { themeColor } = tourguide
+  const { markers } = tourguide
 
   const animations = {
     initial: { y: 100, opacity: 0 },
@@ -21,17 +22,30 @@ const BoothInfoCard = (props) => {
     exit: { y: 100, opacity: 0 }
   }
 
-  // const bg = useColorModeValue('white', 'black')
   const bg = useColorModeValue('gray.10', 'gray.100')
   const color = useColorModeValue('black', 'white')
-  const lang = langGetter()
+  const lang = langGetter().toUpperCase()
 
   const { t } = useTranslation()
   const [cardLang, setCardLang] = useState(lang)
+  const [isActive, setIsActive] = useState(false)
 
   const switch_cardLang = () => {
-    setCardLang(cardLang === "zh"? "en":"zh")
+    setCardLang(cardLang === "ZH"? "EN":"ZH")
   }
+
+  useEffect(()=>{
+
+    let hasMarker = false
+    markers.forEach(markerList => {
+      markerList.forEach(marker=>{
+        if(_.isEqual(marker.booth, data))
+          hasMarker = true
+      })
+    })
+    setIsActive(hasMarker)
+    console.log("booth card: ", data)
+  }, [])
 
   const Row = (props) => {
     
@@ -39,8 +53,8 @@ const BoothInfoCard = (props) => {
 
     return (
       <Flex alignItems='flex-start' color={color} lineHeight="1.5">
-        <FontAwesomeIcon icon={icon} />
-        <Text marginLeft=".5em">{text}</Text>
+        <Text>
+        <FontAwesomeIcon icon={icon} style={{marginRight: ".5em"}}/>{text}</Text>
       </Flex>
     )
 
@@ -52,20 +66,33 @@ const BoothInfoCard = (props) => {
         
       <CardHead bg={bg}>
         <Box>
-          <Heading size="md" lineHeight="1.5" color={color}>{data.name[cardLang]}</Heading>
-          <Row icon={faLocationDot} text={data.venue[cardLang]}/>
+          <Heading size="md" lineHeight="1.5" color={color}>{data[`name${cardLang}`]}</Heading>
+          <Row icon={faLocationDot} text={data[`venue${cardLang}`]}/>
+          {/* <Row icon={faCircle} color={isActive?"success":"gray"} text={t(`tourguideEditor.${isActive?"active":"inactive"}-booth`)}/> */}
         </Box>
         <OptionsMenu data={data}  />
       </CardHead>
 
       <CardContent>
-        <VRImageBox bg='white'>
-          <Text p="1em">{t('tourguideEditor.no-vr-image')}</Text>
-        </VRImageBox>
+        {
+          data.imageData !== null && data.speechEN !== null && data.speechZH !== null ?
+          
+          <React.Fragment>
+            <VRImageBox bg='white'>
+              <Image src={"data:image/*;base64,"+data.imageData} w="100%" h="100%" objectFit="contain" />
+            </VRImageBox>
+            <FontAwesomeIcon icon={faComment}/>
+            <Text color={color}>{data[`speech${cardLang}`]}</Text>
+          </React.Fragment>
+          :
+          <WarningBox bg='warning'>
+            <Text color={color}><FontAwesomeIcon icon={faBan} style={{marginRight: '.5em'}}/>{t(`tourguideEditor.no-vr-available`)} </Text>
+          </WarningBox>
+
+        }
+        
         <FontAwesomeIcon icon={faAlignLeft}/>
-        <Text color={color}>{data.description[cardLang]} </Text>
-        <FontAwesomeIcon icon={faComment}/>
-        <Text color={color}>{t('tourguideEditor.no-vr-speech')}</Text>
+        <Text color={color}>{data[`description${cardLang}`]} </Text>
       </CardContent>
 
       <CardButtons data={data} switchCardLang={switch_cardLang} />
@@ -121,5 +148,13 @@ const VRImageBox = styled(Box)`
   width: 100%;
   border-radius: 25px;
   margin-bottom: .5em;
+  overflow:hidden;
+
+`
+
+const WarningBox = styled(Box)`
+
+  border-radius: 25px;
+  padding: .5em; margin: .5em 0;
 
 `
