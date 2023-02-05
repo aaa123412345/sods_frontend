@@ -12,6 +12,7 @@ import VRCanvas from "./components/VRCanvas/VRCanvas";
 
 import { useState, createContext, useEffect } from "react";
 
+
 export const UserContext = createContext()
 export const UserContextUpdate = createContext()
 
@@ -21,7 +22,6 @@ function App() {
     const permission = []
     permission.push(process.env.REACT_APP_DEFAULT_PERMISSION)
     const [user, setUser] = useState({
-        userID:'',
         rolePermission: permission,
         token:'',
         userType:''
@@ -31,9 +31,53 @@ function App() {
         setUser(userDict)
     }
 
-    useEffect(()=>console.log(user),[user])
+    useEffect(()=>{
+        console.log(user)
+        if(user.userType === ''){
+            getInLocal()
+            console.log('get')
+        }
+    }
+    ,[])
 
+    
 
+    function getInLocal(){
+        var CryptoJS = require("crypto-js");
+        var key = process.env.REACT_APP_LOCAL_STARGE_KEY;
+        var haveData = false
+        var tmpUser = {
+            
+            rolePermission: '',
+            token:'',
+            userType:''
+        }
+
+        //decrept
+        if(localStorage.getItem('userType')!==null){
+            var bytes1  = CryptoJS.AES.decrypt(localStorage.getItem('userType'), key);
+            var userType = bytes1.toString(CryptoJS.enc.Utf8);
+            haveData = true
+        }
+
+        if(userType!== '' && haveData){
+             //decrept
+            var bytes1  = CryptoJS.AES.decrypt(localStorage.getItem('rolePermission'), key);
+            var rolePermission = JSON.parse(bytes1.toString(CryptoJS.enc.Utf8));
+
+            //decrept
+            var bytes2  = CryptoJS.AES.decrypt(localStorage.getItem('token'), key);
+            var token = bytes2.toString(CryptoJS.enc.Utf8);
+
+           
+
+            tmpUser.rolePermission = rolePermission
+            tmpUser.token = token
+            tmpUser.userType = userType
+            setUser(tmpUser)
+        }
+    }
+   
     return (
         <React.StrictMode>
             <UserContext.Provider value={user}>

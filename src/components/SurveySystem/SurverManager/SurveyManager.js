@@ -114,7 +114,7 @@ const SurveyManager = (props) => {
                         <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Edit </Link>
                     </td>
                     <td key={keyPass + "-table-data-"+index+"-td-"+8}>
-                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Active </Link>
+                        <Link to={'/server/eng/active_survey?surveyID='+data['surveyId']}> Active </Link>
                     </td>
                 </tr>
             )
@@ -151,7 +151,7 @@ const SurveyManager = (props) => {
                         <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Edit</Link><br></br>
                     </span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+8}> 
-                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Active </Link><br></br>
+                        <Link to={'/server/eng/active_survey?surveyID='+data['surveyId']}> Active </Link><br></br>
                     </span>
                     
                 </Col>

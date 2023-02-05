@@ -390,7 +390,7 @@ const SurveyEditor = () => {
         var url
         if(editorMode === 'create'){
             method = 'post'
-            url = process.env.REACT_APP_SURVEY_SYSTEM_HOST
+            url = process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey'
         } else if(editorMode === 'update'){
             method = 'put'
             url = process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey/'+urlParams.get('surveyID')

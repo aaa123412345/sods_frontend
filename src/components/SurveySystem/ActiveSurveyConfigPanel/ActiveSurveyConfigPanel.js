@@ -14,6 +14,7 @@ const ActiveSurveyConfigPanel = () => {
     const [ready,setReady] = useState(false);
     const [surveyData, setSurveyData] = useState({});
     const [seletedSurvey, setSeletedSurvey] = useState('');
+    const urlParams = new URLSearchParams(window.location.search);
     
 
     const [userConfigData, setUserConfigData] = useState({surveyId:'',startTime:'',endTime:''})
@@ -53,7 +54,13 @@ const ActiveSurveyConfigPanel = () => {
           }
     }
 
-    useEffect(()=>{getAllSurvey()},[])
+    useEffect(()=>{
+        if(urlParams.has('surveyID')){
+            setConfigData('surveyId',urlParams.get('surveyID'))
+            setSeletedSurvey(urlParams.get('surveyID'))
+            
+        }
+        getAllSurvey()},[])
 
     function selectedSurveyChange(event){
         setSeletedSurvey(event.target.value)
@@ -127,7 +134,7 @@ const ActiveSurveyConfigPanel = () => {
 
     function surveySelector(data){
         return(
-            <Form.Select onChange={selectedSurveyChange} defaultValue=''>
+            <Form.Select onChange={selectedSurveyChange} defaultValue={seletedSurvey}>
                 <option value=''>Select Any Survey to show the preview</option>
                 {data.map((e,index) => 
                     <option value={e.surveyId} key={"survey-selector-option-"+index}>{e.surveyId +': '+e.surveyTitle}</option>

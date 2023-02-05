@@ -43,6 +43,18 @@
       }
     };
 
+    function storeInLocal(data){
+      var CryptoJS = require("crypto-js");
+      var key = process.env.REACT_APP_LOCAL_STARGE_KEY;  
+      var rolePermission = CryptoJS.AES.encrypt(JSON.stringify(data.rolePermission), key).toString();
+      var token = CryptoJS.AES.encrypt(data.token, key).toString();
+      var userType = CryptoJS.AES.encrypt(data.userType, key).toString();
+
+      localStorage.setItem('rolePermission', rolePermission);
+      localStorage.setItem('token', token);
+      localStorage.setItem('userType', userType);
+  }
+
     const postLogin = async (cdata) => {
       try{
         const { data } = await axios({
@@ -56,7 +68,7 @@
           console.log(rest.data)
           setUserContext(rest.data)
           alert("Welcome !")
-
+          storeInLocal(rest.data)
           
         }else if (rest.response === "undefineerror"){
           console.log("The authentication server is down")
@@ -75,7 +87,7 @@
 
     return(
       <>
-       {user.userID === ''?'':<Navigate replace to="/public/eng/about" />}
+       {user.userType === ''?'':<Navigate replace to="/public/eng/about" />}
         <Row style={LoginPageStyle} className="mt-4">
           <Form>
             <Form.Group className="mb-3 mt-4" controlId="formBasicName" style={{width:'80%'}}>
