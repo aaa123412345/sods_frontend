@@ -10,6 +10,7 @@ import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
 import LoginPage from "../../LoginSystem/LoginPage";
 import SurveyManager from "../../SurveySystem/SurverManager/SurveyManager";
 import ActiveSurveyConfigPanel from "../../SurveySystem/ActiveSurveyConfigPanel/ActiveSurveyConfigPanel";
+import ActiveSurveyManager from "../../SurveySystem/ActiveSurverManager/ActiveSurveyManager";
 
 const Components = {
   ctext: CText,
@@ -21,7 +22,8 @@ const Components = {
   crestable:CResposiveTable,
   cloginpage:LoginPage,
   surveymanager:SurveyManager,
-  activeSurveyConfigPanel:ActiveSurveyConfigPanel
+  activeSurveyConfigPanel:ActiveSurveyConfigPanel,
+  activeSurveyManager:ActiveSurveyManager
 };
 
 export default block => {

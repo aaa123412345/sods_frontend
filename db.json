@@ -654,13 +654,13 @@
       "page": {
         "useBootstrap": false,
         "useHeader": true,
-        "title": "Survey Active Config Panel",
+        "title": "Active Manger",
         "style": {},
         "auth":"system:root"
       },
       "element": [
         {
-          "type": "activeSurveyConfigPanel",
+          "type": "activeSurveyManager",
           "rank": 1,
           "subrank": 1,
           "bootstrap": {
@@ -733,11 +733,12 @@
           "child": [{"navName":"Page Design","path":"","auth":"system:root"},
                    {"navName":"Page Routing","path":"","auth":"system:root"},
                    {"navName":"Template","path":"","auth":"system:root"}]}, 
-
+                   
          {"path": "", "navName": "Survey System","auth":"system:root", 
-         "child": [{"navName":"Survey Management","path":"/server/eng/surveymanager","auth":"system:root"},
-                   {"navName":"Survey Editor","path":"/server/eng/surveyeditor","auth":"system:root"},
-                   {"navName":"Survey Active Panel","path":"/server/eng/active_survey","auth":"system:root"}]}, 
+         "child": [{"navName":"Management","path":"/server/eng/surveymanager","auth":"system:root"},
+                   {"navName":"Editor","path":"/server/eng/surveyeditor","auth":"system:root"},
+                   {"navName":"Active Panel","path":"/server/eng/active_survey","auth":"system:root"},
+                   {"navName":"Active Management","path":"/server/eng/survey_active_manger","auth":"system:root"}]}, 
 
          {"path": "/server/tourguide", "child": [], "navName": "Tourguide Editor","auth":"system:root"},
          {"path": "/public/eng/about", "child": [], "navName": "Go Public","auth":"anonymous"}
