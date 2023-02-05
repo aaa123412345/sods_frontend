@@ -84,7 +84,7 @@ const ActiveSurveyManager = (props) => {
         var bordered = true
         var tableHeadStyle = {}
         var tableDataStyle = [{},{}]
-        var tableKey = ['Active Survey ID', 'Survey ID', 'Start Time', 'End Time', 'Action', 'Action']
+        var tableKey = ['Active Survey ID', 'Information', 'Start Time', 'End Time', 'Action', 'Action']
         return(
             <Table key={pkey + "desktop-table"} hover={hover} striped={striped} bordered={bordered}>
                 <thead key={pkey + "desktop-table-head"}>
@@ -108,14 +108,15 @@ const ActiveSurveyManager = (props) => {
             return(
                 <tr style={style} key={keyPass + "-table-data-"+index+"-tr"}>
                    <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['activeSurveyId']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data['surveyId']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['startTime']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+4}> {data['endTime']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+5}> 
-                   <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Go</Link>
+                   
+                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['information']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+4}> {data['startTime']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+5}> {data['endTime']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+6}> 
+                   <Link to={'/server/eng/active_survey?activeSurveyID='+data['activeSurveyId']}> Edit</Link>
                     </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+6}>
-                    <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Go</Link>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+7}>
+                    <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Delete</Link>
                     </td>
                 </tr>
             )
@@ -124,7 +125,7 @@ const ActiveSurveyManager = (props) => {
 
     function MobileTable(table,pkey){
         var styleNum = 2;
-        var tableKey = ['Active Survey ID', 'Survey ID', 'Start Time', 'End Time', 'Action', 'Action']
+        var tableKey = ['Active Survey ID', 'Information', 'Start Time', 'End Time', 'Action', 'Action']
         
         var tableDataStyle = [{"backgroundColor":"gray","color":"black"},{"backgroundColor":"white","color":"black"}]
         return(
@@ -143,13 +144,14 @@ const ActiveSurveyManager = (props) => {
                 <Col key={keyPass+"-Mobile-table-data-row-"+index+"-subrow-col-value"}>
                   
                     <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data['activeSurveyId']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['surveyId']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['startTime']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+4}> {data['endTime']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+5}>
-                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Go</Link> <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+6}> 
-                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Go</Link><br></br>
+                    
+                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['information']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+4}> {data['startTime']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+5}> {data['endTime']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+6}>
+                        <Link to={'/server/eng/active_survey?activeSurveyID='+data['activeSurveyId']}> Edit</Link> <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+7}> 
+                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Delete</Link><br></br>
                     </span>
                 </Col>
                    

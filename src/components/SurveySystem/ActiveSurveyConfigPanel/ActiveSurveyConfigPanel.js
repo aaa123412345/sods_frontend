@@ -13,12 +13,14 @@ const ActiveSurveyConfigPanel = () => {
     const {user,clearLoginState} = useContext(UserContext)
    
     const [ready,setReady] = useState(false);
+    const [mode,setMode] = useState('create');
+    const [activeID,setActiveID] = useState('');
     const [surveyData, setSurveyData] = useState({});
     const [seletedSurvey, setSeletedSurvey] = useState('');
     const urlParams = new URLSearchParams(window.location.search);
     
 
-    const [userConfigData, setUserConfigData] = useState({surveyId:'',startTime:'',endTime:''})
+    const [userConfigData, setUserConfigData] = useState({surveyId:'',startTime:'',endTime:'',information:''})
 
     const getAllSurvey = async() =>{
        
@@ -57,13 +59,60 @@ const ActiveSurveyConfigPanel = () => {
           }
     }
 
+    const getActiveInformation = async(id) =>{
+        try{
+            const { data } = await axios({
+              method: 'get',
+              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/active_survey/"+id,
+              headers:{
+                'token':user.token
+              }
+             
+            
+            })
+           
+            var rest = jsonExtractor(data);
+           // console.log(rest)
+            
+            if(rest.response === "success"){
+              
+              
+              setConfigData('surveyId',rest.data.surveyId)
+              setConfigData('startTime',rest.data.startTime)
+              setConfigData('endTime',rest.data.endTime)
+              setConfigData('information',rest.data.information)
+              setSeletedSurvey(rest.data.surveyId)
+              
+             
+              
+            }else if (rest.response === "undefineerror"){
+              console.log("The authentication server is down")
+              alert("The service is not avaliable. Please try to login later")
+              clearLoginState()
+            }else{
+              console.log(rest)
+              alert("Get data fail")
+              clearLoginState()
+            }
+          }catch (error){
+            clearLoginState()
+            alert("The survey uploading service is not avaliable at this moment")
+          }
+    }
+
     useEffect(()=>{
         if(urlParams.has('surveyID')){
             setConfigData('surveyId',urlParams.get('surveyID'))
             setSeletedSurvey(urlParams.get('surveyID'))
-            
         }
-        getAllSurvey()},[])
+        if(urlParams.has('activeSurveyID')){
+           
+            setActiveID(urlParams.get('activeSurveyID'))
+            setMode('update')
+            getActiveInformation(urlParams.get('activeSurveyID'))
+        }
+        getAllSurvey()
+    },[])
 
     function selectedSurveyChange(event){
         setSeletedSurvey(event.target.value)
@@ -79,6 +128,11 @@ const ActiveSurveyConfigPanel = () => {
     function setStartTime(event){
         //console.log(event.target.value)
         setConfigData('startTime',event.target.value)
+    }
+
+    function setInformation(event){
+        //console.log(event.target.value)
+        setConfigData('information',event.target.value)
     }
 
     function setEndTime(event){
@@ -147,24 +201,33 @@ const ActiveSurveyConfigPanel = () => {
     }
 
     if(ready){
-        if(seletedSurvey !== ''){
-            var a= JSON.parse(surveyData.find(e=>e.surveyId === seletedSurvey).surveyFormat)
-            
-        }
+       
         return(
             <Row>
                 <Col xs='12' md='6'>
-                    
-                    <br></br>
                     {surveySelector(surveyData)}
+                        <Form.Label className="mt-2">Active Information</Form.Label>
+                        <Form.Control
+                            type="text"
+                            id="text"
+                            as="textarea"
+                            rows={4}
+                            onChange={setInformation}
+                            defaultValue={mode==='update'?userConfigData.information:''}
+                            
+                        />
+                    <br></br>
+                    
                     
                     <br></br>
                     <label >Start (date and time):</label>
-                    <input type="datetime-local" id="starttime" name="starttime" onChange={setStartTime}></input>
+                    <input type="datetime-local" id="starttime" name="starttime"
+                     onChange={setStartTime} defaultValue={mode==='update'?userConfigData.startTime:''}></input>
                     <br></br>
                     <br></br>
                     <label >End (date and time):</label>
-                    <input type="datetime-local" id="endtime" name="endtime" onChange={setEndTime}></input>
+                    <input type="datetime-local" id="endtime" name="endtime" onChange={setEndTime}
+                    defaultValue={mode==='update'?userConfigData.endTime:''}></input>
                     <br></br>
                     <br></br>
                     <Button onClick={checkAndSubmit}>Submit</Button>
