@@ -7,7 +7,7 @@ import {UserContext} from '../../../../App'
 import AuthHandler from "../../AuthHandler/AuthHandler";
 
 const CusNavbarChoice = ({data}) => {
-    const user = useContext(UserContext)
+    const {user} = useContext(UserContext)
         
         //<Nav.Link href={data.path} onClick={a}>{data.navName}</Nav.Link>
         return(

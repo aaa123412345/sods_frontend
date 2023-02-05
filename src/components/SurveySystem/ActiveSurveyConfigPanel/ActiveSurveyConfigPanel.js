@@ -10,7 +10,8 @@ import { Form,Button } from "react-bootstrap";
 
 const ActiveSurveyConfigPanel = () => {
 
-    const user = useContext(UserContext)
+    const {user,clearLoginState} = useContext(UserContext)
+   
     const [ready,setReady] = useState(false);
     const [surveyData, setSurveyData] = useState({});
     const [seletedSurvey, setSeletedSurvey] = useState('');
@@ -44,12 +45,14 @@ const ActiveSurveyConfigPanel = () => {
             }else if (rest.response === "undefineerror"){
               console.log("The authentication server is down")
               alert("The service is not avaliable. Please try to login later")
+              clearLoginState()
             }else{
               console.log(rest)
               alert("Get data fail")
+              clearLoginState()
             }
           }catch (error){
-           
+            clearLoginState()
             alert("The survey uploading service is not avaliable at this moment")
           }
     }

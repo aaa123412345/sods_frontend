@@ -21,14 +21,17 @@ import {UserContext} from '../../../App'
 
 const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
     
-    const user = useContext(UserContext)
+    const {user,clearLoginState} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
-    
-    
 
+
+
+    
+    
+   
    
 
     const getData = async () => {
@@ -62,13 +65,14 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
           setItems(rest.data);
           setIsReady(true);
         }else{
-          
+          clearLoginState();
           setIsLoaded(true);
           setError(error);
         }
       }catch (error){
           setIsLoaded(true);
           setError(error);
+          clearLoginState()
       }
     };
       

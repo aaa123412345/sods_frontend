@@ -15,7 +15,7 @@ import AuthHandler from "../../AuthHandler/AuthHandler";
 
 
 const SidebarDropdown = ({data,sindex}) => {
-    const user = useContext(UserContext)
+    const {user} = useContext(UserContext)
     const [toggle,setToggle] = useState(false)
     
     const iconStyle = {display: 'inline'}

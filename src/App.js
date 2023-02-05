@@ -14,7 +14,6 @@ import { useState, createContext, useEffect } from "react";
 
 
 export const UserContext = createContext()
-export const UserContextUpdate = createContext()
 
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
     const permission = []
     permission.push(process.env.REACT_APP_DEFAULT_PERMISSION)
     const [user, setUser] = useState({
-        rolePermission: permission,
+        rolePermission: [''],
         token:'',
         userType:''
     });
@@ -31,12 +30,27 @@ function App() {
         setUser(userDict)
     }
 
+    const clearLoginState = () =>{
+        setUser({
+            rolePermission: [''],
+            token:'',
+            userType:''
+        })
+        localStorage.removeItem('sods_fyp_ck')
+        localStorage.removeItem('sods_fyp_ut')
+        localStorage.removeItem('sods_fyp_rp')
+        localStorage.removeItem('sods_fyp_t')
+
+
+    }
+
     useEffect(()=>{
         console.log(user)
         if(user.userType === ''){
             getInLocal()
             console.log('get')
         }
+        
     }
     ,[])
 
@@ -48,7 +62,7 @@ function App() {
         var haveData = false
         var tmpUser = {
             
-            rolePermission: '',
+            rolePermission: [''],
             token:'',
             userType:''
         }
@@ -91,8 +105,8 @@ function App() {
    
     return (
         <React.StrictMode>
-            <UserContext.Provider value={user}>
-                <UserContextUpdate.Provider value={setUserContext}>
+            <UserContext.Provider value={{user,setUserContext,clearLoginState}}>
+                
                     <Provider store={store}>
                         <BrowserRouter>
                             
@@ -125,7 +139,7 @@ function App() {
                         
                         </BrowserRouter>
                     </Provider>
-                </UserContextUpdate.Provider>
+                
             </UserContext.Provider>
         </React.StrictMode>
       

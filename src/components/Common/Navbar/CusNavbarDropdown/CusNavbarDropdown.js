@@ -9,7 +9,7 @@ import AuthHandler from "../../AuthHandler/AuthHandler";
 
 const CusNavbarDropdown = ({data,sindex}) => {
     
-    const user = useContext(UserContext)
+    const {user} = useContext(UserContext)
 
  
         return(

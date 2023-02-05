@@ -12,7 +12,7 @@ import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 const SurveyManager = (props) => {
     
     //user information
-    const user = useContext(UserContext)
+    const {user,clearLoginState} = useContext(UserContext)
     const [ready,setReady] = useState(false);
     const [surveydata, setSurveyData] = useState({});
 
@@ -30,22 +30,24 @@ const SurveyManager = (props) => {
             })
            
             var rest = jsonExtractor(data);
-            console.log(rest)
+            //console.log(rest)
             
             if(rest.response === "success"){
-              console.log(rest.data)
+              //console.log(rest.data)
               setSurveyData(rest.data)
               setReady(true)
               
             }else if (rest.response === "undefineerror"){
-              console.log("The authentication server is down")
+              //console.log("The authentication server is down")
+              clearLoginState()
               alert("The service is not avaliable. Please try to login later")
             }else{
-              console.log(rest)
+              //console.log(rest)
+              clearLoginState()
               alert("Get data fail")
             }
           }catch (error){
-           
+            clearLoginState()
             alert("The survey uploading service is not avaliable at this moment")
           }
     }

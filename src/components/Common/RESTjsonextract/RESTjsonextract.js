@@ -1,6 +1,8 @@
 
+
 function jsonExtractor(json){
-   
+    
+
 
     var result={
         response: "",
@@ -29,9 +31,11 @@ function jsonExtractor(json){
        
     }else if(json.code>=400 &&json.code<500){
         result.response= "clienterror"
+        
        
     }else if(json.code>=500 &&json.code<600){
         result.response= "servererror"
+        
 
     }
 
@@ -39,6 +43,7 @@ function jsonExtractor(json){
         result.data = json.data
     }
 
+    
     return result;
 }
 

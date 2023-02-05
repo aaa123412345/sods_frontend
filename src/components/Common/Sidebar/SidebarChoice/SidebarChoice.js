@@ -5,7 +5,7 @@ import {UserContext} from '../../../../App'
 import AuthHandler from "../../AuthHandler/AuthHandler";
 
 const SidebarChoice = ({data}) => {
-    const user = useContext(UserContext)
+    const {user} = useContext(UserContext)
     
     return(
         <>

@@ -25,7 +25,7 @@ const SurveyEditor = () => {
     const windowsize = useWindowSize()
     
     //user information
-    const user = useContext(UserContext)
+    const {user,clearLoginState} = useContext(UserContext)
     const urlParams = new URLSearchParams(window.location.search);
 
     //page state
@@ -413,14 +413,16 @@ const SurveyEditor = () => {
     
             
             }else if (rest.response === "undefineerror"){
-            console.log("The authentication server is down")
-            alert("The service is not avaliable. Please try to login later")
+                console.log("The authentication server is down")
+                alert("The service is not avaliable. Please try to login later")
+                clearLoginState()
             }else{
-            console.log(rest)
-            alert("Upload fail")
+                console.log(rest)
+                alert("Upload fail")
+                clearLoginState()
             }
         }catch (error){
-        
+            clearLoginState()
             alert("The survey uploading service is not avaliable at this moment")
         }
     }
@@ -467,12 +469,14 @@ const SurveyEditor = () => {
             }else if (rest.response === "undefineerror"){
               console.log("The authentication server is down")
               alert("The service is not avaliable. Please try to login later")
+              clearLoginState()
             }else{
               console.log(rest)
               alert("Get data fail")
+              clearLoginState()
             }
           }catch (error){
-           
+            clearLoginState()
             alert("The survey uploading service is not avaliable at this moment")
           }
     }

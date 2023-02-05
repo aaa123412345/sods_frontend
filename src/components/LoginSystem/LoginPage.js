@@ -9,7 +9,7 @@
 
 
 
-  import {UserContextUpdate,UserContext} from '../../App.js'
+  import {UserContext} from '../../App.js'
 
   const LoginPageStyle = {
     color:"black",
@@ -26,8 +26,8 @@
     const [userName,setUserName] = useState('')
     const [saveLogin,setSaveLogin] = useState(false)
 
-    const setUserContext = useContext(UserContextUpdate)
-    const user = useContext(UserContext)
+
+    const {user,setUserContext} = useContext(UserContext)
 
 
     const handleSubmit = (event) => {
