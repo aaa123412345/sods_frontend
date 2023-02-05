@@ -9,7 +9,7 @@ import axios from 'axios';
 import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
 
 
-const SurveyManager = (props) => {
+const ActiveSurveyManager = (props) => {
     
     //user information
     const user = useContext(UserContext)
@@ -21,7 +21,7 @@ const SurveyManager = (props) => {
         try{
             const { data } = await axios({
               method: 'get',
-              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey',
+              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST,
               headers:{
                 'token':user.token
               }
@@ -81,7 +81,7 @@ const SurveyManager = (props) => {
         var bordered = true
         var tableHeadStyle = {}
         var tableDataStyle = [{},{}]
-        var tableKey = ['Survey ID','Survey Title', 'Create Time', 'Create User ID', 'Modify Time', 'Modify User ID', 'Action 1', 'Action 2']
+        var tableKey = ['Survey ID', 'Create Time', 'Create User ID', 'Modify Time', 'Modify User ID', 'Action']
         return(
             <Table key={pkey + "desktop-table"} hover={hover} striped={striped} bordered={bordered}>
                 <thead key={pkey + "desktop-table-head"}>
@@ -104,17 +104,13 @@ const SurveyManager = (props) => {
            
             return(
                 <tr style={style} key={keyPass + "-table-data-"+index+"-tr"}>
-                    <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['surveyId']} </td>
-                    <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data['surveyTitle']} </td>
-                    <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createTime']} </td>
-                    <td key={keyPass + "-table-data-"+index+"-td-"+4}> {data['createUserId']} </td>
-                    <td key={keyPass + "-table-data-"+index+"-td-"+5}> {data['updateTime']} </td>
-                    <td key={keyPass + "-table-data-"+index+"-td-"+6}> {data['updateUserId']} </td>
-                    <td key={keyPass + "-table-data-"+index+"-td-"+7}>
-                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Edit </Link>
-                    </td>
-                    <td key={keyPass + "-table-data-"+index+"-td-"+8}>
-                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Active </Link>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['surveyId']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data['createTime']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createUserId']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+4}> {data['updateTime']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+5}> {data['updateUserId']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+6}>
+                    <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Go</Link>
                     </td>
                 </tr>
             )
@@ -123,7 +119,7 @@ const SurveyManager = (props) => {
 
     function MobileTable(table,pkey){
         var styleNum = 2;
-        var tableKey = ['Survey ID','Survey Title', 'Create Time', 'Create User ID', 'Modify Time', 'Modify User ID', 'Action 1', 'Action 2']
+        var tableKey = ['Survey ID', 'Create Time', 'Create User ID', 'Modify Time', 'Modify User ID', 'Action']
         
         var tableDataStyle = [{"backgroundColor":"gray","color":"black"},{"backgroundColor":"white","color":"black"}]
         return(
@@ -142,18 +138,13 @@ const SurveyManager = (props) => {
                 <Col key={keyPass+"-Mobile-table-data-row-"+index+"-subrow-col-value"}>
                   
                     <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data['surveyId']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['surveyTitle']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createTime']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+4}> {data['createUserId']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+5}> {data['updateTime']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+6}> {data['updateUserId']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+7}> 
-                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Edit</Link><br></br>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['createTime']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createUserId']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+4}> {data['updateTime']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+5}> {data['updateUserId']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+6}> 
+                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Go</Link>
                     </span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+8}> 
-                        <Link to={'/server/eng/surveyeditor?surveyID='+data['surveyId']}> Active </Link><br></br>
-                    </span>
-                    
                 </Col>
                    
             </Row>
@@ -164,4 +155,4 @@ const SurveyManager = (props) => {
 
 
 }
-export default SurveyManager;
+export default ActiveSurveyManager;

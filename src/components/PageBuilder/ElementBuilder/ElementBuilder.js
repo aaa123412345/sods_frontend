@@ -9,6 +9,7 @@ import CResposiveTable from "../../Common/LayoutElement/CResposiveTable/CResposi
 import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
 import LoginPage from "../../LoginSystem/LoginPage";
 import SurveyManager from "../../SurveySystem/SurverManager/SurveyManager";
+import ActiveSurveyConfigPanel from "../../SurveySystem/ActiveSurveyConfigPanel/ActiveSurveyConfigPanel";
 
 const Components = {
   ctext: CText,
@@ -19,7 +20,8 @@ const Components = {
   surveyeditor: SurveyEditor,
   crestable:CResposiveTable,
   cloginpage:LoginPage,
-  surveymanager:SurveyManager
+  surveymanager:SurveyManager,
+  activeSurveyConfigPanel:ActiveSurveyConfigPanel
 };
 
 export default block => {

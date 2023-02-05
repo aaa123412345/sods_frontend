@@ -393,7 +393,7 @@ const SurveyEditor = () => {
             url = process.env.REACT_APP_SURVEY_SYSTEM_HOST
         } else if(editorMode === 'update'){
             method = 'put'
-            url = process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/'+urlParams.get('surveyID')
+            url = process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey/'+urlParams.get('surveyID')
         }
         try{
             const { data } = await axios({
@@ -448,7 +448,7 @@ const SurveyEditor = () => {
         try{
             const { data } = await axios({
               method: 'get',
-              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/'+id,
+              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey/'+id,
               headers:{
                 'token':user.token
               },
