@@ -45,14 +45,16 @@
 
     function storeInLocal(data){
       var CryptoJS = require("crypto-js");
-      var key = process.env.REACT_APP_LOCAL_STARGE_KEY;  
+      var key = process.env.REACT_APP_LOCAL_STARGE_KEY
       var rolePermission = CryptoJS.AES.encrypt(JSON.stringify(data.rolePermission), key).toString();
       var token = CryptoJS.AES.encrypt(data.token, key).toString();
       var userType = CryptoJS.AES.encrypt(data.userType, key).toString();
+      var checkKey = CryptoJS.AES.encrypt('sods_fyp', key).toString();
 
-      localStorage.setItem('rolePermission', rolePermission);
-      localStorage.setItem('token', token);
-      localStorage.setItem('userType', userType);
+      localStorage.setItem('sods_fyp_rp', rolePermission);
+      localStorage.setItem('sods_fyp_t', token);
+      localStorage.setItem('sods_fyp_ut', userType);
+      localStorage.setItem('sods_fyp_ck',checkKey);
   }
 
     const postLogin = async (cdata) => {
