@@ -40,6 +40,7 @@ function App() {
         localStorage.removeItem('sods_fyp_ut')
         localStorage.removeItem('sods_fyp_rp')
         localStorage.removeItem('sods_fyp_t')
+        window.location.reload()
 
 
     }
@@ -87,12 +88,12 @@ function App() {
             var bytes1  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_ut'), key);
             var userType = bytes1.toString(CryptoJS.enc.Utf8);
              //decrept
-            var bytes1  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_rp'), key);
-            var rolePermission = JSON.parse(bytes1.toString(CryptoJS.enc.Utf8));
+            var bytes2  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_rp'), key);
+            var rolePermission = JSON.parse(bytes2.toString(CryptoJS.enc.Utf8));
 
             //decrept
-            var bytes2  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_t'), key);
-            var token = bytes2.toString(CryptoJS.enc.Utf8);
+            var bytes3  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_t'), key);
+            var token = bytes3.toString(CryptoJS.enc.Utf8);
 
            
 

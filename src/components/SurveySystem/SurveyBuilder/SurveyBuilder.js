@@ -4,7 +4,7 @@ import { Form,Button, Row } from "react-bootstrap";
 
 import SurveyFormmator from "./SurveyFormmator";
 
-const SurveyBuilder = ({data,testMode}) => {
+const SurveyBuilder = ({data,testMode,uploadMethod}) => {
     const [formData, setformData] = useState({})
     const [validated, setValidated] = useState(false);
     const [curPart, setCurPart] = useState(1)
@@ -28,20 +28,25 @@ const SurveyBuilder = ({data,testMode}) => {
     }
 
     const handleSubmit = (event) => {
-        const form = event.currentTarget;
-       
+        const form = event.currentTarget.parentNode;
+        
         if (form.checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
-          console.log("no ok")
+         
           setValidated(true);
         }else{
-            console.log("ok")
-            console.log(formData)
+            
+            if(!testMode){
+                
+                uploadMethod(formData)
+            }
         }
        
        
       };
+
+      
 
     const goBack= () =>{
         setCurPart(curPart-1)
@@ -81,14 +86,14 @@ const SurveyBuilder = ({data,testMode}) => {
 
     return (
         
-        <Form noValidate validated={validated} onSubmit={handleSubmit} >
+        <Form noValidate validated={validated} >
              {data.questionset[data.info.partKey[curPart-1]].map((element,index) => <SurveyFormmator
             data={element} qid={element.qid} parentFunction={onInput} validated={validated} savedFormData={formData} 
             curPart={curPart} key={"surveydict-"+(index+1).toString()}></SurveyFormmator>)}
             
            
              { !testMode&&curPart==totalPart?
-                <Button type="submit" >
+                <Button onClick={handleSubmit} >
                     Submit
                 </Button>:''
              }

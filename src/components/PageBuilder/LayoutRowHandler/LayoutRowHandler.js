@@ -14,7 +14,8 @@ const LayoutRowHandler = (data) => {
                     data:element,
                     key:data['keypass']+"col"+index.toString(),
                     path : data.path,
-                    subpath: data.subpath
+                    subpath: data.subpath,
+                    lang:data.lang
                 }
                 ))}
         </Row>

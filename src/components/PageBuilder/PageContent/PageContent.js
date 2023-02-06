@@ -109,8 +109,8 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
           
 
           { items.page.useBootstrap?
-          <PageBootstrapHandler data={items.element} path={path} subpath={ subpath}></PageBootstrapHandler>:
-          items.element.map((element)=> ElementBuilder({data:element,path:path,subpath:subpath}))
+          <PageBootstrapHandler data={items.element} path={path} subpath={ subpath} lang={lang}></PageBootstrapHandler>:
+          items.element.map((element)=> ElementBuilder({data:element,path:path,subpath:subpath,lang:lang}))
           }
         </div>
         </>

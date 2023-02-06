@@ -11,6 +11,8 @@ import LoginPage from "../../LoginSystem/LoginPage";
 import SurveyManager from "../../SurveySystem/SurverManager/SurveyManager";
 import ActiveSurveyConfigPanel from "../../SurveySystem/ActiveSurveyConfigPanel/ActiveSurveyConfigPanel";
 import ActiveSurveyManager from "../../SurveySystem/ActiveSurverManager/ActiveSurveyManager";
+import ActiveSurveyPublicCardViewer from "../../SurveySystem/ActiveSurveyPubilcCardViewer/ActiveSurveyPubilcCardViewer";
+import SurveyLoader from "../../SurveySystem/SurveyLoader";
 
 const Components = {
   ctext: CText,
@@ -23,7 +25,9 @@ const Components = {
   cloginpage:LoginPage,
   surveymanager:SurveyManager,
   activeSurveyConfigPanel:ActiveSurveyConfigPanel,
-  activeSurveyManager:ActiveSurveyManager
+  activeSurveyManager:ActiveSurveyManager,
+  activeSurveyPublicCardViewer:ActiveSurveyPublicCardViewer,
+  survey:SurveyLoader
 };
 
 export default block => {
@@ -34,7 +38,8 @@ export default block => {
       block: block.data,
       path:block.path,
       subpath:block.subpath,
-      keyPass : tkey
+      keyPass : tkey,
+      lang:block.lang
     });
   }
   return React.createElement(

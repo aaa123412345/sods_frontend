@@ -18,7 +18,8 @@ const LayoutHandler = (data) => {
                 key:"row"+index.toString(),
                 keypass:"row"+index.toString(),
                 path : data.path,
-                subpath: data.subpath
+                subpath: data.subpath,
+                lang:data.lang
             }
             ))}
         </Container>

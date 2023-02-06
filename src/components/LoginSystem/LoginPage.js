@@ -37,8 +37,7 @@
         
           alert("Invalid Format of User Name or Password")
       }else{
-          console.log("ok")
-          console.log({userName:userName,password:psw})
+          
           postLogin({userName:userName,password:psw})
       }
     };
@@ -67,16 +66,16 @@
        
         var rest = jsonExtractor(data);
         if(rest.response === "success"){
-          console.log(rest.data)
+          
           setUserContext(rest.data)
           alert("Welcome !")
           storeInLocal(rest.data)
           
         }else if (rest.response === "undefineerror"){
-          console.log("The authentication server is down")
+          
           alert("The service is not avaliable. Please try to login later")
         }else{
-          console.log(rest)
+          
           alert("Account or Password error")
         }
       }catch (error){
