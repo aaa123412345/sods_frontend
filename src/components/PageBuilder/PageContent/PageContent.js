@@ -27,13 +27,6 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
 
-
-
-    
-    
-   
-   
-
     const getData = async () => {
       var useLanguage = process.env.REACT_APP_USE_LANGUAGE;
       var url;
