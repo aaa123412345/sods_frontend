@@ -20,17 +20,14 @@ const RealTimeVotingRoom = () => {
         message: ''
 
       });
-    useEffect(() => {
-
-        return () => registerUser()
-    }, []);
+   
 
     const connect =()=>{
         let Sock = new SockJS('http://localhost:8888/ws');
-        
-        
+        alert(user.token)
+        console.log(user.token)
         stompClient = over(Sock);
-        stompClient.connect({},onConnected, onError);
+        stompClient.connect({token:user.token},onConnected, onError);
     }
 
     const onConnected = () => {
@@ -135,7 +132,8 @@ const RealTimeVotingRoom = () => {
     <>
         <h1>Current Link to : {sessionID}</h1>
         <h2>User Number : {1}</h2>
-        <h3>Click Count : {1}</h3>
+        <h3>Click Count : {1}</h3> 
+        <Button onClick={()=>registerUser()}>Connect</Button>
         <Button onClick={()=>sendPrivateValue("ADD")}>+ 1</Button>
         <Button onClick={()=>sendPrivateValue("CLEAR")}>Clear Click Count</Button>
         
