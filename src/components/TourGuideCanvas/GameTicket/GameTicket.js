@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 
-import { Flex, Text, Heading, Grid, GridItem } from '@chakra-ui/react'
+import { Flex, Text, Heading, Grid, GridItem, useColorModeValue } from '@chakra-ui/react'
 import styled from 'styled-components'
 import { faArrowLeft, faMap } from '@fortawesome/free-solid-svg-icons'
 
@@ -26,6 +26,8 @@ const GameTicket = (props) => {
 
     const windowSize = useWindowSize()
 
+    const bg = useColorModeValue('white', 'black')
+
     const userLang = langGetter().toUpperCase()
     const laptopMode = windowSize.width > mobileBreakPoint
 
@@ -35,7 +37,7 @@ const GameTicket = (props) => {
 
     return (
         <AnimatedPage>
-            <Flex h='100%' flexDir="column">
+            <Flex h='100%' flexDir="column" bg={bg}>
                 <CustomButton text={laptopMode ? t('floorplan.map') : ""} bgColor={laptopMode ? themeColor : 'gray'} 
                     faIcon={laptopMode ? faMap : faArrowLeft} isCircle={!laptopMode} onClick={back_toMap}
                     cssStyle={{margin: '1em', boxShadow: "1px 5px 5px rgba(0, 0, 0, .1)"}}/> 

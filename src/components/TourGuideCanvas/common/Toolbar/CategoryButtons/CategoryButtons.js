@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { useDispatch, connect } from 'react-redux';
+
 import { 
     Flex, Popover, PopoverTrigger, Heading,
     PopoverContent, Button
 } from '@chakra-ui/react'
-import MyButton from '../../EditorButton/CustomButton';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useDispatch, connect } from 'react-redux';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+
+import CustomButton from '../../EditorButton/CustomButton';
 import useSessionStorage from '../../../../../hooks/useSessionStorage';
-import { useEffect } from 'react';
 import { updatePage } from '../../../../../redux/tourguide/tourguide.action';
+import { langGetter } from '../../../../../helpers/langGetter';
 
 const CategoryButtons = (props) => {
 
@@ -17,16 +21,22 @@ const CategoryButtons = (props) => {
     const { themeColor, page } = tourguide
     const dispatch = useDispatch()
 
-    const [pageSession, setPageSession] = useSessionStorage('page', 0)
+    const navigate = useNavigate()
+    const { subsubpath } = useParams()
 
-    const handle_onClick = (index)=>{
-        setPageSession(index)        
-        dispatch(updatePage(index))
+    const lang = langGetter() === 'en' ? 'eng' : 'chi'
+
+    // const [pageSession, setPageSession] = useSessionStorage('page', 0)
+
+    const handle_onClick = (path) => {
+        // setPageSession(index)        
+        // dispatch(updatePage(index))
+        navigate(`/public/${lang}/tourguide/editor/${path}`)
     }
 
-    useEffect(()=>{
-        dispatch(updatePage(pageSession))
-    },[])
+    // useEffect(()=>{
+    //     dispatch(updatePage(pageSession))
+    // },[])
 
     const OptionBar = (props) => {
 
@@ -46,10 +56,9 @@ const CategoryButtons = (props) => {
                 {
                     optionList.map((option, index)=>{
 
-                        return React.createElement(MyButton, {
+                        return React.createElement(CustomButton, {
                             key: index, 
-                            ...option
-                                
+                            ...option      
                         })
                     })
                 }
@@ -72,17 +81,16 @@ const CategoryButtons = (props) => {
             <React.Fragment>
             {
                 props.categoryList.map((category, index) => (
-                    <MyButton
+                    <CustomButton
                         key={index}
-                        isSelected={page === index}
+                        isSelected={subsubpath === category.path}
                         bgColor={themeColor}
                         text={category.label}
                         faIcon={category.icon}
-                        onClick={()=>handle_onClick(index)}
+                        onClick={()=>handle_onClick(category.path)}
                         />
 
                 ))
-
             }
             </React.Fragment>
         )
@@ -92,7 +100,7 @@ const CategoryButtons = (props) => {
 
         <Flex alignItems="center" minH="50px">
             <OptionBar optionList={optionList} />
-            {categoryList !== undefined && heading === undefined && <CategoryBar categoryList={categoryList}/>}
+            {categoryList !== undefined && heading === undefined && <CategoryBar categoryList={categoryList} />}
             {heading !== undefined && <Heading ml="1em" size={'lg'}>{heading}</Heading>}
         </Flex>
 

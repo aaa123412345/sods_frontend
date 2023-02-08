@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components'
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 
 const MotionStamp = motion(Flex)
@@ -11,8 +11,10 @@ const Stamp = (props) => {
     const { label, isCollected, tourguide } = props
     const { themeColor } = tourguide
 
+    const bg = useColorModeValue('gray.10', 'gray.100')
+
     return (
-        <StampContainer bg='gray.10'>
+        <StampContainer bg={bg}>
             <StampBorder bg={isCollected ? themeColor : 'gray'} whileHover={{scale: 1.1, duration: .2}}>
                 <Text textAlign='center' color="white">{label}</Text>
             </StampBorder>

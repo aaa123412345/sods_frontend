@@ -1,45 +1,56 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+
 import styled from 'styled-components'
 import { Flex } from '@chakra-ui/react'
-import ItemList from '../../common/ItemList/ItemList'
+
 import { useTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
+
+import ItemList from '../../common/ItemList/ItemList'
 
 const LeftPanel = (props) => {
 
   const { tourguide } = props
-  const { page, floorplans, stories } = tourguide
+  const { floorplans, stories } = tourguide
 
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
-  const propsList = [
-    {
-      modalIndex: 0, 
+  const { subsubpath } = useParams()
+
+  const dataDictionary = {
+    floorplans: {
+      dataName: 'floorplans', 
+      modalIndex: 0,
+      heading: t('tourguideEditor.region'),
+      path: "floorplans",
+      name: "floorplan"
+    }, 
+    booths: {
+      dataName: 'floorplans', 
+      modalIndex: 0,
       heading: t('tourguideEditor.region'),
       path: "floorplans",
       name: "floorplan"
     },
-    {
+    stories: {
+      dataName: 'stories',
       modalIndex: 4, 
       heading: t('tourguideEditor.cover-story'),
       path: "story",
       name: "story"
     }
-  ]
-
-  const index = page <= 1 ? 0 : 1
+  }
 
   return (
     <Container>
 
-      <ItemList 
-        data={page <= 1 ? floorplans : stories}
-        type={0} 
-        isCategoryList={true}
-        modalIndex={propsList[index].modalIndex}
-        heading={propsList[index].heading}
-        path={propsList[index].path}
-        name={propsList[index].name} />
+      <ItemList isCategoryList type={0} 
+        dataName={dataDictionary[subsubpath]?.dataName}
+        modalIndex={dataDictionary[subsubpath]?.modalIndex}
+        heading={dataDictionary[subsubpath]?.heading}
+        path={dataDictionary[subsubpath]?.path}
+        name={dataDictionary[subsubpath]?.name} />
           
     </Container>
   )

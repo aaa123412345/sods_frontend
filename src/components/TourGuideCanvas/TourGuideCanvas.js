@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Navigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { connect, useDispatch } from 'react-redux'
 
@@ -13,22 +13,24 @@ import QRCodeModal from './QRCodeModal/QRCodeModal'
 import Wrapper from './common/Wrapper/Wrapper'
 import LoadingSpinner from './common/LoadingSpinner/LoadingSpinner'
 import { tourHost } from '../../constants/constants'
-import { updateFloorplans, updateStories, updateBooths, updateMarkers } from '../../redux/tourguide/tourguide.action'
+import { updateFloorplans, updateStories, updateBooths, updateMarkers, updateLoadingItem, clearLoadingItem } from '../../redux/tourguide/tourguide.action'
 import BoothPage from './BoothPage/BoothPage'
 
 const TourGuideCanvas = (props) => {
 
-    const { block, tourguide, modal } = props
+    const { block } = props
     const { isAdmin } = block
 
     const { lang, path, subpath } = useParams()
 
     const dispatch = useDispatch()
 
+    const navigate = useNavigate()
+
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
-    const render_feature = () => {
+    const render_layout = () => {
 
         switch(subpath){
 
@@ -41,59 +43,67 @@ const TourGuideCanvas = (props) => {
             case "ticket":
                 return <GameTicket />
 
-            case 'story': 
+            case "story": 
                 return <StorySlider />
 
-            case "floorplan-editor" || "booth-editor" || "story-editor":
+            case "editor":
                 return <TourGuideEditor />
 
             default: 
-                return path === 'tourguide' && <Navigate replace to={`/public/${lang}/tourguide/${isAdmin?"floorplan-editor":"floorplans"}`} /> 
+                return <LoadingSpinner />
     
         }
 
     }
 
-    const get_data = (path, updateFunction) => {
+    const get_data = async (path, updateFunction) => {
 
-        setIsLoading(true)
+        dispatch(updateLoadingItem(`tourguide.loading-${path}`))
         let url = `${tourHost}/${path}`
-        axios.get(url)
+        await axios.get(url)
         .then((res)=>{
             dispatch(updateFunction(res.data.data))
-            // console.log("updated from " + url + " successfully;")
+            console.log("updated from " + url + " successfully;")            
         })
         .catch((err)=>{setError(err)})
+        
     }
 
     useEffect(()=>{
 
+        // update language parameter in local storage base on url
+        window.localStorage.setItem('i18n-lang', JSON.stringify(lang === 'eng' ? 'en' : 'zh'))
+
         setError(null)
-        // load all data first
-        get_data("floorplans", (data) => updateFloorplans(data))
-        get_data("booths", (data) => updateBooths(data))
-        get_data("markers", (data) => updateMarkers(data))
-        get_data("stories", (data) => updateStories(data))
-        setIsLoading(false)
+        setIsLoading(true)
         
+        Promise.all([
+            get_data("floorplans", (data) => updateFloorplans(data)),
+            get_data("booths", (data) => updateBooths(data)),
+            get_data("markers", (data) => updateMarkers(data)),
+            get_data("stories", (data) => updateStories(data))
+        ])
+        .then(()=>{
+            console.log('loaded')
+            setIsLoading(false)
+            dispatch(clearLoadingItem())
+        })
+     
     }, [])
 
     useEffect(()=>{
-
-        window.localStorage.setItem('i18n-lang', JSON.stringify(lang === 'eng' ? 'en' : 'zh'))
-
-    }, [])
+        // redirect case
+        if(path === 'tourguide' && (subpath === null || subpath === "" || subpath === undefined))
+            navigate(`/public/${lang}/tourguide/${isAdmin?"editor":"floorplans"}`)
+    }, [subpath])
 
     if(error)
         return <div>{error.message}</div>
 
-    if(isLoading)
-        return <LoadingSpinner />
+    return isLoading ? <LoadingSpinner /> : (
 
-    return (
-
-        <Wrapper isUseChakra={subpath !== "vr-tour"} isUseContainer>
-            {(() => render_feature())()}
+        <Wrapper isUseChakra isUseContainer>
+            {(() => render_layout())()}
             <QRCodeModal />
         </Wrapper>
 

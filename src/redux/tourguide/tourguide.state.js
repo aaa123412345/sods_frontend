@@ -10,6 +10,7 @@ export const initTourguideState = {
     booths: [],
     games: [],
     storyProgress: 1,
-    stories: []
+    stories: [], 
+    loadingItem: ""
 
 }

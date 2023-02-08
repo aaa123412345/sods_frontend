@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 const DeleteNAddButtons = (props) => {
 
     const { 
-        isDeleteMode, setIsDeleteMode,
         modalIndex, path, name, tourguide, form, modal
     } = props
 
@@ -52,18 +51,9 @@ const DeleteNAddButtons = (props) => {
                 faIcon={faAdd} 
                 text={t(`tourguideEditor.create-${path}`)}
                 bgColor={themeColor} 
-                isDisabled={isDeleteMode || isNoRegionDefined}
+                isDisabled={isNoRegionDefined}
                 onClick = {open_modal}
                 />
-
-            {/* <MyButton 
-                faIcon={faTrash} 
-                isCircle={true} 
-                bgColor='danger'
-                isSelected={isDeleteMode} 
-                onClick={()=>{setIsDeleteMode(!isDeleteMode)}}
-                isDisabled={isNoRegionDefined}
-            /> */}
         </Flex>
     
     )

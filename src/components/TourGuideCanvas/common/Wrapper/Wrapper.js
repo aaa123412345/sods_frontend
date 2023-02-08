@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 
 import styled from 'styled-components'
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, useColorModeValue } from '@chakra-ui/react'
 import { newTheme } from '../../../../theme/theme'
 import { Flex } from '@chakra-ui/react'
 
@@ -24,7 +24,7 @@ const Wrapper = ({ children, isUseChakra = false, isUseContainer = false }) => {
     const ContainerWrapper = ({children}) => {
         return (
             <AnimatePresence>
-                <OuterContainer key={path + "-" + subpath}>{children}</OuterContainer>
+                <OuterContainer key={path + "-" + subpath} bg={'white'}>{children}</OuterContainer>
             </AnimatePresence>    
         )
     }

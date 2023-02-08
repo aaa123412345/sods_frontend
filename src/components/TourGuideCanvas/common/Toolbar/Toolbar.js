@@ -7,8 +7,7 @@ const Toolbar = (props) => {
     const { 
         type = 1, 
         modalIndex, 
-        path, name, 
-        isDeleteMode, setIsDeleteMode, 
+        path, name,
         categoryList, optionList, heading
     } = props
 
@@ -16,8 +15,6 @@ const Toolbar = (props) => {
 
         case 1: 
             return <DeleteNAddButtons 
-                        isDeleteMode={isDeleteMode} 
-                        setIsDeleteMode={setIsDeleteMode}
                         path={path} name={name} modalIndex={modalIndex} />
         case 2:
             return <CategoryButtons 

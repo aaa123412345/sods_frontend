@@ -16,6 +16,10 @@
     "error": "Error", 
     "try-again": "Please try again.", 
     "loading-vr": "Loading VR Scene", 
+    "loading-floorplans": "Loading Floor Plans", 
+    "loading-booths": "Loading Booths",
+    "loading-markers": "Loading Markers",
+    "loading-stories": "Loading Stories", 
     "exit": "Exit"
 
 
