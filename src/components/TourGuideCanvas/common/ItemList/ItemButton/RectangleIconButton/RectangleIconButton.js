@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 import { Button, Text } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faMap } from '@fortawesome/free-solid-svg-icons'
-import { useSelector } from 'react-redux'
+
 import { langGetter } from '../../../../../../helpers/langGetter'
-import { motion } from 'framer-motion'
 
 
 const MotionButton = motion(Button)
@@ -14,31 +17,40 @@ const RectangleIconButton = (props) => {
 
     const { variant, onClick, data } = props
 
-    const { page } = useSelector(state => state.tourguide)
-
-    const isFloorEditor = page <= 1 
+    const { subsubpath } = useParams()
 
     const lang = langGetter().toUpperCase()
 
-    const name = isFloorEditor ? 'region' : 'title'
+    const dataDictionary = {
+        floorplans: {
+            name: 'region', 
+            icon: faMap
+        }, 
+        booths: {
+            name: 'region', 
+            icon: faMap
+        },
+        stories: {
+            name: 'title', 
+            icon: faBook
+        }
+    }
 
     const [text, setText] = useState('')
 
     useEffect(()=>{
         setText('')
+        var name = dataDictionary[subsubpath]?.name
         if(data[name + lang] !== undefined)
             setText(data[name + lang])
-    }, [data, lang, name])
+    }, [data, lang, subsubpath])
 
     return (
         <StyledButton initial={{y: 50, opacity: 0}} animate={{y: 0, opacity: 1}} exit={{y: 50, opacity: 0}}
-            variant={variant}
-            borderRadius={8}
-            onClick={onClick}
+            variant={variant} borderRadius={8} onClick={onClick}
             boxShadow={'0px 5px 12px rgba(0, 0, 0, .1)'}>
 
-            <FontAwesomeIcon 
-                icon={isFloorEditor ? faMap : faBook} 
+            <FontAwesomeIcon icon={dataDictionary[subsubpath]?.icon} 
                 style={{position: 'absolute', left: '1em'}}/>
 
             <StyledText>{text}</StyledText>
@@ -51,12 +63,12 @@ export default RectangleIconButton
 
 const StyledButton = styled(MotionButton)`
 
-  position: relative;
-  margin: .5em 1em;
-  flex-basis: 40%; flex-grow: 0; flex-shrink: 0;
-  min-height: 50px;
-  max-height: 60px;
-  max-width: 300px;
+    position: relative;
+    margin: .5em 1em;
+    flex-basis: 40%; flex-grow: 0; flex-shrink: 0;
+    min-height: 50px;
+    max-height: 60px;
+    max-width: 300px;
 
 `
 

@@ -14,7 +14,8 @@ const CustomButton = (props) => {
         isOutline = false,
         isWhiteBorder = false,
         cssStyle = null,
-        circleDiameter = 45
+        circleDiameter = 45, 
+        isDisableToHideText = false
     } = props
 
     const outline = isOutline ? "Outline" : ""
@@ -29,7 +30,7 @@ const CustomButton = (props) => {
         
         let button = buttonRef.current
 
-        if(button !== undefined && button.offsetWidth < 150)
+        if(!isDisableToHideText && button !== undefined && button.offsetWidth < 150)
             setIsHide(true)
         else
             setIsHide(false)

@@ -22,9 +22,9 @@ function App() {
     const permission = []
     permission.push(process.env.REACT_APP_DEFAULT_PERMISSION)
     const [user, setUser] = useState({
-        rolePermission: [''],
-        token:'',
-        userType:''
+        rolePermission: ['system:root'],
+        token:'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1MThiMWExMjJhN2U0NzE4Yjc3ZTBkMjg4ZDBlMTBiYyIsInN1YiI6IjEiLCJpc3MiOiJzZyIsImlhdCI6MTY3NTg0NTI2OCwiZXhwIjoxNjc1ODQ4ODY4fQ.xiqvnWcOZKThMhnHgXZ9UILE2NcKuY2XmFun4SfeF9U',
+        userType:'1'
     });
     
     const setUserContext = (userDict) => {
@@ -123,6 +123,7 @@ function App() {
                                 <Route path='/public/:lang/:path' element={<PublicPageManager />}></Route> 
                                 <Route path='/public/:lang/:path/:subpath' element={<PublicPageManager />}></Route> 
                                 <Route path='/public/:lang/:path/:subpath/:subsubpath' element={<PublicPageManager />}></Route> 
+                                <Route path='/public/:lang/:path/:subpath/:subsubpath/:subsubsubpath' element={<PublicPageManager />}></Route> 
 
                                 <Route path='/user/:lang/:path' element={<UserPageManager />}></Route> 
                                 <Route path='/user/:lang/:path/:subpath' element={<UserPageManager />}></Route> 
@@ -131,6 +132,8 @@ function App() {
                                 <Route path='/server/:lang/:path' element={<ServerPageManager/>}></Route>
                                 <Route path='/server/:lang/:path/:subpath' element={<ServerPageManager/>}></Route> 
                                 <Route path='/server/:lang/:path/:subpath/:subsubpath' element={<ServerPageManager/>}></Route> 
+                                <Route path='/public/:lang/:path/:subpath/:subsubpath/:subsubsubpath' element={<ServerPageManager/>}></Route>
+
                                 <Route
                                     path="*"
                                     element={

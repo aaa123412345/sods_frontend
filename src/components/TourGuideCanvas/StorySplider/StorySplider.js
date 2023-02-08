@@ -11,13 +11,13 @@ import { useTranslation } from 'react-i18next'
 
 import CustomButton from '../common/EditorButton/CustomButton'
 import { langGetter } from '../../../helpers/langGetter'
-import { mobileBreakPoint } from '../../../constants/constants'
+import { mobileBreakPoint, scrollbarCSS } from '../../../constants/constants'
 import useWindowSize from '../../../hooks/useWindowSize'
 
 const StorySplider = (props) => {
 
     const { isPreviewMode = false, tourguide } = props
-    const { themeColor, stories } = tourguide
+    const { themeColor, stories, itemIndex } = tourguide
 
     const { t } = useTranslation()
 
@@ -35,6 +35,8 @@ const StorySplider = (props) => {
         return arr;
 
     }, {})  
+
+    console.log('sotries', stories)
 
     const back_toMap = () => {
         navigate(`/public/${lang === 'EN' ? 'eng':'chi'}/tourguide/floorplans`)
@@ -58,11 +60,11 @@ const StorySplider = (props) => {
                 cssStyle={{position: "absolute", zIndex: 3, top: 0, margin: '1em', boxShadow: "1px 5px 5px rgba(0, 0, 0, .1)"}}/> 
 
 
-            <Slider dir='ltr' ref={sliderRef}
+            <Slider dir='ltr' ref={sliderRef} sx={scrollbarCSS}
                 overflowX={isPreviewMode?'hidden':"scroll"}>
 
             {
-                stories.map((item, index) => (
+                stories.filter(story => isPreviewMode && story.id === stories[itemIndex].id || !isPreviewMode).map((item, index) => (
                     <StorySection 
                         ref={sectionRef[item.id]} key={index}
                         bgImg={`url(${item.imageUrl})`}>

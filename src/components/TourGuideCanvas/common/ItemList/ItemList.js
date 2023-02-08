@@ -22,12 +22,12 @@ import { updateBooth } from '../../../../redux/form/form.action'
 const ItemList = (props) => {
 
   const { 
-    data, isCategoryList, isFloorFilter,
+    dataName, isCategoryList,
     modalIndex, heading, path, name,
     tourguide, modal
   } = props
 
-  const { host, themeColor, itemIndex, floorplans, page } = tourguide
+  const { host, themeColor, itemIndex, floorplans, page, markers } = tourguide
   const dispatch = useDispatch()
 
   const { t } = useTranslation()
@@ -36,36 +36,17 @@ const ItemList = (props) => {
   const [itemIndexSession, setItemIndexSession] = useSessionStorage('itemIndex', 0)
 
   // react state
-  const [isDeleteMode, setIsDeleteMode] = useState(false)
-  const [selectedItems, setSelectedItems] = useState([])
-  const [items, setItems] = useState()
-
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
+  // const [items, setItems] = useState()
 
   const handle_active = (index) => {
 
     let isSameIndex = itemIndex === index
 
-    if(isDeleteMode)
-      return selectedItems.includes(items[index].id) ? true : false 
+    // if(isDeleteMode)
+    //   return selectedItems.includes(items[index].id) ? true : false 
     if(isCategoryList)
       return isSameIndex ?  true : false
     return false
-
-  }
-
-  const add_to_list = (index) => {
-
-    let newList = [...selectedItems]
-    let current = items[index].id
-
-    if(newList.includes(current))
-      newList.splice(newList.indexOf(current), 1)
-    else
-      newList.push(current)
-
-    setSelectedItems(newList)
 
   }
 
@@ -75,63 +56,11 @@ const ItemList = (props) => {
   }
 
   const select_item = (index) => {
-
-    if(isDeleteMode)
-      add_to_list(index)
   
     if(isCategoryList)
       update_page(index)
     
   }
-
-  useEffect(()=>{
-    update_page(itemIndexSession)
-  },[])
-
-  useEffect(()=>{
-    setItems(data !== null ? data : [])
-  },[page, data])
-
-  useEffect(()=>{
-
-    if(isFloorFilter && floorplans.length !== 0 ){
-
-      const delayID = setTimeout(()=>{
-        
-        let floorplanID = floorplans[itemIndex].id
-        axios.get(host+path+"?floorplan-id="+floorplanID)
-        .then(res=>{
-          let data = res.data.data
-          // console.log(data)
-          setItems(data)
-          dispatch(updateBooths(data))
-          setIsLoading(false)
-          setError(null)
-        })
-        .catch(err=>{
-          setIsLoading(true)
-          setError(err)
-        })
-
-      },1000)
-
-      return () => clearTimeout(delayID)
-
-    }else
-      setIsLoading(false)
-
-  }, [itemIndex, modal.isOpen])
-
-  useEffect(()=>{
-    setSelectedItems([])
-  },[isDeleteMode])
-
-
-  if(error !== null)
-    return <div>{error.message}</div>
-
-  if(isLoading)
-    return <LoadingSpinner />
 
   return (
     
@@ -139,33 +68,21 @@ const ItemList = (props) => {
 
       <Toolbar type={1} 
         modalIndex={modalIndex} 
-        path={path} name={name} 
-        isDeleteMode={isDeleteMode} 
-        setIsDeleteMode={setIsDeleteMode} />
+        path={path} name={name} />
 
       <Title size="sm">{t(`${heading}`)}</Title>
 
-      <ScrollContent flexDir={{base: 'column', md: isCategoryList?"column":"row"}}
-        flexWrap={{base: "no-wrap", md: isCategoryList ? "no-wrap":"wrap"}}
-        overflowX="hidden" overflowY="scroll">
+      <ScrollContent flexDir="column" flexWrap="no-wrap" overflowX="hidden" overflowY="scroll">
         <AnimatePresence>
         {
-          
-          items !== undefined && 
-          items.map((item, index) => (
+          tourguide[dataName]?.map((item, index) => (
             <ItemButton key={index} type={path} data={item}
-              variant={handle_active(index) ? isDeleteMode ? 'danger': themeColor : 'gray'}
+              variant={handle_active(index) ? themeColor : 'gray'}
               onClick={()=>(select_item(index))}/>
-          ))
+          )) ?? <></>
         }
         </AnimatePresence>
       </ScrollContent>
-
-      <FunctionalFooter
-        isShow={isDeleteMode} 
-        onClose={()=>{setIsDeleteMode(false); setSelectedItems([])}}
-        path={path} method='delete' data={selectedItems}
-        />
 
     </React.Fragment>
     

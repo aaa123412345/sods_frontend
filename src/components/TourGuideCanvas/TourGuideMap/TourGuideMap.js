@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
 import styled from 'styled-components'
-import { Flex, Box, Image, Text, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Box, Image, Text, useColorModeValue, useColorMode } from '@chakra-ui/react'
 
 import { useDispatch, connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -22,8 +22,9 @@ import useWindowSize from '../../../hooks/useWindowSize';
 import { refreshTime, tourHost } from '../../../constants/constants';
 import { updateFloorplans } from '../../../redux/tourguide/tourguide.action';
 import CustomButton from '../common/EditorButton/CustomButton';
-import { faGift, faTicket } from '@fortawesome/free-solid-svg-icons';
+import { faGift, faMoon, faSun, faTicket } from '@fortawesome/free-solid-svg-icons';
 import { langGetter } from '../../../helpers/langGetter';
+import StatusBar from './StatusBar/StatusBar';
 
 const TourGuideMap = (props) => {
 
@@ -40,10 +41,12 @@ const TourGuideMap = (props) => {
 
     const windowSize = useWindowSize()
 
+    const { colorMode, toggleColorMode } = useColorMode()
+
     const navigate = useNavigate()
     const userLang = langGetter() === 'en' ? 'eng' : 'chi'
 
-    const { subsubpath } = useParams()
+    const { path, subpath, subsubpath } = useParams()
 
     const containerRef = useRef(null)
     const mapRef = useRef(null)
@@ -189,7 +192,8 @@ const TourGuideMap = (props) => {
 
     useEffect(()=>{
 
-        if(subsubpath === "" || subsubpath === undefined || subsubpath === null)
+        if(subpath !== "editor" && path === 'tourguide' && 
+            (subsubpath === "" || subsubpath === undefined || subsubpath === null))
             navigate(`/public/${userLang}/tourguide/floorplans/${floorplans[itemIndex]?.id ?? ""}`)
 
     }, [])
@@ -200,9 +204,10 @@ const TourGuideMap = (props) => {
         const url = `/public/${userLang}/tourguide/`
 
         return (
-            <FloatingContainer bg={bg}>
+            <FloatingContainer bg={bg} mt="1em">
                 <CustomButton faIcon={faTicket} onClick={()=>{navigate(url+"ticket")}} bgColor={themeColor} isCircle />
                 <CustomButton faIcon={faGift} onClick={()=>{navigate(url+"story")}} bgColor={themeColor} isCircle /> 
+                <CustomButton faIcon={colorMode === 'light' ? faMoon : faSun} onClick={toggleColorMode} bgColor={themeColor} isCircle /> 
             </FloatingContainer>
         )
     }
@@ -215,11 +220,17 @@ const TourGuideMap = (props) => {
 
             <OuterContainer ref={containerRef}>
 
-                { isClientView && <div ref={selectorRef}><FloorSelector /></div> }
+                { 
+                    isClientView && 
+                    <div ref={selectorRef}>
+                        <FloorSelector />
+                        <StatusBar />
+                    </div> 
+                }
 
                 { isClientView && <FloatingButtons /> }
 
-                <ScrollMap borderRadius={isAssignBooth && 25}>
+                <ScrollMap borderRadius={isAssignBooth && 25} >
 
                     {
                         floorplans[itemIndex] !== undefined ? 

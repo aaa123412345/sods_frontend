@@ -8,6 +8,8 @@
     "remind-message": "Please select a booth within the floor plan.", 
     "stamp-btn": "Stamp", 
     "vr-btn": "VR Mode",
-    "map-not-ready": "Tour Guideline is preparing. You may browse another pages first."
+    "map-not-ready": "Tour Guideline is preparing. You may browse another pages first.",
+    "openday": "Open Day", 
+    "count-down": "Count Down"
 
 }

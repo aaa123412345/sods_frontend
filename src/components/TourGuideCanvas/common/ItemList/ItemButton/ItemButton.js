@@ -1,6 +1,7 @@
 import React from 'react'
 import RectangleIconButton from './RectangleIconButton/RectangleIconButton'
 import BoothInfoCard from './BoothInfoCard/BoothInfoCard'
+import BoothRecord from './BoothRecord/BoothRecord'
 
 const ItemButton = (props) => {
   
@@ -13,7 +14,7 @@ const ItemButton = (props) => {
         case 'story':
             return React.createElement(RectangleIconButton,  {...props})
         case 'booths':
-            return React.createElement(BoothInfoCard,  {...props})
+            return React.createElement(BoothRecord,  {...props})
 
         default: 
             return 

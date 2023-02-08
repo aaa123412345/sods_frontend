@@ -7,7 +7,7 @@ import { openQRModal } from '../../../redux/modal/modal.action'
 import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
-import { Flex, Box, Heading, Text, Image, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Box, Heading, Text, Image } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAlignCenter, faArrowLeft, faLocationDot, faMap, faStamp, faTent, faVrCardboard } from '@fortawesome/free-solid-svg-icons'
 
@@ -40,7 +40,6 @@ const BoothPage = (props) => {
     const opendayDate = new Date()
     const isOpendayToday = new Date() > opendayDate
 
-
     const back_toMap = () => {
         navigate(`/public/${userLang === 'EN' ? 'eng':'chi'}/tourguide/floorplans`)
     }
@@ -70,7 +69,7 @@ const BoothPage = (props) => {
         ) 
     }
 
-    return (
+    return booth !== undefined && (
 
         <AnimatedPage>
             <ImageContainer>

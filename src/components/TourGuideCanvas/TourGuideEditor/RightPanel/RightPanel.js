@@ -1,25 +1,30 @@
 import React, { useRef } from 'react'
-import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
 
+import { useDispatch, connect } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+
+import styled from 'styled-components'
 import { Flex, useColorModeValue } from '@chakra-ui/react'
 import { faMapLocationDot, faPen, faTent, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-import tourPageData from '../../../../data/tourPageData'
 import Toolbar from '../../common/Toolbar/Toolbar'
-import { useDispatch, connect } from 'react-redux'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
+import { tourEditorData } from '../../../../data/tourEditorData'
+
 import { updateFloorplan, updateStory } from '../../../../redux/form/form.action'
 import { openModal } from '../../../../redux/modal/modal.action'
-import { useTranslation } from 'react-i18next'
 
 const RightPanel = (props) => {
 
     const { tourguide, modal, form } = props
-    const { page, itemIndex, floorplans, stories } = tourguide
+    const { itemIndex, floorplans, stories } = tourguide
     const { floorplan, story } = form
     const dispatch = useDispatch()
 
     const { t } = useTranslation()
+
+    const { subsubpath } = useParams()
 
     const isShowSession = false
 
@@ -32,47 +37,47 @@ const RightPanel = (props) => {
     const bg = useColorModeValue('gray.10', 'gray.100')
     
     // constants
-    const categories = [{label: t('tourguide.floorplan'), icon: faMapLocationDot}, {label: t('tourguide.booth'), icon: faTent}]
-    const isTicketEditor = page === 2
+    const categories = [{path: "floorplans", label: t('tourguide.floorplan'), icon: faMapLocationDot}, {path: "booths", label: t('tourguide.booth'), icon: faTent}]
+    const isTicketEditor = subsubpath === "tickets"
 
     // react hooks
     const contentRef = useRef(null)
 
     const onOpen = (isDelete = false) => {
 
-        let floorplanPayload = {...floorplans[itemIndex]}
-        let storyPayload = {...stories[itemIndex]} 
-        let payload = isTicketEditor ? storyPayload : floorplanPayload
+        // let floorplanPayload = {...floorplans[itemIndex]}
+        // let storyPayload = {...stories[itemIndex]} 
+        // let payload = isTicketEditor ? storyPayload : floorplanPayload
 
-        let modalIndex = isTicketEditor ? 4 : 0
-        let path = isTicketEditor ? 'story':'floorplans'
-        let name = isTicketEditor ? 'story' : 'floorplan'
+        // let modalIndex = isTicketEditor ? 4 : 0
+        // let path = isTicketEditor ? 'story':'floorplans'
+        // let name = isTicketEditor ? 'story' : 'floorplan'
 
-        let modalPayload = {
+        // let modalPayload = {
 
-            page: 0, modalIndex: isDelete?5:modalIndex,
-            path: path, method: isDelete?"delete":"put",
-            name: name, id: payload.id, 
-            byteData: payload.imageData
+        //     page: 0, modalIndex: isDelete?5:modalIndex,
+        //     path: path, method: isDelete?"delete":"put",
+        //     name: name, id: payload.id, 
+        //     byteData: payload.imageData
 
-        }
+        // }
         
-        if(isTicketEditor){
-            setStorySession(storyPayload)
-            dispatch(updateStory(storyPayload))
-        }else{
-            setFloorplanSession(floorplanPayload)
-            dispatch(updateFloorplan(floorplanPayload))
-        }
+        // if(isTicketEditor){
+        //     setStorySession(storyPayload)
+        //     dispatch(updateStory(storyPayload))
+        // }else{
+        //     setFloorplanSession(floorplanPayload)
+        //     dispatch(updateFloorplan(floorplanPayload))
+        // }
 
-        // avoid compiled warnings
-        if(isShowSession){
-            console.log(floorplanSession)
-            console.log(storySession)
-        }
+        // // avoid compiled warnings
+        // if(isShowSession){
+        //     console.log(floorplanSession)
+        //     console.log(storySession)
+        // }
 
-        setModalSession({...modalSession, ...modalPayload})
-        dispatch(openModal(modalPayload))
+        // setModalSession({...modalSession, ...modalPayload})
+        // dispatch(openModal(modalPayload))
 
     }
 
@@ -92,19 +97,18 @@ const RightPanel = (props) => {
             <Content bg={bg} ref={contentRef}>
   
                 {
-                    tourPageData[page].components.map((component, index) => {
+                    tourEditorData[subsubpath ?? ""]?.components?.map((component, index) => {
 
-                        var props = { key: index, ...component.props }
+                        return React.createElement(
+                            component.type, 
+                            { 
+                                key: index, 
+                                height: contentRef?.current?.offsetHeight, 
+                                itemIndex: itemIndex, 
+                                ...component.props
+                            })
 
-                        // extra properties
-                        if(page === 0){
-                            props['height'] = contentRef.current === null ? null : contentRef.current.offsetHeight
-                            props['itemIndex'] = itemIndex
-                        }
-
-                        return React.createElement(component.type, {...props})
-
-                    })
+                    }) ?? <></>
                 }
                 
             </Content>

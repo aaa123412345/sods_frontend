@@ -11,6 +11,8 @@ export const UPDATE_BOOTHS = "UPDATE_BOOTHS"
 export const UPDATE_STORIES = "UPDATE_STORIES"
 export const UPDATE_STORY_PROGRESS = "UPDATE_STORY_PROGRESS"
 export const UPDATE_GAMES = "UPDATE_GAMES"
+export const UPDATE_LOADING_ITEM = "UPDATE_LOADING_ITEM"
+export const CLEAR_LOADING_ITEM = "CLEAR_LOADING_ITEM"
 
 // action creator
 
@@ -56,4 +58,12 @@ export const updateStoryProgress = (progress) => {
 
 export const updateGames = (games) => {
     return { type: UPDATE_GAMES, games }
+}
+
+export const updateLoadingItem = (loadingItem) => {
+    return { type: UPDATE_LOADING_ITEM, loadingItem }
+}
+
+export const clearLoadingItem = () => {
+    return { type: CLEAR_LOADING_ITEM }
 }
