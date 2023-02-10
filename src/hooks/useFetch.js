@@ -2,13 +2,13 @@ import axios from "axios";
 import { useState, useEffect,useContext } from "react";
 import {UserContext} from '../App'
 
-export default function useFetch(method,url,sendData){
+export default function useFetch(url){
     const {user,clearLoginState} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
-    const [redirection, setRedirection] = useState('');
+    const [errMsg, setErrMsg] = useState('');
     
     
     useEffect(()=>{
@@ -25,9 +25,9 @@ export default function useFetch(method,url,sendData){
             }
             
             const { data } = await axios({
-                method: method,
+                method: 'get',
                 url: url,
-                data: sendData,
+               
                 headers:headers
             })
             
@@ -41,18 +41,22 @@ export default function useFetch(method,url,sendData){
                 }else if(data.code>=400 &&data.code<500){           //404 -> Not found Error 403 -> Permission Error 401-> Validation Error 
                     if(data.code === 401){
                         clearLoginState();  
+                        setErrMsg('ValidationError')
+                    }else if(data.code === 402){
+                        setErrMsg('PermissionError')
+                    }else if(data.code === 404){
+                        setErrMsg('DataNotFound')
                     }
 
-                    setError(error);
+               
                 
                 }else if(data.code>=500 &&data.code<600){
-                    alert("Service ERROR")
+                    setErrMsg('ServiceError')
             
                 }
                 
             
         }catch (error){
-                alert(error)
                 
                 setError(error);
                 
@@ -61,7 +65,7 @@ export default function useFetch(method,url,sendData){
         }
     }
 
-    return {items,isLoaded,ready,error,redirection}
+    return {items,isLoaded,ready,error,errMsg}
 
     
   };

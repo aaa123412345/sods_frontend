@@ -8,100 +8,124 @@ import { Button } from 'react-bootstrap';
 var stompClient =null;
 const sessionID = "ABCDEF"
 const userName = "TestRoot"
+
+const MESSAGE_STATUS = {
+    JOIN:"JOIN",
+    LEAVE:"LEAVE",
+    MESSAGE:"MESSAGE",
+    COMMAND:"COMMAND",
+    ERROR:"ERROR"
+}
+
+const ACTION_TYPE = {
+    ADD:"ADD",
+    MINUS:"MINUS",
+    CLEAR:"CLEAR",
+    SYNCHRONIZATION:"SYNCHRONIZATION",
+    NONE:"NONE",
+    CREATEGROUP:"CREATEGROUP",
+    REMOVEGROUP:"REMOVEGROUP",
+    FORCEUNSUBSCRIBE:"FORCEUNSUBSCRIBE"
+}
+
 const RealTimeVotingRoom = () => {
-    //const [privateChats, setPrivateChats] = useState(new Map());     
-    //const [publicChats, setPublicChats] = useState([]); 
-    //const [tab,setTab] =useState("CHATROOM");
+    const [roomState, setRoomState] = useState({
+        isConnect:false,
+        isSubscribe:false
+    })
+    const [clickCount,setClickCount] = useState(0)
     const {user,clearLoginState} = useContext(UserContext)
     const [userData, setUserData] = useState({
         username: '',
         receivername: '',
-        connected: false,
-        message: ''
+        data: '',
+        status:'',
+        action:''
 
       });
    
 
     const connect =()=>{
         let Sock = new SockJS('http://localhost:8888/ws');
-        alert(user.token)
-        console.log(user.token)
         stompClient = over(Sock);
         stompClient.connect({token:user.token},onConnected, onError);
+        
+    }
+
+    const disconnect=()=>{
+        if(roomState.isSubscribe){
+            unSubscribe();
+        }
+        stompClient.disconnect();
+        setRoomState({...roomState,"isConnect":false})
     }
 
     const onConnected = () => {
-        setUserData({...userData,"connected": true});
-       // stompClient.subscribe('/chatroom/public', onMessageReceived);
+        
+        setRoomState({...roomState,"isConnect":true})
+        
+    }
+    const subscribe = () =>{
         stompClient.subscribe('/user/'+sessionID+'/private', onPrivateMessage);
+        setRoomState({...roomState,"isSubscribe":true})
         userJoin();
+    }
+
+    const unSubscribe = () => {
+        userLeave();
+        setRoomState({...roomState,"isSubscribe":false})
+        stompClient.unsubscribe('/user/'+sessionID+'/private')
     }
 
     const userJoin=()=>{
           var chatMessage = {
             senderName: userName,
             receiverName:sessionID,
-            status:"JOIN"
+            status:MESSAGE_STATUS.JOIN,
+            action:ACTION_TYPE.NONE
           };
           stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
     }
-    /*
-    const onMessageReceived = (payload)=>{
-        var payloadData = JSON.parse(payload.body);
-        switch(payloadData.status){
-            case "JOIN":
-                if(!privateChats.get(payloadData.senderName)){
-                    privateChats.set(payloadData.senderName,[]);
-                    setPrivateChats(new Map(privateChats));
-                }
-                break;
-            case "MESSAGE":
-                publicChats.push(payloadData);
-                setPublicChats([...publicChats]);
-                break;
-        }
-    }*/
-    
+
+    const userLeave=()=>{
+        var chatMessage = {
+          senderName: userName,
+          receiverName:sessionID,
+          status:MESSAGE_STATUS.LEAVE,
+          action:ACTION_TYPE.NONE
+        };
+        stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+    }
+
+   
     const onPrivateMessage = (payload)=>{
         
         var payloadData = JSON.parse(payload.body);
         console.log(payloadData)
-        /*
-        if(privateChats.get(payloadData.senderName)){
-            privateChats.get(payloadData.senderName).push(payloadData);
-            setPrivateChats(new Map(privateChats));
-        }else{
-            let list =[];
-            list.push(payloadData);
-            privateChats.set(payloadData.senderName,list);
-            setPrivateChats(new Map(privateChats));
-        }*/
+
+        if(payloadData.status === MESSAGE_STATUS.COMMAND){
+            actionExecutor(payloadData)
+        }
+        
+    }
+
+    const actionExecutor= (payloadData) =>{
+        var action = payloadData.action
+        var data = JSON.parse(payloadData.data)
+        switch(action){
+            case ACTION_TYPE.FORCEUNSUBSCRIBE: unSubscribe();break;
+            case ACTION_TYPE.SYNCHRONIZATION: doSynchronization(data);break;
+        }
+    }
+
+    const doSynchronization = (data)=>{
+        setClickCount(data.clickCount)
     }
 
     const onError = (err) => {
         console.log(err);
         
     }
-    /*
-
-    const handleMessage =(event)=>{
-        const {value}=event.target;
-        setUserData({...userData,"message": value});
-    }
-
-    const sendValue=()=>{
-            if (stompClient) {
-              var chatMessage = {
-                senderName: userData.username,
-                message: userData.message,
-                status:"MESSAGE",
-                data:user.token
-              };
-              console.log(chatMessage);
-              stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-              setUserData({...userData,"message": ""});
-            }
-    }*/
 
     
     const sendPrivateValue=(action)=>{
@@ -109,8 +133,7 @@ const RealTimeVotingRoom = () => {
           var chatMessage = {
             senderName: userName,
             receiverName:sessionID,
-            message: userData.message,
-            status:"MESSAGE",
+            status:MESSAGE_STATUS.MESSAGE,
             action:action
           };
          
@@ -119,23 +142,66 @@ const RealTimeVotingRoom = () => {
         }
     }
 
-    const handleUsername=(event)=>{
-        const {value}=event.target;
-        setUserData({...userData,"username": value});
+    const sendPrivateCommand=(action)=>{
+        if (stompClient) {
+          var chatMessage = {
+            senderName: userName,
+            receiverName:sessionID,
+            status:MESSAGE_STATUS.COMMAND,
+            action:action
+          };
+         
+          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+          setUserData({...userData,"message": ""});
+        }
     }
 
-    const registerUser=()=>{
-        connect();
+    
+    function userControlPlatform(){
+        return(
+            <>
+             <h4>User Data : </h4> 
+            <Button onClick={()=>sendPrivateValue(ACTION_TYPE.ADD)}>+ 1</Button>
+            <Button onClick={()=>sendPrivateValue(ACTION_TYPE.MINUS)}>- 1</Button>
+            </>
+        )
     }
+
+    function adminControlPlatform(){
+        return(
+            <>
+            <h4>Admin Action : </h4> 
+        <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.CLEAR)}>Clear Data</Button>
+        <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.CREATEGROUP)}>Create Room</Button>
+        <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.REMOVEGROUP)}>Remove Room</Button>
+            </>
+        )
+    }  
 
     return (
     <>
         <h1>Current Link to : {sessionID}</h1>
         <h2>User Number : {1}</h2>
-        <h3>Click Count : {1}</h3> 
-        <Button onClick={()=>registerUser()}>Connect</Button>
-        <Button onClick={()=>sendPrivateValue("ADD")}>+ 1</Button>
-        <Button onClick={()=>sendPrivateValue("CLEAR")}>Clear Click Count</Button>
+        <h3>Click Count : {clickCount}</h3> 
+        <h3>Connect : {roomState.isConnect?'true':'false'}</h3> 
+        <h3>Subscribe : {roomState.isSubscribe?'true':'false'}</h3> 
+        
+        <h4>User Action : </h4> 
+        {roomState.isConnect?
+            <Button onClick={()=>disconnect()}>Disconnect</Button>:
+            <Button onClick={()=>connect()}>Connect</Button>
+        }
+        {!roomState.isConnect?'':
+            roomState.isSubscribe?
+            <Button onClick={()=>unSubscribe()}>Leave room</Button>:
+            <Button onClick={()=>subscribe()}>Join room</Button>
+        }
+        {roomState.isSubscribe?
+            userControlPlatform():''    
+        }
+        {roomState.isConnect?
+            adminControlPlatform():''
+        }
         
     </>
     )
