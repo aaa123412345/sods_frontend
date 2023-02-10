@@ -16,17 +16,22 @@ import AuthHandler from "../../Common/AuthHandler/AuthHandler";
 import { Navigate } from 'react-router-dom';
 
 import {UserContext} from '../../../App'
+import useFetch from "../../../hooks/useFetch";
 
 
 
 const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
-    
+    const {items,isLoaded,ready,error,redirection} = useFetch('get',host+lang+'/'+path,{})
+    console.log(host+lang+'/'+path)
+
+ 
+    /*
     const {user,clearLoginState} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
     const [items, setItems] = useState([]);
-
+   
     const getData = async () => {
       var useLanguage = process.env.REACT_APP_USE_LANGUAGE;
       var url;
@@ -89,7 +94,14 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
         //User do not have permission
         else return(<Navigate replace to={"/public/"+lang+"/about"} />)
       }
-
+      */
+  
+      if (error) {
+        console.log("Error")
+      } else if (isLoaded) {
+        console.log("load . . .")
+      } else if(ready) {
+        console.log(items)
       return(
         <>
       
@@ -109,6 +121,7 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
         </>
       )
     }
+    
 }
 
 export default PageContent;

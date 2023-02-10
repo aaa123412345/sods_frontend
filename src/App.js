@@ -22,9 +22,9 @@ function App() {
     const permission = []
     permission.push(process.env.REACT_APP_DEFAULT_PERMISSION)
     const [user, setUser] = useState({
-        rolePermission: ['system:root'],
-        token:'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1MThiMWExMjJhN2U0NzE4Yjc3ZTBkMjg4ZDBlMTBiYyIsInN1YiI6IjEiLCJpc3MiOiJzZyIsImlhdCI6MTY3NTg0NTI2OCwiZXhwIjoxNjc1ODQ4ODY4fQ.xiqvnWcOZKThMhnHgXZ9UILE2NcKuY2XmFun4SfeF9U',
-        userType:'1'
+        rolePermission: [''],
+        token:'',
+        userType:''
     });
     
     const setUserContext = (userDict) => {
@@ -41,7 +41,7 @@ function App() {
         localStorage.removeItem('sods_fyp_ut')
         localStorage.removeItem('sods_fyp_rp')
         localStorage.removeItem('sods_fyp_t')
-        window.location.reload()
+        
 
 
     }
