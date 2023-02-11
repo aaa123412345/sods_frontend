@@ -41,7 +41,7 @@ function App() {
         localStorage.removeItem('sods_fyp_ut')
         localStorage.removeItem('sods_fyp_rp')
         localStorage.removeItem('sods_fyp_t')
-        
+        window.location.reload();
 
 
     }
