@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 
 var stompClient =null;
 const sessionID = "ABCDEF"
-const userName = "TestRoot"
+
 
 const MESSAGE_STATUS = {
     JOIN:"JOIN",
@@ -31,16 +31,20 @@ const ACTION_TYPE = {
 const RealTimeVotingRoom = () => {
     const [roomState, setRoomState] = useState({
         isConnect:false,
-        isSubscribe:false
+        isSubscribe:false,
+        isJoin:false,
+        participantSubmit:0,
+        participantJoin:0
     })
     const [clickCount,setClickCount] = useState(0)
     const {user,clearLoginState} = useContext(UserContext)
     const [userData, setUserData] = useState({
-        username: '',
-        receivername: '',
+        userName: '',
+        receiverName: '',
         data: '',
         status:'',
-        action:''
+        action:'',
+        permission:[]
 
       });
    
@@ -60,26 +64,32 @@ const RealTimeVotingRoom = () => {
         setRoomState({...roomState,"isConnect":false})
     }
 
-    const onConnected = () => {
-        
+    const onConnected = (data) => {
+        var validatedUserData = JSON.parse(data.headers['user-name'])
+        setUserData({...userData,"userName":validatedUserData.UserName,"permission":validatedUserData.Permission})
         setRoomState({...roomState,"isConnect":true})
         
     }
     const subscribe = () =>{
         stompClient.subscribe('/user/'+sessionID+'/private', onPrivateMessage);
-        setRoomState({...roomState,"isSubscribe":true})
+        setRoomState({...roomState,"isSubscribe":true});
         userJoin();
-    }
+       
+       
+    } 
+
+ 
 
     const unSubscribe = () => {
         userLeave();
         setRoomState({...roomState,"isSubscribe":false})
+       
         stompClient.unsubscribe('/user/'+sessionID+'/private')
     }
 
     const userJoin=()=>{
           var chatMessage = {
-            senderName: userName,
+            senderName: userData.userName,
             receiverName:sessionID,
             status:MESSAGE_STATUS.JOIN,
             action:ACTION_TYPE.NONE
@@ -89,7 +99,7 @@ const RealTimeVotingRoom = () => {
 
     const userLeave=()=>{
         var chatMessage = {
-          senderName: userName,
+          senderName: userData.userName,
           receiverName:sessionID,
           status:MESSAGE_STATUS.LEAVE,
           action:ACTION_TYPE.NONE
@@ -120,6 +130,8 @@ const RealTimeVotingRoom = () => {
 
     const doSynchronization = (data)=>{
         setClickCount(data.clickCount)
+        setRoomState({...roomState,
+            "participantSubmit":data.participantSubmit,"participantJoin":data.participantJoin,"isSubscribe":true})
     }
 
     const onError = (err) => {
@@ -131,7 +143,7 @@ const RealTimeVotingRoom = () => {
     const sendPrivateValue=(action)=>{
         if (stompClient) {
           var chatMessage = {
-            senderName: userName,
+            senderName: userData.userName,
             receiverName:sessionID,
             status:MESSAGE_STATUS.MESSAGE,
             action:action
@@ -145,7 +157,7 @@ const RealTimeVotingRoom = () => {
     const sendPrivateCommand=(action)=>{
         if (stompClient) {
           var chatMessage = {
-            senderName: userName,
+            senderName: userData.userName,
             receiverName:sessionID,
             status:MESSAGE_STATUS.COMMAND,
             action:action
@@ -181,10 +193,20 @@ const RealTimeVotingRoom = () => {
     return (
     <>
         <h1>Current Link to : {sessionID}</h1>
-        <h2>User Number : {1}</h2>
-        <h3>Click Count : {clickCount}</h3> 
+        {roomState.isConnect?
+           <><h3>You Are : {userData.userName}</h3>
+           <h3>Permission : {userData.permission}</h3></>:
+            ''
+        }
+        
         <h3>Connect : {roomState.isConnect?'true':'false'}</h3> 
         <h3>Subscribe : {roomState.isSubscribe?'true':'false'}</h3> 
+
+        {roomState.isSubscribe?<>
+        <h3>User Join : {roomState.participantJoin}</h3>
+        <h3>User Submit : {roomState.participantSubmit}</h3>
+        <h3>Click Count : {clickCount}</h3> 
+        </>:''}
         
         <h4>User Action : </h4> 
         {roomState.isConnect?
