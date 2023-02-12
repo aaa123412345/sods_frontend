@@ -5,8 +5,11 @@ import {UserContext} from "../../../App"
 
 import { Button } from 'react-bootstrap';
 
+import useFetch from '../../../hooks/useFetch';
+
 var stompClient =null;
 const sessionID = "ABCDEF"
+const surveyID='1624730353662853121'
 
 
 const MESSAGE_STATUS = {
@@ -18,14 +21,22 @@ const MESSAGE_STATUS = {
 }
 
 const ACTION_TYPE = {
-    ADD:"ADD",
-    MINUS:"MINUS",
+    
+    SUBMIT:"SUBMIT",
     CLEAR:"CLEAR",
     SYNCHRONIZATION:"SYNCHRONIZATION",
     NONE:"NONE",
     CREATEGROUP:"CREATEGROUP",
     REMOVEGROUP:"REMOVEGROUP",
-    FORCEUNSUBSCRIBE:"FORCEUNSUBSCRIBE"
+    FORCEUNSUBSCRIBE:"FORCEUNSUBSCRIBE",
+    SHOWRESULT:"SHOWRESULT",
+    NEXTQUESTION:"NEXTQUESTION",
+    VOTINGEND:"VOTINGEND",
+}
+
+const CLIENT_RENDER_METHOD = {
+    VOTING:"VOTING",
+    RESULT:"RESULT"
 }
 
 const RealTimeVotingRoom = () => {
@@ -33,20 +44,18 @@ const RealTimeVotingRoom = () => {
         isConnect:false,
         isSubscribe:false,
         isJoin:false,
-        participantSubmit:0,
-        participantJoin:0
+        
     })
-    const [clickCount,setClickCount] = useState(0)
+    const [votingState, setVotingState] = useState({})
+
     const {user,clearLoginState} = useContext(UserContext)
     const [userData, setUserData] = useState({
-        userName: '',
-        receiverName: '',
-        data: '',
-        status:'',
-        action:'',
+        UserID:'',
         permission:[]
+});
+    const [renderData, setRenderData] = useState({})
 
-      });
+    const {items,isLoaded,ready,error,redirection} = useFetch(process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey/'+surveyID)
    
 
     const connect =()=>{
@@ -66,10 +75,11 @@ const RealTimeVotingRoom = () => {
 
     const onConnected = (data) => {
         var validatedUserData = JSON.parse(data.headers['user-name'])
-        setUserData({...userData,"userName":validatedUserData.UserName,"permission":validatedUserData.Permission})
+        setUserData({...userData,"UserID":validatedUserData.UserID,"permission":[...userData.permission,validatedUserData.Permission]})
         setRoomState({...roomState,"isConnect":true})
         
     }
+
     const subscribe = () =>{
         stompClient.subscribe('/user/'+sessionID+'/private', onPrivateMessage);
         setRoomState({...roomState,"isSubscribe":true});
@@ -81,9 +91,8 @@ const RealTimeVotingRoom = () => {
  
 
     const unSubscribe = () => {
-        userLeave();
+        
         setRoomState({...roomState,"isSubscribe":false})
-       
         stompClient.unsubscribe('/user/'+sessionID+'/private')
     }
 
@@ -129,9 +138,13 @@ const RealTimeVotingRoom = () => {
     }
 
     const doSynchronization = (data)=>{
-        setClickCount(data.clickCount)
-        setRoomState({...roomState,
-            "participantSubmit":data.participantSubmit,"participantJoin":data.participantJoin,"isSubscribe":true})
+        //setClickCount(data.clickCount)
+
+        if('renderData' in data){
+            console.log(data.renderData)
+           setRenderData(data.renderData)
+        }
+        setVotingState({...data})
     }
 
     const onError = (err) => {
@@ -140,6 +153,21 @@ const RealTimeVotingRoom = () => {
     }
 
     
+    const sendPrivateValueWithData=(action,data)=>{
+        if (stompClient) {
+          var chatMessage = {
+            senderName: userData.UserID,
+            receiverName:sessionID,
+            status:MESSAGE_STATUS.MESSAGE,
+            action:action,
+            data:JSON.stringify(data)
+          };
+         
+          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+         
+        }
+    }
+
     const sendPrivateValue=(action)=>{
         if (stompClient) {
           var chatMessage = {
@@ -153,7 +181,7 @@ const RealTimeVotingRoom = () => {
           setUserData({...userData,"message": ""});
         }
     }
-
+    
     const sendPrivateCommand=(action)=>{
         if (stompClient) {
           var chatMessage = {
@@ -161,6 +189,7 @@ const RealTimeVotingRoom = () => {
             receiverName:sessionID,
             status:MESSAGE_STATUS.COMMAND,
             action:action
+           
           };
          
           stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
@@ -168,126 +197,105 @@ const RealTimeVotingRoom = () => {
         }
     }
 
+    const sendPrivateCommandWithData=(action,data)=>{
+        if (stompClient) {
+          var chatMessage = {
+            senderName: userData.userName,
+            receiverName:sessionID,
+            status:MESSAGE_STATUS.COMMAND,
+            action:action,
+            data:JSON.stringify(data)
+          };
+         
+          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+          setUserData({...userData,"message": ""});
+        }
+    }
+
+    function getResponseData(key,value){
+        return {key:key,value:value}
+    }
+    
+
     
     function userControlPlatform(){
         return(
             <>
-             <h4>User Data : </h4> 
-            <Button onClick={()=>sendPrivateValue(ACTION_TYPE.ADD)}>+ 1</Button>
-            <Button onClick={()=>sendPrivateValue(ACTION_TYPE.MINUS)}>- 1</Button>
+             <h4>User Data </h4> 
+            <Button onClick={()=>sendPrivateValueWithData(ACTION_TYPE.SUBMIT,getResponseData(votingState.currentQuestion,1000))}>SUBMIT</Button>
+            
             </>
         )
+    }
+
+    function votingStateDisplayer(){
+        return(
+            <>
+            <h3>Voting State:</h3>
+            <h4>Clien Render Method: {votingState.clientRenderMethod}</h4>
+            <h4>Current Question: {votingState.currentQuestion}</h4>
+            <h4>User State: {votingState.participantSubmit+" / "+votingState.participantJoin}</h4>
+            <h4>Current Link to : {votingState.passcode}</h4>
+            </>
+            
+        )
+
     }
 
     function adminControlPlatform(){
         return(
             <>
             <h4>Admin Action : </h4> 
-        <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.CLEAR)}>Clear Data</Button>
-        <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.CREATEGROUP)}>Create Room</Button>
-        <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.REMOVEGROUP)}>Remove Room</Button>
+            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.CLEAR)}>Clear Data</Button>
+            <Button onClick={()=>sendPrivateCommandWithData(ACTION_TYPE.CREATEGROUP,{surveyID:surveyID,surveyFormat:items})}>Create Room</Button>
+            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.REMOVEGROUP)}>Remove Room</Button>
+            <br></br>
+            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.SHOWRESULT)}>Show result</Button>
+            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.NEXTQUESTION)}>Next question</Button>
+            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.VOTINGEND)}>End Voting</Button>
             </>
         )
     }  
+    if(ready){
+       
+        return (
+        <>
+            
+            {roomState.isConnect?
+            <><h3>You Are : {userData.UserID}</h3>
+            <h3>Permission : {userData.permission}</h3></>:
+                ''
+            }
+            
+            <h3>Connect : {roomState.isConnect?'true':'false'}</h3> 
+            <h3>Subscribe : {roomState.isSubscribe?'true':'false'}</h3> 
 
-    return (
-    <>
-        <h1>Current Link to : {sessionID}</h1>
-        {roomState.isConnect?
-           <><h3>You Are : {userData.userName}</h3>
-           <h3>Permission : {userData.permission}</h3></>:
-            ''
-        }
         
-        <h3>Connect : {roomState.isConnect?'true':'false'}</h3> 
-        <h3>Subscribe : {roomState.isSubscribe?'true':'false'}</h3> 
-
-        {roomState.isSubscribe?<>
-        <h3>User Join : {roomState.participantJoin}</h3>
-        <h3>User Submit : {roomState.participantSubmit}</h3>
-        <h3>Click Count : {clickCount}</h3> 
-        </>:''}
-        
-        <h4>User Action : </h4> 
-        {roomState.isConnect?
-            <Button onClick={()=>disconnect()}>Disconnect</Button>:
-            <Button onClick={()=>connect()}>Connect</Button>
-        }
-        {!roomState.isConnect?'':
-            roomState.isSubscribe?
-            <Button onClick={()=>unSubscribe()}>Leave room</Button>:
-            <Button onClick={()=>subscribe()}>Join room</Button>
-        }
-        {roomState.isSubscribe?
-            userControlPlatform():''    
-        }
-        {roomState.isConnect?
-            adminControlPlatform():''
-        }
-        
-    </>
-    )
-    /*
-    <div className="container">
-            {userData.connected?
-            <div className="chat-box">
-                <div className="member-list">
-                    <ul>
-                        <li onClick={()=>{setTab("CHATROOM")}} className={`member ${tab==="CHATROOM" && "active"}`}>Chatroom</li>
-                        {[...privateChats.keys()].map((name,index)=>(
-                            <li onClick={()=>{setTab(name)}} className={`member ${tab===name && "active"}`} key={index}>{name}</li>
-                        ))}
-                    </ul>
-                </div>
-                {tab==="CHATROOM" && <div className="chat-content">
-                    <ul className="chat-messages">
-                        {publicChats.map((chat,index)=>(
-                            <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
-                                {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                                <div className="message-data">{chat.message}</div>
-                                {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
-                            </li>
-                        ))}
-                    </ul>
-
-                    <div className="send-message">
-                        <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
-                        <button type="button" className="send-button" onClick={sendValue}>send</button>
-                    </div>
-                </div>}
-                {tab!=="CHATROOM" && <div className="chat-content">
-                    <ul className="chat-messages">
-                        {[...privateChats.get(tab)].map((chat,index)=>(
-                            <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
-                                {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                                <div className="message-data">{chat.message}</div>
-                                {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
-                            </li>
-                        ))}
-                    </ul>
-
-                    <div className="send-message">
-                        <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
-                        <button type="button" className="send-button" onClick={sendPrivateValue}>send</button>
-                    </div>
-                </div>}
-            </div>
-            :
-            <div className="register">
-                <input
-                    id="user-name"
-                    placeholder="Enter your name"
-                    name="userName"
-                    value={userData.username}
-                    onChange={handleUsername}
-                    margin="normal"
-                />
-                <button type="button" onClick={registerUser}>
-                        connect
-                </button> 
-            </div>}
-        </div>
-    */
+            
+            <h4>User Action : </h4> 
+            {roomState.isConnect?
+                <Button onClick={()=>disconnect()}>Disconnect</Button>:
+                <Button onClick={()=>connect()}>Connect</Button>
+            }
+            {!roomState.isConnect?'':
+                roomState.isSubscribe?
+                <Button onClick={()=>unSubscribe()}>Leave room</Button>:
+                <Button onClick={()=>subscribe()}>Join room</Button>
+            }
+            {roomState.isSubscribe?
+                votingStateDisplayer():''    
+            }
+            {roomState.isSubscribe?
+                userControlPlatform():''    
+            }
+            {roomState.isConnect?
+                adminControlPlatform():''
+            }
+            
+        </>
+        )
+    }
+    
 }
 
 export default RealTimeVotingRoom

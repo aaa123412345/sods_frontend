@@ -1,79 +1,33 @@
-import React,{useEffect, useState} from "react";
+import React from "react";
 import {Table,Row,Col} from 'react-bootstrap';
 import { Link } from "react-router-dom"; 
 
-//import user context and related component
-import {UserContext} from '../../../App'
-import { useContext } from "react";
-import axios from 'axios';
-import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
-
+import useFetch from "../../../hooks/useFetch"
 
 const SurveyTable = (props) => {
     
-    //user information
-    const {user,clearLoginState} = useContext(UserContext)
-    const [ready,setReady] = useState(false);
-    const [surveydata, setSurveyData] = useState({});
+    const {items,isLoaded,ready,error,redirection} = useFetch(process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey')
 
-    const getAllSurvey = async() =>{
+   
+    if (error) {
+        console.log("Error")
+      } else if (isLoaded) {
+        
+      } else {
        
-        try{
-            const { data } = await axios({
-              method: 'get',
-              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey',
-              headers:{
-                'token':user.token
-              }
-             
-            
-            })
-           
-            var rest = jsonExtractor(data);
-            //console.log(rest)
-            
-            if(rest.response === "success"){
-              //console.log(rest.data)
-              setSurveyData(rest.data)
-              setReady(true)
-              
-            }else if (rest.response === "undefineerror"){
-              //console.log("The authentication server is down")
-              clearLoginState()
-              alert("The service is not avaliable. Please try to login later")
-            }else{
-              //console.log(rest)
-              clearLoginState()
-              alert("Get data fail")
-            }
-          }catch (error){
-            clearLoginState()
-            alert("The survey uploading service is not avaliable at this moment")
-          }
-    }
+        if(ready) {
+            return(
+                <>
+                    <div className="d-none d-sm-block">
+                    {DesktopTable(items,"surveymanager-")}
+                    </div>
 
-    function deleteSurvey(surveyid){
-
-    }
-    
-    function checkSurveyWithEditor(surveyid){
-
-    }
-
-    useEffect(()=>{getAllSurvey()},[])
-
-    if(ready){
-        return(
-            <>
-                <div className="d-none d-sm-block">
-                   {DesktopTable(surveydata,"surveymanager-")}
-                </div>
-
-                <div id="mTable" className="d-block d-sm-none">
-                    {MobileTable(surveydata,"surveymanager-")}
-                </div>
-            </>
-        )
+                    <div id="mTable" className="d-block d-sm-none">
+                        {MobileTable(items,"surveymanager-")}
+                    </div>
+                </>
+            )
+        }
     }
     
     function DesktopTable(content,pkey){
@@ -83,7 +37,7 @@ const SurveyTable = (props) => {
         var bordered = true
         var tableHeadStyle = {}
         var tableDataStyle = [{},{}]
-        var tableKey = ['Survey ID','Survey Title', 'Create Time', 'Create User ID', 'Modify Time', 'Modify User ID', 'Action 1', 'Action 2']
+        var tableKey = ['Survey ID','Survey Title','Survey Type', 'Create Time', 'Create User ID', 'Modify Time', 'Modify User ID', 'Action 1', 'Action 2']
         return(
             <Table key={pkey + "desktop-table"} hover={hover} striped={striped} bordered={bordered}>
                 <thead key={pkey + "desktop-table-head"}>
@@ -108,6 +62,7 @@ const SurveyTable = (props) => {
                 <tr style={style} key={keyPass + "-table-data-"+index+"-tr"}>
                     <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['surveyId']} </td>
                     <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data['surveyTitle']} </td>
+                    <td key={keyPass + "-table-data-"+index+"-td-"+9}> {data['surveyType']} </td>
                     <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createTime']} </td>
                     <td key={keyPass + "-table-data-"+index+"-td-"+4}> {data['createUserId']} </td>
                     <td key={keyPass + "-table-data-"+index+"-td-"+5}> {data['updateTime']} </td>
@@ -125,7 +80,7 @@ const SurveyTable = (props) => {
 
     function MobileTable(table,pkey){
         var styleNum = 2;
-        var tableKey = ['Survey ID','Survey Title', 'Create Time', 'Create User ID', 'Modify Time', 'Modify User ID', 'Action 1', 'Action 2']
+        var tableKey = ['Survey ID','Survey Title','Survey Type', 'Create Time', 'Create User ID', 'Modify Time', 'Modify User ID', 'Action 1', 'Action 2']
         
         var tableDataStyle = [{"backgroundColor":"gray","color":"black"},{"backgroundColor":"white","color":"black"}]
         return(
@@ -145,6 +100,7 @@ const SurveyTable = (props) => {
                   
                     <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data['surveyId']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['surveyTitle']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+9}> {data['surveyType']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createTime']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+4}> {data['createUserId']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+5}> {data['updateTime']} <br></br></span>
