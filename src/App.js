@@ -9,7 +9,9 @@ import { Provider } from "react-redux";
 import { store } from './redux/store'
 import Chatroom from "./components/Chatroom/Chatroom";
 import VRCanvas from "./components/VRCanvas/VRCanvas";
-import RealTimeVotingRoom from "./components/SurveySystem/RealTimeVotingRoom/RealTimeVotingRoom";
+import RealTimeVotingRoom from "./components/SurveySystem/RealTimeVotingSystem/RealTimeVotingRoom";
+import RealTimeVotingClient from "./components/SurveySystem/RealTimeVotingSystem/RealTimeVotingClient";
+import RealTime123 from "./components/SurveySystem/RealTimeVotingSystem/RealTime123";
 
 import { useState, createContext, useEffect } from "react";
 
@@ -47,10 +49,9 @@ function App() {
     }
 
     useEffect(()=>{
-        console.log(user)
+        
         if(user.userType === ''){
             getInLocal()
-            console.log('get')
         }
         
     }
@@ -117,7 +118,7 @@ function App() {
                             <Routes>
                                 
                             <Route>
-                                <Route path="/voteTest" element={<RealTimeVotingRoom />}></Route> 
+                               
                                 <Route path="/public/:lang/tourguide-vr/:id" element={<VRCanvas />}></Route> 
                                 {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
                                 <Route path='/public/:lang/:path' element={<PublicPageManager />}></Route> 

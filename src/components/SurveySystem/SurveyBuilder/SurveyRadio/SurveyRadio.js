@@ -38,7 +38,7 @@ const SurveyRadio = ({data,parentFunction,qid,savedFormData,curPart}) => {
             value={option}
             key={qid.toString()+"-radio-option-"+index.toString()}
             onClick={setdata}
-            defaultChecked={init?false:(savedFormData[curPart][qid]===option?true:false)}
+            defaultChecked={init?false:curPart in savedFormData?(savedFormData[curPart][qid]===option?true:false):false}
             required={data.required}
             />
         )

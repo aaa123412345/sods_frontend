@@ -13,6 +13,9 @@ import ActiveSurveyConfigPanel from "../../SurveySystem/ActiveSurveyConfigPanel/
 import ActiveSurveyManager from "../../SurveySystem/ActiveSurverManager/ActiveSurveyManager";
 import ActiveSurveyPublicCardViewer from "../../SurveySystem/ActiveSurveyPubilcCardViewer/ActiveSurveyPubilcCardViewer";
 import SurveyLoader from "../../SurveySystem/SurveyLoader";
+import VotingAdmin from "../../SurveySystem/RealTimeVotingSystem/VotingAdmin";
+import VotingClient from "../../SurveySystem/RealTimeVotingSystem/VotingClient";
+import VotingSelector from "../../SurveySystem/RealTimeVotingSystem/VotingSelector";
 
 const Components = {
   ctext: CText,
@@ -27,7 +30,10 @@ const Components = {
   activeSurveyConfigPanel:ActiveSurveyConfigPanel,
   activeSurveyManager:ActiveSurveyManager,
   activeSurveyPublicCardViewer:ActiveSurveyPublicCardViewer,
-  survey:SurveyLoader
+  survey:SurveyLoader,
+  votingAdmin:VotingAdmin,
+  votingClient:VotingClient,
+  votingSelector:VotingSelector
 };
 
 export default block => {

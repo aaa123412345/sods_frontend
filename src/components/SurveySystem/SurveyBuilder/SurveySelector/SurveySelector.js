@@ -22,7 +22,7 @@ const SurveySelector = ({data,parentFunction,qid,savedFormData,curPart}) => {
             <Row>
                 <Col md={8}>
                     <Form.Select qid={qid} onChange={setdata} key={"sselect-real-"+qid.toString()}
-                     required={data.required} defaultValue={init?'':savedFormData[curPart][qid]}>
+                     required={data.required} defaultValue={init?'':curPart in savedFormData?savedFormData[curPart][qid]:''}>
                         {init?<option></option>:""}
                         {data.option.map((element,index) => optionCreator(index+1, element,qid))}
                     </Form.Select>
@@ -35,7 +35,7 @@ const SurveySelector = ({data,parentFunction,qid,savedFormData,curPart}) => {
 
     function optionCreator(index,option,qid){
         return(
-            <option key={qid.toString()+"-sselect-option-"+index.toString()} value={index}>{option}</option>
+            <option key={qid.toString()+"-sselect-option-"+index.toString()} value={option}>{option}</option>
         )
     }
 }

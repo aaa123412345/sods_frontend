@@ -1,11 +1,16 @@
 import React, { useEffect, useState,useContext  } from 'react'
 import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
-import {UserContext} from "../../../App"
+//import {UserContext} from "../../../App"
 
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 import useFetch from '../../../hooks/useFetch';
+
+import RealTimeVotingElementDict from './RealTimeVotingElementDict';
+import RealTimeVotingResultDisplayer from './RealTimeVotingResultDisplayer';
+
+
 
 var stompClient =null;
 const sessionID = "ABCDEF"
@@ -36,10 +41,10 @@ const ACTION_TYPE = {
 
 const CLIENT_RENDER_METHOD = {
     VOTING:"VOTING",
-    RESULT:"RESULT"
+    SHOWRESULT:"SHOWRESULT"
 }
 
-const RealTimeVotingRoom = () => {
+const RealTimeVotingClient = () => {
     const [roomState, setRoomState] = useState({
         isConnect:false,
         isSubscribe:false,
@@ -47,21 +52,22 @@ const RealTimeVotingRoom = () => {
         
     })
     const [votingState, setVotingState] = useState({})
+    //const {user,clearLoginState} = useContext(UserContext)
 
-    const {user,clearLoginState} = useContext(UserContext)
     const [userData, setUserData] = useState({
         UserID:'',
-        permission:[]
-});
-    const [renderData, setRenderData] = useState({})
+        permission:[]});
 
-    const {items,isLoaded,ready,error,redirection} = useFetch(process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey/'+surveyID)
+    const [renderData, setRenderData] = useState({})
+    const [validated,setValidated] = useState(false)
+    const [responseData,setResponseData] = useState({})
+    const {items,isLoaded,ready,error,redirection} = useFetch(process.env.REACT_APP_VOTING_SYSTEM_HOST+'/'+sessionID)    
    
 
     const connect =()=>{
         let Sock = new SockJS('http://localhost:8888/ws');
         stompClient = over(Sock);
-        stompClient.connect({token:user.token},onConnected, onError);
+       // stompClient.connect({token:user.token},onConnected, onError);
         
     }
 
@@ -87,8 +93,6 @@ const RealTimeVotingRoom = () => {
        
        
     } 
-
- 
 
     const unSubscribe = () => {
         
@@ -144,7 +148,7 @@ const RealTimeVotingRoom = () => {
             console.log(data.renderData)
            setRenderData(data.renderData)
         }
-        setVotingState({...data})
+        setVotingState(data)
     }
 
     const onError = (err) => {
@@ -182,51 +186,56 @@ const RealTimeVotingRoom = () => {
         }
     }
     
-    const sendPrivateCommand=(action)=>{
-        if (stompClient) {
-          var chatMessage = {
-            senderName: userData.userName,
-            receiverName:sessionID,
-            status:MESSAGE_STATUS.COMMAND,
-            action:action
-           
-          };
+    const handleSubmit = (event) => {
+        const form = event.currentTarget.parentNode;
+        
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
          
-          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-          setUserData({...userData,"message": ""});
-        }
-    }
-
-    const sendPrivateCommandWithData=(action,data)=>{
-        if (stompClient) {
-          var chatMessage = {
-            senderName: userData.userName,
-            receiverName:sessionID,
-            status:MESSAGE_STATUS.COMMAND,
-            action:action,
-            data:JSON.stringify(data)
-          };
-         
-          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-          setUserData({...userData,"message": ""});
-        }
-    }
-
-    function getResponseData(key,value){
-        return {key:key,value:value}
-    }
-    
-
-    
-    function userControlPlatform(){
-        return(
-            <>
-             <h4>User Data </h4> 
-            <Button onClick={()=>sendPrivateValueWithData(ACTION_TYPE.SUBMIT,getResponseData(votingState.currentQuestion,1000))}>SUBMIT</Button>
+          setValidated(true);
+        }else{
             
-            </>
-        )
+            sendPrivateValueWithData(ACTION_TYPE.SUBMIT,responseData)
+        }
+       
+       
+      };
+
+    function onInput(qid,value){
+        setResponseData({key:qid,value:value})
+        
     }
+
+    
+    
+    function rendering(){
+        if(roomState.isSubscribe&&roomState.isConnect){
+            if(votingState.clientRenderMethod!== undefined && renderData !== {}){
+                if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.VOTING){
+                   
+                    
+                    return(
+                        <>  
+                            <h4>User Area:</h4>
+                            <Form noValidate validated={validated}>
+                                <RealTimeVotingElementDict data={JSON.parse(renderData)} qid={votingState.currentQuestion}
+                                validated={validated} parentFunction={onInput} savedFormData={{}} curPart={''}/>
+                                <Button onClick={handleSubmit} >Submit</Button>
+                            </Form>
+                        </>
+                    
+                    )
+                }else if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.SHOWRESULT){
+                    return(
+                        <RealTimeVotingResultDisplayer data={JSON.parse(renderData)}></RealTimeVotingResultDisplayer>
+                    )
+                }
+            }
+        }
+    }
+    
+    
 
     function votingStateDisplayer(){
         return(
@@ -242,20 +251,7 @@ const RealTimeVotingRoom = () => {
 
     }
 
-    function adminControlPlatform(){
-        return(
-            <>
-            <h4>Admin Action : </h4> 
-            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.CLEAR)}>Clear Data</Button>
-            <Button onClick={()=>sendPrivateCommandWithData(ACTION_TYPE.CREATEGROUP,{surveyID:surveyID,surveyFormat:items})}>Create Room</Button>
-            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.REMOVEGROUP)}>Remove Room</Button>
-            <br></br>
-            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.SHOWRESULT)}>Show result</Button>
-            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.NEXTQUESTION)}>Next question</Button>
-            <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.VOTINGEND)}>End Voting</Button>
-            </>
-        )
-    }  
+    
     if(ready){
        
         return (
@@ -285,12 +281,11 @@ const RealTimeVotingRoom = () => {
             {roomState.isSubscribe?
                 votingStateDisplayer():''    
             }
-            {roomState.isSubscribe?
-                userControlPlatform():''    
-            }
-            {roomState.isConnect?
-                adminControlPlatform():''
-            }
+           
+            <br></br>
+            {rendering()}
+
+            
             
         </>
         )
@@ -298,4 +293,4 @@ const RealTimeVotingRoom = () => {
     
 }
 
-export default RealTimeVotingRoom
+export default RealTimeVotingClient

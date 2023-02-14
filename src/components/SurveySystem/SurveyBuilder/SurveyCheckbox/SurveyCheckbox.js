@@ -108,7 +108,8 @@ const SurveyCheckbox = ({data,parentFunction,qid,validated,savedFormData,curPart
                     key={qid.toString()+"-checkbox-option-"+index.toString()}
                     onChange={setdata}
                     required={required}
-                    defaultChecked={init?false:(savedFormData[curPart][qid].find(e => e === option)===undefined?false:true)}
+                    defaultChecked={init?false:curPart in savedFormData?
+                        (savedFormData[curPart][qid].find(e => e === option)===undefined?false:true):false}
                     />
             )
         }else return(

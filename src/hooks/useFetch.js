@@ -18,6 +18,7 @@ export default function useFetch(url){
     async function getDataFromServerAndProcess(){
         var headers={}
         setIsLoaded(true)
+
         try{
             
             if(user.token !== ''){
@@ -27,10 +28,11 @@ export default function useFetch(url){
             const { data } = await axios({
                 method: 'get',
                 url: url,
-               
                 headers:headers
             })
-            
+
+           
+                //console.log(data)
                 if(data === undefined||!("code" in data) ||!("msg" in data)){
                     alert("Response Data format have ERROR")
                 }
@@ -40,7 +42,9 @@ export default function useFetch(url){
                     setIsReady(true);
                 }else if(data.code>=400 &&data.code<500){           //404 -> Not found Error 403 -> Permission Error 401-> Validation Error 
                     if(data.code === 401){
-                        clearLoginState();  
+                        if(user.token !== ''){
+                            clearLoginState();  
+                        }
                         setErrMsg('ValidationError')
                     }else if(data.code === 402){
                         setErrMsg('PermissionError')
