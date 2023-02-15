@@ -2,9 +2,12 @@ import React, { useEffect,useContext } from "react";
 import { UserContext } from "../../../App";
 import axios from "axios";
 import { useState } from "react";
-import { Button,Tabs,Tab,Form, } from "react-bootstrap";
+import { Button,Tabs,Tab,Form, Row, Col, } from "react-bootstrap";
 import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
+import RealTimeVotingElementDict from "./RealTimeVotingElementDict";
+import RealTimeVotingResultDisplayer from "./RealTimeVotingResultDisplayer";
+import QRCode from "react-qr-code";
 
 var stompClient =null;
 //Enum
@@ -114,7 +117,7 @@ const VotingAdmin = () => {
                 //connect
                 alert("Connect Success")
                 connect();
-                subscribe();
+                
             }
     }
 
@@ -140,7 +143,7 @@ const VotingAdmin = () => {
     const connect =()=>{
         let Sock = new SockJS('http://localhost:8888/ws');
         stompClient = over(Sock);
-        stompClient.connect({token:user.token},onConnected, onError);
+        stompClient.connect({token:user.token}, onConnected, onError);
         
     }
 
@@ -161,9 +164,11 @@ const VotingAdmin = () => {
     }
 
     const subscribe = () =>{
-        stompClient.subscribe('/user/'+passCode+'/private', onPrivateMessage);
-        setRoomState({...roomState,"isSubscribe":true});
-        userJoin();
+        
+            stompClient.subscribe('/user/'+passCode+'/private', onPrivateMessage);
+            setRoomState({...roomState,"isSubscribe":true});
+            userJoin();
+        
        
        
     } 
@@ -256,8 +261,6 @@ const VotingAdmin = () => {
             }
             if(urlParams.has('surveyID')){
                 setSurveyID(urlParams.get('surveyID'))    
-            }else{
-                alert("You should go this page with the surveyID")
             }
         }
     },[])
@@ -302,15 +305,119 @@ const VotingAdmin = () => {
         )
     }
 
-    function votingControlPlatform(){
-        return( <Tab eventKey="actived" title="Voting State">
+    function QRCodeTab(){
+        //QRCode value = {votingState.passcode} size={256}
+    //style={{ height: "auto", maxWidth: "100%", width: "100%" }} viewBox={`0 0 256 256`}></QRCode>
+   
+    if(votingState.passCode!== undefined)
+   
+        return(
+            <Tab eventKey="qrcode" title="Method to join this voting">
+                
+                <Row style={{marginLeft:'auto',marginRight:'auto',width:'80%',textAlign:'center'}}>
+                    <h1>Pass code : {votingState.passcode}</h1>
+                    <QRCode value="ABCDER"  ></QRCode>
+                </Row>
+                
+            </Tab>
+        )
+    }
 
-
-
-
+    function votingStateDisplayer(){
+        return(
+            <>
+            <h3>Voting State:</h3>
+            <h4>Clien Render Method: {votingState.clientRenderMethod}</h4>
+            <h4>Current Question: {votingState.currentQuestion}</h4>
+            <h4>User State: {votingState.participantSubmit+" / "+votingState.participantJoin}</h4>
             
+            </>
+            
+        )
+
+    }
+
+    function adminControlPlatform(){
+        return(
+            
+            <Row>
+                <Col>
+                    {votingStateDisplayer()}
+                </Col>
+                <Col>
+                <h4>Admin Action : </h4> 
+                <br></br>
+                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.CLEAR)}>Clear Data</Button>
+                <br></br> <br></br>
+
+                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.SHOWRESULT)}>Show result</Button>
+                <br></br> <br></br>
+                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.NEXTQUESTION)}>Next question</Button>
+                <br></br> <br></br>
+                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.VOTINGEND)}>End Voting</Button>
+                </Col>
+            </Row>
+            
+        )
+    } 
+
+    function rendering(){
+        if(roomState.isSubscribe){
+            if(votingState.clientRenderMethod!== undefined && renderData !== {}){
+                if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.VOTING){     
+                    return(
+                        <>  
+                            <h4>User Area:</h4>
+                            <Form noValidate validated={validated}>
+                                <RealTimeVotingElementDict data={JSON.parse(renderData)} qid={votingState.currentQuestion}
+                                validated={validated} parentFunction={()=>{}} savedFormData={{}} curPart={''}/>
+                                
+                            </Form>
+                        </>
+                    
+                    )
+                }else if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.SHOWRESULT){
+                    return(
+                        <RealTimeVotingResultDisplayer data={JSON.parse(renderData)}></RealTimeVotingResultDisplayer>
+                    )
+                }
+            }
+        }
+    }
+
+    function votingControlTab(){
+        return( 
+        <Tab eventKey="votingControl" title="Voting State">
+            <Row>
+                <Col>
+                    {adminControlPlatform()}
+                </Col>
+                <Col>
+                    {rendering()}
+                </Col>
+            </Row>
+
         </Tab>)
     }
+
+    function votingControlTab2(){
+        return( 
+        <Tab eventKey="votingControl2" title="Method to join this voting">
+            
+                <Row style={{marginLeft:'auto',marginRight:'auto',width:'80%',textAlign:'center'}}>
+                    <h1>Pass code : {votingState.passcode}</h1>
+                    {votingState.passcode=== undefined?'':
+                    <QRCode value={votingState.passcode} size={256} style={{ height: "auto", maxWidth: "50%", width: "50%",marginLeft:'auto',marginRight:'auto' }} 
+                    viewBox={`0 0 256 256`}></QRCode>
+                    }
+                    
+                </Row>
+           
+
+        </Tab>)
+    }
+
+    
 
     if(passCodeReady){
        
@@ -328,7 +435,10 @@ const VotingAdmin = () => {
                 connectGroupTab():''}
 
                 {roomState.isSubscribe?
-                votingControlPlatform():''}
+                votingControlTab():''}
+
+                {roomState.isSubscribe?
+                votingControlTab2():''}
 
                
                 

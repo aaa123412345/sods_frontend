@@ -245,9 +245,7 @@ const RealTimeVotingRoom = () => {
     function rendering(){
         if(roomState.isSubscribe&&roomState.isConnect){
             if(votingState.clientRenderMethod!== undefined && renderData !== {}){
-                if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.VOTING){
-                   
-                    
+                if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.VOTING){     
                     return(
                         <>  
                             <h4>User Area:</h4>
@@ -297,7 +295,8 @@ const RealTimeVotingRoom = () => {
             <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.VOTINGEND)}>End Voting</Button>
             </>
         )
-    }  
+    } 
+     
     if(ready){
        
         return (
