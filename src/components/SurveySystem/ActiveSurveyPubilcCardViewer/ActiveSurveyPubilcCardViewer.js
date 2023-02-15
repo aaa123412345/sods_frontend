@@ -1,16 +1,15 @@
 import React from "react";
 import { Card,Col,Row } from "react-bootstrap";
-import {UserContext} from "../../../App"
-import { useContext,useEffect, useState } from "react";
-import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
-import axios from 'axios';
 
+
+import useFetch from "../../../hooks/useFetch";
 
 const ActiveSurveyPublicCardViewer = () =>{
-  const {user,clearLoginState} = useContext(UserContext)
-  const [surveyData, setSurveyData] = useState({});
-  const [ready,setReady] = useState(false);
+ 
 
+  const {items,isLoaded,ready,error,redirection} = useFetch(process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/active_survey_current")
+
+  /*
   const getAllActiveSurvey = async() =>{
     try{
         const { data } = await axios({
@@ -45,7 +44,8 @@ const ActiveSurveyPublicCardViewer = () =>{
         clearLoginState()
         alert("The survey uploading service is not avaliable at this moment")
       }
-}
+}*/
+
     function ActiveSurveyCard(element,index) {
         return (
           <Col style={{display: 'flex', justifyContent: 'center'}} key={'aspcv-card-col-'+index}>
@@ -66,16 +66,13 @@ const ActiveSurveyPublicCardViewer = () =>{
         );
     }
 
-    useEffect(()=>{
-     
-      getAllActiveSurvey()
-  },[])
+
   if(ready){
-    console.log(surveyData)
+    console.log(items)
     return(
       <>
         <Row xs={1} sm={2} md={2} xl={3} xxl={4}  className="g-1">
-          {surveyData.map((element,index)=>ActiveSurveyCard(element,index))}
+          {items.map((element,index)=>ActiveSurveyCard(element,index))}
           
         </Row>
       </>

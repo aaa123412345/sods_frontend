@@ -9,9 +9,7 @@ import { Provider } from "react-redux";
 import { store } from './redux/store'
 import Chatroom from "./components/Chatroom/Chatroom";
 import VRCanvas from "./components/VRCanvas/VRCanvas";
-import RealTimeVotingRoom from "./components/SurveySystem/RealTimeVotingSystem/RealTimeVotingRoom";
-import RealTimeVotingClient from "./components/SurveySystem/RealTimeVotingSystem/RealTimeVotingClient";
-import RealTime123 from "./components/SurveySystem/RealTimeVotingSystem/RealTime123";
+
 
 import { useState, createContext, useEffect } from "react";
 

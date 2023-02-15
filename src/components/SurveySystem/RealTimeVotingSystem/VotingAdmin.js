@@ -293,11 +293,23 @@ const VotingAdmin = () => {
     function connectGroupTab(){
         return(
             <Tab eventKey="actived" title="Group Connect">
-                    <Form.Label className="mt-2">Pass Code :</Form.Label><br></br>
+                    <Form.Label className="mt-2">Pass Code (Letter only):</Form.Label><br></br>
                     <Form.Control
                     type="text"
                     id="text"
-                    onChange={(event)=>setPassCode(event.target.value)}     
+                    style={{width:'30%'}}
+                    onChange={(event)=>{
+                        var bigStr = event.target.value.toUpperCase();
+                        setPassCode(bigStr)
+                             
+                    }}
+                    onKeyDown={(event)=>{
+                        var pressed = event.key
+                        console.log(pressed)
+                        if(!((pressed>='A'&&pressed<='Z')||(pressed>='a'&&pressed<='z')||pressed==='Backspace')){
+                            event.preventDefault();
+                        }
+                    }}
                 />
                 <Button className="mt-2" onClick={checkPasscodeAndConnect}> Connect Group</Button>
             </Tab>
@@ -305,23 +317,7 @@ const VotingAdmin = () => {
         )
     }
 
-    function QRCodeTab(){
-        //QRCode value = {votingState.passcode} size={256}
-    //style={{ height: "auto", maxWidth: "100%", width: "100%" }} viewBox={`0 0 256 256`}></QRCode>
    
-    if(votingState.passCode!== undefined)
-   
-        return(
-            <Tab eventKey="qrcode" title="Method to join this voting">
-                
-                <Row style={{marginLeft:'auto',marginRight:'auto',width:'80%',textAlign:'center'}}>
-                    <h1>Pass code : {votingState.passcode}</h1>
-                    <QRCode value="ABCDER"  ></QRCode>
-                </Row>
-                
-            </Tab>
-        )
-    }
 
     function votingStateDisplayer(){
         return(

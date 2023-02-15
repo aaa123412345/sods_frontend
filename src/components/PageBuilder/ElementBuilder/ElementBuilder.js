@@ -11,11 +11,12 @@ import LoginPage from "../../LoginSystem/LoginPage";
 import SurveyManager from "../../SurveySystem/SurverManager/SurveyManager";
 import ActiveSurveyConfigPanel from "../../SurveySystem/ActiveSurveyConfigPanel/ActiveSurveyConfigPanel";
 import ActiveSurveyManager from "../../SurveySystem/ActiveSurverManager/ActiveSurveyManager";
-import ActiveSurveyPublicCardViewer from "../../SurveySystem/ActiveSurveyPubilcCardViewer/ActiveSurveyPubilcCardViewer";
+
 import SurveyLoader from "../../SurveySystem/SurveyLoader";
 import VotingAdmin from "../../SurveySystem/RealTimeVotingSystem/VotingAdmin";
 import VotingClient from "../../SurveySystem/RealTimeVotingSystem/VotingClient";
 import VotingSelector from "../../SurveySystem/RealTimeVotingSystem/VotingSelector";
+import PublicSurveyJoiner from "../../SurveySystem/PublicSurveyJoiner/PublicSurveyJoiner";
 
 const Components = {
   ctext: CText,
@@ -29,7 +30,7 @@ const Components = {
   surveymanager:SurveyManager,
   activeSurveyConfigPanel:ActiveSurveyConfigPanel,
   activeSurveyManager:ActiveSurveyManager,
-  activeSurveyPublicCardViewer:ActiveSurveyPublicCardViewer,
+  activeSurveyPublicCardViewer:PublicSurveyJoiner,
   survey:SurveyLoader,
   votingAdmin:VotingAdmin,
   votingClient:VotingClient,
