@@ -17,6 +17,7 @@ import VotingAdmin from "../../SurveySystem/RealTimeVotingSystem/VotingAdmin";
 import VotingClient from "../../SurveySystem/RealTimeVotingSystem/VotingClient";
 import VotingSelector from "../../SurveySystem/RealTimeVotingSystem/VotingSelector";
 import PublicSurveyJoiner from "../../SurveySystem/PublicSurveyJoiner/PublicSurveyJoiner";
+import LogoutPage from "../../LoginSystem/LogoutPage";
 
 const Components = {
   ctext: CText,
@@ -35,6 +36,7 @@ const Components = {
   votingAdmin:VotingAdmin,
   votingClient:VotingClient,
   votingSelector:VotingSelector,
+  logoutPage:LogoutPage
 };
 
 export default block => {

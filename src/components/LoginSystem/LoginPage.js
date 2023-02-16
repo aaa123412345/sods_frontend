@@ -2,14 +2,14 @@
   import {Form,Button,Row,InputGroup} from 'react-bootstrap';
   import { faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-  import axios from 'axios';
-  import jsonExtractor from '../Common/RESTjsonextract/RESTjsonextract';
+
   import { Navigate } from 'react-router-dom';
  
 
 
 
   import {UserContext} from '../../App.js'
+  import useSendRequest from '../../hooks/useSendRequest';
 
   const LoginPageStyle = {
     color:"black",
@@ -25,9 +25,11 @@
     const [psw,setPsw] = useState('')
     const [userName,setUserName] = useState('')
     const [saveLogin,setSaveLogin] = useState(false)
-
-
     const {user,setUserContext} = useContext(UserContext)
+
+
+    const [hookActive,setHookActive] = useState(false)
+    const login = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/login','post',{userName:userName,password:psw},hookActive)
 
 
     const handleSubmit = (event) => {
@@ -37,8 +39,8 @@
         
           alert("Invalid Format of User Name or Password")
       }else{
+          setHookActive(true)
           
-          postLogin({userName:userName,password:psw})
       }
     };
 
@@ -56,38 +58,29 @@
       localStorage.setItem('sods_fyp_ck',checkKey);
   }
 
-    const postLogin = async (cdata) => {
-      try{
-        const { data } = await axios({
-          method: 'post',
-          url: process.env.REACT_APP_USER_SYSTEM_HOST+'/login',
-          data: cdata
-        })
-       
-        var rest = jsonExtractor(data);
-        if(rest.response === "success"){
-          
-          setUserContext(rest.data)
-          alert("Welcome !")
-          storeInLocal(rest.data)
-          
-        }else if (rest.response === "undefineerror"){
-          
-          alert("The service is not avaliable. Please try to login later")
-        }else{
-          
-          alert("Account or Password error")
+  
+    useEffect(()=>{
+      if(!login.isLoaded){
+        if(login.ready){
+          alert("Welcome")
+          setUserContext(login.items)
+          storeInLocal(login.items)
+        }else if(login.errMsg!==''){
+          if(hookActive){
+            alert(login.errMsg)
+            setHookActive(false)
+          }
+        
         }
-      }catch (error){
-       
-        alert("The login service is not avaliable at this moment")
       }
-    };
+    }
+      ,[login])
 
     
 
     return(
       <>
+       {login.ready?<Navigate to="/public/eng/about"></Navigate>:''}
        {user.userType === ''?'':<Navigate replace to="/public/eng/about" />}
         <Row style={LoginPageStyle} className="mt-4">
           <Form>

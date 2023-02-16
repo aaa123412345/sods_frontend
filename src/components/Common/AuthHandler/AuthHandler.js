@@ -11,9 +11,15 @@ const AuthHandler = (requirePermission,user) =>{
             return true;
         }else{
             return false;
-        }
-            
+        }      
     } 
+    if(requirePermission === 'authenticated'){
+        if(user.userType === ''){
+            return false;
+        }else{
+            return true;
+        } 
+    }
     //if user is system root, user can use any api
     if(user.rolePermission.find(element => element === "system:root") !== undefined) return true;
 
