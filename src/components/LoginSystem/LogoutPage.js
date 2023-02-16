@@ -3,6 +3,7 @@ import {UserContext} from '../../App'
 import useSendRequest from "../../hooks/useSendRequest";
 import { Navigate } from 'react-router-dom';
 
+
 const LogoutPage = () => {
 const {user,clearLoginState} = useContext(UserContext)
 const [hookActive,setHookActive] = useState(false)

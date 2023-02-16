@@ -1,45 +1,54 @@
   import React, {useState, useContext, useEffect} from 'react';
-  import {Form,Button,Row,InputGroup} from 'react-bootstrap';
-  import { faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
-  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
   import { Navigate } from 'react-router-dom';
- 
-
-
-
   import {UserContext} from '../../App.js'
   import useSendRequest from '../../hooks/useSendRequest';
+  import LoginForm from './LoginForm.js';
+  import RegisterForm from './RegisterForm.js';
+  import { Tab, Tabs } from "react-bootstrap";
 
-  const LoginPageStyle = {
-    color:"black",
-    width:"90%",
-    marginLeft:"auto",
-    marginRight:"auto",
-    border:"solid black",
-    borderRadius: "25px"
-  }
 
   const LoginPage = () =>{
-    const [showPsw,setShowPsw] = useState(false)
-    const [psw,setPsw] = useState('')
-    const [userName,setUserName] = useState('')
-    const [saveLogin,setSaveLogin] = useState(false)
     const {user,setUserContext} = useContext(UserContext)
 
+    //Login
+    const [loginDict,setLoginDict] = useState({userName:"",password:"",showPassword:false,remember:false})
 
-    const [hookActive,setHookActive] = useState(false)
-    const login = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/login','post',{userName:userName,password:psw},hookActive)
+    //Register
+    const [registerDict,setRegisterDict] = useState({userName:"",password:"",showPassword:false,remember:false})
+
+    //Hook
+    const [hookState, setHookState] = useState({
+      loginActive:false,
+      registerActive:false,
+    })
+    const login = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/login'
+    ,'get',loginDict,hookState.loginActive)
+    const register = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/register'
+    ,'post',registerDict,hookState.registerActive)
 
 
-    const handleSubmit = (event) => {
+    const handleLoginSubmit = (event) => {
       const form = event.currentTarget;
      
-      if (userName===""||psw==='') {
+      if (loginDict.userName===""||loginDict.password==='') {
         
           alert("Invalid Format of User Name or Password")
       }else{
-          setHookActive(true)
+        setHookState({...hookState,loginActive:true})
+          
+      }
+    };
+
+    const handleRegisterSubmit = (event) => {
+      const form = event.currentTarget;
+     
+      if (registerDict.userName===""||registerDict.password==='') {
+        
+          alert("Invalid Format of User Name or Password")
+      }else{
+        setHookState({...hookState,registerActive:true})
           
       }
     };
@@ -57,18 +66,19 @@
       localStorage.setItem('sods_fyp_ut', userType);
       localStorage.setItem('sods_fyp_ck',checkKey);
   }
+  
 
   
     useEffect(()=>{
       if(!login.isLoaded){
         if(login.ready){
-          alert("Welcome")
-          setUserContext(login.items)
-          storeInLocal(login.items)
+            alert("Welcome")
+            setUserContext(login.items)
+            storeInLocal(login.items)
         }else if(login.errMsg!==''){
-          if(hookActive){
+          if(hookState.loginActive){
             alert(login.errMsg)
-            setHookActive(false)
+            setHookState({...hookState,loginActive:false})
           }
         
         }
@@ -76,47 +86,49 @@
     }
       ,[login])
 
+      useEffect(()=>{
+        if(!register.isLoaded){
+          if(register.ready){
+              
+              if(hookState.registerActive){
+                alert("Registered. Please login again")
+
+                window.location.reload();
+              }
+             
+          }else if(register.errMsg!==''){
+            if(hookState.registerActive){
+              alert(register.errMsg)
+              setHookState({...hookState,registerActive:false})
+            }
+          
+          }
+        }
+      }
+        ,[register])
+
     
 
     return(
       <>
        {login.ready?<Navigate to="/public/eng/about"></Navigate>:''}
        {user.userType === ''?'':<Navigate replace to="/public/eng/about" />}
-        <Row style={LoginPageStyle} className="mt-4">
-          <Form>
-            <Form.Group className="mb-3 mt-4" controlId="formBasicName" style={{width:'80%'}}>
-              <Form.Label>User Name</Form.Label>
-              <Form.Control type="text" placeholder="User Name" onChange={(e)=>setUserName(e.target.value)}/>
-              
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword" style={{width:'80%'}}>
-            <Form.Label>Password</Form.Label>
-              <InputGroup className="mb-3">
-                <Form.Control
-                  placeholder="Password"
-                  aria-label="Password"
-                  aria-describedby="basic-addon2"
-                  type={showPsw?'text':'password'}
-                  onChange={(e)=>setPsw(e.target.value)}
-                  
-                />
-                <Button variant="outline-secondary" id="button-addon2" onClick={()=>setShowPsw(!showPsw)}>
-                  {showPsw?<FontAwesomeIcon icon={faEyeSlash}></FontAwesomeIcon>:
-                  <FontAwesomeIcon icon={faEye}></FontAwesomeIcon>
-                  }
-                </Button>
-              </InputGroup>
-            </Form.Group>
-          
-            
-            <Form.Group className="mb-3" controlId="formBasicCheckbox" style={{width:'80%'}}>
-              <Form.Check type="checkbox" label="Remember" onChange={()=>setSaveLogin(!saveLogin)}/>
-            </Form.Group>
-            <Button variant="primary" className='mb-3' onClick={handleSubmit}>
-              Login
-            </Button>
-          </Form>
-        </Row>
+       <Tabs
+                defaultActiveKey="login"
+                id="uncontrolled-tab-example"
+                className="mb-3"
+            >
+            <Tab eventKey="login" title="Login">
+                <LoginForm setDictUP={setLoginDict} dict={loginDict} handleSubmit={handleLoginSubmit}></LoginForm>
+            </Tab>
+            <Tab eventKey="register" title="Register">
+                <RegisterForm setDictUP={setRegisterDict} dict={registerDict} handleSubmit={handleRegisterSubmit}></RegisterForm>
+            </Tab>
+
+
+        </Tabs>
+        
+
       </>
     )
   }
