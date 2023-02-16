@@ -304,12 +304,12 @@ const VotingAdmin = () => {
                              
                     }}
                     onKeyDown={(event)=>{
-                        var pressed = event.key
-                        console.log(pressed)
+                        var pressed = event.key               
                         if(!((pressed>='A'&&pressed<='Z')||(pressed>='a'&&pressed<='z')||pressed==='Backspace')){
                             event.preventDefault();
                         }
                     }}
+                    onInput={(e)=>{e.target.value = ("" + e.target.value).toUpperCase();}}
                 />
                 <Button className="mt-2" onClick={checkPasscodeAndConnect}> Connect Group</Button>
             </Tab>

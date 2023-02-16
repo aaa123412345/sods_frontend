@@ -30,11 +30,11 @@ const Components = {
   surveymanager:SurveyManager,
   activeSurveyConfigPanel:ActiveSurveyConfigPanel,
   activeSurveyManager:ActiveSurveyManager,
-  activeSurveyPublicCardViewer:PublicSurveyJoiner,
+  surveyUserJoiner:PublicSurveyJoiner,
   survey:SurveyLoader,
   votingAdmin:VotingAdmin,
   votingClient:VotingClient,
-  votingSelector:VotingSelector
+  votingSelector:VotingSelector,
 };
 
 export default block => {
