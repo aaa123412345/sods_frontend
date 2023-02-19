@@ -14,8 +14,7 @@ export default function useSendRequest(url,method,tdata,active){
     useEffect(()=>{
         
         if(active){
-            
-             getDataFromServerAndProcess()
+            getDataFromServerAndProcess()
         }
        
     },[url,active])

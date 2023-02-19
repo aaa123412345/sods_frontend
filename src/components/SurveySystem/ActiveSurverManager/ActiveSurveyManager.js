@@ -53,13 +53,7 @@ const ActiveSurveyManager = (props) => {
           }
     }
 
-    function deleteSurvey(surveyid){
-
-    }
-    
-    function checkSurveyWithEditor(surveyid){
-
-    }
+   
 
     useEffect(()=>{getAllSurvey()},[])
 

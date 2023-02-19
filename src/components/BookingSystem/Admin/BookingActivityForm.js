@@ -34,7 +34,8 @@ const BookingActivityForm = ({setDictUP,dict,handleSubmit}) =>{
                 <Form.Control
                     type="text"
                     id="text-location"
-                    onChange={(e)=>setDict("location",e.target.value)}                                
+                    onChange={(e)=>setDict("location",e.target.value)}  
+                    defaultValue = {dict.location === undefined?'':dict.location}                              
                 />
 
                 <Form.Label className="mt-2">Activity Information</Form.Label>
@@ -43,16 +44,28 @@ const BookingActivityForm = ({setDictUP,dict,handleSubmit}) =>{
                     id="text-information"
                     as="textarea"
                     rows={4}
-                    onChange={(e)=>setDict("information",e.target.value)}                                
+                    onChange={(e)=>setDict("information",e.target.value)}
+                    defaultValue = {dict.information === undefined?'':dict.information}                                 
+                /><br></br>
+
+                <Form.Label className="mt-2">Quote</Form.Label>
+                <Form.Control
+                    type="number"
+                    id="text-quote"
+                    onChange={(e)=>setDict("maxQuote",e.target.value)}
+                    defaultValue = {dict.maxQuote === undefined?'':dict.maxQuote}                                 
                 /><br></br>
 
                 <label >Start (date and time):</label><br></br>
                 <input type="datetime-local" id="starttime" name="starttime" 
-                onChange={(e)=>setDict("startTime",e.target.value)}></input><br></br><br></br>
+                onChange={(e)=>setDict("startTime",e.target.value)}
+                defaultValue = {dict.startTime === undefined?'':dict.startTime}
+                ></input><br></br><br></br>
 
                 <label >End  (date and time):</label><br></br>
                 <input type="datetime-local" id="endtime" name="endtime" 
-                onChange={(e)=>setDict("endTime",e.target.value)}></input> <br></br><br></br>
+                onChange={(e)=>setDict("endTime",e.target.value)}
+                defaultValue = {dict.endTime === undefined?'':dict.endTime}></input> <br></br><br></br>
           
                 <Button onClick={handleSubmit}> Upload </Button><br></br><br></br>
             
