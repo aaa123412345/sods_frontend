@@ -7,6 +7,7 @@ import CVideo from "../../Common/LayoutElement/CVideo/CVideo";
 import SurveyEditor from "../../SurveySystem/SurverEditor/SurverEditor";
 import CResposiveTable from "../../Common/LayoutElement/CResposiveTable/CResposiveTable";
 import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
+import ARTreasureEditor from "../../ARTreasureEditor/ARTreasureEditor";
 import LoginPage from "../../LoginSystem/LoginPage";
 import SurveyManager from "../../SurveySystem/SurverManager/SurveyManager";
 import ActiveSurveyConfigPanel from "../../SurveySystem/ActiveSurveyConfigPanel/ActiveSurveyConfigPanel";
@@ -25,6 +26,7 @@ const Components = {
   cvideo: CVideo,
   cmultipletext: CMultipleText,
   ctourguide: TourGuideCanvas,
+  cartreasureeditor: ARTreasureEditor,
   surveyeditor: SurveyEditor,
   crestable:CResposiveTable,
   cloginpage:LoginPage,
