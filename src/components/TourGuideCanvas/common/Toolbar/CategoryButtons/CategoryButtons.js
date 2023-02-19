@@ -14,6 +14,7 @@ import CustomButton from '../../EditorButton/CustomButton';
 import useSessionStorage from '../../../../../hooks/useSessionStorage';
 import { updatePage } from '../../../../../redux/tourguide/tourguide.action';
 import { langGetter } from '../../../../../helpers/langGetter';
+import Options from '../../Options/Options';
 
 const CategoryButtons = (props) => {
 
@@ -38,42 +39,42 @@ const CategoryButtons = (props) => {
     //     dispatch(updatePage(pageSession))
     // },[])
 
-    const OptionBar = (props) => {
+    // const OptionBar = (props) => {
 
-        const TriggerButton = () => {
-            return (
-                <PopoverTrigger>
-                    <Button w="45px" h="45px" borderRadius={50} variant="gray">
-                        <FontAwesomeIcon icon={faEllipsisV} />
-                    </Button>
-                </PopoverTrigger>
-            )
-        }
+    //     const TriggerButton = () => {
+    //         return (
+    //             <PopoverTrigger>
+    //                 <Button w="45px" h="45px" borderRadius={50} variant="gray">
+    //                     <FontAwesomeIcon icon={faEllipsisV} />
+    //                 </Button>
+    //             </PopoverTrigger>
+    //         )
+    //     }
 
-        const Options= (OptionList) => {
-            return (
-                <PopoverContent w="100%" h="fit-content" bg="transparent" borderColor="transparent" boxShadow='none'>
-                {
-                    optionList.map((option, index)=>{
+    //     const Options= (OptionList) => {
+    //         return (
+    //             <PopoverContent w="100%" h="fit-content" bg="transparent" borderColor="transparent" boxShadow='none'>
+    //             {
+    //                 optionList.map((option, index)=>{
 
-                        return React.createElement(CustomButton, {
-                            key: index, 
-                            ...option      
-                        })
-                    })
-                }
-                </PopoverContent>
-            )
-        }
+    //                     return React.createElement(CustomButton, {
+    //                         key: index, 
+    //                         ...option      
+    //                     })
+    //                 })
+    //             }
+    //             </PopoverContent>
+    //         )
+    //     }
 
-        return (
-            <Popover>
-                <TriggerButton />
-                <Options optionList={props.optionList} />
-            </Popover>
-        )
+    //     return (
+    //         <Popover>
+    //             <TriggerButton />
+    //             <Options optionList={props.optionList} />
+    //         </Popover>
+    //     )
 
-    }
+    // }
 
     const CategoryBar = (props) => {
         
@@ -99,7 +100,8 @@ const CategoryButtons = (props) => {
     return (
 
         <Flex alignItems="center" minH="50px">
-            <OptionBar optionList={optionList} />
+            <Options buttons={optionList} />
+            {/* <OptionBar optionList={optionList} /> */}
             {categoryList !== undefined && heading === undefined && <CategoryBar categoryList={categoryList} />}
             {heading !== undefined && <Heading ml="1em" size={'lg'}>{heading}</Heading>}
         </Flex>

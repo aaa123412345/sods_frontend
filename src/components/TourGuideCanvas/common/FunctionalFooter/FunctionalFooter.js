@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -8,10 +8,11 @@ import { useDispatch, connect } from 'react-redux'
 import { resetData } from '../../../../redux/form/form.action'
 import { closeModal } from '../../../../redux/modal/modal.action'
 import { toast_generator } from '../../../../helpers/toastGenerator'
-import { submitLabel } from '../../../../constants/constants'
+import { submitLabel, tourHost } from '../../../../constants/constants'
 import { useTranslation } from 'react-i18next'
 import { conforms } from 'lodash'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
+import { UserContext } from '../../../../App'
 
 const FunctionalFooter = (props) => {
 
@@ -27,9 +28,17 @@ const FunctionalFooter = (props) => {
 
     // chakra hooks
     const toast = useToast({duration: 3000, isClosable: true})
+    
+    const { user } = useContext(UserContext)
 
     const [modalSession, setModalSession] = useSessionStorage('modal', modal)
     const [canSubmit, setCanSubmit] = useState(false)
+
+    const config = {
+        headers: {
+            token: user.token
+        }
+    }
 
     const check_validation = (data) => {
 
@@ -92,19 +101,12 @@ const FunctionalFooter = (props) => {
     const handle_create = () => {
 
         let data = form[name]
-        let extraPath = ""
+        let extraPath = path === 'booths' ? `markers/${form['marker'].y}/${form['marker'].x}/${form['marker'].floorID}/`:"/"     
 
-        let formData = new FormData()
-        formData.append(name, JSON.stringify({...data}))
-        formData.append("image", file)
+        let url = tourHost+extraPath+path
+        console.log(url)
 
-        if(path === "booths")
-            extraPath = `markers/${form['marker'].floorID}/${form['marker'].y}/${form['marker'].x}/tourguide-`            
-
-        let url = host+extraPath+path
-
-        console.log("formData: ", formData)
-        axios.post(url, formData)
+        axios.post(url, data, config)
         .then((res)=>{toast(toast_generator(t("tourguide.created"), t(`tourguide.${name}`)))})
         .catch(err=>{console.log(err.message); toast(toast_generator())})
 

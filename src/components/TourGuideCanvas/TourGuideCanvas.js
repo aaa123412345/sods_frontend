@@ -15,6 +15,7 @@ import LoadingSpinner from './common/LoadingSpinner/LoadingSpinner'
 import { tourHost } from '../../constants/constants'
 import { updateFloorplans, updateStories, updateBooths, updateMarkers, updateLoadingItem, clearLoadingItem } from '../../redux/tourguide/tourguide.action'
 import BoothPage from './BoothPage/BoothPage'
+import EditorModal from './common/EditorModal/EditorModal'
 
 const TourGuideCanvas = (props) => {
 
@@ -76,7 +77,7 @@ const TourGuideCanvas = (props) => {
 
         setError(null)
         setIsLoading(true)
-        
+    
         Promise.all([
             get_data("floorplans", (data) => updateFloorplans(data)),
             get_data("booths", (data) => updateBooths(data)),
@@ -94,7 +95,7 @@ const TourGuideCanvas = (props) => {
     useEffect(()=>{
         // redirect case
         if(path === 'tourguide' && (subpath === null || subpath === "" || subpath === undefined))
-            navigate(`/public/${lang}/tourguide/${isAdmin?"editor":"floorplans"}`)
+            navigate(`/${isAdmin ? "server" : "public"}/${lang}/tourguide/${isAdmin ? "editor" : "floorplans"}`)
     }, [subpath])
 
     if(error)
@@ -105,6 +106,7 @@ const TourGuideCanvas = (props) => {
         <Wrapper isUseChakra isUseContainer>
             {(() => render_layout())()}
             <QRCodeModal />
+            <EditorModal />
         </Wrapper>
 
     )

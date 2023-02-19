@@ -12,9 +12,7 @@ export const booth = {
     venueZH: "", 
     venueEN: "",
     descriptionZH: "", 
-    descriptionEN: "",
-    speechEN: "",
-    speechZH: ""
+    descriptionEN: ""
 }
 
 export const vr = {

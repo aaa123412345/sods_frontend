@@ -21,21 +21,21 @@ const LeftPanel = (props) => {
   const dataDictionary = {
     floorplans: {
       dataName: 'floorplans', 
-      modalIndex: 0,
+      modalName: "floorplan",
       heading: t('tourguideEditor.region'),
       path: "floorplans",
       name: "floorplan"
     }, 
     booths: {
       dataName: 'floorplans', 
-      modalIndex: 0,
+      modalName: "floorplan",
       heading: t('tourguideEditor.region'),
       path: "floorplans",
       name: "floorplan"
     },
     stories: {
       dataName: 'stories',
-      modalIndex: 4, 
+      modalName: "story", 
       heading: t('tourguideEditor.cover-story'),
       path: "story",
       name: "story"
@@ -47,7 +47,7 @@ const LeftPanel = (props) => {
 
       <ItemList isCategoryList type={0} 
         dataName={dataDictionary[subsubpath]?.dataName}
-        modalIndex={dataDictionary[subsubpath]?.modalIndex}
+        modalName={dataDictionary[subsubpath]?.modalName}
         heading={dataDictionary[subsubpath]?.heading}
         path={dataDictionary[subsubpath]?.path}
         name={dataDictionary[subsubpath]?.name} />
