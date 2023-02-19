@@ -2,12 +2,13 @@ import React from "react";
 import {Table,Row,Col} from 'react-bootstrap';
 import { Link } from "react-router-dom"; 
 
-import useFetch from "../../../hooks/useFetch";
+import useSendRequest from "../../../hooks/useSendRequest";
 
 const SurveyTable = (props) => {
     
-    const {items,isLoaded,ready,error,redirection} = useFetch(process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey')
 
+    const {items,isLoaded,ready,error,redirection} = 
+    useSendRequest(process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey','get',{},true)
    
     if (error) {
         console.log("Error")

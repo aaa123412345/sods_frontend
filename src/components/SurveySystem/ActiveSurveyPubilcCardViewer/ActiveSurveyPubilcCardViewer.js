@@ -2,12 +2,13 @@ import React from "react";
 import { Card,Col,Row } from "react-bootstrap";
 
 
-import useFetch from "../../../hooks/useFetch";
+import useSendRequest from "../../../hooks/useSendRequest";
 
 const ActiveSurveyPublicCardViewer = () =>{
  
 
-  const {items,isLoaded,ready,error,redirection} = useFetch(process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/active_survey_current")
+  const {items,isLoaded,ready,error,redirection} = 
+  useSendRequest(process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/active_survey_current",'get',{},true)
 
   /*
   const getAllActiveSurvey = async() =>{

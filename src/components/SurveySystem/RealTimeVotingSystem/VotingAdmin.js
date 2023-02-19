@@ -141,7 +141,7 @@ const VotingAdmin = () => {
     */
 
     const connect =()=>{
-        let Sock = new SockJS('http://localhost:8888/ws');
+        let Sock = new SockJS(process.env.REACT_APP_WEBSOCKET_HOST);
         stompClient = over(Sock);
         stompClient.connect({token:user.token}, onConnected, onError);
         

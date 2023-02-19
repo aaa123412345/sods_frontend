@@ -49,9 +49,12 @@ export default function useSendRequest(url,method,tdata,active){
                 }else if(data.code>=400 &&data.code<500){           //404 -> Not found Error 403 -> Permission Error 401-> Validation Error 
                     if(data.code === 401){
                         if(user.token !== ''){
+                            alert("Your token have error")
                             clearLoginState();  
+
                         }
                         setErrMsg('ValidationError')
+                        
                     }else if(data.code === 402){
                         setErrMsg('PermissionError')
                     }else if(data.code === 404){

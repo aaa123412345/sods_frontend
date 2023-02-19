@@ -8,12 +8,12 @@ import SurveyBuilder from "../SurveyBuilder/SurveyBuilder";
 import { Form,Button } from "react-bootstrap";
 
 import { Navigate } from 'react-router-dom';
+import useSendRequest from "../../../hooks/useSendRequest";
 
 const ActiveSurveyConfigPanel = (props) => {
 
     const {user,clearLoginState} = useContext(UserContext)
-   
-    const [ready,setReady] = useState(false);
+    const [ready,setReady] = useState(false)
     const [mode,setMode] = useState('create');
     const [activeID,setActiveID] = useState('');
     const [surveyData, setSurveyData] = useState({});
@@ -24,7 +24,8 @@ const ActiveSurveyConfigPanel = (props) => {
 
     const [userConfigData, setUserConfigData] = useState(
         {surveyId:'',startTime:'',endTime:'',information:'',allowAnonymous:false,allowPublicSearch:false})
-
+    
+ 
    
 
     const getAllSurvey = async() =>{
@@ -219,56 +220,57 @@ const ActiveSurveyConfigPanel = (props) => {
         return(<Navigate replace to={"/server/"+props.lang+"/surveymanager"} />)
     }
     else if(ready){
-       
-        return(
-            <Row>
-                <Col xs='12' md='6'>
-                    {surveySelector(surveyData)}
-                        <Form.Label className="mt-2">Active Information</Form.Label>
-                        <Form.Control
-                            type="text"
-                            id="text"
-                            as="textarea"
-                            rows={4}
-                            onChange={setInformation}
-                            defaultValue={mode==='update'?userConfigData.information:''}
-                            
-                        /><br></br><br></br>
-                    <label >Start (date and time):</label>
-                    <input type="datetime-local" id="starttime" name="starttime"
-                     onChange={setStartTime} defaultValue={mode==='update'?userConfigData.startTime:''}></input><br></br><br></br>
-                    <label >End (date and time):</label>
-                    <input type="datetime-local" id="endtime" name="endtime" onChange={setEndTime}
-                    defaultValue={mode==='update'?userConfigData.endTime:''}></input> <br></br><br></br>
-                    
-                    <Form.Check 
-                        type='checkbox'     
-                        id='ASCP-checkbox-1'   
-                        label='Allow Anonymous?'
-                        key='ASCP-checkbox-1'
-                        onChange={setAllowAnonymous}
-                        defaultChecked={mode==='update'?userConfigData.allowAnonymous:false}
-                    />
+        
+            return(
+                <Row>
+                    <Col xs='12' md='6'>
+                        {surveySelector(surveyData)}
+                            <Form.Label className="mt-2">Active Information</Form.Label>
+                            <Form.Control
+                                type="text"
+                                id="text"
+                                as="textarea"
+                                rows={4}
+                                onChange={setInformation}
+                                defaultValue={mode==='update'?userConfigData.information:''}
+                                
+                            /><br></br><br></br>
+                        <label >Start (date and time):</label>
+                        <input type="datetime-local" id="starttime" name="starttime"
+                        onChange={setStartTime} defaultValue={mode==='update'?userConfigData.startTime:''}></input><br></br><br></br>
+                        <label >End (date and time):</label>
+                        <input type="datetime-local" id="endtime" name="endtime" onChange={setEndTime}
+                        defaultValue={mode==='update'?userConfigData.endTime:''}></input> <br></br><br></br>
+                        
                         <Form.Check 
-                        type='checkbox'
-                        id='ASCP-checkbox-2'   
-                        label='Allow Public Search'
-                        key='ASCP-checkbox-2'
-                        onChange={setAllowPublicSearch}
-                        defaultChecked={mode==='update'?userConfigData.allowPublicSearch:false}
-                    />
+                            type='checkbox'     
+                            id='ASCP-checkbox-1'   
+                            label='Allow Anonymous?'
+                            key='ASCP-checkbox-1'
+                            onChange={setAllowAnonymous}
+                            defaultChecked={mode==='update'?userConfigData.allowAnonymous:false}
+                        />
+                            <Form.Check 
+                            type='checkbox'
+                            id='ASCP-checkbox-2'   
+                            label='Allow Public Search'
+                            key='ASCP-checkbox-2'
+                            onChange={setAllowPublicSearch}
+                            defaultChecked={mode==='update'?userConfigData.allowPublicSearch:false}
+                        />
 
-                    <Button onClick={checkAndSubmit}>Submit</Button>
-                </Col>
-                <Col xs='12' md='6' style={{backgroundColor:'lightgray'}}>
-                {seletedSurvey === ''?
-                '':
-                <SurveyBuilder data={JSON.parse(surveyData.find(e=>e.surveyId === seletedSurvey).surveyFormat)} testMode={true}></SurveyBuilder>
-                    }
-                </Col>
-            </Row>
-        )
-        //<SurveyBuilder data={JSON.parse(surveyData.find(e=>e.surveyId === seletedSurvey).surveyFormat} testMode={true}></SurveyBuilder>
+                        <Button onClick={checkAndSubmit}>Submit</Button>
+                    </Col>
+                    <Col xs='12' md='6' style={{backgroundColor:'lightgray'}}>
+                    {seletedSurvey === ''?
+                    '':
+                    <SurveyBuilder data={JSON.parse(surveyData.find(e=>e.surveyId === seletedSurvey).surveyFormat)} testMode={true}></SurveyBuilder>
+                        }
+                    </Col>
+                </Row>
+            )
+        
+       
     }
 }
 

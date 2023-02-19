@@ -24,7 +24,7 @@
       registerActive:false,
     })
     const login = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/login'
-    ,'get',loginDict,hookState.loginActive)
+    ,'post',loginDict,hookState.loginActive)
     const register = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/register'
     ,'post',registerDict,hookState.registerActive)
 

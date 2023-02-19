@@ -8,13 +8,13 @@ import PublicNavbar from "../../PublicSite/PublicNavbar/PublicNavbar";
 import ServerNavbar from "../../ServerSite/ServerNavbar/ServerNavbar";
 
 
-import useFetch from "../../../hooks/useFetch";
+import useSendRequest from "../../../hooks/useSendRequest";
 
 
 
 
 const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
-    const {items,isLoaded,ready,error,redirection} = useFetch(host+lang+'/'+path)
+    const {items,isLoaded,ready,error,redirection} = useSendRequest(host+lang+'/'+path,'get',{},true)
 
       if (error) {
         console.log("Error")

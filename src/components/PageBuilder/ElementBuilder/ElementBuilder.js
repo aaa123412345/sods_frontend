@@ -3,21 +3,29 @@ import CImage from "../../Common/LayoutElement/CImage/CImage";
 import CMultipleText from "../../Common/LayoutElement/CMultipleText/CMultipleText";
 import CText from "../../Common/LayoutElement/CText/CText";
 import CVideo from "../../Common/LayoutElement/CVideo/CVideo";
+import CResposiveTable from "../../Common/LayoutElement/CResposiveTable/CResposiveTable";
+
+//Special Component
+import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
+
+import LoginPage from "../../LoginSystem/LoginPage";
+import LogoutPage from "../../LoginSystem/LogoutPage";
 
 import SurveyEditor from "../../SurveySystem/SurverEditor/SurverEditor";
-import CResposiveTable from "../../Common/LayoutElement/CResposiveTable/CResposiveTable";
-import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
-import LoginPage from "../../LoginSystem/LoginPage";
 import SurveyManager from "../../SurveySystem/SurverManager/SurveyManager";
+import SurveyLoader from "../../SurveySystem/SurveyLoader";
 import ActiveSurveyConfigPanel from "../../SurveySystem/ActiveSurveyConfigPanel/ActiveSurveyConfigPanel";
 import ActiveSurveyManager from "../../SurveySystem/ActiveSurverManager/ActiveSurveyManager";
+import PublicSurveyJoiner from "../../SurveySystem/PublicSurveyJoiner/PublicSurveyJoiner";
 
-import SurveyLoader from "../../SurveySystem/SurveyLoader";
 import VotingAdmin from "../../SurveySystem/RealTimeVotingSystem/VotingAdmin";
 import VotingClient from "../../SurveySystem/RealTimeVotingSystem/VotingClient";
 import VotingSelector from "../../SurveySystem/RealTimeVotingSystem/VotingSelector";
-import PublicSurveyJoiner from "../../SurveySystem/PublicSurveyJoiner/PublicSurveyJoiner";
-import LogoutPage from "../../LoginSystem/LogoutPage";
+
+import BookingActivityEditor from "../../BookingSystem/Admin/BookingActivityEditor";
+import BookingAdminManager from "../../BookingSystem/Admin/BookingAdminManager";
+import BookingClientManager from "../../BookingSystem/Client/BookingClientManager";
+
 
 const Components = {
   ctext: CText,
@@ -25,18 +33,26 @@ const Components = {
   cvideo: CVideo,
   cmultipletext: CMultipleText,
   ctourguide: TourGuideCanvas,
-  surveyeditor: SurveyEditor,
   crestable:CResposiveTable,
+
   cloginpage:LoginPage,
+  logoutPage:LogoutPage,
+
+  surveyUserJoiner:PublicSurveyJoiner,
+  survey:SurveyLoader,
+  surveyeditor: SurveyEditor,
   surveymanager:SurveyManager,
   activeSurveyConfigPanel:ActiveSurveyConfigPanel,
   activeSurveyManager:ActiveSurveyManager,
-  surveyUserJoiner:PublicSurveyJoiner,
-  survey:SurveyLoader,
+  
   votingAdmin:VotingAdmin,
   votingClient:VotingClient,
   votingSelector:VotingSelector,
-  logoutPage:LogoutPage
+  
+  bookingActivityEditor:BookingActivityEditor,
+  bookingAdminManager:BookingAdminManager,
+  bookingClientManager:BookingClientManager,
+  
 };
 
 export default block => {
