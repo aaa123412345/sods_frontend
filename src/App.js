@@ -12,6 +12,7 @@ import VRCanvas from "./components/VRCanvas/VRCanvas";
 
 
 import { useState, createContext, useEffect } from "react";
+import ARCanvas from "./components/ARCanvas/ARCanvas";
 
 
 export const UserContext = createContext()
@@ -117,6 +118,7 @@ function App() {
                                 
                             <Route>
                                
+                                <Route path="/public/:lang/ar-treasure/:id" element={<ARCanvas/>}></Route>
                                 <Route path="/public/:lang/tourguide-vr/:id" element={<VRCanvas />}></Route> 
                                 {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
                                 <Route path='/public/:lang/:path' element={<PublicPageManager />}></Route> 
