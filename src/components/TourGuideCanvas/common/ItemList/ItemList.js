@@ -1,29 +1,27 @@
 import React, { useState, useEffect }  from 'react'
-import styled from 'styled-components'
 
+import styled from 'styled-components'
+import { AnimatePresence } from 'framer-motion'
 import { Flex, Heading } from '@chakra-ui/react'
+import { faAdd } from '@fortawesome/free-solid-svg-icons'
+
+import axios from 'axios'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, connect } from 'react-redux'
+
+import { updateBooths, updateItemIndex } from '../../../../redux/tourguide/tourguide.action'
+import { updateBooth } from '../../../../redux/form/form.action'
+import { openModal } from '../../../../redux/modal/modal.action'
 
 import ItemButton from './ItemButton/ItemButton'
-import Toolbar from '../Toolbar/Toolbar'
-import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
+import CustomButton from '../EditorButton/CustomButton'
 
 import useSessionStorage from '../../../../hooks/useSessionStorage'
-
-import { useDispatch, connect } from 'react-redux'
-import { updateBooths, updateItemIndex } from '../../../../redux/tourguide/tourguide.action'
-
-import { useTranslation } from 'react-i18next'
-
-import { AnimatePresence } from 'framer-motion'
-import axios from 'axios'
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
-import { updateBooth } from '../../../../redux/form/form.action'
 
 const ItemList = (props) => {
 
   const { 
-    dataName, isCategoryList,
-    modalIndex, heading, path, name,
+    dataName, isCategoryList, modalName, heading, path, name,
     tourguide, modal
   } = props
 
@@ -32,8 +30,11 @@ const ItemList = (props) => {
 
   const { t } = useTranslation()
 
+  const isNoRegionDefined = path === "booths" && floorplans.length === 0 ? true : false
+  
+
   // session storage
-  const [itemIndexSession, setItemIndexSession] = useSessionStorage('itemIndex', 0)
+  // const [itemIndexSession, setItemIndexSession] = useSessionStorage('itemIndex', 0)
 
   // react state
   // const [items, setItems] = useState()
@@ -51,7 +52,7 @@ const ItemList = (props) => {
   }
 
   const update_page = (index) => {
-    setItemIndexSession(index)
+    // setItemIndexSession(index)
     dispatch(updateItemIndex(index))
   }
 
@@ -62,13 +63,29 @@ const ItemList = (props) => {
     
   }
 
+  const open_modal = () => {
+
+      let payload = {
+          modalName: modalName, 
+          path: path, method: 'post', 
+          name: name,
+      }
+      
+      // setModalSession({...modalSession, ...payload})
+      dispatch(openModal(payload))
+      
+  }
+
   return (
     
     <React.Fragment>
 
-      <Toolbar type={1} 
-        modalIndex={modalIndex} 
-        path={path} name={name} />
+      <Flex m="1em .5em">
+        <CustomButton faIcon={faAdd} bgColor={themeColor} 
+          text={t(`tourguideEditor.create-${path}`)}
+          isDisabled={isNoRegionDefined} onClick={open_modal}
+          />
+      </Flex>
 
       <Title size="sm">{t(`${heading}`)}</Title>
 

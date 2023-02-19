@@ -1,13 +1,12 @@
 export const initModalState = {
 
     isOpen: false,
-    modalIndex: 0,
+    modalName: null,
     path: '',
     method: '',
-    name: "",
-    byteData: null,
+    name: '',
     id: null,
-    isQRCode: false,
-    qrID: null
+    qrID: null, 
+    isQRCode: false
 
 }

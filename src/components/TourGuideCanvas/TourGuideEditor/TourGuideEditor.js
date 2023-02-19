@@ -8,11 +8,9 @@ import { useDispatch, connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
 import AnimatedPage from '../common/AnimatedPage/AnimatedPage'
-import EditorModal from '../common/EditorModal/EditorModal'
 import RightPanel from './RightPanel/RightPanel'
 import LeftPanel from './LeftPanel/LeftPanel'
 
-import tourModalData from '../../../data/tourModalData'
 import useSessionStorage from '../../../hooks/useSessionStorage'
 import { updateItemIndex, updatePage } from '../../../redux/tourguide/tourguide.action'
 import { langGetter } from '../../../helpers/langGetter'
@@ -44,7 +42,7 @@ const TourGuideEditor = (props) => {
     }
 
     const change_page = (type) => {
-        navigate(`/public/${lang}/tourguide/editor/${type}`)
+        navigate(`/server/${lang}/tourguide/editor/${type}`)
     }
 
     useEffect(()=>{
@@ -52,11 +50,11 @@ const TourGuideEditor = (props) => {
         const excludeCase = subsubpath === 'booths'
 
         if(subsubpath === undefined || subsubpath === null)
-            navigate(`/public/${lang}/tourguide/editor/${defaultEditorPath}/${pathIdDictionary[defaultEditorPath] ?? " "}`)
+            navigate(`/server/${lang}/tourguide/editor/${defaultEditorPath}/${pathIdDictionary[defaultEditorPath] ?? " "}`)
         else {
     
             if((subsubsubpath === undefined || subsubsubpath === null) && !excludeCase)
-                navigate(`/public/${lang}/tourguide/editor/${subsubpath}/${pathIdDictionary[subsubpath] ?? " "}`)
+                navigate(`/server/${lang}/tourguide/editor/${subsubpath}/${pathIdDictionary[subsubpath] ?? " "}`)
 
         }
 
@@ -73,14 +71,14 @@ const TourGuideEditor = (props) => {
     }
 
     return (
+
         <AnimatedPage>
             
              <EditorHeader />
             
              <Container bg={bg} flexDir={{base: 'column', md: 'row'}}>
-                 <LeftPanel />
-                 <RightPanel />
-                 {/* <EditorModal pages={tourModalData[modalIndex].pages}/> */}
+                <LeftPanel />
+                <RightPanel />
              </Container>
 
         </AnimatedPage>

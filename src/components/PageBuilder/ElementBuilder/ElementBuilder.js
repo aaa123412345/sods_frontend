@@ -7,7 +7,6 @@ import CResposiveTable from "../../Common/LayoutElement/CResposiveTable/CResposi
 
 //Special Component
 import TourGuideCanvas from "../../TourGuideCanvas/TourGuideCanvas";
-
 import LoginPage from "../../LoginSystem/LoginPage";
 import LogoutPage from "../../LoginSystem/LogoutPage";
 
@@ -33,6 +32,7 @@ const Components = {
   cvideo: CVideo,
   cmultipletext: CMultipleText,
   ctourguide: TourGuideCanvas,
+  surveyeditor: SurveyEditor,
   crestable:CResposiveTable,
 
   cloginpage:LoginPage,

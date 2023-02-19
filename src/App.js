@@ -131,7 +131,7 @@ function App() {
                                 <Route path='/server/:lang/:path' element={<ServerPageManager/>}></Route>
                                 <Route path='/server/:lang/:path/:subpath' element={<ServerPageManager/>}></Route> 
                                 <Route path='/server/:lang/:path/:subpath/:subsubpath' element={<ServerPageManager/>}></Route> 
-                                <Route path='/public/:lang/:path/:subpath/:subsubpath/:subsubsubpath' element={<ServerPageManager/>}></Route>
+                                <Route path='/server/:lang/:path/:subpath/:subsubpath/:subsubsubpath' element={<ServerPageManager/>}></Route>
 
                                 <Route
                                     path="*"
