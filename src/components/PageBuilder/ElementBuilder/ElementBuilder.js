@@ -24,6 +24,7 @@ import VotingSelector from "../../SurveySystem/RealTimeVotingSystem/VotingSelect
 import BookingActivityEditor from "../../BookingSystem/Admin/BookingActivityEditor";
 import BookingAdminManager from "../../BookingSystem/Admin/BookingAdminManager";
 import BookingClientManager from "../../BookingSystem/Client/BookingClientManager";
+import BookingClientDetailed from "../../BookingSystem/Client/BookingClientDetailed";
 
 
 const Components = {
@@ -52,7 +53,7 @@ const Components = {
   bookingActivityEditor:BookingActivityEditor,
   bookingAdminManager:BookingAdminManager,
   bookingClientManager:BookingClientManager,
-  
+  bookingClientDetailed:BookingClientDetailed,
 };
 
 export default block => {

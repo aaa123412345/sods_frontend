@@ -34,12 +34,12 @@ const RegisterForm=({setDictUP,dict,handleSubmit})=>{
         <Row style={RegistereFormStyle} className="mt-4">
            
           <Form>
-            <Form.Group className="mb-3 mt-4" controlId="formBasicName" style={{width:'80%'}}>
+            <Form.Group className="mb-3 mt-4" controlId="formRegisterName" style={{width:'80%'}}>
               <Form.Label>User Name (Required)</Form.Label>
               <Form.Control type="text" placeholder="User Name" required onChange={(e)=>setDict("userName",e.target.value)}/> 
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword" style={{width:'80%'}}>
+            <Form.Group className="mb-3" controlId="formRegisterPassword" style={{width:'80%'}}>
             <Form.Label>Password (Required)</Form.Label>
               <InputGroup className="mb-3">
                 <Form.Control

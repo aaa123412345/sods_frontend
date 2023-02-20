@@ -33,12 +33,12 @@ const LoginForm=({setDictUP,dict,handleSubmit})=>{
     return(
         <Row style={LoginPageStyle} className="mt-4">
           <Form>
-            <Form.Group className="mb-3 mt-4" controlId="formBasicName" style={{width:'80%'}}>
+            <Form.Group className="mb-3 mt-4" controlId="formLoginFormName" style={{width:'80%'}}>
               <Form.Label>User Name</Form.Label>
               <Form.Control type="text" placeholder="User Name" onChange={(e)=>setDict("userName",e.target.value)}/>
               
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword" style={{width:'80%'}}>
+            <Form.Group className="mb-3" controlId="formLoginFormPassword" style={{width:'80%'}}>
             <Form.Label>Password</Form.Label>
               <InputGroup className="mb-3">
                 <Form.Control
@@ -49,7 +49,7 @@ const LoginForm=({setDictUP,dict,handleSubmit})=>{
                   onChange={(e)=>setDict("password",e.target.value)}
                   
                 />
-                <Button variant="outline-secondary" id="button-addon2" 
+                <Button variant="outline-secondary" id="button-LoginForm-addon2" 
                 onClick={(e)=>setDict("showPassword",!dict.showPassword)}>
 
                   {dict.showPassword?<FontAwesomeIcon icon={faEye}></FontAwesomeIcon>:

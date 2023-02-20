@@ -59,11 +59,13 @@
       var rolePermission = CryptoJS.AES.encrypt(JSON.stringify(data.rolePermission), key).toString();
       var token = CryptoJS.AES.encrypt(data.token, key).toString();
       var userType = CryptoJS.AES.encrypt(data.userType, key).toString();
+      var userId = CryptoJS.AES.encrypt(data.userId, key).toString();
       var checkKey = CryptoJS.AES.encrypt('sods_fyp', key).toString();
 
       localStorage.setItem('sods_fyp_rp', rolePermission);
       localStorage.setItem('sods_fyp_t', token);
       localStorage.setItem('sods_fyp_ut', userType);
+      localStorage.setItem('sods_fyp_ud', userId);
       localStorage.setItem('sods_fyp_ck',checkKey);
   }
   

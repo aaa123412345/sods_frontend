@@ -1,7 +1,7 @@
 import React from "react";
 import { Card,Col,Row } from "react-bootstrap";
 
-const UserBookingDataCardViewer = ({items}) =>{
+const UserBookingDataCardViewer = ({items,isJoin}) =>{
  
 
 function BookingSurveyCard(element,index) {
@@ -16,7 +16,7 @@ function BookingSurveyCard(element,index) {
                   <br></br>
                   {"To : "+ element.endTime }
                 </Card.Text>
-                <Card.Link key={'aspcv-card-Link-'+index} href={"/public/eng/survey?passcode="}>Look Detail</Card.Link>
+                <Card.Link key={'aspcv-card-Link-'+index} href={"/public/eng/booking_activity_detailed?isJoin="+isJoin+"&&activityId="+element.bookingActivityId}>Look Detail</Card.Link>
                 
               </Card.Body>
             </Card>

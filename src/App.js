@@ -25,7 +25,8 @@ function App() {
     const [user, setUser] = useState({
         rolePermission: [''],
         token:'',
-        userType:''
+        userType:'',
+        userId:''
     });
     
     const setUserContext = (userDict) => {
@@ -66,7 +67,8 @@ function App() {
             
             rolePermission: [''],
             token:'',
-            userType:''
+            userType:'',
+            userId:''
         }
 
         //decrept
@@ -80,27 +82,33 @@ function App() {
                 localStorage.removeItem('sods_fyp_ut')
                 localStorage.removeItem('sods_fyp_rp')
                 localStorage.removeItem('sods_fyp_t')
+                localStorage.removeItem('sods_fyp_ud')
             }
             
         }
 
         if(userType!== '' && haveData){
-             //decrept
+             //decrept --- user type
             var bytes1  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_ut'), key);
             var userType = bytes1.toString(CryptoJS.enc.Utf8);
-             //decrept
+             //decrept --- role permission
             var bytes2  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_rp'), key);
             var rolePermission = JSON.parse(bytes2.toString(CryptoJS.enc.Utf8));
 
-            //decrept
+            //decrept --- token
             var bytes3  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_t'), key);
             var token = bytes3.toString(CryptoJS.enc.Utf8);
+
+            //decrept --- user id
+            var bytes4  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_ud'), key);
+            var userId = bytes4.toString(CryptoJS.enc.Utf8);
 
            
 
             tmpUser.rolePermission = rolePermission
             tmpUser.token = token
             tmpUser.userType = userType
+            tmpUser.userId = userId
             setUser(tmpUser)
         }
     }
