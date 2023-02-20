@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const BookingActivityTable = () =>{
 
-    const init = useSendRequest(process.env.REACT_APP_BOOKING_SYSTEM_HOST+'all','get',{},true)
+    const init = useSendRequest(process.env.REACT_APP_BOOKING_SYSTEM_HOST+'booking_activity_information/'+'all','get',{},true)
     const [ready,setReady] = useState(false);
     useEffect(()=>{
         if(!init.isLoaded && !ready){

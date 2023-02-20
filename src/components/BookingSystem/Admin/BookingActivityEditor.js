@@ -10,11 +10,11 @@ const BookingActivityEditor = () =>{
 
     const [uploadMode, setUploadMode] = useState('post')
     const [uploadHookActive,setUploadHookActive] = useState(false)
-    const upload = useSendRequest(process.env.REACT_APP_BOOKING_SYSTEM_HOST+ActivityID,uploadMode,activityData,uploadHookActive)
+    const upload = useSendRequest(process.env.REACT_APP_BOOKING_SYSTEM_HOST+'booking_activity_information/'+ActivityID,uploadMode,activityData,uploadHookActive)
     
 
     const [getDataHook, setGetDataHook] = useState(false)
-    const init = useSendRequest(process.env.REACT_APP_BOOKING_SYSTEM_HOST+ActivityID,'get',{},getDataHook)
+    const init = useSendRequest(process.env.REACT_APP_BOOKING_SYSTEM_HOST+'booking_activity_information/'+ActivityID,'get',{},getDataHook)
     
     const urlParams = new URLSearchParams(window.location.search);
 

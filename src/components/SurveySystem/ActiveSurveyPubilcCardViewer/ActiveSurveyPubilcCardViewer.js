@@ -10,42 +10,6 @@ const ActiveSurveyPublicCardViewer = () =>{
   const {items,isLoaded,ready,error,redirection} = 
   useSendRequest(process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/active_survey_current",'get',{},true)
 
-  /*
-  const getAllActiveSurvey = async() =>{
-    try{
-        const { data } = await axios({
-          method: 'get',
-          url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/active_survey_current",
-          headers:{
-            'token':user.token
-          }
-         
-        
-        })
-       
-        var rest = jsonExtractor(data);
-       // console.log(rest)
-        
-        if(rest.response === "success"){
-          
-          setSurveyData(rest.data)
-          
-          setReady(true)
-          
-        }else if (rest.response === "undefineerror"){
-          console.log("The authentication server is down")
-          alert("The service is not avaliable. Please try to login later")
-          clearLoginState()
-        }else{
-          console.log(rest)
-          alert("Get data fail")
-          clearLoginState()
-        }
-      }catch (error){
-        clearLoginState()
-        alert("The survey uploading service is not avaliable at this moment")
-      }
-}*/
 
     function ActiveSurveyCard(element,index) {
         return (
