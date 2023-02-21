@@ -10,3 +10,8 @@ p.s.
 1. Start a redis service with docker
 2. start backend service
 3. start frontend (this) service
+
+Build Step
+
+1. npm run build
+
