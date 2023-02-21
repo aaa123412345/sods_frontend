@@ -40,7 +40,7 @@ const BookingActivityTable = () =>{
         var bordered = true
         var tableHeadStyle = {}
         var tableDataStyle = [{},{}]
-        var tableKey = ['Active Survey ID','Location', 'Information','Quote','Current Participant', 'Start Time', 'End Time', 'Action']
+        var tableKey = ['Active Survey ID','Location', 'Title','Quote','Current Participant', 'Start Time', 'End Time', 'Action']
         return(
             <Table key={pkey + "desktop-table"} hover={hover} striped={striped} bordered={bordered}>
                 <thead key={pkey + "desktop-table-head"}>
@@ -65,7 +65,7 @@ const BookingActivityTable = () =>{
                 <tr style={style} key={keyPass + "-table-data-"+index+"-tr"}>
                    <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['bookingActivityId']} </td>
                    <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data['location']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['information']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['title']} </td>
                    <td key={keyPass + "-table-data-"+index+"-td-"+9}> {data['maxQuote']} </td>
                    <td key={keyPass + "-table-data-"+index+"-td-"+10}> {data['currentNum']} </td>
                    <td key={keyPass + "-table-data-"+index+"-td-"+4}> {data['startTime']} </td>
@@ -81,7 +81,7 @@ const BookingActivityTable = () =>{
 
     function MobileTable(table,pkey){
         var styleNum = 2;
-        var tableKey = ['Active Survey ID','Location', 'Information','Quote','Current Participant', 'Start Time', 'End Time', 'Action', 'Action']
+        var tableKey = ['Activity ID','Location', 'Title','Quote','Current Participant', 'Start Time', 'End Time', 'Action', 'Action']
         
         var tableDataStyle = [{"backgroundColor":"gray","color":"black"},{"backgroundColor":"white","color":"black"}]
         return(
@@ -99,16 +99,20 @@ const BookingActivityTable = () =>{
                 </Col>
                 <Col key={keyPass+"-Mobile-table-data-row-"+index+"-subrow-col-value"}>
                   
-                    <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data['activeSurveyId']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['location']} </span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['information']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data['bookingActivityId']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['location']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['title']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+9}> {data['maxQuote']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+10}> {data['currentNum']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+4}> {data['startTime']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+5}> {data['endTime']} <br></br></span>
                     <span key={keyPass + "-table-data-"+index+"-td-"+6}>
                         <Link to={'/server/eng/booking_activity_editor?ActivityID='+data['bookingActivityId']}> Edit</Link> <br></br>
-                        </span>
+                    </span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+11}>
+                        <Link onClick={() => {navigator.clipboard.writeText(data['bookingActivityId'])
+                    alert("Copy to clipboard Ready")}}> Copy</Link> <br></br>
+                    </span>
                     
                 </Col>
                    

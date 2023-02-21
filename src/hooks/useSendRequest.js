@@ -58,7 +58,10 @@ export default function useSendRequest(url,method,tdata,active){
                         setErrMsg('PermissionError')
                     }else if(data.code === 404){
                         setErrMsg('DataNotFound')
+                    }else if(data.code === 400){
+                        setErrMsg(data.msg)
                     }
+                    
 
                
                 

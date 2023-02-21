@@ -4,6 +4,7 @@ import { Col, Row, Button,Modal } from "react-bootstrap";
 import useSendRequest from "../../../hooks/useSendRequest";
 import {UserContext} from '../../../App'
 import QRCode from "react-qr-code";
+import CryptoJS from "crypto-js";
 
 const BookingClientDetailed = () => {
     const fontSize = "2vw"
@@ -36,18 +37,23 @@ const BookingClientDetailed = () => {
     const urlParams = new URLSearchParams(window.location.search);
 
     function QRCodeModel(){
-        return(
-            <Modal show={showQRCode} onHide={()=>{setShowQRCode(false)}}>
-            <Modal.Header closeButton>
-              <Modal.Title>Activity QR Code (For Checker)</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-            <QRCode value={"/user_arrive_data/"+activityId+"/"+user.userId} size={256} style={{ height: "auto", maxWidth: "100%", width: "100%",marginLeft:'auto',marginRight:'auto' }} 
-                    viewBox={`0 0 256 256`}></QRCode>
-            </Modal.Body>
-            
-          </Modal>
-        )
+        if(isJoin){
+            var data = JSON.stringify({activityId:activityId,userID:user.userId})
+            var key = process.env.REACT_APP_QR_CODE_KEY
+            var cryptoData = CryptoJS.AES.encrypt(data, key).toString();
+            return(
+                <Modal show={showQRCode} onHide={()=>{setShowQRCode(false)}}>
+                <Modal.Header closeButton>
+                <Modal.Title>Activity QR Code (For Checker)</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <QRCode value={cryptoData} size={256} style={{ height: "auto", maxWidth: "100%", width: "100%",marginLeft:'auto',marginRight:'auto' }} 
+                        viewBox={`0 0 256 256`}></QRCode>
+                </Modal.Body>
+                
+            </Modal>
+            )
+        }
     }
 
     useEffect(()=>{

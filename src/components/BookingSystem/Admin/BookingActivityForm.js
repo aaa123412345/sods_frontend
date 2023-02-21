@@ -38,14 +38,22 @@ const BookingActivityForm = ({setDictUP,dict,handleSubmit}) =>{
                     defaultValue = {dict.location === undefined?'':dict.location}                              
                 />
 
-                <Form.Label className="mt-2">Activity Information</Form.Label>
+                <Form.Label className="mt-2">Title</Form.Label>
                 <Form.Control
                     type="text"
-                    id="text-information"
+                    id="text-title"
+                    onChange={(e)=>setDict("title",e.target.value)}  
+                    defaultValue = {dict.title === undefined?'':dict.title}                              
+                />
+
+                <Form.Label className="mt-2">Activity Content</Form.Label>
+                <Form.Control
+                    type="text"
+                    id="text-content"
                     as="textarea"
                     rows={4}
-                    onChange={(e)=>setDict("information",e.target.value)}
-                    defaultValue = {dict.information === undefined?'':dict.information}                                 
+                    onChange={(e)=>setDict("content",e.target.value)}
+                    defaultValue = {dict.content === undefined?'':dict.content}                                 
                 /><br></br>
 
                 <Form.Label className="mt-2">Quote</Form.Label>

@@ -397,13 +397,14 @@ const VotingAdmin = () => {
     }
 
     function votingControlTab2(){
+        var url = window.location.host + "/public/eng/vote_client?passCode="+votingState.passcode
         return( 
         <Tab eventKey="votingControl2" title="Method to join this voting">
             
                 <Row style={{marginLeft:'auto',marginRight:'auto',width:'80%',textAlign:'center'}}>
                     <h1>Pass code : {votingState.passcode}</h1>
                     {votingState.passcode=== undefined?'':
-                    <QRCode value={votingState.passcode} size={256} style={{ height: "auto", maxWidth: "50%", width: "50%",marginLeft:'auto',marginRight:'auto' }} 
+                    <QRCode value={url} size={256} style={{ height: "auto", maxWidth: "50%", width: "50%",marginLeft:'auto',marginRight:'auto' }} 
                     viewBox={`0 0 256 256`}></QRCode>
                     }
                     

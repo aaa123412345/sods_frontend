@@ -14,6 +14,7 @@ const BookingClientManager = () =>{
     
     if(!init.isLoaded){
         if(init.ready){
+            console.log(init)
             const join = init.items.filter((e)=>e.isJoin)
             const notjoin = init.items.filter((e)=>!e.isJoin)
 
