@@ -1,0 +1,18 @@
+{
+
+    "title": "AR Treasure", 
+    "start": "Start", 
+    "continue": "continue",
+    "question": "Puzzle",
+    "unlock": "unlock",
+    "placeholder-password": "Please enter password", 
+    "instruction": "How to Play",
+    "step-1": "Find the location of treasure within this booth first",
+    "step-2": "Scan the treasure marker",
+    "step-3": "Solve the puzzle and get a stamp",
+    "hint-1": "Find and scan treasure marker within this booth", 
+    "hint-2": "Solve the puzzle to unlock treasure", 
+    "hint-3": "You got a stamp from the tresaure!", 
+    "back": "Back to Game Ticket"
+
+}

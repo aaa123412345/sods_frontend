@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux'
 
-import CustomButton from '../../common/EditorButton/CustomButton'
+import CustomButton from '../../../Common/common/CustomButton/CustomButton';
 import { langGetter } from '../../../../helpers/langGetter';
 
 const CustomMarker = (props) => {

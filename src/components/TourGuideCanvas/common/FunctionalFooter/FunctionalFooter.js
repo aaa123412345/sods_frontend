@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import styled from 'styled-components'
+import { conforms } from 'lodash'
 
+import styled from 'styled-components'
 import { Box, Flex, useToast } from '@chakra-ui/react'
-import MyButton from '../EditorButton/CustomButton'
+
+import { useTranslation } from 'react-i18next'
 import { useDispatch, connect } from 'react-redux'
+
 import { resetData } from '../../../../redux/form/form.action'
 import { closeModal } from '../../../../redux/modal/modal.action'
+
+import CustomButton from '../../../Common/common/CustomButton/CustomButton'
+
+import useSessionStorage from '../../../../hooks/useSessionStorage'
 import { toast_generator } from '../../../../helpers/toastGenerator'
 import { submitLabel, tourHost } from '../../../../constants/constants'
-import { useTranslation } from 'react-i18next'
-import { conforms } from 'lodash'
-import useSessionStorage from '../../../../hooks/useSessionStorage'
 import { UserContext } from '../../../../App'
 
 const FunctionalFooter = (props) => {
@@ -148,8 +152,8 @@ const FunctionalFooter = (props) => {
 
             <Flex justifyContent='space-between'>
 
-                <MyButton text={t('tourguide.cancel')} onClick={onClose}/>
-                <MyButton text={t(`tourguide.${submitLabel[method]}`)} 
+                <CustomButton text={t('tourguide.cancel')} onClick={onClose}/>
+                <CustomButton text={t(`tourguide.${submitLabel[method]}`)} 
                     onClick={()=>{handle_method(method)}}
                     bgColor={method === 'delete' ? "danger" : themeColor} 
                     isDisabled={!canSubmit}/>

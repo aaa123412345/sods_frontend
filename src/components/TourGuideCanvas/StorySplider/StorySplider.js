@@ -9,7 +9,7 @@ import { faMap, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import CustomButton from '../common/EditorButton/CustomButton'
+import CustomButton from '../../Common/common/CustomButton/CustomButton'
 import { langGetter } from '../../../helpers/langGetter'
 import { mobileBreakPoint, scrollbarCSS } from '../../../constants/constants'
 import useWindowSize from '../../../hooks/useWindowSize'

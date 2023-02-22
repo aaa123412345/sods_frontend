@@ -1,0 +1,17 @@
+{
+    "title": "AR 尋寶之旅", 
+    "start": "開始",
+    "continue": "繼續", 
+    "question": "謎題",
+    "unlock": "解鎖",
+    "placeholder-password": "請輸入密碼", 
+    "instruction": "遊戲玩法", 
+    "step-1": "於本攤位內尋找寶物的位置", 
+    "step-2": "掃描寶物標記",
+    "step-3": "解開謎題及取得印仔", 
+    "hint-1": "於本攤位內尋找寶物標記", 
+    "hint-2": "解開謎題以開啟寶箱", 
+    "hint-3": "您成功取得一個印仔", 
+    "back": "回到遊戲劵"
+
+}

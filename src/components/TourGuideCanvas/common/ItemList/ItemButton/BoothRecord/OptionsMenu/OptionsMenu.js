@@ -10,7 +10,7 @@ import { Flex, Popover, PopoverTrigger, PopoverContent, PopoverBody, Box } from 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAlignLeft, faEllipsisVertical, faGlobe, faLocationDot, faPen, faQrcode, faTent, faTrash, faVrCardboard } from '@fortawesome/free-solid-svg-icons'
 
-import CustomButton from '../../../../EditorButton/CustomButton'
+import CustomButton from '../../../../../../Common/common/CustomButton/CustomButton'
 import useSessionStorage from '../../../../../../../hooks/useSessionStorage'
 import { langGetter } from '../../../../../../../helpers/langGetter'
 import { openModal, openQRModal, updateQRID } from '../../../../../../../redux/modal/modal.action'

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
-
 import { Box, Flex,Heading, Image, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import EditorButton from '../common/EditorButton/CustomButton'
 import { useDispatch, connect } from 'react-redux'
 
 import { QrReader } from 'react-qr-reader'
 import QRCode from 'qrcode';
+
+import CustomButton from '../../Common/common/CustomButton/CustomButton'
 import { closeQRModal } from '../../../redux/modal/modal.action'
 
 const MotionFlex = motion(Flex); 
@@ -65,7 +65,7 @@ const QRCodeScanner = (props) => {
 
                 <ModalHeader>
                     <Heading size='lg'>QR Code Scanner</Heading>
-                    <EditorButton faIcon={faXmark} isCircle={true} onClick={close_modal}/>
+                    <CustomButton faIcon={faXmark} isCircle={true} onClick={close_modal}/>
                 </ModalHeader>
 
                 <Content>

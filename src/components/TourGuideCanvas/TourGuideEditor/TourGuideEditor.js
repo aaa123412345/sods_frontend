@@ -7,7 +7,7 @@ import { Flex, Heading, Button, useColorModeValue } from '@chakra-ui/react'
 import { useDispatch, connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-import AnimatedPage from '../common/AnimatedPage/AnimatedPage'
+import AnimatedPage from '../../Common/common/AnimatedPage/AnimatedPage'
 import RightPanel from './RightPanel/RightPanel'
 import LeftPanel from './LeftPanel/LeftPanel'
 

@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMap } from '@fortawesome/free-solid-svg-icons'
 
-import CustomButton from '../../common/EditorButton/CustomButton'
+import CustomButton from '../../../Common/common/CustomButton/CustomButton'
 import { langGetter } from '../../../../helpers/langGetter'
 import { scrollbarCSS } from '../../../../constants/constants'
 
