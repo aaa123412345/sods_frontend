@@ -12,6 +12,8 @@ import tourguideEditorEN from './locales/en/tourguideEditor.json';
 import tourguideEditorZH from './locales/zh/tourguideEditor.json'
 import modalEN from './locales/en/modal.json';
 import modalZH from './locales/zh/modal.json'
+import arTreasureEN from './locales/en/arTreasure.json'
+import arTreasureZH from './locales/zh/arTreasure.json'
 
 const userLang = window.localStorage.getItem('i18n-lang') === "zh" ? 'zh' : 'en'
 
@@ -31,7 +33,8 @@ const resources = {
       floorplan: floorplanEN,
       gameTicket: gameTicketEN,
       tourguideEditor: tourguideEditorEN,
-      modal: modalEN
+      modal: modalEN, 
+      arTreasure: arTreasureEN
     }
   },
   zh: {
@@ -40,7 +43,8 @@ const resources = {
       floorplan: floorplanZH,
       gameTicket: gameTicketZH,
       tourguideEditor: tourguideEditorZH, 
-      modal: modalZH
+      modal: modalZH,
+      arTreasure: arTreasureZH
     }
   },
 };

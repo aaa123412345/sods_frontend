@@ -14,7 +14,7 @@ import { updateBooth } from '../../../../redux/form/form.action'
 import { openModal } from '../../../../redux/modal/modal.action'
 
 import ItemButton from './ItemButton/ItemButton'
-import CustomButton from '../EditorButton/CustomButton'
+import CustomButton from '../../../Common/common/CustomButton/CustomButton'
 
 import useSessionStorage from '../../../../hooks/useSessionStorage'
 

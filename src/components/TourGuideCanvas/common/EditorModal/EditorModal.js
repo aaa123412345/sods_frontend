@@ -11,7 +11,7 @@ import { useDispatch, connect } from 'react-redux'
 import { resetData, updateBooth, updateFloorplan } from '../../../../redux/form/form.action'
 import { clearErrorList, closeModal, updateModal } from '../../../../redux/modal/modal.action'
 
-import CustomButton from '../EditorButton/CustomButton'
+import CustomButton from '../../../Common/common/CustomButton/CustomButton'
 import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
 
 import { tourModalData } from '../../../../data/tourModalData'

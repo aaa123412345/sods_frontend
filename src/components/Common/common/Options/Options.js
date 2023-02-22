@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Box } from '@chakra-ui/react'
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 
-import CustomButton from '../EditorButton/CustomButton'
+import CustomButton from "../CustomButton/CustomButton"
 
 const MotionBox = motion(Box)
 

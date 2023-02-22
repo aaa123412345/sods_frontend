@@ -7,8 +7,8 @@ import { Flex, Text, Heading, Grid, GridItem, useColorModeValue } from '@chakra-
 import styled from 'styled-components'
 import { faArrowLeft, faMap } from '@fortawesome/free-solid-svg-icons'
 
-import AnimatedPage from '../common/AnimatedPage/AnimatedPage'
-import CustomButton from '../common/EditorButton/CustomButton'
+import AnimatedPage from '../../Common/common/AnimatedPage/AnimatedPage'
+import CustomButton from '../../Common/common/CustomButton/CustomButton'
 import Stamp from './Stamp/Stamp'
 import { langGetter } from '../../../helpers/langGetter'
 import { mobileBreakPoint } from '../../../constants/constants'

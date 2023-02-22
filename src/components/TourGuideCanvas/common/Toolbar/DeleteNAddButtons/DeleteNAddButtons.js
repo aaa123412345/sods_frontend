@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { faAdd, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import MyButton from '../../EditorButton/CustomButton';
+import CustomButton from '../../../../Common/common/CustomButton/CustomButton';
 
 import useSessionStorage from '../../../../../hooks/useSessionStorage';
 import { useDispatch, connect } from 'react-redux';
@@ -47,7 +47,7 @@ const DeleteNAddButtons = (props) => {
     return (
 
         <Flex justifyContent={'flex-start'} m="1em .5em">
-            <MyButton 
+            <CustomButton 
                 faIcon={faAdd} 
                 text={t(`tourguideEditor.create-${path}`)}
                 bgColor={themeColor} 

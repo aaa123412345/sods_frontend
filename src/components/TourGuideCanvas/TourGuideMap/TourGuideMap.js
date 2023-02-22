@@ -1,30 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
+import _ from 'lodash';
+import ImageMarker from 'react-image-marker';
+import axios from 'axios';
+
 import styled from 'styled-components'
 import { Flex, Box, Image, Text, useColorModeValue, useColorMode } from '@chakra-ui/react'
+import { faGift, faMoon, faSun, faTicket } from '@fortawesome/free-solid-svg-icons';
 
 import { useDispatch, connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import _ from 'lodash';
-import axios from 'axios';
-import ImageMarker from 'react-image-marker';
 
-import EditorButton from '../common/EditorButton/CustomButton';
-import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
-import AnimatedPage from '../common/AnimatedPage/AnimatedPage';
+import CustomButton from '../../Common/common/CustomButton/CustomButton';
+import AnimatedPage from '../../Common/common/AnimatedPage/AnimatedPage';
 import FloorSelector from './FloorSelector/FloorSelector';
 import CustomMarker from './CustomMarker/CustomMarker';
-import { updateMarker } from '../../../redux/form/form.action';
+import StatusBar from './StatusBar/StatusBar';
+
 import useWindowSize from '../../../hooks/useWindowSize';
 
-import { refreshTime, tourHost } from '../../../constants/constants';
+import { updateMarker } from '../../../redux/form/form.action';
 import { updateFloorplans } from '../../../redux/tourguide/tourguide.action';
-import CustomButton from '../common/EditorButton/CustomButton';
-import { faGift, faMoon, faSun, faTicket } from '@fortawesome/free-solid-svg-icons';
+import { refreshTime, tourHost } from '../../../constants/constants';
 import { langGetter } from '../../../helpers/langGetter';
-import StatusBar from './StatusBar/StatusBar';
 
 const TourGuideMap = (props) => {
 

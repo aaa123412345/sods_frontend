@@ -3,18 +3,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useDispatch, connect } from 'react-redux';
 
-import { 
-    Flex, Popover, PopoverTrigger, Heading,
-    PopoverContent, Button
-} from '@chakra-ui/react'
+import {  Flex, Heading } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
-import CustomButton from '../../EditorButton/CustomButton';
+import CustomButton from '../../../../Common/common/CustomButton/CustomButton';
+import Options from '../../../../Common/common/Options/Options'
+
 import useSessionStorage from '../../../../../hooks/useSessionStorage';
 import { updatePage } from '../../../../../redux/tourguide/tourguide.action';
 import { langGetter } from '../../../../../helpers/langGetter';
-import Options from '../../Options/Options';
 
 const CategoryButtons = (props) => {
 

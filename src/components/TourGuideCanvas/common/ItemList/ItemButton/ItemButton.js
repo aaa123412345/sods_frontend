@@ -1,6 +1,5 @@
 import React from 'react'
 import RectangleIconButton from './RectangleIconButton/RectangleIconButton'
-import BoothInfoCard from './BoothInfoCard/BoothInfoCard'
 import BoothRecord from './BoothRecord/BoothRecord'
 
 const ItemButton = (props) => {

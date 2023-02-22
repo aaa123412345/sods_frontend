@@ -9,7 +9,7 @@ import { Flex, Box, Image, Text } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faLocationDot, faQrcode } from '@fortawesome/free-solid-svg-icons'
 
-import CustomButton from '../../../EditorButton/CustomButton'
+import CustomButton from '../../../../../Common/common/CustomButton/CustomButton'
 import { openQRModal, updateQRID } from '../../../../../../redux/modal/modal.action'
 import OptionsMenu from './OptionsMenu/OptionsMenu'
 
