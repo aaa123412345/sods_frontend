@@ -70,7 +70,7 @@ const VotingClient = () => {
     const checkPasscodeAndConnect=async()=>{ 
         const { data } = await axios({
                 method: 'get',
-                url: process.env.REACT_APP_VOTING_SYSTEM_HOST+'/'+passCode,
+                url: process.env.REACT_APP_VOTING_SYSTEM_HOST+'/passcode/'+passCode,
                 headers:{'token':user.token}
         })
             
