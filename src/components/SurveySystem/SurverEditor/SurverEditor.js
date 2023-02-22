@@ -72,6 +72,7 @@ const SurveyEditor = () => {
                 setShow(true)
             
             }else{
+                alert("Some element have invalid/incomplete information")
                 setSurveySyntax(false)
                 setShow(false)
             }
@@ -533,7 +534,7 @@ const SurveyEditor = () => {
                 </Col>
 
                                 {/*Preview*/}
-                <Offcanvas show={show} onHide={handleClose} placement={'end'} style={{color:'black',minWidth:'672px'}}>
+                <Offcanvas show={show} onHide={handleClose} placement={'end'} style={{color:'black',width:'100%'}}>
                     <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Preview</Offcanvas.Title>
                     </Offcanvas.Header>
