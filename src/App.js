@@ -1,17 +1,27 @@
 import React from "react";
+import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
+import { Provider } from "react-redux";
+import { store } from './redux/store'
+import { useState, createContext, useEffect } from "react";
+/*
+const PublicPageManager = React.lazy(()=>import("./components/PublicSite/PublicPageManager/PublicPageManager"))
+const ServerPageManager = React.lazy(()=>import("./components/ServerSite/ServerPageManager/ServerPageManager"))
+const UserPageManager = React.lazy(()=>import("./components/UserSite/UserPageManager/UserPageManager"))
+
+const Chatroom = React.lazy(()=>import("./components/Chatroom/Chatroom"))
+const VRCanvas = React.lazy(()=>import("./components/VRCanvas/VRCanvas"))
+const QRScanner = React.lazy(()=>import("./components/QRScanner"))
+const ARCanvas = React.lazy(()=>import("./components/ARCanvas/ARCanvas"))
+*/
+
 import PublicPageManager from "./components/PublicSite/PublicPageManager/PublicPageManager";
 import ServerPageManager from "./components/ServerSite/ServerPageManager/ServerPageManager";
 import UserPageManager from "./components/UserSite/UserPageManager/UserPageManager";
 
-import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
-
-import { Provider } from "react-redux";
-import { store } from './redux/store'
 import Chatroom from "./components/Chatroom/Chatroom";
 import VRCanvas from "./components/VRCanvas/VRCanvas";
+import QRScanner from "./components/QRScanner";
 
-
-import { useState, createContext, useEffect } from "react";
 import ARCanvas from "./components/ARCanvas/ARCanvas";
 
 
@@ -125,7 +135,7 @@ function App() {
                             <Routes>
                                 
                             <Route>
-                               
+                                <Route path="/testQR" element={<QRScanner/>}></Route>
                                 <Route path="/public/:lang/ar-treasure/:id" element={<ARCanvas/>}></Route>
                                 <Route path="/public/:lang/tourguide-vr/:id" element={<VRCanvas />}></Route> 
                                 {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}

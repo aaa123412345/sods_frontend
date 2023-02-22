@@ -2,12 +2,14 @@ import React, { useEffect,useContext } from "react";
 import { UserContext } from "../../../App";
 import axios from "axios";
 import { useState } from "react";
-import { Button,Tabs,Tab,Form, Row, Col, } from "react-bootstrap";
+import { Button,Tabs,Tab,Form, Row, Col,Card } from "react-bootstrap";
 import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
 import RealTimeVotingElementDict from "./RealTimeVotingElementDict";
 import RealTimeVotingResultDisplayer from "./RealTimeVotingResultDisplayer";
 import QRCode from "react-qr-code";
+
+import useSendRequest from "../../../hooks/useSendRequest";
 
 var stompClient =null;
 //Enum
@@ -40,7 +42,7 @@ const CLIENT_RENDER_METHOD = {
 
 
 const VotingAdmin = () => {
-    
+    const [tabKey,setTabKey] = useState('major')
     const {user,clearLoginState} = useContext(UserContext)
     const [passCode,setPassCode] = useState('')
     const [surveyID,setSurveyID] = useState('')
@@ -63,62 +65,79 @@ const VotingAdmin = () => {
     const [renderData, setRenderData] = useState({})
     const [validated,setValidated] = useState(false)
     const [responseData,setResponseData] = useState({})
-    
+
+    const [initActive,setInitActive] = useState(true)
+    const initHook = useSendRequest(process.env.REACT_APP_VOTING_SYSTEM_HOST+'/'+'getExist','get',{},initActive)
+    const [initData,setInitData] = useState({})
+
+     const [actionHookState,setActionHookState] = useState({
+        method:'',
+        data:{},
+        active:false
+    })
+    const actionHook = useSendRequest(process.env.REACT_APP_VOTING_SYSTEM_HOST+'/passcode/'+passCode
+    ,actionHookState.method,actionHookState.data,actionHookState.active)
+
+   
     /*
     REST AREA
     */
-
-    const createGroup=async()=>{
-        const { data } = await axios({
-            method: 'post',
-            url: process.env.REACT_APP_VOTING_SYSTEM_HOST+'/'+passCode,
-            headers:{'token':user.token},
-            data:{surveyID}
-        })
-        alert(data.msg)
-        setGroupcreated(true)
-    }
-    const removeGroup=async(passCode)=>{
-        const { data } = await axios({
-            method: 'delete',
-            url: process.env.REACT_APP_VOTING_SYSTEM_HOST+'/'+passCode,
-            headers:{'token':user.token}
-        })
-        console.log(data)
-    }
-    const preGetNewPasscode=async()=>{
-        var passcodeIsNotUse = false
-        do{
-            var tmpPassCode = getRandomStr(6)
-            const { data } = await axios({
-                method: 'get',
-                url: process.env.REACT_APP_VOTING_SYSTEM_HOST+'/'+tmpPassCode,
-                headers:{'token':user.token}
-            })
-            
-            if(data.code===404){
-                break;
+    useEffect(()=>{
+        if(!actionHook.isLoaded && actionHookState.active){
+            if(actionHook.ready){
+                if(actionHookState.method === 'get'){
+                    alert("Connect Success")
+                    connect();
+                }else if(actionHookState.method === 'post'){
+                    alert("Create Success")
+                    setGroupcreated(true)
+                    window.location.reload();
+                }else if(actionHookState.method === 'delete'){
+                    alert("Remove Success")
+                    window.location.reload();
+                }
+                setActionHookState({
+                    method:'',
+                    data:{},
+                    active:false
+                })
+            }else if(actionHook.errMsg !== ''){
+                alert(actionHook.errMsg)
+                setActionHookState({
+                    method:'',
+                    data:{},
+                    active:false
+                })
             }
-        }while(passcodeIsNotUse === false)
+        }
+    },[actionHook])
 
-        setPassCode(tmpPassCode)
-        setPassCodeReady(true)
+    const createGroup=()=>{
+        setActionHookState({
+            method:'post',
+            data:{surveyID},
+            active:true
+        })
+    }
+
+    const removeGroup=()=>{
+        setActionHookState({
+            method:'delete',
+            data:{},
+            active:true
+        })
         
     }
+    
 
-    const checkPasscodeAndConnect=async()=>{ 
-        const { data } = await axios({
-                method: 'get',
-                url: process.env.REACT_APP_VOTING_SYSTEM_HOST+'/'+passCode,
-                headers:{'token':user.token}
+    const checkPasscodeAndConnect=()=>{ 
+        setActionHookState({
+            method:'get',
+            data:{},
+            active:true
         })
-            
-            if(data.code===200){
-                //connect
-                alert("Connect Success")
-                connect();
-                
-            }
+        
+           
     }
 
     const createAndConnect = () => {
@@ -167,6 +186,7 @@ const VotingAdmin = () => {
         
             stompClient.subscribe('/user/'+passCode+'/private', onPrivateMessage);
             setRoomState({...roomState,"isSubscribe":true});
+            
             userJoin();
         
        
@@ -187,6 +207,7 @@ const VotingAdmin = () => {
             action:ACTION_TYPE.NONE
           };
           stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+          setTabKey('votingControl')
     }
 
     const onPrivateMessage = (payload)=>{
@@ -255,14 +276,15 @@ const VotingAdmin = () => {
     }
 
     useEffect(()=>{
-        return()=>{
-            if(passCodeReady===false){
-                preGetNewPasscode()
+        
+            if(!passCodeReady){
+                setPassCodeReady(true)
+                setPassCode(getRandomStr(6))
             }
             if(urlParams.has('surveyID')){
                 setSurveyID(urlParams.get('surveyID'))    
             }
-        }
+        
     },[])
 
     /*
@@ -281,6 +303,7 @@ const VotingAdmin = () => {
                     id="text"
                     onChange={(event)=>setSurveyID(event.target.value)}
                     defaultValue={surveyID}
+                    style={{width:"70%"}}
                             
                 />
                 <Button className="mt-2" onClick={createGroup}> Create Group</Button>
@@ -291,31 +314,72 @@ const VotingAdmin = () => {
         )
     }
     function connectGroupTab(){
-        return(
-            <Tab eventKey="actived" title="Group Connect">
-                    <Form.Label className="mt-2">Pass Code (Letter only):</Form.Label><br></br>
-                    <Form.Control
-                    type="text"
-                    id="text"
-                    style={{width:'30%'}}
-                    onChange={(event)=>{
-                        var bigStr = event.target.value.toUpperCase();
-                        setPassCode(bigStr)
-                             
-                    }}
-                    onKeyDown={(event)=>{
-                        var pressed = event.key               
-                        if(!((pressed>='A'&&pressed<='Z')||(pressed>='a'&&pressed<='z')||pressed==='Backspace')){
-                            event.preventDefault();
-                        }
-                    }}
-                    onInput={(e)=>{e.target.value = ("" + e.target.value).toUpperCase();}}
-                />
-                <Button className="mt-2" onClick={checkPasscodeAndConnect}> Connect Group</Button>
-            </Tab>
-
-        )
+        if(!initHook.isLoaded&&initActive){
+            if(initHook.ready){
+                setInitActive(false)
+                setInitData(initHook.items)
+               
+            }
+        }
+        
+        
+            
+            
+            return(
+                <Tab eventKey="actived" title="Group Connect">
+                    <Row>
+                            <Col>
+                                <Form.Label className="mt-2">Pass Code (Letter only):</Form.Label><br></br>
+                                <Form.Control
+                                type="text"
+                                id="text"
+                                style={{width:'30%'}}
+                                onChange={(event)=>{
+                                    var bigStr = event.target.value.toUpperCase();
+                                    setPassCode(bigStr)
+                                        
+                                }}
+                                onKeyDown={(event)=>{
+                                    var pressed = event.key               
+                                    if(!((pressed>='A'&&pressed<='Z')||(pressed>='a'&&pressed<='z')||pressed==='Backspace')){
+                                        event.preventDefault();
+                                    }
+                                }}
+                                onInput={(e)=>{e.target.value = ("" + e.target.value).toUpperCase();}}
+                                />
+                                <Button className="mt-2" onClick={checkPasscodeAndConnect}> Connect Group</Button>
+                            </Col>
+                            <Col>
+                                <Row xs={1} sm={1} md={1} xl={2} xxl={2}  className="g-1">
+                                    {Array.isArray(initData)? initData.map((element,index)=>VotingCard(element,index)):''}
+                                </Row>
+                            </Col>
+                        </Row>
+                    </Tab>
+            )
+        
+        
     }
+
+    function VotingCard(element,index) {
+        return (
+          <Col style={{display: 'flex', justifyContent: 'center'}} key={'aspcv-card-col-'+index}>
+            <Card style={{ width: '18rem'}} key={'aspcv-card-root-'+index}>
+              <Card.Body key={'aspcv-card-body-'+index}>
+                <Card.Title key={'aspcv-card-Title-'+index}>{element.passcode}</Card.Title>
+                <Card.Subtitle key={'aspcv-card-Subtitle-'+index} className="mb-2 text-muted">{JSON.parse(element.surveyID).surveyID}</Card.Subtitle>
+                <Card.Text key={'aspcv-card-info-'+index}>
+                  {"("+element.participantSubmit+"/"+element.participantJoin+")"}
+                </Card.Text>
+                
+              </Card.Body>
+            </Card>
+          </Col>
+        );
+    }
+        
+    
+
 
    
 
@@ -421,9 +485,10 @@ const VotingAdmin = () => {
         return(
             <>
             <Tabs
-                defaultActiveKey="designed"
+                activeKey={tabKey}
                 id="uncontrolled-tab-example"
                 className="mb-3"
+                onSelect={(k)=> setTabKey(k)}
             >
                 {!roomState.isSubscribe?
                 createGroupTab():''}

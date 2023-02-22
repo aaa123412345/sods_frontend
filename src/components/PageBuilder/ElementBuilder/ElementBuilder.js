@@ -1,4 +1,31 @@
-import React from "react";
+import React,{lazy} from "react";
+
+const CImage = React.lazy(()=>import("../../Common/LayoutElement/CImage/CImage"))
+const CMultipleText = React.lazy(()=>import("../../Common/LayoutElement/CMultipleText/CMultipleText"))
+const CText = React.lazy(()=>import("../../Common/LayoutElement/CText/CText"))
+const CVideo = React.lazy(()=>import("../../Common/LayoutElement/CVideo/CVideo"))
+const CResposiveTable = React.lazy(()=>import("../../Common/LayoutElement/CResposiveTable/CResposiveTable"))
+
+const TourGuideCanvas = React.lazy(()=>import("../../TourGuideCanvas/TourGuideCanvas"))
+const LoginPage = React.lazy(()=>import("../../LoginSystem/LoginPage"))
+const LogoutPage = React.lazy(()=>import("../../LoginSystem/LogoutPage"))
+
+const SurveyEditor = React.lazy(()=>import("../../SurveySystem/SurverEditor/SurverEditor"))
+const SurveyManager = React.lazy(()=>import("../../SurveySystem/SurverManager/SurveyManager"))
+const SurveyLoader = React.lazy(()=>import("../../SurveySystem/SurveyLoader"))
+const ActiveSurveyConfigPanel = React.lazy(()=>import("../../SurveySystem/ActiveSurveyConfigPanel/ActiveSurveyConfigPanel"))
+const ActiveSurveyManager = React.lazy(()=>import("../../SurveySystem/ActiveSurverManager/ActiveSurveyManager"))
+const PublicSurveyJoiner = React.lazy(()=>import("../../SurveySystem/PublicSurveyJoiner/PublicSurveyJoiner"))
+
+const VotingAdmin = React.lazy(()=>import("../../SurveySystem/RealTimeVotingSystem/VotingAdmin"))
+const VotingClient = React.lazy(()=>import("../../SurveySystem/RealTimeVotingSystem/VotingClient"))
+const VotingSelector = React.lazy(()=>import("../../SurveySystem/RealTimeVotingSystem/VotingSelector"))
+
+const BookingActivityEditor = React.lazy(()=>import("../../BookingSystem/Admin/BookingActivityEditor"))
+const BookingAdminManager = React.lazy(()=>import("../../BookingSystem/Admin/BookingAdminManager"))
+const BookingClientManager = React.lazy(()=>import("../../BookingSystem/Client/BookingClientManager"))
+const BookingClientDetailed = React.lazy(()=>import("../../BookingSystem/Client/BookingClientDetailed"))
+/*
 import CImage from "../../Common/LayoutElement/CImage/CImage";
 import CMultipleText from "../../Common/LayoutElement/CMultipleText/CMultipleText";
 import CText from "../../Common/LayoutElement/CText/CText";
@@ -25,7 +52,7 @@ import BookingActivityEditor from "../../BookingSystem/Admin/BookingActivityEdit
 import BookingAdminManager from "../../BookingSystem/Admin/BookingAdminManager";
 import BookingClientManager from "../../BookingSystem/Client/BookingClientManager";
 import BookingClientDetailed from "../../BookingSystem/Client/BookingClientDetailed";
-
+*/
 
 const Components = {
   ctext: CText,
