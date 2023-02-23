@@ -7,6 +7,7 @@ const CVideo = React.lazy(()=>import("../../Common/LayoutElement/CVideo/CVideo")
 const CResposiveTable = React.lazy(()=>import("../../Common/LayoutElement/CResposiveTable/CResposiveTable"))
 
 const TourGuideCanvas = React.lazy(()=>import("../../TourGuideCanvas/TourGuideCanvas"))
+const ARTreasureEditor = React.lazy(()=>import("../../ARTreasureEditor/ARTreasureEditor"))
 const LoginPage = React.lazy(()=>import("../../LoginSystem/LoginPage"))
 const LogoutPage = React.lazy(()=>import("../../LoginSystem/LogoutPage"))
 
@@ -60,6 +61,7 @@ const Components = {
   cvideo: CVideo,
   cmultipletext: CMultipleText,
   ctourguide: TourGuideCanvas,
+  cartreasureeditor: ARTreasureEditor,
   surveyeditor: SurveyEditor,
   crestable:CResposiveTable,
 
