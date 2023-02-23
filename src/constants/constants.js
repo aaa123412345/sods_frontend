@@ -1,6 +1,7 @@
 // common
 
 export const tourHost = process.env.REACT_APP_TOURGUIDE_SYSTEM_HOST
+export const arGameHost = process.env.REACT_APP_MINI_GAME_HOST
 export const refreshTime = 60 * 1000 // 1 min
 export const mobileBreakPoint = 48 * 16 // 46 em * 16 px (1em = 16px)
 
