@@ -218,15 +218,22 @@ const VotingClient = () => {
     }
 
     useEffect(()=>{
-        if(urlParams.has('passCode')){
-            if(passCode===''){
-                setPassCode(urlParams.get('passCode'))
-            }else{
-               checkPasscodeAndConnect();
+        if(user.token!== ''){
+            if(urlParams.has('passCode')){
+                if(passCode===''){
+                    setPassCode(urlParams.get('passCode'))
+                }else{
+                checkPasscodeAndConnect();
 
+                }
+            }else{
+                alert("You shoulld go these page with valid Passcode.")
+                window.location.href = "/public/eng/survey_list"
             }
         }else{
-             alert("You shoulld go these page with valid Passcode.")
+            alert("You should go this page with login state.")
+            window.location.href = "/user/eng/login"
+           
         }
         
         

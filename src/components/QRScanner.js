@@ -1,5 +1,6 @@
 import { QrReader } from "react-qr-reader"
 import React,{useState} from "react";
+//For testing only
 const QRScanner = () =>{
     const [data, setData] = useState('No result');
 

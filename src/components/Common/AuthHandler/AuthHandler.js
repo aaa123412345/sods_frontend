@@ -7,14 +7,14 @@ const AuthHandler = (requirePermission,user) =>{
     //if the permission requirnment is anonymousOnly, it only provide for anonymous user
     if(requirePermission==='anonymousOnly'){
 
-        if(user.userType === ''){
+        if(user.token === ''){
             return true;
         }else{
             return false;
         }      
     } 
     if(requirePermission === 'authenticated'){
-        if(user.userType === ''){
+        if(user.token === ''){
             return false;
         }else{
             return true;

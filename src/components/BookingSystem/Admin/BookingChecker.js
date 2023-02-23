@@ -184,6 +184,7 @@ const BookingChecker = () =>{
               <Modal.Body>
                 <div style={QRCodeScannerStyle("qr")}>
                     <QrReader
+                    constraints={{facingMode: 'environment'}}
                     onResult={(result, error) => {
                       if (!!result) {
                         setDataWithCrypto(result?.text);

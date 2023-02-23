@@ -9,28 +9,71 @@ import ServerNavbar from "../../ServerSite/ServerNavbar/ServerNavbar";
 
 
 import useSendRequest from "../../../hooks/useSendRequest";
-
+import useAuthChecker from "../../../hooks/useAuthChecker";
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 
 const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
-    const {items,isLoaded,ready,error,redirection} = useSendRequest(host+lang+'/'+path,'get',{},true)
+      const [pageActive,setPageActive] = useState(true)
+      const page = useSendRequest(host+lang+'/'+path,'get',{},pageActive,true)
+      
+      const [authHookState,setAuthHookState] = useState({requirePermission:'',active:false});
+      const auth = useAuthChecker(authHookState.requirePermission,authHookState.active)
 
-      if (error) {
-        console.log("Error")
-      } else if (isLoaded) {
-        
-      } else {
+      const [ready,setReady] = useState(false)
+
+      useEffect(()=>{
+        setPageActive(true)
+      },[host,path,subpath,lang])
+
+      useEffect(()=>{
+        if(!page.isLoaded && pageActive){
+            if(page.ready){
+                try{
+                  
+                    setAuthHookState({
+                      requirePermission:page.items.page.auth,
+                      active:true
+                    })
+                  }catch(e){
+                    alert("The page data have error. Please communicate with administrator if this error message exist")
+                  }
+                  setPageActive(false)
+                 
+                }else if(page.errMsg !==""){
+                  alert(page.errMsg)
+                  setPageActive(false)
+                }
+            }       
+        }
+      ,[page])
+
+      useEffect(()=>{
        
-        if(ready) {
-        
+        if(auth.ready && authHookState.active){
+          
+          if(auth.result === true){
+            setReady(true)
+          }else{
+            if(auth.redirect!==''){
+              window.location.href = auth.redirect
+            }
+          }
+          setAuthHookState({requirePermission:'',active:false})
+        }
+      },[auth])
+
+        if(ready){
+          var items = page.items
           return(
             <>
           
             {items.page.useHeader&&mode==="public"?<PublicHeader lang={lang}/>:''}
             <div className="PageContent" style={items.page.style}> 
                 
-                {mode==="public"? <PublicNavbar pdata={items.page} lang={lang}></PublicNavbar>:
+                {mode==="public"? <PublicNavbar pdata={page.items.page} lang={lang}></PublicNavbar>:
                   <ServerNavbar pdata={items.page} lang={lang}></ServerNavbar>
                 }
               
@@ -42,12 +85,8 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
             </div>
             </>
           )
-        }else{
-          return(redirection)
-
         }
-    }
-    
-}
+      }
+
 
 export default PageContent;

@@ -12,7 +12,12 @@ const PublicSurveyJoiner = () =>{
    
 
     const redirect = () => {
-        window.location.href = "/public/eng/vote_client?passCode="+passCode;
+        if(user.token !== ''){
+            window.location.href = "/public/eng/vote_client?passCode="+passCode;
+        }else{
+            alert("Please Login to use this function")
+        }
+        
     }
 
     function VotingConnector(){
@@ -52,7 +57,11 @@ const PublicSurveyJoiner = () =>{
             }
         }
         if(autoRedirect){
-            window.location.href = "/public/eng/vote_client?passCode="+tmpCode;
+            if(user.token !== ''){
+                window.location.href = "/public/eng/vote_client?passCode="+tmpCode;
+            }else{
+                alert("Please Login to use this function")
+            }
         }
     }
 
@@ -66,6 +75,7 @@ const PublicSurveyJoiner = () =>{
                 <Modal.Body>
                 
                     <QrReader
+                    constraints={{facingMode: 'environment'}}
                     onResult={(result, error) => {
                         if (!!result) {
                             checkAndRedirect(result?.text)

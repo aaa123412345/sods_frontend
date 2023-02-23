@@ -4,7 +4,6 @@ import {Table,Row,Col} from 'react-bootstrap';
 const CResposiveTable = (props) => {
     
 
-    console.log(props.keyPass)
     return(
         <>
             <div className="d-none d-sm-block">

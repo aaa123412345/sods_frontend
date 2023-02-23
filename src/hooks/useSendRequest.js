@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect,useContext } from "react";
 import {UserContext} from '../App'
 
-export default function useSendRequest(url,method,tdata,active){
+export default function useSendRequest(url,method,tdata,active,autoRedirect){
     const {user,clearLoginState} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -53,13 +53,26 @@ export default function useSendRequest(url,method,tdata,active){
 
                         }
                         setErrMsg('ValidationError')
+                        if(autoRedirect === true){
+                           window.location.href = "/user/eng/login"
+                        }
                         
                     }else if(data.code === 402){
                         setErrMsg('PermissionError')
+                        if(autoRedirect === true){
+                            window.location.href = "/public/eng/about"
+                         }
+
                     }else if(data.code === 404){
                         setErrMsg('DataNotFound')
+                        if(autoRedirect === true){
+                            window.location.href = "/public/eng/about"
+                         }
                     }else if(data.code === 400){
                         setErrMsg(data.msg)
+                        if(autoRedirect === true){
+                            window.location.href = "/public/eng/about"
+                         }
                     }
                     
 
