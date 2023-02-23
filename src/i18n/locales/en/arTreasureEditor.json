@@ -1,6 +1,8 @@
 {
     "heading": "AR Game List",
-    "add-game": "Add AR Game", 
+    "add-game": "Add AR Game",
+    "assign": "Assign", 
+    "loading": "Loading...",
     "heading-question": "Question(s)",
     "heading-answer": "Answer(s)",
     "heading-booth": "Assigned Booth",

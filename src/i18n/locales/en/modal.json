@@ -31,7 +31,10 @@
 
     "heading-ar-game": "AR Treasure Game",
     "label-ar-game-question": "Question",
-    "label-ar-game-answer": "Answer(s)"
+    "label-ar-game-answer": "Answer(s)", 
+
+    "heading-assign-game": "Assign Game To Booth",
+    "label-assign-booth-game": "Select Booth"
 
 
 

@@ -5,8 +5,9 @@ import TextInput from "../components/Common/common/Inputs/TextInput/TextInput";
 import ImageUploader from '../components/Common/common/Inputs/ImageUploader/ImageUploader'
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
 
-import { updateBooth, updateFloorplan, updateStory, updateVR, updateARTreasure } from "../redux/form/form.action";
+import { updateBooth, updateFloorplan, updateStory, updateVR, updateARTreasure, updateBoothGame } from "../redux/form/form.action";
 import TagInput from "../components/Common/common/Inputs/TagInput/TagInput";
+import ItemList from "../components/Common/common/ItemList/ItemList";
 
 export const tourModalData = {
 
@@ -186,6 +187,26 @@ export const tourModalData = {
             }
         ]
 
+    },
+
+    boothGame: {
+
+        heading: 'heading-assign-game',
+        components: [
+            {
+                type: ItemList, 
+                props: {
+                    isInputList: true,
+                    faIcon: faTent, 
+                    label: "label-assign-booth-game",
+                    names: { form: 'boothGame', field: 'boothId'},
+                    update: (data) => updateBoothGame(data)
+                }
+            }
+        ]
+
     }
+
+
 
 }

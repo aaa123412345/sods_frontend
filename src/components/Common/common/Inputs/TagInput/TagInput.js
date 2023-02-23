@@ -59,7 +59,7 @@ const TagInput = (props) => {
 
     const Tag = ({text, onClick}) => {
         return (
-            <Flex w="fit-content" m=".5em" paddingRight=".5em" borderRadius="25px" boxShadow="0px 1px 5px rgba(0, 0, 0, .2)" alignItems="center" justifyContent="space-around"
+            <Flex w="fit-content" m=".5em" paddingRight=".5em" borderRadius="5px" boxShadow="0px 1px 5px rgba(0, 0, 0, .2)" alignItems="center" justifyContent="space-around"
                 onClick={onClick}>
                 <Text m="0 .5em">{text}</Text>
                 <FontAwesomeIcon icon={faXmarkCircle} />

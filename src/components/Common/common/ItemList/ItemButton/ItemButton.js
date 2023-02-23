@@ -14,7 +14,8 @@ const ItemButton = (props) => {
             return React.createElement(RectangleIconButton,  {...props})
         case 'booths':
             return React.createElement(BoothRecord,  {...props})
-
+        case 'boothGame': 
+            return React.createElement(BoothRecord,  {isNotUseFunction: true, ...props})
         default: 
             return 
     }
