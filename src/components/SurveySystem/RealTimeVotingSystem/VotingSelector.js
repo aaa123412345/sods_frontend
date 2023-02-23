@@ -7,14 +7,18 @@ import {UserContext} from "../../../App"
 import SurveyBuilder from "../SurveyBuilder/SurveyBuilder";
 import { Form,Button } from "react-bootstrap";
 
+import { faSync} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-const VotingSelector = () => {
+
+const VotingSelector = (prop) => {
 
     const {user,clearLoginState} = useContext(UserContext)
     const [ready,setReady] = useState(false);
     const [surveyData, setSurveyData] = useState({});
     const [seletedSurvey, setSeletedSurvey] = useState('');
+    const [passCode,setPassCode] = useState('')
     const urlParams = new URLSearchParams(window.location.search);
     
     const getAllSurvey = async() =>{
@@ -56,7 +60,20 @@ const VotingSelector = () => {
 
     function selectedSurveyChange(event){
         setSeletedSurvey(event.target.value)
+        prop.setSurveyID(event.target.value)
         
+    }
+
+    const setRandomPasscode = () =>{
+        var num = 6
+        var str = "ABCDEFGHIJKNMOPQRSTUVWXYZ"
+        var result = ""
+        for(var i=0;i<num;i++){
+            var index = Math.floor(Math.random() * str.length)
+            result+=str.charAt(index)
+        }
+        setPassCode(result)
+        prop.setPasscode(result)
     }
 
 
@@ -67,14 +84,14 @@ const VotingSelector = () => {
            
             setSeletedSurvey(urlParams.get('surveyID'))
         }
-        
+        setRandomPasscode()
         getAllSurvey()
     },[])
 
 
     function surveySelector(data){
         return(
-            <Form.Select onChange={selectedSurveyChange} defaultValue={seletedSurvey}>
+            <Form.Select onChange={selectedSurveyChange} defaultValue={seletedSurvey} style={{width:"50%"}}>
                 <option value=''>Select Any Survey to show the preview</option>
                 {data.map((e,index) => 
                     <option value={e.surveyId} key={"survey-selector-option-"+index}>{e.surveyId +': '+e.surveyTitle}</option>
@@ -90,9 +107,18 @@ const VotingSelector = () => {
         return(
             <Row>
                 <Col xs='12' md='6'>
-                    {surveySelector(surveyData)}
+                <Form.Label className="mt-2">Pass Code (6 Letter): </Form.Label><br></br>
+                        {passCode}
+                        <Button size="sm" style={{marginLeft:"20px"}} onClick={setRandomPasscode}> <FontAwesomeIcon icon={faSync}></FontAwesomeIcon></Button>
+                        <br></br>
+                        {surveySelector(surveyData)}
+                        <br></br>
+
+                    <Button className="mt-2" onClick={prop.createGroup}> Create Group</Button>
+                    <Button className="mt-2" onClick={prop.createAndConnect}> Create And Connect Group</Button>
+                    <br></br>
+                    <br></br>
                     
-                    <Button onClick={()=>{window.location.href="/server/eng/vote_admin?surveyID="+seletedSurvey}}>Submit</Button>
                 </Col>
                 <Col xs='12' md='6' style={{backgroundColor:'lightgray'}}>
                 {seletedSurvey === ''?

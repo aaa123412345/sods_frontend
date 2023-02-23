@@ -8,6 +8,9 @@ import SockJS from 'sockjs-client';
 import RealTimeVotingElementDict from "./RealTimeVotingElementDict";
 import RealTimeVotingResultDisplayer from "./RealTimeVotingResultDisplayer";
 import QRCode from "react-qr-code";
+import { faSync} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import VotingSelector from "./VotingSelector";
 
 import useSendRequest from "../../../hooks/useSendRequest";
 
@@ -145,15 +148,7 @@ const VotingAdmin = () => {
         checkPasscodeAndConnect()
     }
 
-    const getRandomStr = (num) =>{
-        var str = "ABCDEFGHIJKNMOPQRSTUVWXYZ"
-        var result = ""
-        for(var i=0;i<num;i++){
-            var index = Math.floor(Math.random() * 26)
-            result+=str.charAt(index)
-        }
-        return result;
-    }
+   
 
     /*
     Web socket
@@ -197,6 +192,8 @@ const VotingAdmin = () => {
         
         setRoomState({...roomState,"isSubscribe":false})
         stompClient.unsubscribe('/user/'+passCode+'/private')
+        alert("Voting Finnish")
+        setTabKey('major')
     }
 
     const userJoin=()=>{
@@ -279,7 +276,7 @@ const VotingAdmin = () => {
         
             if(!passCodeReady){
                 setPassCodeReady(true)
-                setPassCode(getRandomStr(6))
+                
             }
             if(urlParams.has('surveyID')){
                 setSurveyID(urlParams.get('surveyID'))    
@@ -292,24 +289,17 @@ const VotingAdmin = () => {
     */
 
     function createGroupTab(){
+       
         return(
             <Tab eventKey="major" title="Group create/Connect">
                 
-                <Form.Label className="mt-2">Pass Code : {passCode}</Form.Label><br></br>
-                        
-                <Form.Label className="mt-2">Survey ID</Form.Label>
-                <Form.Control
-                    type="text"
-                    id="text"
-                    onChange={(event)=>setSurveyID(event.target.value)}
-                    defaultValue={surveyID}
-                    style={{width:"70%"}}
-                            
-                />
-                <Button className="mt-2" onClick={createGroup}> Create Group</Button>
-                <Button className="mt-2" onClick={createAndConnect}> Create And Connect Group</Button>
-                <br></br>
-                
+                <Row>
+                    
+                    <Col>
+                        <VotingSelector createGroup={createGroup} createAndConnect={createAndConnect}
+                        setPasscode= {setPassCode} setSurveyID={setSurveyID}></VotingSelector>
+                    </Col>
+                </Row>
             </Tab>
         )
     }
