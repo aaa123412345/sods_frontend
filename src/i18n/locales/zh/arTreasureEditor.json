@@ -1,7 +1,8 @@
 {
-    "heading": "遊戲列表",
+    "heading": "AR 遊戲列表",
     "add-game": "新增AR 遊戲", 
     "heading-question": "問題",
     "heading-answer": "答案",
-    "heading-booth": "相關攤位"
+    "heading-booth": "相關攤位",
+    "remark": "AR 尋寶之旅是一個用於分析攤位的成效的小遊戲，謎題是根據攤位資訊內容而設，玩家的回答或會反映攤位的成效"
 }

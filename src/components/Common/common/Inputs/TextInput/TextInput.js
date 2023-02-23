@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Flex, Input, Text, FormLabel, Textarea } from '@chakra-ui/react'
+import { Flex, Input, FormLabel, Textarea } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -8,9 +8,7 @@ import { placeholderLang } from '../../../../../constants/constants'
 
 const TextInput = (props) => {
 
-    const { 
-        isTextArea = false, faIcon, label, names, placeholder, form, update
-    } = props
+    const { isTextArea = false, faIcon, label, names, placeholder, form, update } = props
     const dispatch = useDispatch()
 
     const { t } = useTranslation()

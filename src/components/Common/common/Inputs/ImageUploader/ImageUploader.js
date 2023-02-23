@@ -7,7 +7,7 @@ import { Flex, FormLabel, Text, Image, useColorModeValue } from '@chakra-ui/reac
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux'
-import { updateFile } from '../../../../../redux/form/form.action'
+// import { updateFile } from '../../../../../redux/form/form.action'
 import { connect } from 'react-redux'
 
 const ImageUploader = (props) => {
@@ -78,7 +78,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    update: (file) => dispatch(updateFile(file))
+    // update: (file) => dispatch(updateFile(file))
 });
 
 export default connect(

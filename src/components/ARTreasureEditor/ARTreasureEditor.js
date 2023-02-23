@@ -16,6 +16,7 @@ import GameListContainer from './GameListContainer/GameListContainer'
 
 import { arGameHost, tourHost } from '../../constants/constants'
 import { updateConfig } from '../../redux/sysConfig/sysConfig.action'
+import EditorModal from '../Common/common/EditorModal/EditorModal'
 
 const ARTreasureEditor = (props) => {
   
@@ -76,6 +77,7 @@ const ARTreasureEditor = (props) => {
     <Wrapper isUseChakra isUseContainer>
 
       <GameListContainer />
+      <EditorModal />
 
     </Wrapper>
   )

@@ -15,7 +15,7 @@ import LoadingSpinner from '../Common/common/LoadingSpinner/LoadingSpinner'
 import { tourHost } from '../../constants/constants'
 import { updateFloorplans, updateStories, updateBooths, updateMarkers, updateLoadingItem, clearLoadingItem } from '../../redux/tourguide/tourguide.action'
 import BoothPage from './BoothPage/BoothPage'
-import EditorModal from './common/EditorModal/EditorModal'
+import EditorModal from '../Common/common/EditorModal/EditorModal'
 
 const TourGuideCanvas = (props) => {
 

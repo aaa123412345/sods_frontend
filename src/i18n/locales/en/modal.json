@@ -27,6 +27,13 @@
     
     "heading-vr": "VR Tour", 
     "label-vr-speech": "Speech for Tour", 
-    "label-upload-360image": "Upload 360 Degree Image"
+    "label-upload-360image": "Upload 360 Degree Image", 
+
+    "heading-ar-game": "AR Treasure Game",
+    "label-ar-game-question": "Question",
+    "label-ar-game-answer": "Answer(s)"
+
+
+
     
 }

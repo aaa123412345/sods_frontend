@@ -1,11 +1,12 @@
-import { faAlignLeft, faBook, faLocationDot, faTent } from "@fortawesome/free-solid-svg-icons";
+import { faA, faAlignLeft, faBook, faLocationDot, faQ, faTent } from "@fortawesome/free-solid-svg-icons";
 import { faImages, faMap } from "@fortawesome/free-regular-svg-icons";
 
-import TextInput from "../components/TourGuideCanvas/common/Inputs/TextInput/TextInput";
-import ImageUploader from "../components/TourGuideCanvas/common/Inputs/ImageUploader/ImageUploader";
+import TextInput from "../components/Common/common/Inputs/TextInput/TextInput";
+import ImageUploader from '../components/Common/common/Inputs/ImageUploader/ImageUploader'
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
 
-import { updateBooth, updateFloorplan, updateStory, updateVR } from "../redux/form/form.action";
+import { updateBooth, updateFloorplan, updateStory, updateVR, updateARTreasure } from "../redux/form/form.action";
+import TagInput from "../components/Common/common/Inputs/TagInput/TagInput";
 
 export const tourModalData = {
 
@@ -153,6 +154,36 @@ export const tourModalData = {
             //     props: { faIcon: faImages, label: "label-upload-cover" }
             // }
                     
+        ]
+
+    },
+
+    arTreasure: {
+
+        heading: "heading-ar-game",
+        components: [
+            {
+                type: TextInput,
+                props: {
+                    isTextArea: true,
+                    faIcon: faQ,
+                    label: "label-ar-game-question", 
+                    names: { form: "arTreasure", field: "question", }, 
+                    placeholder: { zh: "本校的主要授課語言是甚麼？" , en: "What is the teaching language?" },
+                    update: (data) => updateARTreasure(data)
+
+                }
+            }, 
+            {
+                type: TagInput,
+                props: {
+                    faIcon: faA,
+                    label: "label-ar-game-answer", 
+                    names: { form: "arTreasure", field: "answer", }, 
+                    placeholder: { zh: "英文" , en: "English" },
+                    update: (data) => updateARTreasure(data)
+                }
+            }
         ]
 
     }
