@@ -22,7 +22,7 @@ const VotingSelector = () => {
         try{
             const { data } = await axios({
               method: 'get',
-              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/survey_vote_only",
+              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/survey?type=Vote&&withFormat=True",
               headers:{
                 'token':user.token
               }
@@ -83,9 +83,7 @@ const VotingSelector = () => {
         )
     }
 
-    function jump(){
-
-    }
+   
 
    if(ready){
        

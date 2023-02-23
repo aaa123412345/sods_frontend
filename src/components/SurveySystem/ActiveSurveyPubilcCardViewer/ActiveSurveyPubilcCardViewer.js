@@ -38,6 +38,7 @@ const ActiveSurveyPublicCardViewer = () =>{
       <>
         <Row xs={1} sm={2} md={2} xl={3} xxl={4}  className="g-1">
           {items.map((element,index)=>ActiveSurveyCard(element,index))}
+          {items.length === 0? "You are finished all survey. Thank you":""}
           
         </Row>
       </>

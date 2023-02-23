@@ -33,7 +33,7 @@ const ActiveSurveyConfigPanel = (props) => {
         try{
             const { data } = await axios({
               method: 'get',
-              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/survey_with_format",
+              url: process.env.REACT_APP_SURVEY_SYSTEM_HOST+"/survey?withFormat=True&&type=Survey",
               headers:{
                 'token':user.token
               }

@@ -8,7 +8,7 @@ const SurveyTable = (props) => {
     
 
     const {items,isLoaded,ready,error,redirection} = 
-    useSendRequest(process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey','get',{},true)
+    useSendRequest(process.env.REACT_APP_SURVEY_SYSTEM_HOST+'/survey?withFormat=False&&type=all','get',{},true)
    
     if (error) {
         console.log("Error")
