@@ -2,7 +2,8 @@ import React, { useState, useEffect }  from 'react'
 
 import styled from 'styled-components'
 import { AnimatePresence } from 'framer-motion'
-import { Flex, Heading } from '@chakra-ui/react'
+import { Flex, Heading, FormLabel } from '@chakra-ui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios'
@@ -22,7 +23,8 @@ const ItemList = (props) => {
 
   const { 
     dataName, isCategoryList, modalName, heading, path, name,
-    tourguide, modal
+    isInputList = false, faIcon, label, names, update,
+    tourguide, arTreasure, modal, form
   } = props
 
   const { host, themeColor, itemIndex, floorplans, page, markers } = tourguide
@@ -30,8 +32,9 @@ const ItemList = (props) => {
 
   const { t } = useTranslation()
 
+  const [selectedIndex, setSelectIndex] = useState(null) // input & local use 
+
   const isNoRegionDefined = path === "booths" && floorplans.length === 0 ? true : false
-  
 
   // session storage
   // const [itemIndexSession, setItemIndexSession] = useSessionStorage('itemIndex', 0)
@@ -41,12 +44,15 @@ const ItemList = (props) => {
 
   const handle_active = (index) => {
 
-    let isSameIndex = itemIndex === index
+    let isSameIndex = (itemIndex === index) 
+
+    if(isInputList)
+      return selectedIndex === index
 
     // if(isDeleteMode)
     //   return selectedItems.includes(items[index].id) ? true : false 
     if(isCategoryList)
-      return isSameIndex ?  true : false
+      return isSameIndex 
     return false
 
   }
@@ -60,15 +66,25 @@ const ItemList = (props) => {
   
     if(isCategoryList)
       update_page(index)
+
+    console.log('clicked')
+
+    if(isInputList){
+      console.log(selectedIndex)
+      setSelectIndex(index)
+      let newData = {...form[names.form]}
+      newData[names.field] = arTreasure['booths'][index].id
+      dispatch(update({...newData}))
+    }
     
   }
 
   const open_modal = () => {
 
       let payload = {
-          modalName: modalName, 
-          path: path, method: 'post', 
-          name: name,
+        modalName: modalName, 
+        path: path, method: 'post', 
+        name: name,
       }
       
       // setModalSession({...modalSession, ...payload})
@@ -80,24 +96,41 @@ const ItemList = (props) => {
     
     <React.Fragment>
 
-      <Flex m="1em .5em">
-        <CustomButton faIcon={faAdd} bgColor={themeColor} 
-          text={t(`tourguideEditor.create-${path}`)}
-          isDisabled={isNoRegionDefined} onClick={open_modal}
-          />
-      </Flex>
+      {
 
-      <Title size="sm">{t(`${heading}`)}</Title>
+        !isInputList && 
+        <React.Fragment>
+          <Flex m="1em .5em">
+            <CustomButton faIcon={faAdd} bgColor={themeColor} 
+              text={t(`tourguideEditor.create-${path}`)}
+              isDisabled={isNoRegionDefined} onClick={open_modal}
+              />
+          </Flex>
+    
+          <Title size="sm">{t(`${heading}`)}</Title>
+        </React.Fragment>
+
+      }
+
+      { 
+        isInputList && 
+        <FormLabel ml=".5em" fontWeight="bold">
+          <FontAwesomeIcon icon={faIcon} style={{marginRight: '.5em'}} />
+          {t(`modal.${label}`)}
+        </FormLabel>
+      }
 
       <ScrollContent flexDir="column" flexWrap="no-wrap" overflowX="hidden" overflowY="scroll">
         <AnimatePresence>
         {
-          tourguide[dataName]?.map((item, index) => (
-            <ItemButton key={index} type={path} data={item}
+
+          (isInputList ? arTreasure['booths'] : tourguide[dataName])?.map((item, index) => (
+            <ItemButton key={index} type={path ?? names?.form} data={item}
               variant={handle_active(index) ? themeColor : 'gray'}
               onClick={()=>(select_item(index))}/>
           )) ?? <></>
         }
+
         </AnimatePresence>
       </ScrollContent>
 
@@ -109,6 +142,7 @@ const ItemList = (props) => {
 const mapStateToProps = state => {
   return {
       tourguide: state.tourguide,
+      arTreasure: state.arTreasure,
       modal: state.modal,
       form: state.form
   };

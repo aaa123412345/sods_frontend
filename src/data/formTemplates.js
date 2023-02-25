@@ -44,9 +44,17 @@ export const story = {
     contentEN: "" 
 
 }
+export const arTreasure = {
 
-export const game = {
+    questionEN: "",
+    questionZH: "",
+    answers: ""
 
-    gameType: null 
-    
+}
+
+export const boothGame = {
+
+    boothId: null,
+    gameId: null
+
 }

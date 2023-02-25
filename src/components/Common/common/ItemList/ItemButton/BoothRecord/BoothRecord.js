@@ -15,7 +15,7 @@ import OptionsMenu from './OptionsMenu/OptionsMenu'
 
 const BoothRecord = (props) => {
 
-    const { data, tourguide } = props
+    const { data, isNotUseFunction = false, onClick, variant, tourguide } = props
     const { floorplans, markers, itemIndex } = tourguide
     const dispatch = useDispatch()
 
@@ -25,6 +25,13 @@ const BoothRecord = (props) => {
         initial: { y: 100, opacity: 0 },
         animate: { y: 0, opacity: 1 },
         exit: { y: 100, opacity: 0 }
+    }
+
+    const handle_click = () => {
+
+        if(isNotUseFunction)
+            onClick()
+
     }
 
     const open_QRModal = () => {
@@ -49,17 +56,20 @@ const BoothRecord = (props) => {
     && (
 
         <React.Fragment>
-            <Flex justifyContent='flex-end'>
-                {/** QR Code */}
-                <CustomButton faIcon={faQrcode} onClick={open_QRModal} isCircle cssStyle={{boxShadow: "none"}}/>
-                {/** VR Preview */}
-                {/** More Button */}
-                <OptionsMenu data={data }/>
-            </Flex>
-            <Record variants={animations} initial='initial' animate="animate" exit='exit' transition={{duration: .25}}
-                flexDir={{base: "column", md: "row"}}>
 
-                
+            {
+                !isNotUseFunction && 
+                <Flex justifyContent='flex-end'>
+                    {/** QR Code */}
+                    <CustomButton faIcon={faQrcode} onClick={open_QRModal} isCircle cssStyle={{boxShadow: "none"}}/>
+                    {/** VR Preview */}
+                    {/** More Button */}
+                    <OptionsMenu data={data }/>
+                </Flex>
+            }
+            
+            <Record variants={animations} initial='initial' animate="animate" exit='exit' transition={{duration: .25}}
+                flexDir={{base: "column", md: "row"}} onClick={handle_click} bg={isNotUseFunction && variant !== 'gray' ? variant : ''}>
 
                 <Image src="/images/test-school-photo.jpg" h="100%" maxH="300px" w={{base: "100%", md: "150px"}} objectFit="cover" />
 

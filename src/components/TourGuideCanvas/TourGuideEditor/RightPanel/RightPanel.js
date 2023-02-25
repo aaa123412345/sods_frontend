@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { Flex, useColorModeValue } from '@chakra-ui/react'
 import { faMapLocationDot, faPen, faTent, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-import Toolbar from '../../common/Toolbar/Toolbar'
+import Toolbar from '../../../Common/common/Toolbar/Toolbar'
 import useSessionStorage from '../../../../hooks/useSessionStorage'
 import { tourEditorData } from '../../../../data/tourEditorData'
 

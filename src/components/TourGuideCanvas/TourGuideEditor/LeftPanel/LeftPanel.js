@@ -7,7 +7,7 @@ import { Flex } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 
-import ItemList from '../../common/ItemList/ItemList'
+import ItemList from '../../../Common/common/ItemList/ItemList'
 
 const LeftPanel = (props) => {
 

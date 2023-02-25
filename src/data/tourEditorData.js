@@ -1,6 +1,6 @@
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
-import ItemList from "../components/TourGuideCanvas/common/ItemList/ItemList";
 import StorySplider from "../components/TourGuideCanvas/StorySplider/StorySplider";
+import ItemList from "../components/Common/common/ItemList/ItemList";
 
 export const tourEditorData = {
 

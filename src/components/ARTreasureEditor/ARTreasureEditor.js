@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 
 import axios from 'axios'
-
-import styled from 'styled-components'
-import { Heading, useColorModeValue } from '@chakra-ui/react'
 
 import { connect, useDispatch } from 'react-redux'
 import { updateBooths, updateBoothGames, updateARTreasures } from '../../redux/arTreasure/arTreasure.action' 
@@ -16,18 +12,16 @@ import GameListContainer from './GameListContainer/GameListContainer'
 
 import { arGameHost, tourHost } from '../../constants/constants'
 import { updateConfig } from '../../redux/sysConfig/sysConfig.action'
+import EditorModal from '../Common/common/EditorModal/EditorModal'
 
 const ARTreasureEditor = (props) => {
   
   const { sysConfig } = props
   const { config } = sysConfig
 
-  const { lang, path, subpath } = useParams()
+  const { lang } = useParams()
   
   const dispatch = useDispatch()
-  const { t } = useTranslation()
-
-  const color = useColorModeValue('white', 'black')
 
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -58,8 +52,8 @@ const ARTreasureEditor = (props) => {
     Promise.all([
       get_data(tourHost, "configs", (data)=>updateConfig(data)),
       get_data(tourHost, "booths", (data)=>updateBooths(data)),
-      get_data(arGameHost, "boothGames", (data)=>updateBoothGames(data)),
-      get_data(arGameHost, "arTreasures", (data)=>updateARTreasures(data))
+      get_data(tourHost, "boothGames", (data)=>updateBoothGames(data)),
+      get_data(arGameHost, "treasures", (data)=>updateARTreasures(data))
     ])
     .then(()=>{
       console.log('loaded')
@@ -76,6 +70,7 @@ const ARTreasureEditor = (props) => {
     <Wrapper isUseChakra isUseContainer>
 
       <GameListContainer />
+      <EditorModal />
 
     </Wrapper>
   )

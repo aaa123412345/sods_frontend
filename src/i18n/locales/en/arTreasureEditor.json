@@ -1,7 +1,10 @@
 {
     "heading": "AR Game List",
-    "add-game": "Add New AR Game", 
+    "add-game": "Add AR Game",
+    "assign": "Assign", 
+    "loading": "Loading...",
     "heading-question": "Question(s)",
     "heading-answer": "Answer(s)",
-    "heading-booth": "Assigned Booth"
+    "heading-booth": "Assigned Booth",
+    "remark": "AR Treasure is a game for eveluate the effectiveness of the booth content. The puzzle is set based on the information provided by the booth. The player activity may reflect the effectiveness of this booth content. "
 }

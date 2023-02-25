@@ -28,6 +28,12 @@
 
     "heading-vr": "VR 導賞", 
     "label-vr-speech": "介紹演講", 
-    "label-upload-360image": "上載360全景圖片"
-    
+    "label-upload-360image": "上載360全景圖片", 
+
+    "heading-ar-game": "AR 尋寶之旅",
+    "label-ar-game-question": "謎題",
+    "label-ar-game-answer": "謎底",
+
+    "heading-assign-game": "設定攤位遊戲",
+    "label-assign-booth-game": "選選攤位"
 }
