@@ -7,32 +7,7 @@ import { color } from "@chakra-ui/react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const data2 = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -61,11 +36,15 @@ const RealTimeVotingResultDisplayer = ({data}) => {
         var data = []
         var backgroundColor = []
         var borderColor= []
-        Object.entries(dataDict).forEach(([key, value]) => {
+        Object.entries(dataDict).forEach(([key, value],index) => {
             labels.push(key);
             data.push(value);
-            
-            var tmpColor = randomRGB()
+            var tmpColor;
+            if(index<14){
+                tmpColor = RGBTalbe(index)
+            }else{
+                tmpColor = randomRGB()
+            }
             backgroundColor.push(getRGBAstr(tmpColor,0.2))
             borderColor.push(getRGBAstr(tmpColor,1))
          }); 
@@ -81,6 +60,12 @@ const RealTimeVotingResultDisplayer = ({data}) => {
                 }
             ]
          }
+    }
+    function RGBTalbe(index){
+        var R=[255,0,0,255,0,255,192,128,128,128,0,128,0,0]
+        var G=[0,255,0,255,255,0,192,128,0,128,128,0,128,0]
+        var B =[0,0,255,0,255,255,192,128,0,0,0,128,128,128]
+        return {r:R[index],g:G[index],b:B[index]}
     }
 
     function randomRGB(){

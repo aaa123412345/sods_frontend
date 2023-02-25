@@ -197,13 +197,14 @@ const VotingAdmin = () => {
     }
 
     const userJoin=()=>{
+        /*
           var chatMessage = {
             senderName: userData.userName,
             receiverName:passCode,
             status:MESSAGE_STATUS.JOIN,
             action:ACTION_TYPE.NONE
           };
-          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));*/
           setTabKey('votingControl')
     }
 
