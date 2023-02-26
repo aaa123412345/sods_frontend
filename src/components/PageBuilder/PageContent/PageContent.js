@@ -77,11 +77,12 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
                   <ServerNavbar pdata={items.page} lang={lang}></ServerNavbar>
                 }
               
-
-              { items.page.useBootstrap?
-              <PageBootstrapHandler data={items.element} path={path} subpath={ subpath} lang={lang}></PageBootstrapHandler>:
-              items.element.map((element)=> ElementBuilder({data:element,path:path,subpath:subpath,lang:lang}))
-              }
+              <div style={{paddingLeft:'5px'}}>
+                { items.page.useBootstrap?
+                <PageBootstrapHandler data={items.element} path={path} subpath={ subpath} lang={lang}></PageBootstrapHandler>:
+                items.element.map((element)=> ElementBuilder({data:element,path:path,subpath:subpath,lang:lang}))
+                }
+              </div>
             </div>
             </>
           )
