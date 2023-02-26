@@ -79,7 +79,8 @@ const RealTimeVotingResultDisplayer = ({data}) => {
     }
 
     function displaySelector(data){
-
+        <Pie data={dataConvertToChart(data.map)} />
+        /*
        if(data.resultRenderMethod === ResultRenderMethod.PIECHART){
         return ( <Pie data={dataConvertToChart(data.map)} />)
 
@@ -93,7 +94,7 @@ const RealTimeVotingResultDisplayer = ({data}) => {
             return(
                 <ReactWordcloud words={dataConvertToWordCloud(data.map)} size={[10,10]} options = {{rotations: 2,rotationAngles: [-90, 0]}}></ReactWordcloud>
             )
-        }
+        }*/
     }
    
     return(

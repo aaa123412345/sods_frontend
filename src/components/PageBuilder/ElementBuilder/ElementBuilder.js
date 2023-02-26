@@ -26,6 +26,9 @@ const BookingActivityEditor = React.lazy(()=>import("../../BookingSystem/Admin/B
 const BookingAdminManager = React.lazy(()=>import("../../BookingSystem/Admin/BookingAdminManager"))
 const BookingClientManager = React.lazy(()=>import("../../BookingSystem/Client/BookingClientManager"))
 const BookingClientDetailed = React.lazy(()=>import("../../BookingSystem/Client/BookingClientDetailed"))
+
+const NavigationEditor = React.lazy(()=>import("../../CMS/NavigationEditor/NavigationEditor"))
+
 /*
 import CImage from "../../Common/LayoutElement/CImage/CImage";
 import CMultipleText from "../../Common/LayoutElement/CMultipleText/CMultipleText";
@@ -83,6 +86,8 @@ const Components = {
   bookingAdminManager:BookingAdminManager,
   bookingClientManager:BookingClientManager,
   bookingClientDetailed:BookingClientDetailed,
+
+  navigationEditor:NavigationEditor
 };
 
 export default block => {
