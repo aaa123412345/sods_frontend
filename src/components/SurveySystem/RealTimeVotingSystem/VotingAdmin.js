@@ -18,6 +18,7 @@ var stompClient =null;
 //Enum
 const MESSAGE_STATUS = {
     JOIN:"JOIN",
+    ADMINJOIN:"ADMINJOIN",
     LEAVE:"LEAVE",
     MESSAGE:"MESSAGE",
     COMMAND:"COMMAND",
@@ -51,6 +52,8 @@ const VotingAdmin = () => {
     const [surveyID,setSurveyID] = useState('')
     const [passCodeReady,setPassCodeReady] = useState(false)
     const [groupCreated,setGroupcreated] = useState(false)
+    const [currentQuestionMsg,setCurrentQuestionMsg] = useState('')
+
     const urlParams = new URLSearchParams(window.location.search);
 
 
@@ -197,14 +200,14 @@ const VotingAdmin = () => {
     }
 
     const userJoin=()=>{
-        /*
+        
           var chatMessage = {
             senderName: userData.userName,
             receiverName:passCode,
-            status:MESSAGE_STATUS.JOIN,
+            status:MESSAGE_STATUS.ADMINJOIN,
             action:ACTION_TYPE.NONE
           };
-          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));*/
+          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
           setTabKey('votingControl')
     }
 
@@ -234,6 +237,9 @@ const VotingAdmin = () => {
         if('renderData' in data){
             console.log(data.renderData)
            setRenderData(data.renderData)
+        }
+        if('currentQuestionMsg' in data){
+            setCurrentQuestionMsg(data.currentQuestionMsg)
         }
         setVotingState(data)
     }
@@ -398,14 +404,20 @@ const VotingAdmin = () => {
                 <Col>
                 <h4>Admin Action : </h4> 
                 <br></br>
-                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.CLEAR)}>Clear Data</Button>
+                
+                {votingState.clientRenderMethod === CLIENT_RENDER_METHOD.SHOWRESULT?
+                ''
+                :<>
+                    <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.SHOWRESULT)}>Show result</Button>
                 <br></br> <br></br>
-
-                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.SHOWRESULT)}>Show result</Button>
-                <br></br> <br></br>
+                </>}
+                
                 <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.NEXTQUESTION)}>Next question</Button>
                 <br></br> <br></br>
-                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.VOTINGEND)}>End Voting</Button>
+                {votingState.currentQuestion === votingState.maxQuestion?
+                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.VOTINGEND)}>End Voting</Button>:''
+                     }
+                
                 </Col>
             </Row>
             
@@ -429,7 +441,11 @@ const VotingAdmin = () => {
                     )
                 }else if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.SHOWRESULT){
                     return(
+                        <>
+                        {currentQuestionMsg !== ''?<h4>{currentQuestionMsg}</h4>:''}
                         <RealTimeVotingResultDisplayer data={JSON.parse(renderData)}></RealTimeVotingResultDisplayer>
+                        </>
+                        
                     )
                 }
             }

@@ -2,18 +2,17 @@ import React from "react";
 
 import ReactWordcloud from "react-wordcloud"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
-import { color } from "@chakra-ui/react";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
-
-
+import { Pie,Bar,Line } from 'react-chartjs-2';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+
 
 const ResultRenderMethod = {
-    WORDCLOUD:'WORDCLOUD'
+    WORDCLOUD:'WORDCLOUD',
+    PIECHART:'PIECHART',
+    BARCHART:'BARCHART',
+    LINECHART:'LINECHART'
 }
 
 
@@ -80,17 +79,30 @@ const RealTimeVotingResultDisplayer = ({data}) => {
     }
 
     function displaySelector(data){
-        if(data.resultRenderMethod === ResultRenderMethod.WORDCLOUD) {
+
+       if(data.resultRenderMethod === ResultRenderMethod.PIECHART){
+        return ( <Pie data={dataConvertToChart(data.map)} />)
+
+        }else if(data.resultRenderMethod === ResultRenderMethod.LINECHART){
+            return ( <Line data={dataConvertToChart(data.map)} />)
+
+        }else if(data.resultRenderMethod === ResultRenderMethod.BARCHART){
+            return ( <Bar data={dataConvertToChart(data.map)} />)
+
+        }else if(data.resultRenderMethod === ResultRenderMethod.WORDCLOUD){
             return(
                 <ReactWordcloud words={dataConvertToWordCloud(data.map)} size={[10,10]} options = {{rotations: 2,rotationAngles: [-90, 0]}}></ReactWordcloud>
-
             )
         }
     }
    
     return(
-        //displaySelector(data)
+        displaySelector(data)
+        /*
+        <>
         <Pie data={dataConvertToChart(data.map)} />
+        </>*/
+        
     )
         
 

@@ -7,6 +7,7 @@ import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
 import RealTimeVotingElementDict from "./RealTimeVotingElementDict";
 import RealTimeVotingResultDisplayer from "./RealTimeVotingResultDisplayer";
+import useSendRequest from "../../../hooks/useSendRequest";
 
 
 var stompClient =null;
@@ -44,15 +45,15 @@ const VotingClient = () => {
     const {user,clearLoginState} = useContext(UserContext)
     const [passCode,setPassCode] = useState('')
     
-    const [passCodeReady,setPassCodeReady] = useState(false)
-    const [groupCreated,setGroupcreated] = useState(false)
+
     const urlParams = new URLSearchParams(window.location.search);
+
+    const [showSubmitBtn,setShowSubmitBtn] = useState(true);
 
 
     const [roomState, setRoomState] = useState({
         isConnect:false,
-        isSubscribe:false,
-        
+        isSubscribe:false, 
     })
     const [votingState, setVotingState] = useState({})
 
@@ -63,10 +64,62 @@ const VotingClient = () => {
     const [renderData, setRenderData] = useState({})
     const [validated,setValidated] = useState(false)
     const [responseData,setResponseData] = useState({})
+
+    const [checkSubmitActive,setCheckSubmitActive] = useState(false)
+    const checkSubmit = useSendRequest(process.env.REACT_APP_VOTING_SYSTEM_HOST+'/checkSubmit/'+passCode,'get',{},checkSubmitActive)
     
+    const [checkPasscodeActive,setCheckPasscodeActive] = useState(false)
+    const checkPasscode = useSendRequest(process.env.REACT_APP_VOTING_SYSTEM_HOST+'/passcode/'+passCode,'get',{},checkPasscodeActive,true)
+   
+    
+    /*UseEffect*/
+    useEffect(()=>{
+        if(user.token!== ''){
+            if(urlParams.has('passCode')){
+                if(passCode===''){
+                    setPassCode(urlParams.get('passCode'))
+                }else{
+                    setCheckPasscodeActive(true)
+                }
+            }else{
+                alert("You shoulld go these page with valid Passcode.")
+                window.location.href = "/public/eng/survey_list"
+            }
+        }else{
+            alert("You should go this page with login state.")
+            window.location.href = "/user/eng/login"
+           
+        }
+    },[passCode])
 
+    useEffect(()=>{
+        if(!checkPasscode.isLoaded&&checkPasscodeActive){
+            if(checkPasscode.ready){
+                setCheckPasscodeActive(false)
+                setCheckSubmitActive(true)
+                connect()
+            }else if(checkPasscode.errMsg!==""){
+                alert(checkPasscode.errMsg)
+            }
+        }
+    },[checkPasscode])
 
+    useEffect(()=>{
+        if(!checkSubmit.isLoaded&&checkSubmitActive){
+            if(checkSubmit.ready){
 
+                if('isSubmit' in checkSubmit.items){
+                    setShowSubmitBtn(!checkSubmit.items.isSubmit)
+                }
+
+                setCheckSubmitActive(false)
+            }else if(checkSubmit.errMsg!==""){
+                alert(checkPasscode.errMsg)
+            }
+        }
+    },[checkSubmit])
+
+    /*
     const checkPasscodeAndConnect=async()=>{ 
         const { data } = await axios({
                 method: 'get',
@@ -81,7 +134,7 @@ const VotingClient = () => {
                 
             }
     }
-
+*/
     /*
     Web socket
     */
@@ -102,6 +155,7 @@ const VotingClient = () => {
     }
 
     const onConnected = (data) => {
+        alert("Connect Success")
         var validatedUserData = JSON.parse(data.headers['user-name'])
         setUserData({...userData,"UserID":validatedUserData.UserID,"permission":[...userData.permission,validatedUserData.Permission]})
 
@@ -158,8 +212,13 @@ const VotingClient = () => {
         //setClickCount(data.clickCount)
 
         if('renderData' in data){
-            console.log(data.renderData)
+            //console.log(data.renderData)
            setRenderData(data.renderData)
+        }
+        if('clientRenderMethod' in data){
+            if(data.clientRenderMethod === CLIENT_RENDER_METHOD.SHOWRESULT){
+                setShowSubmitBtn(true)
+            }
         }
         setVotingState(data)
     }
@@ -207,7 +266,7 @@ const VotingClient = () => {
          
           setValidated(true);
         }else{
-            
+            setShowSubmitBtn(false)
             sendPrivateValueWithData(ACTION_TYPE.SUBMIT,responseData)
         }
        
@@ -218,38 +277,11 @@ const VotingClient = () => {
         setResponseData({key:qid,value:value})
         
     }
-
-    useEffect(()=>{
-        if(user.token!== ''){
-            if(urlParams.has('passCode')){
-                if(passCode===''){
-                    setPassCode(urlParams.get('passCode'))
-                }else{
-                checkPasscodeAndConnect();
-
-                }
-            }else{
-                alert("You shoulld go these page with valid Passcode.")
-                window.location.href = "/public/eng/survey_list"
-            }
-        }else{
-            alert("You should go this page with login state.")
-            window.location.href = "/user/eng/login"
-           
-        }
-        
-        
-         
-    },[passCode])
-
     /*
     React Component Group
     */
-  
-    
-
     function rendering(){
-        if(roomState.isSubscribe){
+        if(roomState.isSubscribe && checkSubmit.ready){
             if(votingState.clientRenderMethod!== undefined && renderData !== {}){
                 if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.VOTING){     
                     return(
@@ -258,13 +290,18 @@ const VotingClient = () => {
                             <Form noValidate validated={validated}>
                                 <RealTimeVotingElementDict data={JSON.parse(renderData)} qid={votingState.currentQuestion}
                                 validated={validated} parentFunction={onInput} savedFormData={{}} curPart={''}/>
-                                <Button onClick={handleSubmit} className="mt-3">Submit</Button>
+                                {showSubmitBtn?
+                                <Button onClick={handleSubmit} className="mt-3">Submit</Button>:
+                                "You Are Submitted"
+                                }
+                                
                             </Form>
                             
                         </>
                     
                     )
                 }else if(votingState.clientRenderMethod === CLIENT_RENDER_METHOD.SHOWRESULT){
+                    
                     return(
                         <> 
                             <h3>Current Question:</h3> 
