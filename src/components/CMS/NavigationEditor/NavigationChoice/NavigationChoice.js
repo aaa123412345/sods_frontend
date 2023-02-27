@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Tooltip} from "react-bootstrap";
 
 
-const NavigationChoice = ({data,mode, configNode, addNode, removeNode, index,sindex}) => {
+const NavigationChoice = ({data,mode, configNode, addNode, removeNode, index,sindex,configNodeData}) => {
     const [toggle,setToggle] = useState(false)
     
     function childNode(){
        
         if(data.child.length>0&&toggle){
             return(
-                data.child.map((data,i) => <NavigationChoice data={data} addNode={addNode} index={index} sindex={i}
+                data.child.map((data,i) => <NavigationChoice data={data} addNode={addNode} index={index} sindex={i} configNodeData={configNodeData}
                 configNode={configNode} removeNode={removeNode} key={"nav-edit-bar-choice-"+index+"-child-"+i} mode='child'/>)
             )
         }
@@ -38,7 +38,10 @@ const NavigationChoice = ({data,mode, configNode, addNode, removeNode, index,sin
                    
                 <div style={{ paddingLeft:"15px",paddingRight:"15px", borderLeft:"dashed black 1px"}}>
                      {data.navName}
+                     
                      {toggleBtn()}
+                     {configNodeData.index === index && configNodeData.sindex === sindex?
+                     <span style={{fontWeight:"bold"}}>{" (Selected)"}</span>:""}
 
                     <span style={{float:'right'}}>
                         

@@ -56,16 +56,23 @@ const NavigationEditor = props => {
 
     function setNode(index,subindex,newData){
         var tmp = navData
+        
 
         //no child
         if(subindex<0){
-            tmp[index] = newData;
+            tmp.navdata[index] = newData;
+            console.log(tmp.navdata[index])
+            console.log(newData)
             setNavData(tmp);
         }else{
-            var tmp1 = tmp[index]
-            tmp1.child[subindex] = newData;
+            
+            tmp.navdata[index].child[subindex] = newData;
+            console.log(tmp)
             setNavData(tmp);
         }
+        
+
+        setUpdate(true)
     }
 
     function configNode(index,subindex){
@@ -115,6 +122,8 @@ const NavigationEditor = props => {
         }
     },[update])
 
+
+
     useEffect(()=>{
         if(!navDataHook.isLoaded&&navDataState.active){
             if(navDataHook.ready){
@@ -154,11 +163,11 @@ const NavigationEditor = props => {
         </Row>
         <Row>
             <Col style={{paddingLeft:"15px"}}>
-                <NavigationTree data={cloneDeep(navData)}  
+                <NavigationTree data={cloneDeep(navData)} configNodeData={configNodeData} 
                 configNode={configNode} addNode={addNode} removeNode={removeNode}></NavigationTree>
             </Col>
             <Col style={{paddingLeft:"15px"}}>
-                <NavigationConfigPanel data={cloneDeep(navData)} configNodeData={configNodeData}/>
+                <NavigationConfigPanel data={cloneDeep(navData)} configNodeData={configNodeData} setNode={setNode}/>
             </Col>
         </Row>    
         </>

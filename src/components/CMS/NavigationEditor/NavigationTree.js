@@ -6,12 +6,11 @@ import { faSquarePlus} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Tooltip} from "react-bootstrap";
 
-const NavigationTree = ({data, configNode, addNode, removeNode}) =>  {
+const NavigationTree = ({data, configNode, addNode, removeNode,configNodeData}) =>  {
 
     
     if(data.navdata !== undefined){
-        console.log(data.navdata)
-        console.log(typeof data.navdata)
+        
     
         return (
            
@@ -22,7 +21,7 @@ const NavigationTree = ({data, configNode, addNode, removeNode}) =>  {
                 </OverlayTrigger>
                 <div style={{ paddingLeft:"15px"}}> 
                     {data.navdata.map((data,index) => <NavigationChoice data={data} index={index} sindex={-1} addNode={addNode} removeNode={removeNode}
-                    configNode={configNode} key={"nav-edit-bar-choice-"+index} mode='parent'/>)}
+                    configNode={configNode} configNodeData={configNodeData} key={"nav-edit-bar-choice-"+index} mode='parent'/>)}
                 </div>
             </div>
         )
