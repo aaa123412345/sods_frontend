@@ -13,8 +13,9 @@ pipeline {
      stage('Npm stage') { 
             steps { 
                 echo 'Npm stage'
-                sh 'npm install '
-                sh 'npm build'
+                sh 'npm install'
+                sh 'npm audit fix'
+                sh 'npm run build'
             }
         }
    /*
