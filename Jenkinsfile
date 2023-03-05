@@ -14,7 +14,7 @@ pipeline {
             steps { 
                 echo 'Npm stage'
                 sh 'npm install '
-                sh 'npm run build'
+                sh 'npm build'
             }
         }
    /*
