@@ -5,7 +5,7 @@ pipeline {
         args '-p 3000:3000'
     }
   }
-  enviroonment {
+  environment {
       CI = 'true'
   }
  
