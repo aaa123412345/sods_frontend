@@ -1,13 +1,5 @@
 pipeline {
-  agent {
-    docker{
-        image 'node:6-alpine'
-        args '-p 3000:3000'
-    }
-  }
-  environment {
-      CI = 'true'
-  }
+  agent any
  
   stages {
     stage('Clone repository') { 
@@ -21,7 +13,7 @@ pipeline {
      stage('Npm stage') { 
             steps { 
                 echo 'Npm stage'
-                sh 'npm install --force'
+                sh 'npm install '
                // sh 'npm run build'
             }
         }
