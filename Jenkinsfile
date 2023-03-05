@@ -16,10 +16,11 @@ pipeline {
             }
         }
     
-     stage('Npm run build') { 
+     stage('Npm stage') { 
             steps { 
-                echo 'Npm run build'
-                sh 'npm run build'
+                echo 'Npm stage'
+                sh 'npm install'
+               // sh 'npm run build'
             }
         }
    /*
