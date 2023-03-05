@@ -2,7 +2,9 @@ FROM node:17-alpine
 
 WORKDIR /app
 
-COPY build .
+RUN mkdir -p build
+
+COPY build/ build/
 
 EXPOSE 3000
 
