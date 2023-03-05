@@ -1,11 +1,13 @@
 pipeline {
   agent {
     docker{
-        image 'node:19-alpine'
+        image 'node:17-alpine'
         args '-p 3000:3000'
     }
   }
-  
+  enviroonment {
+      CI = 'true'
+  }
  
   stages {
     stage('Clone repository') { 
