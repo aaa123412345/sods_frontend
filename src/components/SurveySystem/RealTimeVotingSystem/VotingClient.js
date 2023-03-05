@@ -175,7 +175,8 @@ const VotingClient = () => {
         setRoomState({...roomState,"isSubscribe":false})
         stompClient.unsubscribe('/user/'+passCode+'/private')
         alert("Voting End, Thank you.")
-        window.location.href("public/eng/survey_list")
+        setTimeout(()=>window.location.href="public/eng/survey_list",2000)
+        
     }
 
     const userJoin=()=>{

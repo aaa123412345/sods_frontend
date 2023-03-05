@@ -3,6 +3,8 @@ import React from "react";
 import ReactWordcloud from "react-wordcloud"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie,Bar,Line } from 'react-chartjs-2';
+import 'chart.js/auto';
+import { Chart } from 'react-chartjs-2';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -15,7 +17,32 @@ const ResultRenderMethod = {
     LINECHART:'LINECHART'
 }
 
-
+const dataX = {
+    labels: [1,2,3,4,5,6,7],
+    datasets: [{
+        label: 'My First Dataset',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 207, 0.2)'
+        ],
+        borderColor: [
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)'
+        ],
+        borderWidth: 1
+      }]
+}
 
 const RealTimeVotingResultDisplayer = ({data}) => {
 
@@ -79,22 +106,27 @@ const RealTimeVotingResultDisplayer = ({data}) => {
     }
 
     function displaySelector(data){
-        <Pie data={dataConvertToChart(data.map)} />
-        /*
-       if(data.resultRenderMethod === ResultRenderMethod.PIECHART){
-        return ( <Pie data={dataConvertToChart(data.map)} />)
-
-        }else if(data.resultRenderMethod === ResultRenderMethod.LINECHART){
-            return ( <Line data={dataConvertToChart(data.map)} />)
-
-        }else if(data.resultRenderMethod === ResultRenderMethod.BARCHART){
-            return ( <Bar data={dataConvertToChart(data.map)} />)
-
-        }else if(data.resultRenderMethod === ResultRenderMethod.WORDCLOUD){
+        var type = 'pie'
+        if(data.resultRenderMethod === ResultRenderMethod.LINECHART){
+            type = 'line'
+        }else if (data.resultRenderMethod === ResultRenderMethod.BARCHART){
+            type = 'bar'
+        }
+        
+        if(data.resultRenderMethod !== ResultRenderMethod.WORDCLOUD){
+            return(
+                <>
+                <Chart type={type} data={dataConvertToChart(data.map)} />
+            
+                </>
+                
+            )
+        }else{
             return(
                 <ReactWordcloud words={dataConvertToWordCloud(data.map)} size={[10,10]} options = {{rotations: 2,rotationAngles: [-90, 0]}}></ReactWordcloud>
             )
-        }*/
+        }
+       
     }
    
     return(

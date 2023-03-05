@@ -8,8 +8,7 @@ import SockJS from 'sockjs-client';
 import RealTimeVotingElementDict from "./RealTimeVotingElementDict";
 import RealTimeVotingResultDisplayer from "./RealTimeVotingResultDisplayer";
 import QRCode from "react-qr-code";
-import { faSync} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import VotingSelector from "./VotingSelector";
 
 import useSendRequest from "../../../hooks/useSendRequest";
@@ -395,6 +394,7 @@ const VotingAdmin = () => {
     }
 
     function adminControlPlatform(){
+       
         return(
             
             <Row>
@@ -412,10 +412,14 @@ const VotingAdmin = () => {
                 <br></br> <br></br>
                 </>}
                 
+               
+                {votingState.currentQuestion == votingState.maxQuestion?
+                <Button onClick={()=>{
+                    sendPrivateCommand(ACTION_TYPE.VOTINGEND)
+                    alert("Voting End")
+                    window.location.reload()
+                }}>End Voting</Button>:
                 <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.NEXTQUESTION)}>Next question</Button>
-                <br></br> <br></br>
-                {votingState.currentQuestion === votingState.maxQuestion?
-                <Button onClick={()=>sendPrivateCommand(ACTION_TYPE.VOTINGEND)}>End Voting</Button>:''
                      }
                 
                 </Col>
