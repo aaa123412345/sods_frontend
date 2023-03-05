@@ -11,7 +11,6 @@ p.s.
 2. start backend service
 3. start frontend (this) service
 
-Build Step
+Jenkins for auto project build, image build, code deployment (AWS EC2)
 
-1. npm run build
-
+![jenkins_front](https://user-images.githubusercontent.com/15630162/222968017-44079932-f876-45b5-a4b1-61d25b51f6b9.png)
