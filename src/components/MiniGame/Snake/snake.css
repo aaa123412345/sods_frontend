@@ -1,0 +1,37 @@
+*,html,body {
+    margin: 0;
+    padding: 0;
+  }
+  @media screen and (min-width: 1024px) {
+    .snake{
+        width: 75vw;
+    }
+  }
+  
+  
+  @media screen and (min-width: 768px) and (max-width: 1023px) { 
+    .snake{
+    width: 70vw;
+}
+  }
+  
+  @media screen and (max-width: 767px) {
+    .snake{
+        width: 70vw;
+    }
+  }
+  
+  @media screen and (max-device-width: 480px) {
+    .snake{
+        width: 80vw;
+    }
+
+}
+  
+  @media screen and (max-device-width: 160px) {
+    .snake{
+        width: 80vw;
+    }
+      }
+  
+  

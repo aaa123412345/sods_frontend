@@ -1,13 +1,11 @@
-const Score= ({score, passingScore, numberofAction}) =>{
+const Score = ({ score, passingScore, numberofAction }) => {
+  return (
+    <div>
+      <h3>Moves Lefted : {numberofAction}</h3>
+      <h3>The Passing Score:{passingScore}</h3>
+      <h3>Your Score: {score}</h3>
+    </div>
+  );
+};
 
-    return (
-        <div>
-            <h2>Moves Lefted : {numberofAction}</h2>
-            <h2>The Passing Score:{passingScore}</h2>
-            <h2>Your Score: {score}</h2>
-        </div>
-    )
-}
-
-
-export default Score
+export default Score;
