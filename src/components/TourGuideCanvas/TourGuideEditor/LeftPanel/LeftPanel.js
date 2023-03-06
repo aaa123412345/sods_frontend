@@ -37,7 +37,7 @@ const LeftPanel = (props) => {
       dataName: 'stories',
       modalName: "story", 
       heading: t('tourguideEditor.cover-story'),
-      path: "story",
+      path: "stories",
       name: "story"
     }
   }

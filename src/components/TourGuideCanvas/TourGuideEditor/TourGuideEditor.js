@@ -19,7 +19,7 @@ import { langGetter } from '../../../helpers/langGetter'
 const TourGuideEditor = (props) => {
 
     const { tourguide, modal } = props
-    const { themeColor, floorplans, stories } = tourguide
+    const { themeColor, floorplans, stories, itemIndex } = tourguide
     const { modalIndex } = modal
     const dispatch = useDispatch()
 
@@ -37,8 +37,8 @@ const TourGuideEditor = (props) => {
     const tourguideScope = ['floorplans', 'booths']
     const storiesScope = ['stories']
     const pathIdDictionary = {
-        floorplans: floorplans[0]?.id, 
-        stories: stories[0]?.id
+        floorplans: floorplans[itemIndex]?.id, 
+        stories: stories[itemIndex]?.id
     }
 
     const change_page = (type) => {

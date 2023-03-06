@@ -1,13 +1,14 @@
-import { faA, faAlignLeft, faBook, faLocationDot, faQ, faTent } from "@fortawesome/free-solid-svg-icons";
+import { faA, faAlignLeft, faBook, faImage, faLocationDot, faMapLocation, faMapSigns, faQ, faTent, faVrCardboard } from "@fortawesome/free-solid-svg-icons";
 import { faImages, faMap } from "@fortawesome/free-regular-svg-icons";
+
+import { updateBooth, updateFloorplan, updateStory, updateVR, updateARTreasure, updateBoothGame } from "../redux/form/form.action";
 
 import TextInput from "../components/Common/common/Inputs/TextInput/TextInput";
 import ImageUploader from '../components/Common/common/Inputs/ImageUploader/ImageUploader'
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
-
-import { updateBooth, updateFloorplan, updateStory, updateVR, updateARTreasure, updateBoothGame } from "../redux/form/form.action";
 import TagInput from "../components/Common/common/Inputs/TagInput/TagInput";
 import ItemList from "../components/Common/common/ItemList/ItemList";
+
 
 export const tourModalData = {
 
@@ -24,10 +25,14 @@ export const tourModalData = {
                     update: (data) => updateFloorplan(data)
                 }
             },
-            // {
-            //     type: ImageUploader, 
-            //     props: { faIcon: faMap, label: "label-upload-map" }
-            // }
+            {
+                type: ImageUploader, 
+                props: { 
+                    faIcon: faMapLocation, 
+                    label: "label-upload-map",
+                    names: { form: "floorplan", field: "imageUrl" },
+                }
+            }
         ]
 
     },   
@@ -76,11 +81,25 @@ export const tourModalData = {
 
 
     marker: {
-        heading: "Where is Your Booth?",
+        heading: "heading-where-booth",
         components: [
             {
                 type: TourGuideMap, 
                 props: { isMarkable: false, isAssignBooth: true }
+            },
+        ]
+    },
+
+    vrTour: {
+        heading: "heading-vr",
+        components: [
+            {
+                type: ImageUploader, 
+                props: { 
+                    faIcon: faVrCardboard, 
+                    label: "label-upload-360image",
+                    names: { form: "booth", field: "vrImageUrl" },
+                }
             }
         ]
     },
@@ -95,7 +114,7 @@ export const tourModalData = {
                     faIcon: faTent,
                     label: "label-booth-name",
                     placeholder: { zh: "數學攤位", en: "Mathematic Booth" },
-                    names: { form: "booth", field: "name", },
+                    names: { form: "booth", field: "title", },
                     update: (data) => updateBooth(data)
                 }
             },
@@ -118,6 +137,14 @@ export const tourModalData = {
                     names: { form: "booth", field: "description", },
                     placeholder: { zh: "這裏是學生平日學習數學的地方。", en: "Students are always learning Maths here." },
                     update: (data) => updateBooth(data)
+                }
+            },
+            {
+                type: ImageUploader, 
+                props: { 
+                    faIcon: faImage, 
+                    label: "label-upload-cover",
+                    names: { form: "booth", field: "imageUrl" },
                 }
             }
             
@@ -150,10 +177,14 @@ export const tourModalData = {
                     update: (data) => updateStory(data)
                 }
             },
-            // {
-            //     type: ImageUploader, 
-            //     props: { faIcon: faImages, label: "label-upload-cover" }
-            // }
+            {
+                type: ImageUploader, 
+                props: { 
+                    faIcon: faImage, 
+                    label: "label-upload-cover",
+                    names: { form: "story", field: "imageUrl" },
+                }
+            }
                     
         ]
 

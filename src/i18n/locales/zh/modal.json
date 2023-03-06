@@ -1,14 +1,15 @@
 {
+
     "hint-upload": "拖放/點擊上載圖片",
 
-    "heading-floorplan": "你的平面圖",
+    "heading-floorplan": "您的平面圖",
     "label-region-name": "區域名稱",
     "label-upload-map": "上載平面圖",
     "placeholder-floor": "1樓",
 
     "heading-where-booth": "那裏是您的攤位？",
 
-    "heading-booth": "你的攤位簡介",
+    "heading-booth": "您的攤位簡介",
     "label-booth-name": "攤位名稱",
     "label-venue": "地點",
     "label-description": "簡介",
@@ -17,14 +18,14 @@
     "placeholder-description": "這裏是學生平日學習數學的地方。",
 
 
-    "heading-story": "你的故事",
+    "heading-story": "您的故事",
     "label-story-title": "故事標題",
     "label-story-content": "故事內容",
     "label-upload-cover": "上載封面相片",
     "placeholder-story": "第一天上學",
     "placeholder-story-content": "馬莉莉是個很害羞的學生，一天，陳老師建議他去……",
 
-    "heading-delete": "您是否要刪除？", 
+    "heading-delete": "您是否確定要刪除此項目？", 
 
     "heading-vr": "VR 導賞", 
     "label-vr-speech": "介紹演講", 

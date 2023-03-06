@@ -1,30 +1,21 @@
 export const floorplan = { 
 
     regionZH: "", 
-    regionEN: "" 
+    regionEN: "", 
+    imageUrl: null,
 
 }
 
 export const booth = {
 
-    nameZH: "", 
-    nameEN: "" ,
-    venueZH: "", 
-    venueEN: "",
-    descriptionZH: "", 
-    descriptionEN: ""
-}
-
-export const vr = {
-
-    nameZH: "", 
-    nameEN: "" ,
+    titleZH: "", 
+    titleEN: "" ,
     venueZH: "", 
     venueEN: "",
     descriptionZH: "", 
     descriptionEN: "",
-    speechEN: "",
-    speechZH: ""
+    imageUrl: null,
+    vrImageUrl: null
 
 }
 
@@ -32,7 +23,8 @@ export const marker = {
 
     y: null,
     x: null,
-    floorID: null
+    floorPlanID: null,
+    boothID: null
 
 }
 
@@ -41,7 +33,8 @@ export const story = {
     titleZH: "", 
     titleEN: "",
     contentZH: "", 
-    contentEN: "" 
+    contentEN: "" , 
+    imageUrl: null
 
 }
 export const arTreasure = {
@@ -56,5 +49,19 @@ export const boothGame = {
 
     boothId: null,
     gameId: null
+
+}
+
+// not use currently
+export const vr = {
+
+    nameZH: "", 
+    nameEN: "" ,
+    venueZH: "", 
+    venueEN: "",
+    descriptionZH: "", 
+    descriptionEN: "",
+    speechEN: "",
+    speechZH: ""
 
 }

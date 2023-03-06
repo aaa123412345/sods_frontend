@@ -6,38 +6,39 @@ import { useTranslation } from 'react-i18next'
 import { Flex, FormLabel, Text, Image, useColorModeValue } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
-import { useDispatch } from 'react-redux'
-// import { updateFile } from '../../../../../redux/form/form.action'
+
 import { connect } from 'react-redux'
+import { useEffect } from 'react'
+
 
 const ImageUploader = (props) => {
 
-    const { faIcon, label, modal, setFile } = props
-    const { byteData } = modal
+    const { faIcon, label, names, file, setFile, form } = props
 
     const { t } = useTranslation()
+    const [previewUrl, setPreviewUrl] = useState(form[names.form]?.[names.field] ?? "")
 
-    const base64str = 'data:image/*;base64,'
-    const [image, setImage] = useState(byteData !== null ? base64str+byteData : "")
+    const bg = useColorModeValue("gray.10", "gray.100")
 
     const upload_image = (e) => {
 
-        const reader = new FileReader();
-        reader.onload = () => {
-            if(reader.readyState === 2){
-                setImage(reader.result)
-            }else
-                setImage("")
-        }
-        reader.readAsDataURL(e.target.files[0])
-        // update(e.target.files[0])
-        setFile(e.target.files[0])
-
-        console.log(image)
+        if(e.target.files && e.target.files.length === 1)
+            setFile({name: names.field, file:e.target.files[0]})
 
     }
 
-    const bg = useColorModeValue("gray.10", "gray.100")
+    useEffect(()=>{
+
+        if(!file)
+            return 
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            setPreviewUrl(reader.result)
+        }
+        reader.readAsDataURL(file.file)
+
+    }, [file])
 
     return (
         
@@ -49,12 +50,12 @@ const ImageUploader = (props) => {
             </FormLabel>
 
             <ImagePreview bg={bg} borderRadius={25}>
-                <Image src={image} cursor="pointer"/>
+                <Image src={previewUrl} cursor="pointer"/>
                 <ImageInput type="file" name="image-upload" id="image-input" accept="image/*"
                     onChange={e=>upload_image(e)}/>
                 <Label htmlFor="image-input">
                     {
-                        (image === null || image === undefined || image === "" )
+                        (previewUrl === null || previewUrl === undefined || previewUrl === "" )
                         &&
                         <>
                             <FontAwesomeIcon icon={faUpload} size={'7x'}/>
@@ -77,18 +78,14 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    // update: (file) => dispatch(updateFile(file))
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(ImageUploader)
 
-const ImageInput = styled.input.attrs({ 
-    type: 'file'
-})`
+const ImageInput = styled.input.attrs({ type: 'file' })`
 
    display: none;
 

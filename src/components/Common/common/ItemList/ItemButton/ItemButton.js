@@ -1,6 +1,6 @@
 import React from 'react'
 import RectangleIconButton from './RectangleIconButton/RectangleIconButton'
-import BoothRecord from './BoothRecord/BoothRecord'
+import BoothButton from './BoothButton/BoothButton'
 
 const ItemButton = (props) => {
   
@@ -10,12 +10,12 @@ const ItemButton = (props) => {
 
         case 'floorplans':
             return React.createElement(RectangleIconButton,  {...props})
-        case 'story':
+        case 'stories':
             return React.createElement(RectangleIconButton,  {...props})
         case 'booths':
-            return React.createElement(BoothRecord,  {...props})
+            return React.createElement(BoothButton,  {...props})
         case 'boothGame': 
-            return React.createElement(BoothRecord,  {isNotUseFunction: true, ...props})
+            return React.createElement(BoothButton,  {isNotUseFunction: true, ...props})
         default: 
             return 
     }

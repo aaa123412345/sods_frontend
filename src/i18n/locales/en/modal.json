@@ -1,4 +1,5 @@
 {
+        
     "hint-upload": "Drag or Click to Upload Image",
 
     "heading-floorplan": "Your Floor Plan",
@@ -23,7 +24,7 @@
     "placeholder-story": "First Day of School",
     "placeholder-story-content": "Mary is a shy student; and one day, Miss Chan had suggested her to ...",
 
-    "heading-delete": "Do you want to delete?", 
+    "heading-delete": "Do you confirm to delete the item?", 
     
     "heading-vr": "VR Tour", 
     "label-vr-speech": "Speech for Tour", 

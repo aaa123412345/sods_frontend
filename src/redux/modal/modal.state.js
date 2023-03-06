@@ -6,6 +6,7 @@ export const initModalState = {
     method: '',
     name: '',
     id: null,
+    assignItem: null,
     qrID: null, 
     isQRCode: false
 

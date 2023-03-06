@@ -78,7 +78,7 @@ const BoothPage = (props) => {
                     faIcon={laptopMode ? faMap : faArrowLeft} isCircle={!laptopMode} onClick={back_toMap}
                     cssStyle={{position: 'absolute', zIndex: 2, margin: '1em', boxShadow: "1px 5px 5px rgba(0, 0, 0, .1)"}}/> 
 
-                <CoverImage src="/images/test-school-photo-01.jpeg"/>
+                <CoverImage src={booth['imageUrl']}/>
 
             </ImageContainer>
 

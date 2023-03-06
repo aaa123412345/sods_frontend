@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import styled from 'styled-components'
 import { AnimatePresence } from 'framer-motion'
@@ -18,6 +19,7 @@ import ItemButton from './ItemButton/ItemButton'
 import CustomButton from '../../../Common/common/CustomButton/CustomButton'
 
 import useSessionStorage from '../../../../hooks/useSessionStorage'
+import { langGetter } from '../../../../helpers/langGetter'
 
 const ItemList = (props) => {
 
@@ -27,10 +29,15 @@ const ItemList = (props) => {
     tourguide, arTreasure, modal, form
   } = props
 
-  const { host, themeColor, itemIndex, floorplans, page, markers } = tourguide
+  const { host, themeColor, itemIndex, floorplans, page, markers, stories } = tourguide
   const dispatch = useDispatch()
 
+  const { subsubpath } = useParams()
+  const nagvigate = useNavigate()
+
   const { t } = useTranslation()
+
+  const lang = langGetter() === 'en' ? 'eng' : 'chi'
 
   const [selectedIndex, setSelectIndex] = useState(null) // input & local use 
 
@@ -60,6 +67,13 @@ const ItemList = (props) => {
   const update_page = (index) => {
     // setItemIndexSession(index)
     dispatch(updateItemIndex(index))
+
+    if(subsubpath !== 'booths'){
+      let datalist = path === "floorplans" ? floorplans : stories
+      let id = datalist[index].id
+      nagvigate(`/server/${lang}/tourguide/editor/${path}/${id}`)
+    }
+    
   }
 
   const select_item = (index) => {
@@ -81,14 +95,14 @@ const ItemList = (props) => {
 
   const open_modal = () => {
 
-      let payload = {
-        modalName: modalName, 
-        path: path, method: 'post', 
-        name: name,
-      }
-      
-      // setModalSession({...modalSession, ...payload})
-      dispatch(openModal(payload))
+    let payload = {
+      modalName: modalName, 
+      path: path, method: 'post', 
+      name: name,
+    }
+    
+    // setModalSession({...modalSession, ...payload})
+    dispatch(openModal(payload))
       
   }
 
@@ -96,43 +110,47 @@ const ItemList = (props) => {
     
     <React.Fragment>
 
-      {
-
-        !isInputList && 
-        <React.Fragment>
-          <Flex m="1em .5em">
-            <CustomButton faIcon={faAdd} bgColor={themeColor} 
-              text={t(`tourguideEditor.create-${path}`)}
-              isDisabled={isNoRegionDefined} onClick={open_modal}
-              />
-          </Flex>
-    
-          <Title size="sm">{t(`${heading}`)}</Title>
-        </React.Fragment>
-
-      }
-
-      { 
-        isInputList && 
-        <FormLabel ml=".5em" fontWeight="bold">
-          <FontAwesomeIcon icon={faIcon} style={{marginRight: '.5em'}} />
-          {t(`modal.${label}`)}
-        </FormLabel>
-      }
-
-      <ScrollContent flexDir="column" flexWrap="no-wrap" overflowX="hidden" overflowY="scroll">
-        <AnimatePresence>
+      <Flex flexDir="column" w="100%">
         {
 
-          (isInputList ? arTreasure['booths'] : tourguide[dataName])?.map((item, index) => (
-            <ItemButton key={index} type={path ?? names?.form} data={item}
-              variant={handle_active(index) ? themeColor : 'gray'}
-              onClick={()=>(select_item(index))}/>
-          )) ?? <></>
+          !isInputList && 
+          <React.Fragment>
+            <Flex m="1em .5em">
+              <CustomButton faIcon={faAdd} bgColor={themeColor} 
+                text={t(`tourguideEditor.create-${path}`)}
+                isDisabled={isNoRegionDefined} onClick={open_modal}
+                />
+            </Flex>
+      
+            <Title size="sm">{t(`${heading}`)}</Title>
+          </React.Fragment>
+
         }
 
-        </AnimatePresence>
-      </ScrollContent>
+        { 
+          isInputList && 
+          <FormLabel ml=".5em" fontWeight="bold">
+            <FontAwesomeIcon icon={faIcon} style={{marginRight: '.5em'}} />
+            {t(`modal.${label}`)}
+          </FormLabel>
+        }
+
+        <ScrollContent flexDir={{base: isCategoryList ? 'row' : 'column', md: 'column'}} flexWrap="no-wrap" overflowX={{base: isCategoryList ? "hidden":"scroll", md: "hidden"}} overflowY={{base: isCategoryList ? "scroll":"hidden", md: "scroll"}}>
+          <AnimatePresence>
+          {
+
+            (isInputList ? arTreasure['booths'] : tourguide[dataName])?.map((item, index) => (
+              <ItemButton key={index} type={path ?? names?.form} data={item}
+                variant={handle_active(index) ? themeColor : 'gray'}
+                onClick={()=>(select_item(index))}/>
+            )) ?? <></>
+          }
+
+          </AnimatePresence>
+        </ScrollContent>
+
+      </Flex>
+
 
     </React.Fragment>
     

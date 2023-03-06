@@ -1,4 +1,4 @@
-import { CLEAR_ERROR_LIST, CLOSE_MODAL, CLOSE_QR_MODAL, OPEN_MODAL, OPEN_QR_MODAL, UPDATE_ERROR_LIST, UPDATE_MODAL, UPDATE_QR_ID } from './modal.action'
+import { CLOSE_MODAL, CLOSE_QR_MODAL, OPEN_MODAL, OPEN_QR_MODAL, UPDATE_MODAL, UPDATE_QR_ID } from './modal.action'
 import { initModalState } from './modal.state'
 
 const modalReducer = (state = initModalState, action) => {
@@ -10,13 +10,9 @@ const modalReducer = (state = initModalState, action) => {
                 isOpen: true
             }
         case CLOSE_MODAL:
-            return { ...state, isOpen: false, session: null }
+            return { ...state, isOpen: false, assignItem: null }
         case UPDATE_MODAL:
             return { ...state, ...action.config }
-        case UPDATE_ERROR_LIST:
-            return { ...state, errorList: action.errorList }
-        case CLEAR_ERROR_LIST:
-            return { ...state, errorList: [] }
         case OPEN_QR_MODAL:
             return { ...state, isQRCode: true }
         case CLOSE_QR_MODAL:

@@ -1,5 +1,6 @@
 export const initSysConfigState = {
 
-    config: null
+    config: null, 
+    refreshFlag: 0
     
 }

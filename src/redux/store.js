@@ -8,6 +8,7 @@ import modalReducer from './modal/modal.reducer'
 
 import arTreasureReducer from "./arTreasure/arTreasure.reducer";
 import vrTourReducer from "./vrTour/vrTour.reducer";
+import inspectorReducer from "./inspector/inspector.reducer";
 
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
         tourguide: tourguideReducer, 
         form: formReducer,
         modal: modalReducer,
+        inspector: inspectorReducer,
         arTreasure: arTreasureReducer,
         vrTour: vrTourReducer
     },

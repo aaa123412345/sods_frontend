@@ -16,10 +16,11 @@ import { tourHost } from '../../constants/constants'
 import { updateFloorplans, updateStories, updateBooths, updateMarkers, updateLoadingItem, clearLoadingItem } from '../../redux/tourguide/tourguide.action'
 import BoothPage from './BoothPage/BoothPage'
 import EditorModal from '../Common/common/EditorModal/EditorModal'
+import { clearRefreshFlag, updateConfig } from '../../redux/sysConfig/sysConfig.action'
 
 const TourGuideCanvas = (props) => {
 
-    const { block } = props
+    const { block, sysConfig } = props
     const { isAdmin } = block
 
     const { lang, path, subpath } = useParams()
@@ -79,6 +80,7 @@ const TourGuideCanvas = (props) => {
         setIsLoading(true)
     
         Promise.all([
+            get_data("configs", (data) => updateConfig(data)),
             get_data("floorplans", (data) => updateFloorplans(data)),
             get_data("booths", (data) => updateBooths(data)),
             get_data("markers", (data) => updateMarkers(data)),
@@ -88,9 +90,10 @@ const TourGuideCanvas = (props) => {
             console.log('loaded')
             setIsLoading(false)
             dispatch(clearLoadingItem())
+            dispatch(clearRefreshFlag())
         })
      
-    }, [])
+    }, [sysConfig.refreshFlag])
 
     useEffect(()=>{
         // redirect case
@@ -116,7 +119,8 @@ const TourGuideCanvas = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide, 
-        modal: state.modal
+        modal: state.modal, 
+        sysConfig: state.sysConfig
     };
 };
 
