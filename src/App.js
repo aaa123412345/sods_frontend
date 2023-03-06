@@ -23,6 +23,7 @@ import VRCanvas from "./components/VRCanvas/VRCanvas";
 import QRScanner from "./components/QRScanner";
 
 import ARCanvas from "./components/ARCanvas/ARCanvas";
+import Crush from "./components/MiniGame/Crush/Crush";
 
 
 export const UserContext = createContext()
@@ -30,6 +31,7 @@ export const UserContext = createContext()
 
 function App() {
     //Set the default permission here for testing
+    
     const permission = []
     permission.push(process.env.REACT_APP_DEFAULT_PERMISSION)
     const [user, setUser] = useState({
@@ -40,7 +42,9 @@ function App() {
     });
     
     const setUserContext = (userDict) => {
-        setUser(userDict)
+        if (userDict.rolePermission.length > 0) {
+            setUser(userDict)
+        }
     }
 
     const clearLoginState = () =>{
@@ -49,13 +53,15 @@ function App() {
             token:'',
             userType:''
         })
-        localStorage.removeItem('sods_fyp_ck')
-        localStorage.removeItem('sods_fyp_ut')
-        localStorage.removeItem('sods_fyp_rp')
-        localStorage.removeItem('sods_fyp_t')
+        try{
+            localStorage.removeItem('sods_fyp_ck')
+            localStorage.removeItem('sods_fyp_ut')
+            localStorage.removeItem('sods_fyp_rp')
+            localStorage.removeItem('sods_fyp_t')
+        }catch(e){
+            console.log(e)
+        }
         window.location.reload();
-
-
     }
 
     useEffect(()=>{
@@ -135,6 +141,7 @@ function App() {
                             <Routes>
                                 
                             <Route>
+                                <Route path="/crush" element={<Crush/>}></Route>
                                 <Route path="/testQR" element={<QRScanner/>}></Route>
                                 <Route path="/public/:lang/ar-treasure/:id" element={<ARCanvas/>}></Route>
                                 <Route path="/public/:lang/tourguide-vr/:id" element={<VRCanvas />}></Route> 

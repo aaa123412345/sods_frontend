@@ -13,32 +13,63 @@ const NavigationEditor = props => {
     const [navDataState,setNavDataState] = useState({
         active:false,
         lang:'eng',
-        domain:'public'
+        domain:'public',
+        backup:false
         
     });
-    const navDataHook = useSendRequest(host+navDataState.lang+'/'+navDataState.domain+"navdata",'get',{},navDataState,true)
+    const navDataHook = useSendRequest(navDataHookPathBuilder(),'get',{},navDataState.active,false)
     
-    const [navData, setNavData] = useState({})
-    const [backUpNavData, setBackUpNavData] = useState({})
+    const [updateNavDataState, setUpdateNavDataState] = useState({
+        active:false,
+    })
+    const updateNavDataHook = useSendRequest(host+navDataState.lang+'/'+navDataState.domain+"navdata",'post',
+    navData,updateNavDataState.active,false)
 
+    const [navData, setNavData] = useState({})
     const [configNodeData , setConfigNodeData] = useState({
         index:-1,
         sindex:-1
     })
 
     const [pageReady,setPageReady] = useState(true)
+    const [inEdit,setInEdit] = useState(false)
     const [update,setUpdate] = useState(false)
+
+    function changeNavDataState(event,target){
+        var tmp = navDataState
+        tmp[target] = event.target.value
+        setNavDataState(tmp)
+    }
 
     function startNew(){
         setNavData({...navData,navdata:[]})
-        setBackUpNavData({...navData,navdata:[]})
+        setInEdit(true)
     }
 
-    function getExist(){
+    function navDataHookPathBuilder(){
+        if(navDataState.backup){
+            return host+navDataState.lang+'/'+navDataState.domain+"navdata_backup"
+        }else{
+            return host+navDataState.lang+'/'+navDataState.domain+"navdata"
+        }
+        
+
+    }
+
+    function getExist(withBackup){
         setNavDataState({
             ...navDataState,
-            active:true
+            active:true,
+            backup:withBackup
         })
+        
+
+    
+    }
+
+    function Unfreeze(){
+        setInEdit(false)
+        setNavData({...navData,navdata:[]})
     }
 
     const parentNodeTemplate = {
@@ -131,12 +162,18 @@ const NavigationEditor = props => {
                     ...navDataState,
                     active:false
                 })
+                setInEdit(true)
                 setNavData(cloneDeep(navDataHook.items))
-                setBackUpNavData(cloneDeep(navDataHook.items))
+               
                 setPageReady(true)
                 console.log(navDataHook.items)
             }else if(navDataHook.errMsg!==""){
                 alert(navDataHook.errMsg)
+                setInEdit(false)
+                setNavDataState({
+                    ...navDataState,
+                    active:false
+                })
             }
         }
     },[navDataHook])
@@ -147,20 +184,37 @@ const NavigationEditor = props => {
         <Row className="mb-3 mt-3">
             <Col>
                 {"Domain: "} 
-                <select>
+                <select disabled={inEdit} onChange={(e)=>{changeNavDataState(e,'domain')}}>
                     <option value="public">Public</option>
                     <option value="server">Server</option>
                 </select>
             </Col>
             <Col>
                 {"Language: "} 
-                <input type="text" style={{width:"40%"}}></input>
+                <select disabled={inEdit} onChange={(e)=>{changeNavDataState(e,'lang')}}>
+                    <option value="eng">English</option>
+                    <option value="chi">Chinese</option>
+                    
+                </select>
             </Col>
             <Col>
-                <Button style={{marginRight:"5px"}} onClick={getExist}>Get Exist</Button>
+                {!inEdit? 
+                <>
+                <Button style={{marginRight:"5px"}} onClick={()=>{getExist(false)}}>Get Exist</Button>
+                <Button style={{marginRight:"5px"}} onClick={()=>{getExist(true)}}>Get Backup</Button>
                 <Button onClick={startNew}>Start New</Button>
+                </>
+                : 
+                <>
+                 <Button style={{marginRight:"5px"}}>Upload</Button>
+                 <Button style={{marginRight:"5px"}} onClick={()=>{getExist(navDataState.backup)}}>Recover</Button>
+                 <Button style={{marginRight:"5px"}} onClick={Unfreeze}>Unfreeze</Button>
+                
+                </>}
+                
             </Col>
         </Row>
+        {inEdit?
         <Row>
             <Col style={{paddingLeft:"15px"}}>
                 <NavigationTree data={cloneDeep(navData)} configNodeData={configNodeData} 
@@ -169,7 +223,9 @@ const NavigationEditor = props => {
             <Col style={{paddingLeft:"15px"}}>
                 <NavigationConfigPanel data={cloneDeep(navData)} configNodeData={configNodeData} setNode={setNode}/>
             </Col>
-        </Row>    
+        </Row>
+        :''}
+            
         </>
         )
     }

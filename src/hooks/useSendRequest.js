@@ -22,10 +22,11 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
     async function getDataFromServerAndProcess(){
         var headers={}
         setIsLoaded(true)
-
+        console.log(url)
         try{
             
-            if(user.token !== ''){
+            // if user is not logged in, token is empty string
+            if (user.token) {
                 headers['token'] = user.token
             }
             
@@ -34,11 +35,12 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
                 url: url,
                 headers:headers,
                 data:tdata
-            })
+            }).catch(err => {
+                console.error(err);
+            });
 
-           
-                
-                if(data === undefined||!("code" in data) ||!("msg" in data)){
+
+                if(typeof data !== 'object' || data === null || !('code' in data) || !('msg' in data)){
                     alert("Response Data format have ERROR")
                 }
     
