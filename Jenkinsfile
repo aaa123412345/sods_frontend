@@ -68,7 +68,7 @@ pipeline {
             sh 'docker rm frontend || true'
             sh 'docker rmi -f public.ecr.aws/i4f7p8k7/eiereact || true'
             sh 'docker pull public.ecr.aws/i4f7p8k7/eiereact:latest'
-            sh 'docker run -t -i -d -p  8888:8888 --name="frontend" public.ecr.aws/i4f7p8k7/eiereact:latest'
+            sh 'docker run -t -i -d -p  3000:3000 --name="frontend" public.ecr.aws/i4f7p8k7/eiereact:latest'
             sh 'exit'
             /*
             sh '''
