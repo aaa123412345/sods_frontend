@@ -17,6 +17,10 @@ export default function useAuthChecker(requirePermission,active){
     },[requirePermission,active])
 
     function checker(){
+         //if the permission requirnment is nothing, it is open for everyone 
+         if(requirePermission==='') {
+            return true
+        }
          //if the permission requirnment is anonymous, it is open for everyone 
         if(requirePermission==='anonymous') {
             return true

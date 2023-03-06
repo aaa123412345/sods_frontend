@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
 
-import { faSquarePlus, faSquarePen, faSquareCaretDown,faSquareCaretUp, faSquareMinus} from "@fortawesome/free-solid-svg-icons";
+import { faSquarePlus, faSquarePen, faSquareCaretDown,faSquareCaretUp, faSquareMinus,faArrowCircleDown,faArrowCircleUp} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Tooltip} from "react-bootstrap";
 
 
-const NavigationChoice = ({data,mode, configNode, addNode, removeNode, index,sindex,configNodeData}) => {
+const NavigationChoice = ({data,mode, configNode, addNode, removeNode, index,sindex,configNodeData,max,swapNode}) => {
     const [toggle,setToggle] = useState(false)
     
     function childNode(){
@@ -44,6 +44,19 @@ const NavigationChoice = ({data,mode, configNode, addNode, removeNode, index,sin
                      <span style={{fontWeight:"bold"}}>{" (Selected)"}</span>:""}
 
                     <span style={{float:'right'}}>
+                        {mode=='parent'?
+                        <>
+                        {index>0?
+                         <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{"Move Up"}</Tooltip>}>
+                                <FontAwesomeIcon icon={faArrowCircleUp} style={{paddingLeft:'5px'}} onClick={()=>{swapNode(index,sindex,'up')}}></FontAwesomeIcon>
+                        </OverlayTrigger>:''}
+
+                        {index<max-1?
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{"Move Down"}</Tooltip>}>
+                                <FontAwesomeIcon icon={faArrowCircleDown} style={{paddingLeft:'5px'}} onClick={()=>{swapNode(index,sindex,'down')}}></FontAwesomeIcon>
+                        </OverlayTrigger>:''}
+                        </>:
+                        ''}
                         
                         <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{"Remove This"}</Tooltip>}>
                                 <FontAwesomeIcon icon={faSquareMinus} style={{paddingLeft:'5px'}} onClick={()=>{removeNode(index,sindex)}}></FontAwesomeIcon>

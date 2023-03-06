@@ -6,11 +6,11 @@ import { faSquarePlus} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Tooltip} from "react-bootstrap";
 
-const NavigationTree = ({data, configNode, addNode, removeNode,configNodeData}) =>  {
+const NavigationTree = ({data, configNode, addNode, removeNode,configNodeData,swapNode}) =>  {
 
     
     if(data.navdata !== undefined){
-        
+        var size = data.navdata.length;
     
         return (
            
@@ -20,8 +20,9 @@ const NavigationTree = ({data, configNode, addNode, removeNode,configNodeData}) 
                                 <FontAwesomeIcon icon={faSquarePlus} onClick={()=>{addNode(-1)}}></FontAwesomeIcon>
                 </OverlayTrigger>
                 <div style={{ paddingLeft:"15px"}}> 
-                    {data.navdata.map((data,index) => <NavigationChoice data={data} index={index} sindex={-1} addNode={addNode} removeNode={removeNode}
-                    configNode={configNode} configNodeData={configNodeData} key={"nav-edit-bar-choice-"+index} mode='parent'/>)}
+                    {data.navdata.map((data,index) => <NavigationChoice data={data} index={index} sindex={-1} 
+                    addNode={addNode} removeNode={removeNode} swapNode={swapNode}
+                    configNode={configNode} configNodeData={configNodeData} key={"nav-edit-bar-choice-"+index} mode='parent' max={size}/>)}
                 </div>
             </div>
         )

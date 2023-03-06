@@ -19,13 +19,18 @@ const NavigationEditor = props => {
     });
     const navDataHook = useSendRequest(navDataHookPathBuilder(),'get',{},navDataState.active,false)
     
+    const [navData, setNavData] = useState({})
+    const [navDataBackup, setNavDataBackup] = useState({})
+
     const [updateNavDataState, setUpdateNavDataState] = useState({
         active:false,
+        mode:'put'
     })
-    const updateNavDataHook = useSendRequest(host+navDataState.lang+'/'+navDataState.domain+"navdata",'post',
+    const updateNavDataHook = useSendRequest(host+navDataState.lang+'/'+navDataState.domain+"navdata",updateNavDataState.mode,
     navData,updateNavDataState.active,false)
 
-    const [navData, setNavData] = useState({})
+   
+
     const [configNodeData , setConfigNodeData] = useState({
         index:-1,
         sindex:-1
@@ -43,7 +48,12 @@ const NavigationEditor = props => {
 
     function startNew(){
         setNavData({...navData,navdata:[]})
+        setNavDataBackup({...navDataBackup,navdata:[]})
         setInEdit(true)
+        setUpdateNavDataState({
+            ...updateNavDataState,
+            mode:'post'
+        })
     }
 
     function navDataHookPathBuilder(){
@@ -62,14 +72,37 @@ const NavigationEditor = props => {
             active:true,
             backup:withBackup
         })
+        setUpdateNavDataState({
+            ...updateNavDataState,
+            mode:'put'
+        })
         
 
     
     }
 
     function Unfreeze(){
-        setInEdit(false)
-        setNavData({...navData,navdata:[]})
+        window.location.reload();
+    }
+
+    function updateNavData(){
+        if(!navDataState.backup){
+            if(!dictIsSame(navData,navDataBackup)){
+                
+                setUpdateNavDataState({
+                    ...updateNavDataState,
+                    active:true
+                })
+                
+            }else{
+                alert("No Change")
+            }
+        }else{
+            setUpdateNavDataState({
+                ...updateNavDataState,
+                active:true
+            })
+        }
     }
 
     const parentNodeTemplate = {
@@ -146,14 +179,65 @@ const NavigationEditor = props => {
             setUpdate(true)
         }
     }
+    //swap two node in array
+    function swapNode(index,subindex,dir){
+        var tmp = navData
+        if(subindex=== -1){
+            //parent mode
+            if(dir === 'up'){
+                if(index>0){
+                    var tmpNode = tmp.navdata[index]
+                    tmp.navdata[index] = tmp.navdata[index-1]
+                    tmp.navdata[index-1] = tmpNode
+                    setNavData(tmp)
+                    setUpdate(true)
+                }
+            }else{
+                if(index<tmp.navdata.length-1){
+                    var tmpNode = tmp.navdata[index]
+                    tmp.navdata[index] = tmp.navdata[index+1]
+                    tmp.navdata[index+1] = tmpNode
+                    setNavData(tmp)
+                    setUpdate(true)
+                }
+            }
+        }
+    }
+
+
+    //compare two nested dictionary
+    function dictIsSame(dict1,dict2){
+        if(dict1===dict2){
+            return true
+        }else if(dict1===null || dict2===null){
+            return false
+        }else if(dict1===undefined || dict2===undefined){
+            return false
+        }else if(typeof dict1 !== typeof dict2){
+            return false
+        }else if(typeof dict1 === 'object'){
+            if(Object.keys(dict1).length !== Object.keys(dict2).length){
+                return false
+            }else{
+                for(var key in dict1){
+                    if(!dictIsSame(dict1[key],dict2[key])){
+                        return false
+                    }
+                }
+                return true
+            }
+        }else{
+            return false
+        }
+    }
+
+
 
     useEffect(()=>{
         if(update){
             setUpdate(false)
         }
     },[update])
-
-
 
     useEffect(()=>{
         if(!navDataHook.isLoaded&&navDataState.active){
@@ -164,7 +248,7 @@ const NavigationEditor = props => {
                 })
                 setInEdit(true)
                 setNavData(cloneDeep(navDataHook.items))
-               
+                setNavDataBackup(cloneDeep(navDataHook.items))
                 setPageReady(true)
                 console.log(navDataHook.items)
             }else if(navDataHook.errMsg!==""){
@@ -177,6 +261,32 @@ const NavigationEditor = props => {
             }
         }
     },[navDataHook])
+
+    useEffect(()=>{
+       
+        if(updateNavDataState.active){
+            
+            if(!updateNavDataHook.isLoaded){
+                if(updateNavDataHook.ready){
+                    setUpdateNavDataState({
+                        ...updateNavDataState,
+                        active:false
+                    })
+                    alert("Update Success")
+                    setInEdit(false)
+                    setNavData({...navData,navdata:[]})
+                    setNavDataBackup({...navDataBackup,navdata:[]})
+                    window.location.reload()
+                }else if(updateNavDataHook.errMsg!==""){
+                    alert(updateNavDataHook.errMsg)
+                    setUpdateNavDataState({
+                        ...updateNavDataState,
+                        active:false
+                    })
+                }
+            }
+        }
+    },[updateNavDataHook])
 
     if(pageReady){
         return(
@@ -206,7 +316,7 @@ const NavigationEditor = props => {
                 </>
                 : 
                 <>
-                 <Button style={{marginRight:"5px"}}>Upload</Button>
+                 <Button style={{marginRight:"5px"}} onClick={updateNavData}>Upload</Button>
                  <Button style={{marginRight:"5px"}} onClick={()=>{getExist(navDataState.backup)}}>Recover</Button>
                  <Button style={{marginRight:"5px"}} onClick={Unfreeze}>Unfreeze</Button>
                 
@@ -217,7 +327,7 @@ const NavigationEditor = props => {
         {inEdit?
         <Row>
             <Col style={{paddingLeft:"15px"}}>
-                <NavigationTree data={cloneDeep(navData)} configNodeData={configNodeData} 
+                <NavigationTree data={cloneDeep(navData)} configNodeData={configNodeData} swapNode={swapNode}
                 configNode={configNode} addNode={addNode} removeNode={removeNode}></NavigationTree>
             </Col>
             <Col style={{paddingLeft:"15px"}}>
