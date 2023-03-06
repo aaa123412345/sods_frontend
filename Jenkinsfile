@@ -62,14 +62,16 @@ pipeline {
         echo 'SSH'
         retry(count: 3) {
           sshagent(credentials:['ssh']){
-            sh 'set -ev'
-            sh 'ssh -o StrictHostKeyChecking=no -l ec2-user ec2-13-113-55-21.ap-northeast-1.compute.amazonaws.com << EOF'
-            sh 'docker stop frontend || true'
-            sh 'docker rm frontend || true'
-            sh 'docker rmi -f public.ecr.aws/i4f7p8k7/eiereact || true'
-            sh 'docker pull public.ecr.aws/i4f7p8k7/eiereact:latest'
-            sh 'docker run -t -i -d -p  3000:3000 --name="frontend" public.ecr.aws/i4f7p8k7/eiereact:latest'
-            sh 'exit'
+            sh '''
+              set -ev
+              ssh -o StrictHostKeyChecking=no -l ec2-user ec2-13-113-55-21.ap-northeast-1.compute.amazonaws.com << EOF
+              docker stop frontend || true
+              docker rm frontend || true
+              docker rmi -f public.ecr.aws/i4f7p8k7/eiereact || true
+              docker pull public.ecr.aws/i4f7p8k7/eiereact:latest
+              docker run -t -i -d -p  3000:3000 --name="frontend" public.ecr.aws/i4f7p8k7/eiereact:latest
+              exit
+            '''
             /*
             sh '''
                set -ev
