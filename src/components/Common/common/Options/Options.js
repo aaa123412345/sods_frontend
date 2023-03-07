@@ -37,9 +37,7 @@ const Options = (props) => {
         if(buttons.length !== 0)
             setIsShow(!isShow)
     }
-
-    console.log(buttons)
-
+    
     return (
         <Box position="relative" zIndex={10}>
 
@@ -49,8 +47,8 @@ const Options = (props) => {
                 <MotionBox position="absolute" left={handle_position().left}
                     variants={animations} initial='initial' animate="animate" exit='exit' transition={{duration: .25}}>
                     {
-                        buttons?.map(button => (
-                            <CustomButton faIcon={button.faIcon} text={button.text} onClick={button.onClick}/>
+                        buttons?.map((button, index) => (
+                            <CustomButton key={index} faIcon={button.faIcon} text={button.text} onClick={button.onClick}/>
                         ))?? <></>
                     }
                 </MotionBox>

@@ -3,8 +3,6 @@
 export const OPEN_MODAL = "OPEN_MODAL"
 export const CLOSE_MODAL = "CLOSE_MODAL"
 export const UPDATE_MODAL = "UPDATE_MODAL"
-export const UPDATE_ERROR_LIST = "UPDATE_ERROR_LIST"
-export const CLEAR_ERROR_LIST = "CLEAR_ERROR_LIST"
 export const OPEN_QR_MODAL = "OPEN_QR_MODAL"
 export const CLOSE_QR_MODAL = "CLOSE_QR_MODAL"
 export const UPDATE_QR_ID = "UPDATE_QR_ID"
@@ -21,14 +19,6 @@ export const closeModal = () => {
 
 export const updateModal = (config) => {
     return { type: UPDATE_MODAL, config }
-}
-
-export const updateErrorList = (errorList) => {
-    return { type: UPDATE_ERROR_LIST, errorList }
-}
-
-export const clearErrorList = () => {
-    return { type: CLEAR_ERROR_LIST }
 }
 
 export const openQRModal = () => {

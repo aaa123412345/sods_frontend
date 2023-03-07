@@ -30,7 +30,7 @@ const CategoryButtons = (props) => {
     const handle_onClick = (path) => {
         // setPageSession(index)        
         // dispatch(updatePage(index))
-        navigate(`/public/${lang}/tourguide/editor/${path}`)
+        navigate(`/server/${lang}/tourguide/editor/${path}`)
     }
 
     // useEffect(()=>{

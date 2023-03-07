@@ -23,7 +23,7 @@ const EditorModal = (props) => {
 
     const { form, modal }  = props
     const { floorplan, booth } = form
-    const { isOpen, modalName, path, method, name, id } = modal
+    const { isOpen, modalName, path, method, name, id, assignedItem } = modal
 
     const dispatch = useDispatch()
 
@@ -40,7 +40,7 @@ const EditorModal = (props) => {
     // const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
     // const [boothSession, setBoothSession] = useSessionStorage('booth', booth)
 
-    // const [file, setFile] = useState(null)
+    const [file, setFile] = useState()
 
     const close_modal = () => {
 
@@ -51,7 +51,6 @@ const EditorModal = (props) => {
         //     setBoothSession(boothTemplate)
 
         dispatch(resetData())
-        dispatch(clearErrorList())
         dispatch(closeModal())
 
         // avoid compiled warnings
@@ -89,11 +88,13 @@ const EditorModal = (props) => {
                 </ProgressBar> */}
 
                 <ModalHeader>
-                    <Heading size='md'>{t(`modal.${tourModalData[modalName].heading}`)}</Heading>
+                    <Heading size='md'>{t(`modal.${method === 'delete' ? 'heading-delete' : tourModalData[modalName]?.heading}`)}</Heading>
                     <CustomButton faIcon={faXmark} onClick={close_modal} isCircle/>
                 </ModalHeader>
 
                 {
+
+                    method !== 'delete' && 
 
                     <Content w={{base: '90%', md: '70%'}}>
                         
@@ -103,7 +104,8 @@ const EditorModal = (props) => {
                             tourModalData[modalName].components.map((modalElement, index) => {
                                 return React.createElement(modalElement.type, {
                                     key: index, index: index,
-                                    ...modalElement.props    
+                                    ...modalElement.props, 
+                                    file: file, setFile: setFile    
                                 })
                             })
                         }
@@ -114,7 +116,8 @@ const EditorModal = (props) => {
                 }
 
                 <FunctionalFooter isShow={isOpen} onClose={close_modal}
-                    method={method} path={path} name={name} id={id}                    />
+                    method={method} path={path} name={name} id={id} assignedItem={assignedItem}
+                    file={file} setFile={setFile}/>
 
             </Modal>
         </Overlay>
@@ -174,7 +177,7 @@ const Content = styled(Box)`
     height: 100%;
     max-height: calc(100% - 90px - 60px);
     overflow-y: scroll;
-    box-shadow: 0px -25px 25px -25px rgba(0, 0, 0, .2) inset;
+    // box-shadow: 0px -25px 25px -25px rgba(0, 0, 0, .25) inset;
 
 `
 

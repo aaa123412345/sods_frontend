@@ -14,12 +14,13 @@ const errorToast = {
 
 }
 
-export const toast_generator = (method = undefined, name = undefined) => {
+export const toast_generator = (code = undefined, method = undefined, name = undefined) => {
 
     console.log("method: ", method)
     console.log("name: ", name)
+    console.log("code: ", code)
     
-    if(method === undefined || name === undefined)
+    if(method === undefined || name === undefined || code >= 400)
         return errorToast
     
     return {

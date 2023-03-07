@@ -29,55 +29,42 @@ const RightPanel = (props) => {
     const isShowSession = false
 
     // session storage
-    const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
-    const [storySession, setStorySession] = useSessionStorage('story', story)
-    const [modalSession, setModalSession] = useSessionStorage('modal', modal)
+    // const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
+    // const [storySession, setStorySession] = useSessionStorage('story', story)
+    // const [modalSession, setModalSession] = useSessionStorage('modal', modal)
 
     // chakra hooks
     const bg = useColorModeValue('gray.10', 'gray.100')
     
     // constants
     const categories = [{path: "floorplans", label: t('tourguide.floorplan'), icon: faMapLocationDot}, {path: "booths", label: t('tourguide.booth'), icon: faTent}]
-    const isTicketEditor = subsubpath === "tickets"
+    const isStoryEditor = subsubpath === "stories"
 
     // react hooks
     const contentRef = useRef(null)
 
     const onOpen = (isDelete = false) => {
 
-        // let floorplanPayload = {...floorplans[itemIndex]}
-        // let storyPayload = {...stories[itemIndex]} 
-        // let payload = isTicketEditor ? storyPayload : floorplanPayload
+        let floorplanPayload = {...floorplans[itemIndex]}
+        let storyPayload = {...stories[itemIndex]} 
+        let payload = isStoryEditor ? storyPayload : floorplanPayload
 
-        // let modalIndex = isTicketEditor ? 4 : 0
-        // let path = isTicketEditor ? 'story':'floorplans'
-        // let name = isTicketEditor ? 'story' : 'floorplan'
+        let path = isStoryEditor ? 'stories':'floorplans'
+        let name = isStoryEditor ? 'story' : 'floorplan'
+        let method = isDelete ? "delete" : "put"
 
-        // let modalPayload = {
-
-        //     page: 0, modalIndex: isDelete?5:modalIndex,
-        //     path: path, method: isDelete?"delete":"put",
-        //     name: name, id: payload.id, 
-        //     byteData: payload.imageData
-
-        // }
+        let modalPayload = {
+            modalName: name,
+            path: path, method: method,
+            name: name, id: payload.id
+        }
         
-        // if(isTicketEditor){
-        //     setStorySession(storyPayload)
-        //     dispatch(updateStory(storyPayload))
-        // }else{
-        //     setFloorplanSession(floorplanPayload)
-        //     dispatch(updateFloorplan(floorplanPayload))
-        // }
+        if(isStoryEditor)
+            dispatch(updateStory(storyPayload))
+        else
+            dispatch(updateFloorplan(floorplanPayload))
 
-        // // avoid compiled warnings
-        // if(isShowSession){
-        //     console.log(floorplanSession)
-        //     console.log(storySession)
-        // }
-
-        // setModalSession({...modalSession, ...modalPayload})
-        // dispatch(openModal(modalPayload))
+        dispatch(openModal(modalPayload))
 
     }
 
@@ -87,11 +74,11 @@ const RightPanel = (props) => {
             
         
             <Toolbar type={2} 
-                heading={isTicketEditor ? t('tourguideEditor.preview-ticket') : undefined}
-                categoryList={isTicketEditor ? undefined : categories}
+                heading={isStoryEditor ? t('tourguideEditor.preview-ticket') : undefined}
+                categoryList={isStoryEditor ? undefined : categories}
                 optionList={ [
-                    {text: t(`tourguideEditor.edit-${isTicketEditor ? "story" : 'region'}`), faIcon: faPen, onClick: ()=>onOpen(false)},
-                    {text: t(`tourguideEditor.delete-${isTicketEditor ? "story" : 'region'}`), faIcon: faTrash, onClick: ()=>onOpen(true)}]} />
+                    {text: t(`tourguideEditor.edit-${isStoryEditor ? "story" : 'region'}`), faIcon: faPen, onClick: ()=>onOpen(false)},
+                    {text: t(`tourguideEditor.delete-${isStoryEditor ? "story" : 'region'}`), faIcon: faTrash, onClick: ()=>onOpen(true)}]} />
 
 
             <Content bg={bg} ref={contentRef}>
@@ -145,7 +132,7 @@ const Content = styled(Flex)`
 
     position: relative; 
     margin: 1em auto;
-    flex-direction: column; 
+    flex-direction: row; 
     height: calc(100% - 2em); 
     width: 100%; 
     border-radius: 25px;

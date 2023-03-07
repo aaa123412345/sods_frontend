@@ -1,5 +1,5 @@
 import React, { useRef, createRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
@@ -19,6 +19,8 @@ const StorySplider = (props) => {
     const { isPreviewMode = false, tourguide } = props
     const { themeColor, stories, itemIndex } = tourguide
 
+    const { subpath } = useParams()
+
     const { t } = useTranslation()
 
     const navigate = useNavigate()
@@ -35,9 +37,7 @@ const StorySplider = (props) => {
         return arr;
 
     }, {})  
-
-    console.log('sotries', stories)
-
+    
     const back_toMap = () => {
         navigate(`/public/${lang === 'EN' ? 'eng':'chi'}/tourguide/floorplans`)
     }
@@ -55,9 +55,13 @@ const StorySplider = (props) => {
     return (
         <StyledCanvas h={isPreviewMode? "100%": '100vh'}>
 
-            <CustomButton text={laptopMode ? t('floorplan.map') : ""} bgColor={laptopMode ? themeColor : 'gray'} 
-                faIcon={laptopMode ? faMap : faArrowLeft} isCircle={!laptopMode} onClick={back_toMap}
-                cssStyle={{position: "absolute", zIndex: 3, top: 0, margin: '1em', boxShadow: "1px 5px 5px rgba(0, 0, 0, .1)"}}/> 
+
+            {
+                subpath !== "editor" && 
+                <CustomButton text={laptopMode ? t('floorplan.map') : ""} bgColor={laptopMode ? themeColor : 'gray'} 
+                    faIcon={laptopMode ? faMap : faArrowLeft} isCircle={!laptopMode} onClick={back_toMap}
+                    cssStyle={{position: "absolute", zIndex: 3, top: 0, margin: '1em', boxShadow: "1px 5px 5px rgba(0, 0, 0, .1)"}}/> 
+            }
 
 
             <Slider dir='ltr' ref={sliderRef} sx={scrollbarCSS}
@@ -65,9 +69,7 @@ const StorySplider = (props) => {
 
             {
                 stories.filter(story => isPreviewMode && story.id === stories[itemIndex].id || !isPreviewMode).map((item, index) => (
-                    <StorySection 
-                        ref={sectionRef[item.id]} key={index}
-                        bgImg={`url(${item.imageUrl})`}>
+                    <StorySection ref={sectionRef[item.id]} key={index} bgImg={`url(${item.imageUrl})`} backgroundAttachment={subpath !== "editor"?"local":"fixed"}>
                         <StoryBox as={motion.div} 
                             initial={{ scale: 0.4, opacity: 0, y: 150}}
                             whileInView={{ scale: 1, opacity: 1, y: 0 }}
@@ -122,7 +124,7 @@ const StorySection = styled(Box)`
     scroll-snap-align: center;
     flex-basis: 100%; flex-grow: 0; flex-shrink: 0;
 
-    background: ${props => props.bgImg} no-repeat fixed;
+    background: ${props => props.bgImg} no-repeat;
     background-size: cover;
 
 `

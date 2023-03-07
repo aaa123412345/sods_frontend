@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
-import _ from 'lodash';
 import ImageMarker from 'react-image-marker';
 import axios from 'axios';
 
@@ -19,12 +18,10 @@ import FloorSelector from './FloorSelector/FloorSelector';
 import CustomMarker from './CustomMarker/CustomMarker';
 import StatusBar from './StatusBar/StatusBar';
 
-import useWindowSize from '../../../hooks/useWindowSize';
-
-import { updateMarker } from '../../../redux/form/form.action';
-import { updateFloorplans } from '../../../redux/tourguide/tourguide.action';
-import { refreshTime, tourHost } from '../../../constants/constants';
+import { updateMarkers } from '../../../redux/tourguide/tourguide.action';
+import { tourHost } from '../../../constants/constants';
 import { langGetter } from '../../../helpers/langGetter';
+import { UserContext } from '../../../App';
 
 const TourGuideMap = (props) => {
 
@@ -34,140 +31,45 @@ const TourGuideMap = (props) => {
     const dispatch = useDispatch()
 
     const { t } = useTranslation()
-
-    const bg = useColorModeValue('white', 'black')
-
-    const isClientView = !isMarkable && !isAssignBooth 
-
-    const windowSize = useWindowSize()
+    const navigate = useNavigate()
 
     const { colorMode, toggleColorMode } = useColorMode()
-
-    const navigate = useNavigate()
+    const bg = useColorModeValue('white', 'black')
     const userLang = langGetter() === 'en' ? 'eng' : 'chi'
-
+    const isClientView = !isMarkable && !isAssignBooth 
+    
     const { path, subpath, subsubpath } = useParams()
-
+    
     const containerRef = useRef(null)
     const mapRef = useRef(null)
     const selectorRef = useRef(null)
-
-    const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
-
+    
     // map original size
     const [mapSize, setMapSize] = useState(null)
-    const [isShowBooth, setIsShowBooth] = useState(false)
-    const [currentBooth, setCurrentBooth] = useState(null)
-    
-    const [markerList, setMarkerList] = useState([])
-    const [selectedMarker, setSelectedMarker] = useState(null)
-    const [assignedMarker, setAssignedMarker] = useState(null)
-    const [loadedMarker, setLoadedMarker] = useState(false)
 
+    const {user} = useContext(UserContext)
+
+    const config = { headers: { token: user.token } }
 
     const add_marker = (marker) => {
 
-        // if(isMarkable){
+        if(isMarkable){
             
-        //     let newMarkers = [...markerList, marker]
-        //     let newData = { markerID: {floorID:floorplans[itemIndex].id, y: marker.top, x: marker.left}}
+            let newData = { floorPlanID: floorplans[itemIndex].id, y: marker.top, x: marker.left }
+            let newMarkers = [...markers, newData]
+            
+            axios.post(tourHost+"/markers", newData, config)
+            .then(res=>{ 
+                if(res.data.code < 400){
+                    console.log('added marker')
+                    dispatch(updateMarkers(newMarkers)) 
+                }
+            })
+            .catch(err=>console.log(err))
 
-        //     axios.post(host+"markers", newData)
-        //     .then(res=>setMarkerList(newMarkers))
-        //     .catch(err=>console.log(err))
-
-        // }
+        }
 
     }
-
-    // const delete_marker = (index) => {
-
-    //     if(isMarkable){
-
-    //         let markerToDelete = markerList[index]
-    //         let newMarkers = markerList
-    //         newMarkers.splice(index, 1)
-
-    //         console.log("markerToDelete: ", `/${floorplans[itemIndex].id}/${markerToDelete.top}/${markerToDelete.left}`)
-    //         axios.delete(host+"markers"+`/${floorplans[itemIndex].id}/${markerToDelete.top}/${markerToDelete.left}`)
-    //         .then(res=>setMarkerList(newMarkers))
-    //         .catch(err=>console.log(err))
-
-    //     }
-
-    // }
-
-    // const handle_showBooth = (marker) => {
-
-    //     axios.get(host+"booths")
-    //     .then(res=>{
-    //         let data = res.data.data
-    //         data.forEach(booth=>{
-    //             let boothMarkerID = booth.marker.markerID
-    //             if(boothMarkerID.floorID === marker.floorID && boothMarkerID.y === marker.top && boothMarkerID.x === marker.left){
-    //                 setCurrentBooth(booth)
-    //                 setIsShowBooth(true)
-    //             }
-    //         })
-    //     })
-
-    // }
-
-    // useEffect(()=>{
-
-    //     const refreshId = setInterval(()=>{
-    //         update_mapHeight()
-    //         console.log('height: ', windowSize.height)
-    //         console.log('width: ', windowSize.width)
-    //     }, 1000)
-
-    //     return () => clearInterval(refreshId)
-
-    // }, [mapSize, setMapSize, height])
-
-
-    // useEffect(()=>{
-
-    //     setMarkerList([])
-    //     setIsShowBooth(false)
-    //     setCurrentBooth(null)
-    //     if(floorplans[itemIndex] !== undefined){
-
-    //         let floorplanID = floorplans[itemIndex].id
-    //         axios.get(host+"markers?floorplan-id="+floorplanID)
-    //         .then(res => {
-    //             let markerList = res.data.data
-    //             let list  = markerList.map(marker => ({
-    //                 top: marker.markerID.y,
-    //                 left: marker.markerID.x,
-    //                 floorID: marker.markerID.floorID
-    //             }))
-    //             setMarkerList(list)
-    //             setIsLoading(false)
-    //         })
-    //         .catch(err => {
-    //             setIsLoading(true)
-    //             setError(err)
-    //         })
-
-    //     }else
-    //         setIsLoading(false)
-        
-    // },[itemIndex])
-
-    // useEffect(()=>{
-    
-    //     if(marker.x !== null && marker.y !== null && marker.floorID !== null && isAssignBooth && assignedMarker === null){
-    //         markerList.forEach((markerInList, index) => {
-    //             let assigned = {floorID: marker.floorID, top: marker.y, left: marker.x}
-    //             if(_.isEqual(markerInList, assigned)){
-    //                 setAssignedMarker(index)
-    //             }
-    //         })
-    //     }
-
-    // }, [modal.isOpen, marker, assignedMarker, markerList.length])
 
     useEffect(()=>{
 
@@ -211,8 +113,6 @@ const TourGuideMap = (props) => {
             </FloatingContainer>
         )
     }
-
-
     
     return (
 
@@ -248,14 +148,13 @@ const TourGuideMap = (props) => {
 
                         {
 
-                            markerList !== undefined && floorplans[itemIndex] !== undefined && 
-                            <ImageMarker
-                                src={floorplans[itemIndex]?.imageUrl ?? ""}
+                            markers !== undefined && floorplans[itemIndex] !== undefined && 
+                            <ImageMarker src={floorplans[itemIndex]?.imageUrl ?? ""}
                                 markers={
                                     markers
                                         .filter(marker=>marker.floorPlanID === floorplans[itemIndex].id)
-                                        .map(marker=>({top: marker.y, left: marker.x, ...marker}))
-                                } markerComponent={BoothMarker} onAddMarker={(marker)=>add_marker(marker)}
+                                        .map((currentMarker, index)=>({top: currentMarker.y, left: currentMarker.x, index: index, isAssignBooth: isAssignBooth, isMarkable: isMarkable, markers: markers, marker: marker, ...currentMarker }))
+                                } markerComponent={BoothMarker} onAddMarker={(marker)=>{add_marker(marker)}}
                                 />
 
                         }
