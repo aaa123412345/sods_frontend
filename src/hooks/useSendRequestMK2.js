@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect,useContext } from "react";
 import {UserContext} from '../App'
 
-export default function useSendRequest(url,method,tdata,active,autoRedirect){
+export default function useSendRequestMK2(axiosDict,active,autoRedirect){
     const {user,clearLoginState} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -27,7 +27,7 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
     async function getDataFromServerAndProcess(){
         var headers={}
         setIsLoaded(true)
-        console.log(url)
+        
         try{
             
             // if user is not logged in, token is empty string
@@ -36,10 +36,8 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
             }
             
             const { data } = await axios({
-                method: method,
-                url: url,
-                headers:headers,
-                data:tdata
+                ...axiosDict,
+                headers: headers
             }).catch(err => {
                 console.error(err);
             });
@@ -104,6 +102,3 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
 
     
 };
-
-
-

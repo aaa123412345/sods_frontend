@@ -24,6 +24,7 @@ import QRScanner from "./components/QRScanner";
 
 import ARCanvas from "./components/ARCanvas/ARCanvas";
 import Crush from "./components/MiniGame/Crush/Crush";
+import FileUpload from "./components/CMS/FTP/FileUpload";
 
 
 export const UserContext = createContext()
@@ -141,6 +142,7 @@ function App() {
                             <Routes>
                                 
                             <Route>
+                                <Route path="/file" element={<FileUpload></FileUpload>}></Route>
                                 <Route path="/crush" element={<Crush/>}></Route>
                                 <Route path="/testQR" element={<QRScanner/>}></Route>
                                 <Route path="/public/:lang/ar-treasure/:id" element={<ARCanvas/>}></Route>
