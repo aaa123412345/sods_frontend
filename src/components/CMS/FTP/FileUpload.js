@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState,useContext } from 'react';
 import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
@@ -7,6 +8,8 @@ import {UserContext} from '../../../App'
 const FileUpload = () => {
   const [file, setFile] = useState(null);
   const {user,clearLoginState} = useContext(UserContext)
+  const [progress, setProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
  
   const [postHookDict, setPostHookDict] = useState({
     url: process.env.REACT_APP_FTP_HOST+ '/upload',
@@ -23,10 +26,34 @@ const FileUpload = () => {
     //etPostHookDict({...postHookDict,body:formData});
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async() => {
     //event.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
+    setUploading(true);
+    await axios.post(process.env.REACT_APP_FTP_HOST+ '/upload',
+    formData,{
+      headers: {
+        token: user.token,
+        'Content-Type': 'multipart/form-data',
+      },
+      onUploadProgress: (progressEvent) => {
+        const progress = (progressEvent.loaded / progressEvent.total) * 50;
+        console.log(progressEvent.loaded);
+        setProgress(progress);
+      }
+    })
+    .then(response => {
+      
+      alert("File uploaded");
+    })
+    .catch(error => {
+      console.error(error);
+      alert(error);
+    });
+    setUploading(false);
+  }
+    /*
     fetch(postHookDict.url, {
       method: 'POST',
       body: formData,
@@ -37,7 +64,7 @@ const FileUpload = () => {
     .then(response => response.json())
     .then(data => alert("File uploaded"))
     .catch(error => console.error(error));
-  }
+  }*/
 
   const handleUpload = () => {
     console.log(postHookDict);
@@ -66,7 +93,9 @@ const FileUpload = () => {
   return (
   <div>
     <input type="file" onChange={handleFileChange} />
+    <img src='https://sods-file.s3.ap-northeast-1.amazonaws.com/2_1.png'></img>
     <Button onClick={handleSubmit}>Upload</Button>
+    {uploading && <div>Uploading... {"Progress: "+ progress}</div>}
   </div>
   )
     
