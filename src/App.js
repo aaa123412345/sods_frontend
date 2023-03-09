@@ -24,6 +24,7 @@ import QRScanner from "./components/QRScanner";
 
 import ARCanvas from "./components/ARCanvas/ARCanvas";
 import Crush from "./components/MiniGame/Crush/Crush";
+import Snake from "./components/MiniGame/Snake/snake";
 import FileUpload from "./components/CMS/FTP/FileUpload";
 
 
@@ -142,6 +143,7 @@ function App() {
                             <Routes>
                                 
                             <Route>
+                                <Route path="/snake" element={<Snake/>}></Route>
                                 <Route path="/file" element={<FileUpload></FileUpload>}></Route>
                                 <Route path="/crush" element={<Crush/>}></Route>
                                 <Route path="/testQR" element={<QRScanner/>}></Route>

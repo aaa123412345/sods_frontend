@@ -51,7 +51,7 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
                   alert(page.errMsg)
                   setPageActive(false)
                 }
-                console.log(page)
+                //console.log(page)
             }       
         }
       ,[page])

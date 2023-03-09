@@ -27,7 +27,7 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
     async function getDataFromServerAndProcess(){
         var headers={}
         setIsLoaded(true)
-        console.log(url)
+        //console.log(url)
         try{
             
             // if user is not logged in, token is empty string

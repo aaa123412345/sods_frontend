@@ -1,102 +1,121 @@
-*,html,body {
+*,
+html,
+body {
   margin: 0;
   padding: 0;
 }
 @media screen and (min-width: 1024px) {
   /*STYLES*/
-  .crush{
+  .crush {
     display: flex;
-
   }
-  
-  .gameboard{
+
+  .gameboard {
+    margin: 1rem;
     width: 560px;
     height: 560px;
     display: flex;
     flex-wrap: wrap;
   }
-  
-  
-  .gameboard img{
+
+  .gameboard img {
     width: 70px;
     height: 70px;
   }
 }
 
-
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .crush{
+  .crush {
     display: flex;
   }
-  
-  .gameboard{
+
+  .gameboard {
+    margin: 1rem;
     width: 400px;
     height: 400px;
     display: flex;
     flex-wrap: wrap;
   }
-  
-  
-  .gameboard img{
+
+  .gameboard img {
     width: 50px;
     height: 50px;
   }
 }
 
 @media screen and (max-width: 767px) {
-  .crush{
+  .crush {
     display: flex;
   }
-  
-  .gameboard{
+
+  .gameboard {
+    margin: 0.5rem;
     width: 320px;
     height: 320px;
     display: flex;
     flex-wrap: wrap;
   }
-  
-  
-  .gameboard img{
+
+  .gameboard img {
+    width: 40px;
+    height: 40px;
+  }
+}
+@media screen and (max-width: 520px) {
+  .crush {
+    display: flex;
+  }
+
+  .gameboard {
+    margin: 0.5rem;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .gameboard img {
     width: 40px;
     height: 40px;
   }
 }
 
-@media screen and (max-device-width: 480px) {
-  .crush{
+@media screen and (max-device-width: 505px) {
+  .crush {
     display: flex;
+    flex-direction: column;
   }
-  
-  .gameboard{
-    width: 240px;
-    height: 240px;
+
+  .gameboard {
+    margin: 1rem;
+    width: 320px;
+    height: 320px;
     display: flex;
     flex-wrap: wrap;
   }
-  
-  
-  .gameboard img{
-    width: 30px;
-    height: 30px;
+
+  .gameboard img {
+    width: 40px;
+    height: 40px;
   }
 }
 
 @media screen and (max-device-width: 160px) {
-  .crush{
+  .crush {
     display: flex;
+    flex-direction: column;
   }
-  
-  .gameboard{
+
+  .gameboard {
+    margin: 1rem;
     width: 80px;
     height: 80px;
     display: flex;
     flex-wrap: wrap;
   }
-  
-  
-  .gameboard img{
+
+  .gameboard img {
     width: 10px;
     height: 10px;
   }
 }
-

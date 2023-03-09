@@ -4,10 +4,10 @@ import "./snake.css";
 
 function Snake() {
   const { unityProvider } = useUnityContext({
-    loaderUrl: "build/BuildUnity.loader.js",
-    dataUrl: "build/BuildUnity.data.unityweb",
-    frameworkUrl: "build/BuildUnity.framework.js.unityweb",
-    codeUrl: "build/BuildUnity.wasm.unityweb",
+    loaderUrl: "minigame/snake/Build/BuildUnity.loader.js",
+    dataUrl: "minigame/snake/Build/BuildUnity.data.unityweb",
+    frameworkUrl: "minigame/snake/Build/BuildUnity.framework.js.unityweb",
+    codeUrl: "minigame/snake/Build/BuildUnity.wasm.unityweb",
   });
 
   return <Unity unityProvider={unityProvider}  className="snake"/>;
