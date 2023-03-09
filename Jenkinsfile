@@ -11,6 +11,23 @@ pipeline {
                 }
             }
         }
+     stage('Copy important config to directory'){
+      steps {
+        echo 'Copy file'
+        configFileProvider(
+            [configFile(fileId: 'firebase', variable: 'Config')]) {
+             // some block
+              
+   
+              sh "mkdir -p src/config"
+              sh "touch src/config/firebase.js"
+              sh "cp ${env.Config} src/config/firebase.js"
+              
+             
+        }
+        
+      }
+    }
     
      stage('Npm stage') { 
             steps { 
