@@ -12,6 +12,7 @@ import useSendRequest from "../../../hooks/useSendRequest";
 import useAuthChecker from "../../../hooks/useAuthChecker";
 import { useState } from "react";
 import { useEffect } from "react";
+import cloneDeep from "lodash.clonedeep";
 
 
 
@@ -23,20 +24,24 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
       const auth = useAuthChecker(authHookState.requirePermission,authHookState.active)
 
       const [ready,setReady] = useState(false)
+      
 
       useEffect(()=>{
+        setReady(false)
         setPageActive(true)
+        
       },[host,path,subpath,lang])
 
       useEffect(()=>{
         if(!page.isLoaded && pageActive){
             if(page.ready){
                 try{
-                  
+                    
                     setAuthHookState({
                       requirePermission:page.items.page.auth,
                       active:true
                     })
+                    
                   }catch(e){
                     alert("The page data have error. Please communicate with administrator if this error message exist")
                   }
@@ -46,6 +51,7 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
                   alert(page.errMsg)
                   setPageActive(false)
                 }
+                console.log(page)
             }       
         }
       ,[page])
@@ -65,15 +71,19 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
         }
       },[auth])
 
-        if(ready){
+     
+        if(ready && page.items!=={}){
           var items = page.items
+          var useHeader = true
+          
+         
           return(
             <>
           
-            {items.page.useHeader&&mode==="public"?<PublicHeader lang={lang}/>:''}
+            {useHeader&&mode==="public"?<PublicHeader lang={lang}/>:''}
             <div className="PageContent" style={items.page.style}> 
                 
-                {mode==="public"? <PublicNavbar pdata={page.items.page} lang={lang}></PublicNavbar>:
+                {mode==="public"? <PublicNavbar pdata={items.page} lang={lang}></PublicNavbar>:
                   <ServerNavbar pdata={items.page} lang={lang}></ServerNavbar>
                 }
               

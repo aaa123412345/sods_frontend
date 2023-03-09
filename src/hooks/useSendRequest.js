@@ -7,7 +7,7 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState({});
     const [errMsg, setErrMsg] = useState('');
     
     
@@ -18,7 +18,7 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
             setError(null)
             setIsLoaded(false)
             setIsReady(false)
-            setItems([])
+           
             getDataFromServerAndProcess()
         }
        
@@ -43,6 +43,7 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect){
             }).catch(err => {
                 console.error(err);
             });
+            
 
 
                 if(typeof data !== 'object' || data === null || !('code' in data) || !('msg' in data)){
