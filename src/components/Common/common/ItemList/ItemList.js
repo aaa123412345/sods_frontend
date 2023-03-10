@@ -90,7 +90,6 @@ const ItemList = (props) => {
       host: host, path: path, method: method, 
       name: name,
     }
-    console.log(payload)
     dispatch(openModal(payload))
       
   }

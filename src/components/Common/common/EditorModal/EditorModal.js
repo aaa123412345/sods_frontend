@@ -16,6 +16,7 @@ import FunctionalFooter from '../FunctionalFooter/FunctionalFooter'
 
 import { tourModalData } from '../../../../data/tourModalData'
 import { booth as boothTemplate , floorplan as floorplanTemplate } from '../../../../data/formTemplates'
+import { updateConfig } from '../../../../redux/sysConfig/sysConfig.action'
 
 // import useSessionStorage from '../../../../hooks/useSessionStorage'
 
@@ -24,7 +25,7 @@ const MotionFlex = motion(Flex);
 const EditorModal = (props) => {
 
     const { form, modal, sysConfig }  = props
-    const { config } = sysConfig
+    const { config, originalThemeColor } = sysConfig
     const { isOpen, modalName, host, path, method, name, id, assignedItem } = modal
 
     const dispatch = useDispatch()
@@ -40,6 +41,10 @@ const EditorModal = (props) => {
     const close_modal = () => {
 
         dispatch(resetData())
+        if(originalThemeColor){
+            if(originalThemeColor !== config?.color)
+                dispatch(updateConfig({...config, themeColor: originalThemeColor}))
+        }
         dispatch(closeModal())
 
     }

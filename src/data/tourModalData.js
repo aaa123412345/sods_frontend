@@ -1,13 +1,15 @@
-import { faA, faAlignLeft, faBook, faImage, faLocationDot, faMapLocation, faMapSigns, faQ, faTent, faVrCardboard } from "@fortawesome/free-solid-svg-icons";
+import { faA, faAlignLeft, faBook, faCalendar, faImage, faLocationDot, faMapLocation, faMapSigns, faPalette, faQ, faTent, faVrCardboard } from "@fortawesome/free-solid-svg-icons";
 import { faImages, faMap } from "@fortawesome/free-regular-svg-icons";
 
-import { updateBooth, updateFloorplan, updateStory, updateBoothGame, updateARGame } from "../redux/form/form.action";
+import { updateBooth, updateFloorplan, updateStory, updateBoothGame, updateARGame, updateConfigInput } from "../redux/form/form.action";
 
 import TextInput from "../components/Common/common/Inputs/TextInput/TextInput";
 import ImageUploader from '../components/Common/common/Inputs/ImageUploader/ImageUploader'
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
 import TagInput from "../components/Common/common/Inputs/TagInput/TagInput";
 import ItemList from "../components/Common/common/ItemList/ItemList";
+import ColorPicker from "../components/Common/common/Inputs/ColorPicker/ColorPicker";
+import DateTimePicker from "../components/Common/common/Inputs/DateTimePicker/DateTimePicker";
 
 export const tourModalData = {
 
@@ -192,7 +194,32 @@ export const tourModalData = {
             }
         ]
 
+    },
+
+    configs: {
+
+        heading: 'heading-configs',
+        components: [
+            {
+                type: ColorPicker, 
+                props: {
+                    faIcon: faPalette, label: 'label-theme-color',
+                    names: { form: 'configs', field: 'themeColor'},
+                    update: (data) => updateConfigInput(data)
+                }
+            }, 
+            {
+                type: DateTimePicker, 
+                props: {
+                    faIcon: faCalendar, label: 'label-openday-date',
+                    names: { form: 'configs', field: 'opendayDate'},
+                    update: (data) => updateConfigInput(data)
+                }
+            }
+        ]
+
     }
+
 
 
 

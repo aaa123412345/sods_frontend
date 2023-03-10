@@ -11,19 +11,20 @@ import AnimatedPage from '../../Common/common/AnimatedPage/AnimatedPage'
 import RightPanel from './RightPanel/RightPanel'
 import LeftPanel from './LeftPanel/LeftPanel'
 
-import useSessionStorage from '../../../hooks/useSessionStorage'
-import { updateItemIndex, updatePage } from '../../../redux/tourguide/tourguide.action'
 import { langGetter } from '../../../helpers/langGetter'
-import GameListContainer from '../../ARTreasureEditor/GameListContainer/GameListContainer'
-
+import CustomButton from '../../Common/common/CustomButton/CustomButton'
+import { faGear } from '@fortawesome/free-solid-svg-icons'
+import { openModal } from '../../../redux/modal/modal.action'
+import { tourHost } from '../../../constants/constants'
+import { updateConfigInput } from '../../../redux/form/form.action'
+import { updateOriginalThemeColor } from '../../../redux/sysConfig/sysConfig.action'
  
 const TourGuideEditor = (props) => {
 
-    const { tourguide, modal, sysConfig } = props
+    const { tourguide, modal, sysConfig, form } = props
     const { config } = sysConfig
     const { themeColor } = config ?? 'gray'
     const { floorplans, stories, itemIndex } = tourguide
-    const { modalIndex } = modal
     const dispatch = useDispatch()
 
     const { subsubpath, subsubsubpath } = useParams()
@@ -48,6 +49,17 @@ const TourGuideEditor = (props) => {
         navigate(`/server/${lang}/tourguide/editor/${type}`)
     }
 
+    const open_setting_modal = () => {
+        dispatch(updateOriginalThemeColor(config?.themeColor))
+        dispatch(updateConfigInput({themeColor: config?.themeColor, opendayDate: JSON.stringify(config?.opendayDate??new Date().toISOString())}))
+        let payload = {
+            modalName: 'configs', 
+            host: tourHost, path: 'configs', method: 'put', 
+            name: 'configs'
+        }
+        dispatch(openModal(payload))
+    }
+
     useEffect(()=>{
 
         const excludeCase = subsubpath === 'booths'
@@ -66,6 +78,7 @@ const TourGuideEditor = (props) => {
     const EditorHeader = () => {
         return (
             <HeaderContainer bg={headerBg}>
+                <CustomButton faIcon={faGear} onClick={open_setting_modal} isCircle/>
                 <Heading size="sm" mr="1em">{t('tourguideEditor.editor-type')}</Heading>
                 <Button variant={tourguideScope.includes(subsubpath) ? themeColor : 'gray'} onClick={()=>change_page('floorplans')}>{t('tourguideEditor.tourguide')}</Button> 
                 <Button variant={storiesScope.includes(subsubpath) ? themeColor : 'gray'} onClick={()=>change_page('stories')}>{t('tourguideEditor.cover-story')}</Button>
@@ -83,8 +96,6 @@ const TourGuideEditor = (props) => {
                 <LeftPanel />
                 <RightPanel />
             </Container>
-
-            {/* <GameListContainer /> */}
 
         </AnimatedPage>
 

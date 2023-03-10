@@ -7,6 +7,7 @@ export const UPDATE_MARKER = "UPDATE_MARKER"
 export const UPDATE_STORY = "UPDATE_STORY"
 export const UPDATE_AR_GAME = "UPDATE_AR_GAME"
 export const UPDATE_BOOTH_GAME = "UPDATE_BOOTH_GAME"
+export const UPDATE_CONFIG_INPUT = "UPDATE_CONFIG_INPUT"
 export const RESET_DATA = "RESET_DATA"
 
 // action creator
@@ -37,6 +38,10 @@ export const updateARGame = (arTreasure) => {
 
 export const updateBoothGame = (boothGame) => {
     return { type: UPDATE_BOOTH_GAME, boothGame }
+}
+
+export const updateConfigInput = (newConfig) => {
+    return { type: UPDATE_CONFIG_INPUT, newConfig }
 }
 
 export const resetData = () => {

@@ -52,6 +52,11 @@ export const boothGame = {
 
 }
 
+export const configs = {
+    themeColor: '', 
+    opendayDate: JSON.stringify(new Date().toISOString()),
+}
+
 // not use currently
 export const vr = {
 
