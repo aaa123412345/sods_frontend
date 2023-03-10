@@ -2,6 +2,7 @@ export const initARTreasureState = {
 
     booths: [],
     boothGames: [],
-    arTreasures: []
+    treasure: null,
+    treasures: [],
     
 }

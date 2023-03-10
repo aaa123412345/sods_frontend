@@ -8,7 +8,7 @@ export const initTourguideState = {
     floorplans: [],
     markers: [],
     booths: [],
-    games: [],
+    boothGames: [],
     storyProgress: 1,
     stories: [], 
     loadingItem: ""

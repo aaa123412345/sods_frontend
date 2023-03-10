@@ -2,19 +2,16 @@ import React, { useState, useEffect } from 'react'
 
 import { connect, useDispatch  } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import axios from 'axios'
 
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { Flex, Box } from '@chakra-ui/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAlignLeft, faEllipsisVertical, faGlobe, faLocationDot, faPen, faQrcode, faTent, faTrash, faVrCardboard } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisVertical, faLocationDot, faPen, faTrash, faVrCardboard } from '@fortawesome/free-solid-svg-icons'
 
 import CustomButton from '../../../../../../Common/common/CustomButton/CustomButton'
-import useSessionStorage from '../../../../../../../hooks/useSessionStorage'
-import { langGetter } from '../../../../../../../helpers/langGetter'
 import { openModal, openQRModal, updateQRID } from '../../../../../../../redux/modal/modal.action'
 import { updateBooth, updateMarker } from '../../../../../../../redux/form/form.action'
+import { tourHost } from '../../../../../../../constants/constants'
 
 const MotionBox = motion(Box)
 
@@ -43,7 +40,7 @@ const OptionsMenu = (props) => {
 
         let payload = {
             modalName: 'booth', 
-            path: 'booths', method: 'put', 
+            host: tourHost, path: 'booths', method: 'put', 
             name: 'booth', id: data.id
         }
         dispatch(openModal(payload))
@@ -56,7 +53,7 @@ const OptionsMenu = (props) => {
         let vrPayload = {...data}
         let modalPayload = {
             modalName: 'vrTour', 
-            path: 'booths', method: 'put', 
+            host: tourHost, path: 'booths', method: 'put', 
             name: 'booth', id: data.id
         }
         dispatch(updateBooth(vrPayload))
@@ -71,12 +68,9 @@ const OptionsMenu = (props) => {
             let assignedMarker = markerFilter[0]
             dispatch(updateMarker(assignedMarker))
         }
-        console.log(marker)
-
-        console.log('marker: ', `${marker?.y}/${marker?.x}/${marker?.floorID}`)
         let modalPayload = {
             modalName: 'marker', 
-            path: 'markers', method: 'put', 
+            host: tourHost, path: 'markers', method: 'put', 
             name: 'marker', id: `${marker?.y}/${marker?.x}/${marker?.floorID}`, 
             assignItem: data?.id
         }
@@ -85,10 +79,8 @@ const OptionsMenu = (props) => {
 
     const open_deleteModal = () => {
         let modalPayload = {
-            page: 0, modalIndex: 5,
-            path: "booths", method: "delete",
-            name: 'booth', id: data.id, 
-            byteData: null
+            host: tourHost, path: "booths", method: "delete",
+            name: 'booth', id: data.id
         }
         
         dispatch(openModal(modalPayload))
@@ -96,13 +88,13 @@ const OptionsMenu = (props) => {
 
     useEffect(()=>{
 
-        if(isShow){
+        if(isShow)
             setTimeout(()=>{setIsShow(false)}, 5000)
-        }
 
     }, [isShow])
 
     return (
+
         <Box position="relative">
             <CustomButton faIcon={faEllipsisVertical} isCircle cssStyle={{margin: '.5em', zIndex: 5, boxShadow: 'none'}} onClick={()=>{setIsShow(!isShow)}}/>
             {
@@ -116,20 +108,7 @@ const OptionsMenu = (props) => {
                 </MotionBox>
 
             }
-                    
-            {/* <Popover>
-                <PopoverTrigger>
-                    <CustomButton faIcon={faEllipsisVertical} isCircle cssStyle={{margin: 0, zIndex: 1000}}/>
-                </PopoverTrigger>
-                <PopoverContent mt="45px" right="50%" w="250px" bg="transparent" borderColor="transparent">
-                    <PopoverBody>
-                        <CustomButton faIcon={faPen} text={t('tourguideEditor.edit-booth')} onClick={open_BoothModal}/>
-                        <CustomButton faIcon={faVrCardboard} text={t('tourguideEditor.edit-vr')} onClick={open_VRModal}/>
-                        <CustomButton faIcon={faLocationDot} text={t('tourguideEditor.assign-marker')} onClick={open_locationModal}/>
-                        <CustomButton faIcon={faTrash} text={t('tourguideEditor.delete-booth')} onClick={open_deleteModal}/>
-                    </PopoverBody>
-                </PopoverContent>
-            </Popover> */}
+
         </Box>
     
     )
@@ -154,6 +133,5 @@ const MotionFlex = motion(Flex)
 const Bar = styled(MotionFlex)`
 
     justify-content: flex-end;
-
 
 `

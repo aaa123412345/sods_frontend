@@ -5,7 +5,7 @@ export const UPDATE_BOOTH = "UPDATE_BOOTH"
 export const UPDATE_VR = "UPDATE_VR"
 export const UPDATE_MARKER = "UPDATE_MARKER"
 export const UPDATE_STORY = "UPDATE_STORY"
-export const UPDATE_AR_TREASURE = "UPDATE_AR_TREASURE"
+export const UPDATE_AR_GAME = "UPDATE_AR_GAME"
 export const UPDATE_BOOTH_GAME = "UPDATE_BOOTH_GAME"
 export const RESET_DATA = "RESET_DATA"
 
@@ -31,8 +31,8 @@ export const updateStory = (story) => {
     return { type: UPDATE_STORY, story }
 }
 
-export const updateARTreasure = (arTreasure) => {
-    return { type: UPDATE_AR_TREASURE, arTreasure }
+export const updateARGame = (arTreasure) => {
+    return { type: UPDATE_AR_GAME, arTreasure }
 }
 
 export const updateBoothGame = (boothGame) => {

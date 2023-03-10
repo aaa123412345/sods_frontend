@@ -14,12 +14,15 @@ import LeftPanel from './LeftPanel/LeftPanel'
 import useSessionStorage from '../../../hooks/useSessionStorage'
 import { updateItemIndex, updatePage } from '../../../redux/tourguide/tourguide.action'
 import { langGetter } from '../../../helpers/langGetter'
+import GameListContainer from '../../ARTreasureEditor/GameListContainer/GameListContainer'
 
  
 const TourGuideEditor = (props) => {
 
-    const { tourguide, modal } = props
-    const { themeColor, floorplans, stories, itemIndex } = tourguide
+    const { tourguide, modal, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+    const { floorplans, stories, itemIndex } = tourguide
     const { modalIndex } = modal
     const dispatch = useDispatch()
 
@@ -74,12 +77,14 @@ const TourGuideEditor = (props) => {
 
         <AnimatedPage>
             
-             <EditorHeader />
-            
-             <Container bg={bg} flexDir={{base: 'column', md: 'row'}}>
+            <EditorHeader />
+        
+            <Container bg={bg} flexDir={{base: 'column', md: 'row'}}>
                 <LeftPanel />
                 <RightPanel />
-             </Container>
+            </Container>
+
+            {/* <GameListContainer /> */}
 
         </AnimatedPage>
 
@@ -90,6 +95,7 @@ const TourGuideEditor = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide,
+        sysConfig: state.sysConfig,
         modal: state.modal,
         form: state.form
     };

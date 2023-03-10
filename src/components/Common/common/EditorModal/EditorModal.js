@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion, useAnimation } from 'framer-motion'
 import { Box, Flex,FormControl,Heading, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
@@ -19,11 +19,13 @@ import { booth as boothTemplate , floorplan as floorplanTemplate } from '../../.
 
 // import useSessionStorage from '../../../../hooks/useSessionStorage'
 
+const MotionFlex = motion(Flex); 
+
 const EditorModal = (props) => {
 
-    const { form, modal }  = props
-    const { floorplan, booth } = form
-    const { isOpen, modalName, path, method, name, id, assignedItem } = modal
+    const { form, modal, sysConfig }  = props
+    const { config } = sysConfig
+    const { isOpen, modalName, host, path, method, name, id, assignedItem } = modal
 
     const dispatch = useDispatch()
 
@@ -33,55 +35,27 @@ const EditorModal = (props) => {
     const bg = useColorModeValue("white", "black")
     // const progressBg = useColorModeValue("gray", "gray.100")
 
-    // const isShowSession = false
-
-    // // session storage
-    // const [modalSession, setModalSession] = useSessionStorage('modal', modal)
-    // const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
-    // const [boothSession, setBoothSession] = useSessionStorage('booth', booth)
-
     const [file, setFile] = useState()
 
     const close_modal = () => {
 
-        // setModalSession({ ...modalSession, isOpen: false})
-        // setFloorplanSession(floorplanTemplate)
-
-        // if(path === "booth")
-        //     setBoothSession(boothTemplate)
-
         dispatch(resetData())
         dispatch(closeModal())
 
-        // avoid compiled warnings
-        // if(isShowSession){
-        //     console.log(floorplanSession)
-        //     console.log(boothSession)
-        // }
-
     }
 
-    // useEffect(()=>{
+    
+    return isOpen &&  (
+            
+        <Overlay alignItems={{base: 'flex-end', md: 'center'}} >
+                {/* initial={{opacity: 0}} animate={{opacity: 1}} transition={{ duration: .25 }} */}
+            
 
-    //     dispatch(updateModal(modalSession))
-    //     dispatch(updateFloorplan(floorplanSession))
-    //     dispatch(updateBooth(boothSession))
-
-    // },[])
-
-    // useEffect(()=>{setFloorplanSession(floorplan)}, [floorplan])
-
-    // useEffect(()=>{setBoothSession(booth)}, [booth])
-
-    return !isOpen ? <></> : (
-
-        <Overlay alignItems={{base: 'flex-end', md: 'center'}} 
-            as={MotionFlex} initial={{opacity: 0}} animate={{opacity: 1}} transition={{ duration: .25 }}>
-
-            <Modal as={MotionFlex} initial={{y: 200}} animate={{y: 0}} transition={{ duration: .25 }}
-                bg={bg} borderRadius={{base: '18px 18px 0px 0px', md: 25}}
-                w={method==="delete"?"fit-content":{base: '100%', md: '80%'}} 
-                h={method==="delete"?"fit-content":{base: '90%', md: '70%'}}>
+                {/* // initial={{y: 200}} animate={{y: 0}} transition={{ duration: .25 }} */}
+                <Modal 
+                    bg={bg} borderRadius={{base: '18px 18px 0px 0px', md: 25}}
+                    w={method==="delete"?"fit-content":{base: '100%', md: '80%'}} 
+                    h={method==="delete"?"fit-content":{base: '90%', md: '70%'}}>
 
                 {/* <ProgressBar bg={progressBg} w="100%">
                     <Progress h="10px" w={`${(page + 1)/pages.length * 100}%`} bg={themeColor}></Progress>
@@ -98,36 +72,36 @@ const EditorModal = (props) => {
 
                     <Content w={{base: '90%', md: '70%'}}>
                         
-                        <FormControl>
                         
                         {
                             tourModalData[modalName].components.map((modalElement, index) => {
                                 return React.createElement(modalElement.type, {
                                     key: index, index: index,
-                                    ...modalElement.props, 
-                                    file: file, setFile: setFile    
+                                    file: file, setFile: setFile,
+                                    ...modalElement.props
                                 })
                             })
                         }
-                        </FormControl>
                         
                     </Content>
 
                 }
 
                 <FunctionalFooter isShow={isOpen} onClose={close_modal}
-                    method={method} path={path} name={name} id={id} assignedItem={assignedItem}
+                    method={method} host={host} path={path} name={name} id={id} assignedItem={assignedItem}
                     file={file} setFile={setFile}/>
 
             </Modal>
         </Overlay>
 
+           
     )
 }
 
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide,
+        sysConfig: state.sysConfig,
         modal: state.modal,
         form: state.form
     };
@@ -137,8 +111,6 @@ export default connect(
     mapStateToProps,
     null
 )(EditorModal)
-
-const MotionFlex = motion(Flex); 
 
 const Overlay = styled(MotionFlex)`
 
@@ -173,11 +145,9 @@ const ModalHeader = styled(Flex)`
 const Content = styled(Box)`
 
     margin: 1em auto;
-    // width: calc(100% - 2.5em);
     height: 100%;
     max-height: calc(100% - 90px - 60px);
     overflow-y: scroll;
-    // box-shadow: 0px -25px 25px -25px rgba(0, 0, 0, .25) inset;
 
 `
 

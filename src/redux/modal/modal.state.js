@@ -2,6 +2,7 @@ export const initModalState = {
 
     isOpen: false,
     modalName: null,
+    host: '',
     path: '',
     method: '',
     name: '',

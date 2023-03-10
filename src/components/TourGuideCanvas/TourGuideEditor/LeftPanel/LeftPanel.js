@@ -8,11 +8,11 @@ import { useTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 
 import ItemList from '../../../Common/common/ItemList/ItemList'
+import { tourHost } from '../../../../constants/constants'
 
 const LeftPanel = (props) => {
 
   const { tourguide } = props
-  const { floorplans, stories } = tourguide
 
   const { t } = useTranslation()
 
@@ -49,6 +49,8 @@ const LeftPanel = (props) => {
         dataName={dataDictionary[subsubpath]?.dataName}
         modalName={dataDictionary[subsubpath]?.modalName}
         heading={dataDictionary[subsubpath]?.heading}
+        method={'post'}
+        host={tourHost}
         path={dataDictionary[subsubpath]?.path}
         name={dataDictionary[subsubpath]?.name} />
           

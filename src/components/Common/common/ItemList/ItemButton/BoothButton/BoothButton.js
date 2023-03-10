@@ -70,7 +70,12 @@ const BoothButton = (props) => {
 
                 <Flex onClick={handle_click} w="100%">
 
-                    <StatusBadge isActive={markers.find(marker => marker.boothID === data.id) ?? false} />
+                    {
+                        
+                        !isNotUseFunction && 
+                        <StatusBadge isActive={markers.find(marker => marker.boothID === data.id) ?? false} />
+
+                    }
                     
                     <Flex flexDir="column">
                         <Text fontSize="lg" fontWeight="bold" noOfLines={1}>{data.titleZH}</Text> 

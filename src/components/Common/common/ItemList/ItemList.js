@@ -24,12 +24,14 @@ import { langGetter } from '../../../../helpers/langGetter'
 const ItemList = (props) => {
 
   const { 
-    dataName, isCategoryList, modalName, heading, path, name,
+    dataName, isCategoryList, modalName, heading, method, host, path, name,
     isInputList = false, faIcon, label, names, update,
-    tourguide, arTreasure, modal, form
+    tourguide, arTreasure, sysConfig, form
   } = props
 
-  const { host, themeColor, itemIndex, floorplans, page, markers, stories } = tourguide
+  const { config } = sysConfig
+  const { themeColor } = config ?? 'gray'
+  const { itemIndex, floorplans, stories } = tourguide
   const dispatch = useDispatch()
 
   const { subsubpath } = useParams()
@@ -43,11 +45,6 @@ const ItemList = (props) => {
 
   const isNoRegionDefined = path === "booths" && floorplans.length === 0 ? true : false
 
-  // session storage
-  // const [itemIndexSession, setItemIndexSession] = useSessionStorage('itemIndex', 0)
-
-  // react state
-  // const [items, setItems] = useState()
 
   const handle_active = (index) => {
 
@@ -55,9 +52,6 @@ const ItemList = (props) => {
 
     if(isInputList)
       return selectedIndex === index
-
-    // if(isDeleteMode)
-    //   return selectedItems.includes(items[index].id) ? true : false 
     if(isCategoryList)
       return isSameIndex 
     return false
@@ -65,7 +59,6 @@ const ItemList = (props) => {
   }
 
   const update_page = (index) => {
-    // setItemIndexSession(index)
     dispatch(updateItemIndex(index))
 
     if(subsubpath !== 'booths'){
@@ -81,10 +74,7 @@ const ItemList = (props) => {
     if(isCategoryList)
       update_page(index)
 
-    console.log('clicked')
-
     if(isInputList){
-      console.log(selectedIndex)
       setSelectIndex(index)
       let newData = {...form[names.form]}
       newData[names.field] = arTreasure['booths'][index].id
@@ -97,11 +87,10 @@ const ItemList = (props) => {
 
     let payload = {
       modalName: modalName, 
-      path: path, method: 'post', 
+      host: host, path: path, method: method, 
       name: name,
     }
-    
-    // setModalSession({...modalSession, ...payload})
+    console.log(payload)
     dispatch(openModal(payload))
       
   }
@@ -160,6 +149,7 @@ const ItemList = (props) => {
 const mapStateToProps = state => {
   return {
       tourguide: state.tourguide,
+      sysConfig: state.sysConfig,
       arTreasure: state.arTreasure,
       modal: state.modal,
       form: state.form

@@ -1,6 +1,8 @@
 import React from "react"
 import { useParams } from "react-router-dom"
 
+import { v4 } from 'uuid'
+
 import styled from 'styled-components'
 
 import { ChakraProvider, useColorModeValue } from '@chakra-ui/react'
@@ -9,7 +11,7 @@ import { Flex } from '@chakra-ui/react'
 
 import { AnimatePresence } from 'framer-motion';
 
-const Wrapper = ({ children, isUseChakra = false, isUseContainer = false }) => {
+const Wrapper = ({ children, isUseChakra = false, isUseContainer = false, bgColor }) => {
 
     const { path, subpath } = useParams() 
 
@@ -21,10 +23,10 @@ const Wrapper = ({ children, isUseChakra = false, isUseContainer = false }) => {
         )
     }
 
-    const ContainerWrapper = ({children}) => {
+    const ContainerWrapper = ({children, bgColor}) => {
         return (
             <AnimatePresence>
-                <OuterContainer key={path + "-" + subpath} bg={'white'}>{children}</OuterContainer>
+                <OuterContainer key={path + "-" + subpath + "-" + v4()} bg={bgColor ?? ""}>{children}</OuterContainer>
             </AnimatePresence>    
         )
     }
@@ -32,7 +34,7 @@ const Wrapper = ({ children, isUseChakra = false, isUseContainer = false }) => {
     return isUseChakra ? 
     (
         <ChakraWrapper>
-            { isUseContainer ? <ContainerWrapper>{children}</ContainerWrapper> : children}
+            { isUseContainer ? <ContainerWrapper bgColor={bgColor}>{children}</ContainerWrapper> : children}
         </ChakraWrapper>
     ): children
 

@@ -1,7 +1,10 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Box } from '@chakra-ui/react'
 
-const AnimatedPage = ({children}) => {
+const MotionBox = motion(Box)
+
+const AnimatedPage = ({children, bg}) => {
 
     const animations = {
         initial: { opacity: 0, x: 100 },
@@ -9,11 +12,15 @@ const AnimatedPage = ({children}) => {
         exit: {opacity: 0, x: -100 }
     }
 
+
     return (
-        <motion.div variants={animations} initial='initial' animate="animate" exit="exit" transition={{duration: 1}}
-            style={{width: "100%", height: "100%"}}>
-            {children}
-        </motion.div>
+        <AnimatePresence>
+            <MotionBox 
+            // variants={animations} initial='initial' animate="animate" exit="exit" transition={{duration: 1}}
+                style={{width: "100%", height: "100%"}} bg={bg??""}>
+                {children}
+            </MotionBox>
+        </AnimatePresence>
     )
 }
 

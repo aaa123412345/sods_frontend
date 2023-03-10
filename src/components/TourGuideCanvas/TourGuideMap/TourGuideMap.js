@@ -25,8 +25,10 @@ import { UserContext } from '../../../App';
 
 const TourGuideMap = (props) => {
 
-    const { isMarkable = false, isAssignBooth = false, height, tourguide, form, modal } = props
-    const { themeColor, itemIndex, floorplans, booths, markers } = tourguide
+    const { isMarkable = false, isAssignBooth = false, height, tourguide, form, modal, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+    const { itemIndex, floorplans, booths, markers } = tourguide
     const { marker } = form
     const dispatch = useDispatch()
 
@@ -35,8 +37,7 @@ const TourGuideMap = (props) => {
 
     const { colorMode, toggleColorMode } = useColorMode()
     const bg = useColorModeValue('white', 'black')
-    const userLang = langGetter() === 'en' ? 'eng' : 'chi'
-    const isClientView = !isMarkable && !isAssignBooth 
+    const userLang = langGetter() === 'en' ? 'eng' : 'chi' 
     
     const { path, subpath, subsubpath } = useParams()
     
@@ -49,7 +50,7 @@ const TourGuideMap = (props) => {
 
     const {user} = useContext(UserContext)
 
-    const config = { headers: { token: user.token } }
+    const header = { headers: { token: user.token } }
 
     const add_marker = (marker) => {
 
@@ -58,7 +59,7 @@ const TourGuideMap = (props) => {
             let newData = { floorPlanID: floorplans[itemIndex].id, y: marker.top, x: marker.left }
             let newMarkers = [...markers, newData]
             
-            axios.post(tourHost+"/markers", newData, config)
+            axios.post(tourHost+"/markers", newData, header)
             .then(res=>{ 
                 if(res.data.code < 400){
                     console.log('added marker')
@@ -121,14 +122,14 @@ const TourGuideMap = (props) => {
             <OuterContainer ref={containerRef}>
 
                 { 
-                    isClientView && 
+                    (!isMarkable && !isAssignBooth) && 
                     <div ref={selectorRef}>
                         <FloorSelector />
                         <StatusBar />
                     </div> 
                 }
 
-                { isClientView && <FloatingButtons /> }
+                { (!isMarkable && !isAssignBooth) && <FloatingButtons /> }
 
                 <ScrollMap borderRadius={isAssignBooth && 25} >
 
@@ -173,6 +174,7 @@ const TourGuideMap = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide,
+        sysConfig: state.sysConfig,
         form: state.form, 
         modal: state.modal
     };

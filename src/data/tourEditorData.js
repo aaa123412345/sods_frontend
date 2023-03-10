@@ -2,6 +2,7 @@ import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMa
 import StorySplider from "../components/TourGuideCanvas/StorySplider/StorySplider";
 import ItemList from "../components/Common/common/ItemList/ItemList";
 import BoothInspector from '../components/TourGuideCanvas/TourGuideEditor/BoothInspector/BoothInpector'
+import { tourHost } from "../constants/constants";
 
 export const tourEditorData = {
 
@@ -26,6 +27,8 @@ export const tourEditorData = {
                     isCategoryList: false,
                     modalIndex: 1,
                     heading: "tourguide.booth",
+                    host: tourHost,
+                    method: 'post',
                     path: "booths",
                     name: 'booth', 
                     modalName: "booth"

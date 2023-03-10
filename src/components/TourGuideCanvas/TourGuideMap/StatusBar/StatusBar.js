@@ -11,7 +11,7 @@ import { langGetter } from '../../../../helpers/langGetter'
 
 const StatusBar = (props) => {
 
-    const themeColor = useSelector(state => state.tourguide.themeColor)
+    const themeColor = useSelector(state => state.sysConfig?.config?.themeColor)
 
     const bg = useColorModeValue('white', 'black')
 
