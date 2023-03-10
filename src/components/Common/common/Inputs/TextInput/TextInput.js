@@ -15,6 +15,8 @@ const TextInput = (props) => {
 
     const data = form[names.form]
 
+    const [inputEN, setInputEN] = useState(data[names.field + "EN"])
+    const [inputZH, setInputZH] = useState(data[names.field + "ZH"])
     const [isErr, setIsErr] = useState(false)
     const supportedLang = ['zh', 'en']
     const border = isErr ? 'red' : 'gray'
@@ -22,12 +24,17 @@ const TextInput = (props) => {
     const handle_onChange = (e, lang) => {
 
         const value = e.target.value
+        lang === 'en' ? setInputEN(value) : setInputZH(value)
+        setIsErr(value.length === 0)
+        
+    }
+
+    const handle_onBlur = (e, lang) => {
+        const value = e.target.value
         let newData = {...data}
         let name = names.field + lang.toUpperCase()
         newData[name] = value
         dispatch(update(newData))
-        setIsErr(value.length === 0)
-        
     }
 
     return (
@@ -45,13 +52,13 @@ const TextInput = (props) => {
 
                     return isTextArea?
                     <Textarea key={index} m=".5em 0" borderColor={border} borderRadius={25}
-                        value={data[names.field + lang.toUpperCase()]} 
-                        onChange={e=>handle_onChange(e, lang)}
+                        value={lang === 'en'? inputEN : inputZH} 
+                        onChange={e=>handle_onChange(e, lang)} onBlur={e=>handle_onBlur(e, lang)}
                         placeholder={placeholderLang[lang]+placeholder[lang]} />
                     :
                     <CustomInputField key={index} borderColor={border} borderRadius={25}
-                        value={data[names.field + lang.toUpperCase()]} 
-                        onChange={e=>handle_onChange(e, lang)}
+                        value={lang === 'en'? inputEN : inputZH} 
+                        onChange={e=>handle_onChange(e, lang)}  onBlur={e=>handle_onBlur(e, lang)}
                         placeholder={placeholderLang[lang]+placeholder[lang]} />
                 })
 

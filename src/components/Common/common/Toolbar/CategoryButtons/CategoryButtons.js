@@ -16,8 +16,10 @@ import { langGetter } from '../../../../../helpers/langGetter';
 
 const CategoryButtons = (props) => {
 
-    const { categoryList, optionList, heading, tourguide } = props
-    const { themeColor, page } = tourguide
+    const { categoryList, optionList, heading, tourguide, sysConfig } = props
+    const { page } = tourguide
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
@@ -32,47 +34,6 @@ const CategoryButtons = (props) => {
         // dispatch(updatePage(index))
         navigate(`/server/${lang}/tourguide/editor/${path}`)
     }
-
-    // useEffect(()=>{
-    //     dispatch(updatePage(pageSession))
-    // },[])
-
-    // const OptionBar = (props) => {
-
-    //     const TriggerButton = () => {
-    //         return (
-    //             <PopoverTrigger>
-    //                 <Button w="45px" h="45px" borderRadius={50} variant="gray">
-    //                     <FontAwesomeIcon icon={faEllipsisV} />
-    //                 </Button>
-    //             </PopoverTrigger>
-    //         )
-    //     }
-
-    //     const Options= (OptionList) => {
-    //         return (
-    //             <PopoverContent w="100%" h="fit-content" bg="transparent" borderColor="transparent" boxShadow='none'>
-    //             {
-    //                 optionList.map((option, index)=>{
-
-    //                     return React.createElement(CustomButton, {
-    //                         key: index, 
-    //                         ...option      
-    //                     })
-    //                 })
-    //             }
-    //             </PopoverContent>
-    //         )
-    //     }
-
-    //     return (
-    //         <Popover>
-    //             <TriggerButton />
-    //             <Options optionList={props.optionList} />
-    //         </Popover>
-    //     )
-
-    // }
 
     const CategoryBar = (props) => {
         
@@ -111,6 +72,7 @@ const CategoryButtons = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide,
+        sysConfig: state.sysConfig,
         modal: state.modal,
         form: state.form
     };

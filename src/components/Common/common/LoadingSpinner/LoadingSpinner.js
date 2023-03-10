@@ -6,9 +6,11 @@ import Wrapper from '../Wrapper/Wrapper';
 
 const LoadingSpinner = (props) => {
 
-    const { tourguide } = props
-    const { themeColor, loadingItem } = tourguide
-    const {t} = useTranslation()
+    const { tourguide, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+    const { loadingItem } = tourguide
+    const { t } = useTranslation()
     const bg = localStorage.getItem('chakra-ui-color-mode') === 'dark' ? 'black' : 'white'
     const color = localStorage.getItem('chakra-ui-color-mode') !== 'dark' ? 'black' : 'white'
     
@@ -26,7 +28,8 @@ const LoadingSpinner = (props) => {
 
 const mapStateToProps = state => {
     return {
-        tourguide: state.tourguide
+        tourguide: state.tourguide,
+        sysConfig: state.sysConfig
     };
 };
   

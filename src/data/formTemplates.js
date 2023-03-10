@@ -41,7 +41,7 @@ export const arTreasure = {
 
     questionEN: "",
     questionZH: "",
-    answers: ""
+    answers: JSON.stringify([])
 
 }
 

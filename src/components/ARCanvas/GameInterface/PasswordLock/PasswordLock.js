@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import axios from 'axios'
 
 import styled from 'styled-components'
 import { Box, Flex, Input, Heading, Text } from '@chakra-ui/react'
@@ -10,44 +11,66 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
 
 import CustomButton from '../../../Common/common/CustomButton/CustomButton'
+import { arGameHost } from '../../../../constants/constants'
+import { UserContext } from '../../../../App'
 
 
 const PasswordLock = (props) => {
 
-    const { setIsLocked, isLocked, isFound, tourguide } = props
-    const { themeColor } = tourguide
+    const { setIsLocked, isLocked, isFound, tourguide, sysConfig, arTreasure } = props
+    const { treasure } = arTreasure
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
 
-    const { lang, id } = useParams()
+    const { lang } = useParams()
     const { t } = useTranslation()
     const navigate = useNavigate()
     
     const [currentStep, setCurrentStep] = useState("1")
     const [password, setPassword] = useState('')
 
-    const question = "What is name of college?"
-    const answer = "polyu"
+    const { user } = useContext(UserContext)
+    
+    const startTime = JSON.parse(localStorage.getItem('treasure_startTime'))
+    const data = { user: user.userId, treasureId: treasure.treasureId, startTime: startTime }
+
 
     const unlock_treasure = () => {
-        if(answer === password){
-            setIsLocked(false)
-            setCurrentStep("3")
-        }
 
-        // post record 
+        let score = 0
+        
+        if(startTime !== undefined && treasure){
+
+            if(treasure.answers.includes(password)){
+                setIsLocked(false)
+                setCurrentStep("3")
+                score = 1
+            }
+
+            data = { ...data, userAnswer: password, score: score, endTime: new Date().toISOString() }
+
+            const header = { headers: { token: user.token } }
+
+            axios.post(arGameHost + "/" + "treasureStatistics", data, header)
+                .then(res=>localStorage.removeItem('treasure_startTime'))
+                .catch(err=>console.log(err.message))
+
+        }
+    
+    }
+    const leave = () => {
+
+        navigate(`/public/${lang}/tourguide/ticket`)
+
     }
 
     useEffect(()=>{
 
-        console.log('currentStep: ', currentStep)
-        if(!isLocked){
+        if(!isLocked)
             setCurrentStep('3')
-            console.log('step 3')
-        }
 
-        if(isFound && isLocked){
-            console.log('step 2')
+        if(isFound && isLocked)
             setCurrentStep("2")
-        }
 
     }, [isFound])
 
@@ -58,8 +81,7 @@ const PasswordLock = (props) => {
 
                 <Heading size="sm">
                     <FontAwesomeIcon icon={faExclamationCircle} />
-                    {" "}
-                    {t(`arTreasure.hint-${currentStep}`)}
+                    {" " + t(`arTreasure.hint-${currentStep}`)}
                 </Heading>
 
                 {
@@ -67,7 +89,7 @@ const PasswordLock = (props) => {
                     &&
                     <React.Fragment>
                         <Heading mt=".5em" size="sm">{t('arTreasure.question')}</Heading>
-                        <Text>{question}</Text>
+                        <Text>{treasure.question}</Text>
 
                         <Flex mt=".5em">
 
@@ -84,7 +106,7 @@ const PasswordLock = (props) => {
                     currentStep === '3'
                     &&
                     <CustomButton text={t('arTreasure.back')} faIcon={faRotateBackward}
-                        onClick={()=>{navigate(`/public/${lang}/tourguide/ticket`)}}/>
+                        onClick={()=>{leave()}}/>
                 }
 
             </Box>
@@ -96,7 +118,9 @@ const PasswordLock = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide, 
-        modal: state.modal
+        modal: state.modal, 
+        sysConfig: state.sysConfig,
+        arTreasure: state.arTreasure
     };
 };
 

@@ -16,8 +16,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const GameInterface = (props) => {
 
-    const { isFound, isLocked, setIsLocked, tourguide } = props
-    const { themeColor } = tourguide
+    const { isFound, isLocked, setIsLocked, tourguide, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
 
     const { lang } = useParams()
 
@@ -25,13 +26,12 @@ const GameInterface = (props) => {
     const navigate = useNavigate()
 
     const [isShow, setIsShow] = useState(true)
-    const [isStart, setIsStart] = useState(false)
+    const [isStart, setIsStart] = useState(localStorage.getItem('treasure_startTime') !== undefined ? true : false)
 
     useEffect(()=>{
 
         if(isStart){
-            //do sth
-            // post start time
+            localStorage.setItem('treasure_startTime', JSON.stringify(new Date().toISOString()))
         }
 
     }, [isStart])
@@ -47,9 +47,7 @@ const GameInterface = (props) => {
                     <GameHeader>
                         <CustomButton faIcon={faArrowLeft} onClick={()=>{navigate(`/public/${lang}/tourguide/floorplans`)}} isCircle/>
                         <Heading w="80%" color='white'>
-                            <FontAwesomeIcon icon={faGamepad} />
-                            {' '}
-                            {t('arTreasure.title')}
+                            <FontAwesomeIcon icon={faGamepad} />{ " " + t('arTreasure.title')}
                         </Heading>
                         <CustomButton faIcon={faQuestion} isDisabled={isShow} onClick={()=>{setIsShow(true)}} isCircle/>
                     </GameHeader>
@@ -58,7 +56,7 @@ const GameInterface = (props) => {
 
                 {
                     !isShow && 
-                    <PasswordLock  isLocked={isLocked} setIsLocked={setIsLocked} isFound={isFound}/>
+                    <PasswordLock isLocked={isLocked} setIsLocked={setIsLocked} isFound={isFound}/>
 
                 }
                 
@@ -74,7 +72,8 @@ const GameInterface = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide, 
-        modal: state.modal
+        modal: state.modal, 
+        sysConfig: state.sysConfig
     };
 };
 

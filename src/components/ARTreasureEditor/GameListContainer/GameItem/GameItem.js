@@ -7,53 +7,88 @@ import { faPen, faQuestion, faTent, faTrash } from '@fortawesome/free-solid-svg-
 import { useTranslation } from 'react-i18next'
 import { connect, useDispatch } from 'react-redux'
 
-import { openModal } from '../../../../redux/modal/modal.action'
-
 import CustomButton from '../../../Common/common/CustomButton/CustomButton'
+
+import useWindowSize from '../../../../hooks/useWindowSize'
+import { openModal } from '../../../../redux/modal/modal.action'
+import { updateARGame, updateBoothGame } from '../../../../redux/form/form.action'
+import { mobileBreakPoint, tourHost, arGameHost } from '../../../../constants/constants'
 
 const GameItem = (props) => {
 
-    const { treasure, sysConfig, arTreasure } = props
+    const { isHeader = false, treasure, sysConfig, arTreasure, form } = props
     const { config } = sysConfig
     const { booths, boothGames } = arTreasure
 
     const [booth, setBooth] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
 
-    const answers = JSON.parse(treasure?.answers)
+    const answers = JSON.parse(treasure?.answers ?? JSON.stringify([]))
 
     const { t } = useTranslation()
     const dispatch = useDispatch()
 
     const color = useColorModeValue('white', 'black')
     const bg = useColorModeValue('gray.10', 'gray.100')
+    const windowSize = useWindowSize()
 
     const assign_game = () => {
+        console.log('boothGames: ', boothGames)
+
+        let hasRecord = boothGames.filter((boothGame)=>boothGame?.gameId === treasure?.treasureId)
+        console.log('hasRecord: ', hasRecord)
+        
+        dispatch(updateBoothGame({gameId: treasure.treasureId, boothId: booth?.boothId }))
 
         let payload = {
             modalName: 'boothGame', 
-            path: 'boothGames', method: 'post', 
+            host: tourHost, path: 'boothGames', method: 'post', 
             name: 'boothGame',
         }
         
-        // setModalSession({...modalSession, ...payload})
         dispatch(openModal(payload))
 
     }
 
     const edit_game = () => {
 
+        dispatch(updateARGame(treasure))
+        let payload = {
+            modalName: 'arTreasure', 
+            host: arGameHost, path: 'treasures', method: 'put', 
+            name: 'arGame', id: treasure.treasureId
+        }
+
+        dispatch(openModal(payload))
+
     }
 
     const delete_game = () => {
 
+        let modalPayload = {
+            host: arGameHost, path: "treasures", method: "delete",
+            name: 'arGame', id: treasure.treasureId
+        }
+        
+        dispatch(openModal(modalPayload))
 
+    }
+
+    const ColumnHeading = ({title}) => {
+        return (
+            <React.Fragment>
+                {
+                    (isHeader || (!isHeader && windowSize.width <= mobileBreakPoint)) && 
+                    <Heading size="sm" mb=".5em" color="gray">{title}</Heading>
+                }
+            </React.Fragment>
+        )
     }
 
     const ColumnWrap = ({children}) => {
         return (
             <Box w="100%" p=".5em" boxShadow={{base: 'none', md: "3px 0px 3px -3px rgba(0, 0, 0, .4)"}}>
-                {children}
+                {isHeader ? children[0] : children}
             </Box>
         )
 
@@ -61,39 +96,43 @@ const GameItem = (props) => {
 
     useEffect(()=>{
 
-        // init card info
-        let boothGame = boothGames?.filter((boothGame) => boothGame.gameId !== treasure.treasureId)
-        
-        if(boothGame?.length ?? 0 !== 0){      
+        if(!isHeader){
 
-            let booth = booths?.filter((booth) => booth.id !== boothGame[0].boothId)
-            if(booth?.length ?? 0 !== 0)
-                setBooth(booth[0])
-
+            // init card info
+            let boothGame = boothGames?.filter((boothGame) => boothGame.gameId === treasure.treasureId)
+            
+            if(boothGame?.length ?? 0 !== 0){      
+                
+                let booth = booths?.filter((booth) => booth.id.toString() === boothGame[0].boothId.toString())
+                if(booth?.length ?? 0 !== 0)
+                    setBooth(booth[0])
+            }
         }
 
         setIsLoaded(true)
 
     }, [])
 
-    return (
-        <Record bg={bg} flexDir={{base: "column-reverse", md: 'row'}}> 
+    return ((isHeader && windowSize.width > mobileBreakPoint) || !isHeader) && (
+        <Record bg={bg} flexDir={{base: "column-reverse", md: 'row'}} boxShadow={{base: '0px 5px 15px rgba(0, 0, 0, .2)', md: '0px 15px 15px -15px rgba(0, 0, 0, .2)'}}> 
             <Flex w={{base:"100%", md: "80%"}} flexDir={{base: "column", md: 'row'}}>
                 <ColumnWrap>
-                    <Heading size="sm" mb=".5em" color="gray">{t('arTreasureEditor.heading-question')}</Heading>
+                    <ColumnHeading title={t('arTreasureEditor.heading-question')}/>
                     <Text>{treasure?.questionEN ?? ""}</Text>
                     <Text>{treasure?.questionZH ?? ""}</Text>
                 </ColumnWrap>
                 <ColumnWrap>
-                    <Heading size="sm" mb=".5em" color="gray">{t('arTreasureEditor.heading-answer')}</Heading>
-                    {
-                        answers?.map((answer, index)=>(
-                            <Tag key={index} bg="gray" color={color}>{answer}</Tag>
-                        ))??<></>   
-                    }
+                    <ColumnHeading title={t('arTreasureEditor.heading-answer')}/>
+                    <Flex flexWrap="wrap">
+                        {
+                            answers?.map((answer, index)=>(
+                                <Tag key={index} color={color}>{answer}</Tag>
+                            ))??<></>   
+                        }
+                    </Flex>
                 </ColumnWrap>
                 <ColumnWrap>
-                    <Heading size="sm" mb=".5em" color="gray">{t('arTreasureEditor.heading-booth')}</Heading>
+                    <ColumnHeading title={t('arTreasureEditor.heading-booth')}/>
                     {
                         !isLoaded ? <Text>{t('arTreasureEditor.loading')}</Text>
                         :
@@ -108,8 +147,15 @@ const GameItem = (props) => {
                 </ColumnWrap>
             </Flex>
             <Flex w={{base:"100%", md: "20%"}} justifyContent={{base: 'flex-end', md: "space-evenly"}}>
-                <CustomButton bgColor={config.themeColor} faIcon={faPen} onClick={()=>{edit_game()}} isCircle/>
-                <CustomButton bgColor='danger' faIcon={faTrash} onClick={()=>{delete_game()}} isCircle/>
+                {
+                    isHeader ? 
+                    <ColumnHeading title={""}/>
+                    :
+                    <>
+                        <CustomButton bgColor={config.themeColor} faIcon={faPen} onClick={()=>{edit_game()}} isCircle/>
+                        <CustomButton bgColor='danger' faIcon={faTrash} onClick={()=>{delete_game()}} isCircle/>
+                    </>
+                }
             </Flex>
         </Record>
     )
@@ -118,7 +164,8 @@ const GameItem = (props) => {
 const mapStateToProps = state => {
     return {
       sysConfig: state.sysConfig, 
-      arTreasure: state.arTreasure
+      arTreasure: state.arTreasure, 
+      form: state.form
     };
 };
   
@@ -131,15 +178,16 @@ const Record = styled(Flex)`
 
     margin: 1em auto; padding: .5em;
     width: 90%;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, .2);
-    border-radius: 25px;
 
 `
 
 const Tag = styled(Text)`
   
     width: fit-content;
-    padding: .5em; 
-    border-radius: 25px;
+    margin: .1em;
+    padding: .5em .8em; 
+    border-radius: 18px;
+    backdrop-filter: brightness(.7);
+    color:white;
     
 `

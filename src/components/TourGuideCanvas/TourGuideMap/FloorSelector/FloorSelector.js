@@ -18,8 +18,10 @@ import { scrollbarCSS } from '../../../../constants/constants'
 
 const FloorSelector = (props) => {
 
-    const { tourguide } = props
-    const { themeColor, floorplans, itemIndex} = tourguide
+    const { tourguide, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+    const { floorplans, itemIndex} = tourguide
     const dispatch = useDispatch()
 
     const { t } = useTranslation()
@@ -67,7 +69,8 @@ const FloorSelector = (props) => {
 
 const mapStateToProps = state => {
     return {
-        tourguide: state.tourguide
+        tourguide: state.tourguide, 
+        sysConfig: state.sysConfig
     };
 };
 

@@ -8,8 +8,9 @@ const MotionStamp = motion(Flex)
 
 const Stamp = (props) => {
 
-    const { label, isCollected, tourguide } = props
-    const { themeColor } = tourguide
+    const { label, isCollected, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
 
     const bg = useColorModeValue('gray.10', 'gray.100')
 
@@ -25,6 +26,7 @@ const Stamp = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide,
+        sysConfig: state.sysConfig,
         modal: state.modal
     };
 };

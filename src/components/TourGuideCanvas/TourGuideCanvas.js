@@ -12,10 +12,10 @@ import StorySlider from './StorySplider/StorySplider'
 import QRCodeModal from './QRCodeModal/QRCodeModal'
 import Wrapper from '../Common/common/Wrapper/Wrapper'
 import LoadingSpinner from '../Common/common/LoadingSpinner/LoadingSpinner'
-import { tourHost } from '../../constants/constants'
-import { updateFloorplans, updateStories, updateBooths, updateMarkers, updateLoadingItem, clearLoadingItem } from '../../redux/tourguide/tourguide.action'
 import BoothPage from './BoothPage/BoothPage'
 import EditorModal from '../Common/common/EditorModal/EditorModal'
+import { tourHost } from '../../constants/constants'
+import { updateFloorplans, updateStories, updateBooths, updateMarkers, updateLoadingItem, clearLoadingItem, updateBoothGames } from '../../redux/tourguide/tourguide.action'
 import { clearRefreshFlag, updateConfig } from '../../redux/sysConfig/sysConfig.action'
 
 const TourGuideCanvas = (props) => {
@@ -82,6 +82,7 @@ const TourGuideCanvas = (props) => {
         Promise.all([
             get_data("configs", (data) => updateConfig(data)),
             get_data("floorplans", (data) => updateFloorplans(data)),
+            get_data("boothGames", (data) => updateBoothGames(data)),
             get_data("booths", (data) => updateBooths(data)),
             get_data("markers", (data) => updateMarkers(data)),
             get_data("stories", (data) => updateStories(data))

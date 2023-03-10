@@ -10,7 +10,7 @@ const modalReducer = (state = initModalState, action) => {
                 isOpen: true
             }
         case CLOSE_MODAL:
-            return { ...state, isOpen: false, assignItem: null }
+            return { ...initModalState, isOpen: false, assignItem: null }
         case UPDATE_MODAL:
             return { ...state, ...action.config }
         case OPEN_QR_MODAL:

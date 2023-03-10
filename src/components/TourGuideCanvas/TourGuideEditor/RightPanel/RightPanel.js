@@ -9,11 +9,11 @@ import { Flex, useColorModeValue } from '@chakra-ui/react'
 import { faMapLocationDot, faPen, faTent, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import Toolbar from '../../../Common/common/Toolbar/Toolbar'
-import useSessionStorage from '../../../../hooks/useSessionStorage'
 import { tourEditorData } from '../../../../data/tourEditorData'
 
 import { updateFloorplan, updateStory } from '../../../../redux/form/form.action'
 import { openModal } from '../../../../redux/modal/modal.action'
+import { tourHost } from '../../../../constants/constants'
 
 const RightPanel = (props) => {
 
@@ -25,13 +25,6 @@ const RightPanel = (props) => {
     const { t } = useTranslation()
 
     const { subsubpath } = useParams()
-
-    const isShowSession = false
-
-    // session storage
-    // const [floorplanSession, setFloorplanSession] = useSessionStorage('floorplan', floorplan)
-    // const [storySession, setStorySession] = useSessionStorage('story', story)
-    // const [modalSession, setModalSession] = useSessionStorage('modal', modal)
 
     // chakra hooks
     const bg = useColorModeValue('gray.10', 'gray.100')
@@ -55,7 +48,7 @@ const RightPanel = (props) => {
 
         let modalPayload = {
             modalName: name,
-            path: path, method: method,
+            host: tourHost, path: path, method: method,
             name: name, id: payload.id
         }
         

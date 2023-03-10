@@ -17,8 +17,10 @@ import useWindowSize from '../../../hooks/useWindowSize'
 
 const GameTicket = (props) => {
 
-    const { tourguide } = props
-    const { themeColor, booths } = tourguide
+    const { tourguide, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+    const { booths } = tourguide
 
     const { t } = useTranslation()
 
@@ -64,6 +66,7 @@ const GameTicket = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide,
+        sysConfig: state.sysConfig,
         modal: state.modal
     };
 };

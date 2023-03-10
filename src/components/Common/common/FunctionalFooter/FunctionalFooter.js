@@ -27,15 +27,18 @@ import { finishInspect } from '../../../../redux/inspector/inspector.action'
 const FunctionalFooter = (props) => {
 
     const { 
-        isShow, path, method, name, onClose, 
-        tourguide, form, id, assignedItem, file, setFile
+        isShow, method, path, host, name, onClose, 
+        tourguide, sysConfig, form, id, assignedItem, file, setFile
     } = props
 
-    const { themeColor } = tourguide 
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { t } = useTranslation()
 
+    
     // chakra hooks
     const toast = useToast({duration: 3000, isClosable: true})
 
@@ -44,7 +47,7 @@ const FunctionalFooter = (props) => {
 
     const {user,clearLoginState} = useContext(UserContext)
 
-    const config = { headers: { token: user.token } }
+    const header = { headers: { token: user.token } }
 
     const handle_redirect = (code) => {
 
@@ -131,14 +134,14 @@ const FunctionalFooter = (props) => {
                 return handle_update(imageUrl)
             default:
                 return;
-        }  
+        }
 
     }
 
     const handle_delete = () => {
 
-        // console.log('func. footer: ', tourHost+path+'/'+id)
-        axios.delete(tourHost+'/'+path+'/'+id, config)
+        console.log('func. footer: ', tourHost+path+'/'+id)
+        axios.delete(host+'/'+path+'/'+id, header)
         .then((res)=>{
             let code = res.data.code
             toast(toast_generator(code, t("tourguide.deleted"), t(`tourguide.${path}`)))
@@ -155,10 +158,12 @@ const FunctionalFooter = (props) => {
         let data = form[name]
         let newData = {...data}
 
-        if(imageUrl)
-            newData[file?.name] = imageUrl        
+        console.log('push:', data)
 
-        axios.post(tourHost + '/' + path, {...newData}, config)
+        if(imageUrl)
+            newData[file?.name] = imageUrl   
+            
+        axios.post(host + '/' + path, {...newData}, header)
         .then((res)=>{
             let code = res.data.code
             toast(toast_generator(code, t("tourguide.created"), t(`tourguide.${name}`)))
@@ -174,7 +179,7 @@ const FunctionalFooter = (props) => {
 
         let data = form[name]
         let newData = {...data}
-        let url = tourHost + '/' + path + "/" + id
+        let url = host + '/' + path + "/" + id
 
         if(imageUrl)
             newData[file?.name] = imageUrl     
@@ -182,7 +187,7 @@ const FunctionalFooter = (props) => {
         console.log('url: ', url)
         console.log('newData: ', newData)
 
-        axios.put(url, {...newData}, config)
+        axios.put(url, {...newData}, header)
         .then((res)=>{
             let code = res.data.code
             toast(toast_generator(code, t("tourguide.updated"), t(`tourguide.${name}`)))
@@ -225,6 +230,7 @@ const FunctionalFooter = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide,
+        sysConfig: state.sysConfig,
         modal: state.modal,
         form: state.form
     };

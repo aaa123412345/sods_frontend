@@ -1,4 +1,4 @@
-import { CLEAR_LOADING_ITEM, UPDATE_BOOTHS, UPDATE_FLOORPLANS, UPDATE_GAMES, UPDATE_HOST, UPDATE_ITEM_INDEX, UPDATE_LANGUAGE, UPDATE_LOADING_ITEM, UPDATE_MARKERS, UPDATE_PAGE, UPDATE_REGION_INDEX, UPDATE_STORIES, UPDATE_STORY_INDEX, UPDATE_STORY_PROGRESS, UPDATE_THEME_COLOR } from "./tourguide.action"
+import { CLEAR_LOADING_ITEM, UPDATE_BOOTHS, UPDATE_FLOORPLANS, UPDATE_BOOTH_GAMES, UPDATE_HOST, UPDATE_ITEM_INDEX, UPDATE_LANGUAGE, UPDATE_LOADING_ITEM, UPDATE_MARKERS, UPDATE_PAGE, UPDATE_REGION_INDEX, UPDATE_STORIES, UPDATE_STORY_INDEX, UPDATE_STORY_PROGRESS, UPDATE_THEME_COLOR } from "./tourguide.action"
 import { initTourguideState } from "./tourguide.state"
 
 const tourguideReducer = (state = initTourguideState, action) => {
@@ -20,8 +20,8 @@ const tourguideReducer = (state = initTourguideState, action) => {
             return { ...state, markers: action.markers }
         case UPDATE_BOOTHS:
             return { ...state, booths: action.booths }
-        case UPDATE_GAMES:
-            return { ...state, games: action.games }
+        case UPDATE_BOOTH_GAMES:
+            return { ...state, boothGames: action.games }
         case UPDATE_STORIES:
             return { ...state, stories: action.stories }
         case UPDATE_STORY_PROGRESS:

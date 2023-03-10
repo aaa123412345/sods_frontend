@@ -1,88 +1,89 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-
 import { connect, useDispatch } from 'react-redux'
-import { updateBooths, updateBoothGames, updateARTreasures } from '../../redux/arTreasure/arTreasure.action' 
 
-import LoadingSpinner from '../Common/common/LoadingSpinner/LoadingSpinner'
 import Wrapper from '../Common/common/Wrapper/Wrapper'
+import EditorModal from '../Common/common/EditorModal/EditorModal'
+import LoadingSpinner from '../Common/common/LoadingSpinner/LoadingSpinner'
 import GameListContainer from './GameListContainer/GameListContainer'
 
 import { arGameHost, tourHost } from '../../constants/constants'
 import { updateConfig } from '../../redux/sysConfig/sysConfig.action'
-import EditorModal from '../Common/common/EditorModal/EditorModal'
+import { clearRefreshFlag } from '../../redux/sysConfig/sysConfig.action'
+import { updateARBooths, updateARTreasures, updateBoothGames } from '../../redux/arTreasure/arTreasure.action'
+import { useColorModeValue } from '@chakra-ui/react'
 
 const ARTreasureEditor = (props) => {
-  
-  const { sysConfig } = props
-  const { config } = sysConfig
 
-  const { lang } = useParams()
-  
-  const dispatch = useDispatch()
+    const { sysConfig, modal } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
 
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+    const dispatch = useDispatch()
 
-  console.log(config)
+    const { lang } = useParams()
 
-  const get_data = async (host, path, updateFunction) => {
+    const navigate = useNavigate()
 
-    // dispatch(updateLoadingItem(`tourguide.loading-${path}`))
-    let url = `${host}/${path}`
-    await axios.get(url)
-    .then((res)=>{
-      dispatch(updateFunction(res.data.data))
-      console.log("updated from " + url + " successfully;")            
-    })
-    .catch((err)=>{setError(err)})
-      
-  }
+    const bg = localStorage.getItem('chakra-ui-color-mode') === 'dark' ? 'gray.100' : 'gray.10'
 
-  useEffect(()=>{
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
-    // update language parameter in local storage base on url
-    window.localStorage.setItem('i18n-lang', JSON.stringify(lang === 'eng' ? 'en' : 'zh'))
+    const get_data = async (host, path, updateFunction) => {
 
-    setError(null)
-    setIsLoading(true)
+        let url = `${host}/${path}`
+        await axios.get(url)
+        .then((res)=>{
+            dispatch(updateFunction(res.data.data))
+            console.log("updated from " + url + " successfully;")            
+        })
+        .catch((err)=>{setError(err)})
+        
+    }
 
-    Promise.all([
-      get_data(tourHost, "configs", (data)=>updateConfig(data)),
-      get_data(tourHost, "booths", (data)=>updateBooths(data)),
-      get_data(tourHost, "boothGames", (data)=>updateBoothGames(data)),
-      get_data(arGameHost, "treasures", (data)=>updateARTreasures(data))
-    ])
-    .then(()=>{
-      console.log('loaded')
-      setIsLoading(false)
-      // dispatch(clearLoadingItem())
-    })
-  
-  }, [])
+    useEffect(()=>{
 
-  if(error)
-    return <div>{error.message}</div>
+        // update language parameter in local storage base on url
+        window.localStorage.setItem('i18n-lang', JSON.stringify(lang === 'eng' ? 'en' : 'zh'))
 
-  return isLoading ? <LoadingSpinner /> : (
-    <Wrapper isUseChakra isUseContainer>
+        setError(null)
+        setIsLoading(true)
+    
+        Promise.all([
+            get_data(tourHost, "configs", (data) => updateConfig(data)), 
+            get_data(tourHost, "booths", (data) => updateARBooths(data)),
+            get_data(tourHost, 'boothGames', (data) => updateBoothGames(data)),
+            get_data(arGameHost, "treasures", (data) => updateARTreasures(data))
+        ])
+        .then(()=>{
+            console.log('loaded')
+            setIsLoading(false)
+            dispatch(clearRefreshFlag())
+        })
+     
+    }, [sysConfig.refreshFlag])
 
-      <GameListContainer />
-      <EditorModal />
+    if(error)
+        return <div>{error.message}</div>
 
-    </Wrapper>
-  )
+    return isLoading ? <LoadingSpinner /> : (
+        <Wrapper isUseChakra isUseContainer bgColor={bg}>
+            <GameListContainer />
+            <EditorModal />
+        </Wrapper>
+    )
 }
 
 const mapStateToProps = state => {
-  return {
-    sysConfig: state.sysConfig
-  };
+    return {
+        modal: state.modal, 
+        sysConfig: state.sysConfig
+    };
 };
 
 export default connect(
-  mapStateToProps,
-  null
+    mapStateToProps,
+    null
 )(ARTreasureEditor)

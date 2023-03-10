@@ -7,7 +7,7 @@ import { openQRModal } from '../../../redux/modal/modal.action'
 import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
-import { Flex, Box, Heading, Text, Image } from '@chakra-ui/react'
+import { Flex, Box, Heading, Text, Image, useColorModeValue } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAlignCenter, faArrowLeft, faLocationDot, faMap, faStamp, faTent, faVrCardboard } from '@fortawesome/free-solid-svg-icons'
 
@@ -16,12 +16,14 @@ import AnimatedPage from '../../Common/common/AnimatedPage/AnimatedPage'
 import useWindowSize from '../../../hooks/useWindowSize'
 import { langGetter } from '../../../helpers/langGetter'
 import { mobileBreakPoint } from '../../../constants/constants'
+import { updateTreasureId } from '../../../redux/arTreasure/arTreasure.action'
 
 const BoothPage = (props) => {
 
-    const { tourguide } = props
-
-    const { themeColor, booths } = tourguide
+    const { tourguide, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+    const { booths, boothGames } = tourguide
 
     const dispatch = useDispatch()
 
@@ -31,6 +33,7 @@ const BoothPage = (props) => {
     const { t } = useTranslation()
 
     const windowSize = useWindowSize()
+    const bg = useColorModeValue('gray.10', 'gray.100')
 
     const userLang = langGetter().toUpperCase()
     const laptopMode = windowSize.width > mobileBreakPoint
@@ -40,12 +43,16 @@ const BoothPage = (props) => {
     const opendayDate = new Date()
     const isOpendayToday = new Date() > opendayDate
 
+    const userLangFormatter = (lang) => {
+        return lang === 'EN' ? 'eng':'chi'
+    }
+
     const back_toMap = () => {
-        navigate(`/public/${userLang === 'EN' ? 'eng':'chi'}/tourguide/floorplans`)
+        navigate(`/public/${userLangFormatter(userLang)}/tourguide/floorplans`)
     }
 
     const goto_VrMode = () => {
-        navigate(`/public/${userLang === 'EN' ? 'eng':'chi'}/tourguide-vr/${booth.id}`)
+        navigate(`/public/${userLangFormatter(userLang)}/tourguide-vr/${booth.id}`)
     }
 
     const goto_QRScanner = () => {
@@ -71,7 +78,7 @@ const BoothPage = (props) => {
 
     return booth !== undefined && (
 
-        <AnimatedPage>
+        <AnimatedPage bg={bg}>
             <ImageContainer>
 
                 <CustomButton text={laptopMode ? t('floorplan.map') : ""} bgColor={laptopMode ? themeColor : 'gray'} 
@@ -82,7 +89,7 @@ const BoothPage = (props) => {
 
             </ImageContainer>
 
-            <Content>
+            <Content bg={bg}>
 
                 <Flex alignItems="center">
                     <CircleIcon bg={themeColor}>
@@ -114,7 +121,8 @@ const BoothPage = (props) => {
 
 const mapStateToProps = state => {
     return {
-        tourguide: state.tourguide
+        tourguide: state.tourguide, 
+        sysConfig: state.sysConfig
     };
 };
 

@@ -18,7 +18,7 @@ const CustomMarker = (props) => {
 
     const { modal, sysConfig } = useSelector(state => state)
     const { config } = sysConfig
-    const { themeColor } = config
+    const { themeColor } = config ?? 'gray'
 
     const dispatch = useDispatch()
     const navigate = useNavigate()

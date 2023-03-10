@@ -1,14 +1,13 @@
 import { faA, faAlignLeft, faBook, faImage, faLocationDot, faMapLocation, faMapSigns, faQ, faTent, faVrCardboard } from "@fortawesome/free-solid-svg-icons";
 import { faImages, faMap } from "@fortawesome/free-regular-svg-icons";
 
-import { updateBooth, updateFloorplan, updateStory, updateVR, updateARTreasure, updateBoothGame } from "../redux/form/form.action";
+import { updateBooth, updateFloorplan, updateStory, updateBoothGame, updateARGame } from "../redux/form/form.action";
 
 import TextInput from "../components/Common/common/Inputs/TextInput/TextInput";
 import ImageUploader from '../components/Common/common/Inputs/ImageUploader/ImageUploader'
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
 import TagInput from "../components/Common/common/Inputs/TagInput/TagInput";
 import ItemList from "../components/Common/common/ItemList/ItemList";
-
 
 export const tourModalData = {
 
@@ -36,49 +35,6 @@ export const tourModalData = {
         ]
 
     },   
-
-    boothNMarker: {
-        heading: "heading-booth",
-        components: [
-            {
-                type: TourGuideMap, 
-                props: { isMarkable: false, isAssignBooth: true }
-            },
-            {
-                type: TextInput,
-                props: {
-                    faIcon: faTent,
-                    label: "label-booth-name",
-                    placeholder: { zh: "數學攤位", en: "Mathematic Booth" },
-                    names: { form: "booth", field: "name", },
-                    update: (data) => updateBooth(data)
-                }
-            },
-            {
-                type: TextInput,
-                props: {
-                    faIcon: faLocationDot,
-                    label: "label-venue",
-                    names: { form: "booth", field: "venue", },
-                    placeholder: { zh: "1樓, 101室, 1A 課室", en: "1/F, Room 101, 1A Classroom" },
-                    update: (data) => updateBooth(data)
-                }
-            },
-            {
-                type: TextInput,
-                props: {
-                    isTextArea: true,
-                    faIcon: faAlignLeft,
-                    label: "label-description",
-                    names: { form: "booth", field: "description", },
-                    placeholder: { zh: "這裏是學生平日學習數學的地方。", en: "Students are always learning Maths here." },
-                    update: (data) => updateBooth(data)
-                }
-            }
-            
-        ]
-    },
-
 
     marker: {
         heading: "heading-where-booth",
@@ -200,9 +156,9 @@ export const tourModalData = {
                     isTextArea: true,
                     faIcon: faQ,
                     label: "label-ar-game-question", 
-                    names: { form: "arTreasure", field: "question", }, 
+                    names: { form: "arGame", field: "question", }, 
                     placeholder: { zh: "本校的主要授課語言是甚麼？" , en: "What is the teaching language?" },
-                    update: (data) => updateARTreasure(data)
+                    update: (data) => updateARGame(data)
 
                 }
             }, 
@@ -211,9 +167,9 @@ export const tourModalData = {
                 props: {
                     faIcon: faA,
                     label: "label-ar-game-answer", 
-                    names: { form: "arTreasure", field: "answer", }, 
+                    names: { form: "arGame", field: "answers", }, 
                     placeholder: { zh: "英文" , en: "English" },
-                    update: (data) => updateARTreasure(data)
+                    update: (data) => updateARGame(data)
                 }
             }
         ]

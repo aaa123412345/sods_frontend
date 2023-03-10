@@ -16,8 +16,10 @@ import useWindowSize from '../../../hooks/useWindowSize'
 
 const StorySplider = (props) => {
 
-    const { isPreviewMode = false, tourguide } = props
-    const { themeColor, stories, itemIndex } = tourguide
+    const { isPreviewMode = false, tourguide, sysConfig } = props
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+    const { stories, itemIndex } = tourguide
 
     const { subpath } = useParams()
 
@@ -90,6 +92,7 @@ const StorySplider = (props) => {
 const mapStateToProps = state => {
     return {
         tourguide: state.tourguide,
+        sysConfig: state.sysConfig,
         modal: state.modal
     };
 };
