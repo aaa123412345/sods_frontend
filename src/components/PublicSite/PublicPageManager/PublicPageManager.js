@@ -17,9 +17,9 @@ const PublicPageManager = () => {
         return(
           <div id="site" >
      
-            <PublicSidebar lang={lang} setDisplay = {windowSize.width>768 ? true:false}/>
+            <PublicSidebar lang={lang} setDisplay = {windowSize.width>=768 ? true:false}/>
 
-            <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
+            <div id="content" style={{paddingLeft: windowSize.width>=768 ? "200px" : "0px"  }}>
             
             <PageContent host={process.env.REACT_APP_PUBLIC_REST_HOST} 
             path={path} subpath={subpath} subsubpath={subsubpath} lang={lang} mode={'public'}></PageContent>

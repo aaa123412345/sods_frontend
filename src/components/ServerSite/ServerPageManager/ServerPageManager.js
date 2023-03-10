@@ -19,9 +19,9 @@ const ServerPageManager = (props) => {
         return(
           <div id="site" >
      
-            <ServerSidebar lang={lang} setDisplay = {windowSize.width>768 ? true:false}/>
+            <ServerSidebar lang={lang} setDisplay = {windowSize.width>=768 ? true:false}/>
 
-            <div id="content" style={{paddingLeft: windowSize.width>768 ? "200px" : "0px"  }}>
+            <div id="content" style={{paddingLeft: windowSize.width>=768 ? "200px" : "0px"  }}>
                
                 
                 <PageContent host={process.env.REACT_APP_SERVER_REST_HOST} 
