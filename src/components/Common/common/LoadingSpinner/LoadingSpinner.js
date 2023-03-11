@@ -19,7 +19,7 @@ const LoadingSpinner = (props) => {
             <Flex alignItems='center' justifyContent="center" w="100%" h="100vh" bg={bg}>
                 <Box textAlign="center" bg={bg}>
                     <Spinner w="60px" h="60px" color={themeColor} thickness='4px' emptyColor={bg} size='xl'/>
-                    <Text mt=".25em" color={color}>{t(loadingItem)}</Text>
+                    {/* <Text mt=".25em" color={color}>{t(loadingItem)}</Text> */}
                 </Box>
             </Flex>
         </Wrapper>

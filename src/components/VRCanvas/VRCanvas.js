@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -25,7 +25,9 @@ const VRCanvas = (props) => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isExit, setIsExit] = useState(false)
 
+  const sceneRef = useRef()
   const [vrImage, setVRImage] = useState(null)
 
   const navigate = useNavigate()
@@ -119,6 +121,26 @@ const VRCanvas = (props) => {
 
   // }, [isSpeaking])
 
+  const exit_to_map = () => {
+
+    
+    // navigator.mediaDevices
+    // .getUserMedia()
+    // .then((stream) => {
+    //   /* use the stream */
+    //   const tracks = stream.getTracks();
+    //   tracks.forEach(track => track.stop());
+    // })
+    // .catch((err) => {
+    //   /* handle the error */
+    // });
+
+    setIsExit(true)
+    // let stream = videoElement.current.stream;
+
+    // navigate(`/public/${langGetter() === 'en' ? 'eng': 'chi'}/tourguide/booths/${id}`)
+  }
+
   useEffect(()=>{
 
     let url = `${tourHost}/booths/${id}`
@@ -142,7 +164,7 @@ const VRCanvas = (props) => {
     return <div>{t('tourguide.loading-vr')}</div>
 
 
-  return (
+  return !isExit && (
       
     <div style={{position: 'absolute', height: '100%', width: '100%', zIndex: 2000, background: 'black'}}>
     {/* { 
@@ -153,12 +175,12 @@ const VRCanvas = (props) => {
         
     } */}
 
-      <ExitButton onClick={()=>{ navigate(`/public/${langGetter() === 'en' ? 'eng': 'chi'}/tourguide/booths/${id}`)}}>
+      <ExitButton onClick={()=>{exit_to_map()}}>
         <FontAwesomeIcon icon={faXmarkCircle} />
         {" " + t('tourguide.exit')}
       </ExitButton>
 
-      <Scene>
+      <Scene ref={sceneRef}>
         <Entity primitive='a-sky' src={'/images/test-360-classroom.jpg'}/>
       </Scene>
     </div>

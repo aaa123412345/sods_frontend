@@ -15,17 +15,16 @@ const DateTimePicker = (props) => {
     const { t } = useTranslation()
 
     const [isErr, setIsErr] = useState(false)
-
+    
     const border = isErr ? 'red' : 'gray'
     const data = form[names.form]
-    const tempDate = JSON.stringify(new Date().toISOString())
-    console.log(JSON.parse(data[names.field]??tempDate).substring(0, 16))
+    const tempDate = new Date().toISOString()
+    console.log(JSON.parse(data[names.field]))
 
     const handle_onChange = (e) => {
         setIsErr(false)
         let newData = {...data}
         let value = e.target.value
-        console.log(value)
         newData[names.field] = JSON.stringify(value)
         dispatch(update({...newData}))
         if(new Date(value).getTime() < new Date().getTime())
@@ -39,8 +38,8 @@ const DateTimePicker = (props) => {
                 <FontAwesomeIcon icon={faIcon} style={{marginRight: '.5em'}} />
                 {t(`modal.${label}`)}
             </FormLabel>
-            <Input m=".5em 0" borderColor={border} placeholder="Select Date and Time" size="md" type="datetime-local" 
-                defaultValue={JSON.parse(data[names.field]??tempDate).substring(1, 17)}
+            <Input m=".5em 0" borderColor={border} borderRadius={25} placeholder="Select Date and Time" size="md" type="datetime-local" 
+                defaultValue={(data[names.field] ?? tempDate).substring(1, 17)}
                 onChange={(e)=>{handle_onChange(e)}}/>
 
         </FieldContainer>

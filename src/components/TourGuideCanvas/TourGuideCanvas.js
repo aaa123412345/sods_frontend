@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import { connect, useDispatch } from 'react-redux'
@@ -15,8 +15,9 @@ import LoadingSpinner from '../Common/common/LoadingSpinner/LoadingSpinner'
 import BoothPage from './BoothPage/BoothPage'
 import EditorModal from '../Common/common/EditorModal/EditorModal'
 import { tourHost } from '../../constants/constants'
-import { updateFloorplans, updateStories, updateBooths, updateMarkers, updateLoadingItem, clearLoadingItem, updateBoothGames } from '../../redux/tourguide/tourguide.action'
+import { updateFloorplans, updateStories, updateBooths, updateMarkers, updateLoadingItem, clearLoadingItem, updateBoothGames, updateBoothRecords } from '../../redux/tourguide/tourguide.action'
 import { clearRefreshFlag, updateConfig } from '../../redux/sysConfig/sysConfig.action'
+import { UserContext } from '../../App'
 
 const TourGuideCanvas = (props) => {
 
@@ -32,12 +33,14 @@ const TourGuideCanvas = (props) => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
+    const { user } = useContext(UserContext)
+
     const render_layout = () => {
 
         switch(subpath){
 
             case "floorplans":
-                return <TourGuideMap />
+                return <TourGuideMap isAssignBooth={false} isMarkable={false} />
 
             case "booths":
                 return <BoothPage />
@@ -65,7 +68,7 @@ const TourGuideCanvas = (props) => {
         await axios.get(url)
         .then((res)=>{
             dispatch(updateFunction(res.data.data))
-            console.log("updated from " + url + " successfully;")            
+            // console.log("updated from " + url + " successfully;")            
         })
         .catch((err)=>{setError(err)})
         
@@ -85,13 +88,15 @@ const TourGuideCanvas = (props) => {
             get_data("boothGames", (data) => updateBoothGames(data)),
             get_data("booths", (data) => updateBooths(data)),
             get_data("markers", (data) => updateMarkers(data)),
-            get_data("stories", (data) => updateStories(data))
+            get_data("stories", (data) => updateStories(data)), 
+            get_data(`boothRecords?userId=${user.userId}`, (data) => updateBoothRecords(data))
         ])
         .then(()=>{
             console.log('loaded')
             setIsLoading(false)
             dispatch(clearLoadingItem())
             dispatch(clearRefreshFlag())
+            console.log('floorplans: ', floorplans)
         })
      
     }, [sysConfig.refreshFlag])

@@ -51,7 +51,11 @@ const TourGuideEditor = (props) => {
 
     const open_setting_modal = () => {
         dispatch(updateOriginalThemeColor(config?.themeColor))
-        dispatch(updateConfigInput({themeColor: config?.themeColor, opendayDate: JSON.stringify(config?.opendayDate??new Date().toISOString())}))
+        dispatch(updateConfigInput({
+            themeColor: config?.themeColor, 
+            opendayDate: config?.opendayDate??JSON.stringify(new Date().toISOString()), 
+            minStampNum: config?.minStampNum
+        }))
         let payload = {
             modalName: 'configs', 
             host: tourHost, path: 'configs', method: 'put', 

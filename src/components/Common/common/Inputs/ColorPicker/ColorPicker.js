@@ -23,6 +23,7 @@ const ColorPicker = (props) => {
         let data = form[names.form]
         let newData = {...data}
         newData[names.field] = color
+        console.log(data)
         dispatch(update({...newData}))
     }
 
@@ -35,10 +36,10 @@ const ColorPicker = (props) => {
             <Flex w="90%" flexWrap={'wrap'} >
                 {
                     variants.map((color, index) => (
-                        <Button h='50' w="100%" key={index} variant={color} 
+                        <Button h='45' w="100%" key={index} variant={color} 
                             flexBasis="30%" flexGrow="0" flexShrink="0"
                             onClick={()=>switch_color(color)}>
-                            {color}
+                            {t(`tourguideEditor.color-${color}`)}
                         </Button>
                     ))
                 }

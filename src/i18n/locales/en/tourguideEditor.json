@@ -18,5 +18,14 @@
     "no-vr-image": "No VR image",
     "no-vr-available": "VR Tour setting is not ready", 
     "active-booth": "Active", 
-    "inactive-booth": "Inactive"
+    "inactive-booth": "Inactive",
+
+    "color-red": "Red",
+    "color-blue": "Blue",
+    "color-green": "Green",
+    "color-orange": "Orange",
+    "color-purple": "Purple",
+    "color-pink": "Pink",
+    "light-mode": "Light Mode",
+    "dark-mode": "Dark Mode"
 }

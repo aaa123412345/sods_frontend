@@ -20,7 +20,11 @@ const GameTicket = (props) => {
     const { tourguide, sysConfig } = props
     const { config } = sysConfig
     const { themeColor } = config ?? 'gray'
-    const { booths } = tourguide
+    const { booths, boothRecords } = tourguide
+
+    const stampList = boothRecords.filter(record=>record.isGotStamp===1).map(record => record.boothId)
+    console.log('stampList:', stampList)
+    console.log('booths: ', booths)
 
     const { t } = useTranslation()
 
@@ -51,7 +55,7 @@ const GameTicket = (props) => {
                         {
                             booths.map((booth, index) => (
                                 <GridItem key={index}>
-                                    <Stamp label={booth[`title${userLang}`]} isCollected={false}/>
+                                    <Stamp label={booth[`title${userLang}`]} isCollected={stampList.includes((booth.id).toString())}/>
                                 </GridItem>
                             ))
                         }

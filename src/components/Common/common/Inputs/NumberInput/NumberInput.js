@@ -1,119 +1,99 @@
 import React from 'react'
+
+import { useTranslation } from 'react-i18next'
+import { connect, useDispatch } from 'react-redux'
+
 import styled from 'styled-components'
-import { Flex, Box, Heading, Input, Button } from '@chakra-ui/react'
+import { Flex, Box, FormLabel, Input, Button } from '@chakra-ui/react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd, faMinus } from '@fortawesome/free-solid-svg-icons'
-import { connect, useDispatch } from 'react-redux'
 
 const NumberInput = (props) => {
 
     const { 
         needButtons = false, max = 9999, min = 0, 
-        names, faIcon, label, placeholder,
-        tourguide, form, update
+        names, faIcon, label, placeholder, update,
+        tourguide, form, sysConfig
     } = props
-    const { themeColor } = tourguide
+
+    const { config } = sysConfig
+    const { themeColor } = config ?? 'gray'
+
     const dispatch = useDispatch()
 
+    const { t } = useTranslation()
+
     const data = form[names.form]
-    const step = needButtons ? 1 : 0
 
-    // const handle_increment = () => {
+    const step = 1
 
-    //     let newData = {...data}
-    //     let newValue = data[names.field] + step
-    //     if(newValue > max)
-    //         newValue = max
-    //     newData[names.field] = newValue
-    //     update(newData)
-
-    // }
-
-    // const handle_decrement = () => {
-
-    //     let newData = {...data}
-    //     let newValue = data[names.field] - step
-    //     if(newValue < min)
-    //         newValue = min
-    //     newData[names.field] = newValue
-    //     update(newData)
-
-    // }
-
-    const handle_onChange = (e) => {
-
-        const value = e.target.value
+    const update_value = (value) => {
         let newData = {...data}
         newData[names.field] = value
-        console.log(form[names.form])
         dispatch(update(newData))
+    } 
+
+    const handle_increment = () => {
+
+        let newValue = parseInt(data[names.field]) + step
+        if(newValue > max)
+            newValue = max
+        update_value(newValue)
         
     }
 
-    const handle_onBlur = (e) => {
+    const handle_decrement = () => {
 
-        let value = e.target.value
-        let newData = {...data}
-        if(value > max)
-            value = max
-        if(value < min)
-            value = min
-        if(value.length < 4){
-            let newValue = ''
-            for(var i = 0; i < (4 - value.length); i++)
-                newValue += "0"
-            value = newValue+value 
-        }
-        newData[names.field] = value
-        dispatch(update(newData))
+        let newValue = parseInt(data[names.field]) - step
+        if(newValue < min)
+            newValue = min
+        update_value(newValue)
 
     }
-    
+
+    const handle_change = (e) => {
+
+        let value = e.target.value
+        update_value(value)
+
+    }
+
     return (
 
-        <InputContainer>
-            <Heading size="sm">
-                <FontAwesomeIcon icon={faIcon} style={{marginRight: '1em'}}/>
-                {label} 
-            </Heading>
-            <Margin>
-                {/* {
+        <FieldContainer>
+                
+            <FormLabel ml=".5em" fontWeight="bold">
+                <FontAwesomeIcon icon={faIcon} style={{marginRight: '.5em'}} />
+                {t(`modal.${label}`)}
+            </FormLabel>
+   
+            <Flex>
 
-                    needButtons
-                    &&
-                    <CircleButton bg={themeColor} borderRadius="50% 0% 0% 50%" onClick={handle_decrement}>
-                        <FontAwesomeIcon icon={faMinus} />
-                    </CircleButton>
+                <CircleButton bg={themeColor} borderRadius="50% 0% 0% 50%"  h="50px" onClick={handle_decrement}>
+                    <FontAwesomeIcon icon={faMinus} isDisabled={parseInt(data[names.field]) <= min} />
+                </CircleButton>
 
-                } */}
-                <NumInput 
-                    borderRadius={needButtons?0:25}
-                    textAlign={needButtons?'center':'left'}
-                    placeholder={placeholder}
-                    type='number' 
+                <NumInput type='number' borderRadius={0} textAlign={'center'} h="50px" placeholder={placeholder}
                     name={names.field} value={data[names.field]} 
-                    onChange={e=>handle_onChange(e)} 
-                    onBlur={e=>handle_onBlur(e)} />
-                {/* {
-
-                    needButtons
-                    &&
-                    <CircleButton bg={themeColor} borderRadius="0% 50% 50% 0%" onClick={handle_increment}>
-                        <FontAwesomeIcon icon={faAdd} />
-                    </CircleButton>
-
-                } */}
-            </Margin>
-        </InputContainer>
+                    onChange={e=>handle_change(e)} onBlur={e=>handle_change(e)} />
+                
+                <CircleButton bg={themeColor} borderRadius="0% 50% 50% 0%"  h="50px" onClick={handle_increment}>
+                    <FontAwesomeIcon icon={faAdd} isDisabled={parseInt(data[names.field]) > max}/>
+                </CircleButton>
+            </Flex>
+                
+            
+        </FieldContainer>
 
     )
 }
 
 const mapStateToProps = state => {
     return {
-        tourguide: state.tourguide,
-        form: state.form
+      form: state.form,
+      sysConfig: state.sysConfig,
+      modal: state.modal
     };
 };
 const mapDispatchToProps = dispatch => ({
@@ -150,5 +130,13 @@ const CircleButton = styled(Button)`
 const NumInput = styled(Input)`
 
     width: 100%;
+
+`
+
+const FieldContainer = styled(Flex)`
+
+    margin-top: 1em; 
+    flex-direction: column; 
+    align-items: flex-start;
 
 `
