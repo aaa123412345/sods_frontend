@@ -7,18 +7,18 @@ import PublicHeader from "../../PublicSite/PublicHeader/PublicHeader";
 import PublicNavbar from "../../PublicSite/PublicNavbar/PublicNavbar";
 import ServerNavbar from "../../ServerSite/ServerNavbar/ServerNavbar";
 
+import useSendRequestWithCache from "../../../hooks/useSendRequestWithCache";
 
-import useSendRequest from "../../../hooks/useSendRequest";
 import useAuthChecker from "../../../hooks/useAuthChecker";
 import { useState } from "react";
 import { useEffect } from "react";
-import cloneDeep from "lodash.clonedeep";
+
 
 
 
 const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
       const [pageActive,setPageActive] = useState(true)
-      const page = useSendRequest(host+lang+'/'+path,'get',{},pageActive,true)
+      const page = useSendRequestWithCache(host+lang+'/'+path,'get',{},pageActive,true,true)
       
       const [authHookState,setAuthHookState] = useState({requirePermission:'',active:false});
       const auth = useAuthChecker(authHookState.requirePermission,authHookState.active)

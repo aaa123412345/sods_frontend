@@ -2,7 +2,8 @@ import axios from "axios";
 import { useState, useEffect,useContext } from "react";
 import {UserContext} from '../App'
 
-export default function useSendRequest(url,method,tdata,active,autoRedirect,autoReset){
+
+export default function useSendRequestWithCache(url,method,tdata,active,autoRedirect,autoReset){
     const {user,clearLoginState} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -21,18 +22,28 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect,auto
                     setIsLoaded(false)
                     setIsReady(false)
                 
-                    getDataFromServerAndProcess()
+                    getDataFromServerOrCache()
                 }
             }
         }
        
     },[active])
 
-    async function getDataFromServerAndProcess(){
+   
+
+    async function getDataFromServerOrCache(){
         var headers={}
         setIsLoaded(true)
-        //console.log(url)
-        try{
+        
+        var tmp = window.sessionStorage.getItem(url)
+
+        if(tmp !== null){
+            tmp = JSON.parse(tmp)
+            setItems(tmp.data);
+            setIsReady(true);
+            setIsLoaded(false)
+        }else{
+             try{
             
             // if user is not logged in, token is empty string
             if (user.token) {
@@ -57,6 +68,7 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect,auto
                 if(data.code>=100 &&data.code<400){
                     setItems(data.data);
                     setIsReady(true);
+                    window.sessionStorage.setItem(url,JSON.stringify(data))
                 }else if(data.code>=400 &&data.code<500){           //404 -> Not found Error 403 -> Permission Error 401-> Validation Error 
                     if(data.code === 401){
                         if(user.token !== ''){
@@ -103,6 +115,9 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect,auto
         }finally{
             setIsLoaded(false)
         }
+        }
+
+       
     }
 
     return {items,isLoaded,ready,error,errMsg}

@@ -3,64 +3,39 @@ import React from "react";
 
 import CusNavbar from "../../Common/Navbar/CusNavbar/CusNavbar";
 import { useState,useEffect } from "react";
-import jsonExtractor from "../../Common/RESTjsonextract/RESTjsonextract";
+import useSendRequestWithCache from "../../../hooks/useSendRequestWithCache";
 
 const PublicNavbar = props =>  {
    
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [ready, setIsReady] = useState(false);
-    const [items, setItems] = useState([]);
+  const [ready, setIsReady] = useState(false);
+  const [items, setItems] = useState([]);
     const lang = props.lang
     const host = process.env.REACT_APP_PAGE_IMPORTANT_ELEMENT_REST_HOST
     const pathname = "publicnavdata"
+    const initHook = useSendRequestWithCache(host+props.lang+'/'+pathname,'get',{},true,false,true);
 
-    useEffect(() => {
-      
-        var useLanguage = process.env.REACT_APP_USE_LANGUAGE;
-        var url;
-      
-        if(useLanguage){
-          url = host+lang+'/'+pathname
-        }else{
-          url = host+pathname
+    useEffect(()=>{
+      if(!initHook.isLoaded){
+        if(initHook.ready){
+            if(initHook.items !== undefined){
+                setItems(initHook.items)
+                setIsReady(true)
+            } 
+        }else if(initHook.errMsg !== ""){
+            alert(initHook.errMsg)
         }
-        
-        fetch(url)
-          .then(res => res.json())
-          .then(
-            (result) => {
-              var rest = jsonExtractor(result);
-              
-            if(rest.response == "success"){
-              setIsLoaded(true);
-              setItems(rest.data);
-              setIsReady(true);
-            }else{
-              /*Error */
-              setIsLoaded(true);
-              setError(error);
-            }
-            },
-            
-            (error) => {
-              setIsLoaded(true);
-              setError(error);
-            }
-          )
-      }, [pathname])
+      }
+
+  },[initHook])
+    
       
-      if (error) {
-        
-        return <div>Error: {error.message}</div>;
-      } else if (!isLoaded) {
-        return <div>Loading...</div>;
-      } else if(ready) {
-        
+     
+  if(ready){    
         return(
             <CusNavbar data={items} lang={lang} pdata={props.pdata}/>
         )
-      }
+  }
+      
    
     
 }

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 import { Provider } from "react-redux";
 import { store } from './redux/store'
 import { useState, createContext, useEffect } from "react";
+
 /*
 const PublicPageManager = React.lazy(()=>import("./components/PublicSite/PublicPageManager/PublicPageManager"))
 const ServerPageManager = React.lazy(()=>import("./components/ServerSite/ServerPageManager/ServerPageManager"))
@@ -129,6 +130,7 @@ function App() {
    
     return (
         <React.StrictMode>
+            
             <UserContext.Provider value={{user,setUserContext,clearLoginState}}>
                 
                     <Provider store={store}>
@@ -169,6 +171,7 @@ function App() {
                     </Provider>
                 
             </UserContext.Provider>
+
         </React.StrictMode>
       
     );
