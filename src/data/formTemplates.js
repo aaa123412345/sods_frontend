@@ -54,7 +54,8 @@ export const boothGame = {
 
 export const configs = {
     themeColor: '', 
-    opendayDate: JSON.stringify(new Date().toISOString()),
+    opendayDate: null,
+    minStampNum: 0,
 }
 
 // not use currently

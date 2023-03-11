@@ -5,18 +5,16 @@ import ImageMarker from 'react-image-marker';
 import axios from 'axios';
 
 import styled from 'styled-components'
-import { Flex, Box, Image, Text, useColorModeValue, useColorMode } from '@chakra-ui/react'
-import { faGift, faMoon, faSun, faTicket } from '@fortawesome/free-solid-svg-icons';
+import { Flex, Box, Image, Text } from '@chakra-ui/react'
 
 import { useDispatch, connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-
-import CustomButton from '../../Common/common/CustomButton/CustomButton';
 import AnimatedPage from '../../Common/common/AnimatedPage/AnimatedPage';
 import FloorSelector from './FloorSelector/FloorSelector';
 import CustomMarker from './CustomMarker/CustomMarker';
 import StatusBar from './StatusBar/StatusBar';
+import FloatingButtons from './FloatingButtons/FloatingButtons';
 
 import { updateMarkers } from '../../../redux/tourguide/tourguide.action';
 import { tourHost } from '../../../constants/constants';
@@ -34,9 +32,6 @@ const TourGuideMap = (props) => {
 
     const { t } = useTranslation()
     const navigate = useNavigate()
-
-    const { colorMode, toggleColorMode } = useColorMode()
-    const bg = useColorModeValue('white', 'black')
     const userLang = langGetter() === 'en' ? 'eng' : 'chi' 
     
     const { path, subpath, subsubpath } = useParams()
@@ -102,18 +97,6 @@ const TourGuideMap = (props) => {
     }, [])
 
     const BoothMarker = (props) => { return <CustomMarker {...props} /> };
-    const FloatingButtons = () => {
-
-        const url = `/public/${userLang}/tourguide/`
-
-        return (
-            <FloatingContainer bg={bg} mt="1em">
-                <CustomButton faIcon={faTicket} onClick={()=>{navigate(url+"ticket")}} bgColor={themeColor} isCircle />
-                <CustomButton faIcon={faGift} onClick={()=>{navigate(url+"story")}} bgColor={themeColor} isCircle /> 
-                <CustomButton faIcon={colorMode === 'light' ? faMoon : faSun} onClick={toggleColorMode} bgColor={themeColor} isCircle /> 
-            </FloatingContainer>
-        )
-    }
     
     return (
 
@@ -131,7 +114,7 @@ const TourGuideMap = (props) => {
 
                 { (!isMarkable && !isAssignBooth) && <FloatingButtons /> }
 
-                <ScrollMap borderRadius={isAssignBooth && 25} >
+                <ScrollMap borderRadius={isAssignBooth ? 25 : 0} >
 
                     {
                         floorplans[itemIndex] !== undefined ? 
@@ -215,14 +198,5 @@ const LoadImageSize = styled(Image)`
     position: absolute;
     opacity: 0;
     z-index: -999;
-
-`
-
-const FloatingContainer = styled(Flex)`
-
-    flex-direction: column;
-    position: absolute; z-index: 100; right: 1em; 
-    border-radius: 25px;
-    box-shadow: 0px 5px 22px rgba(0, 0, 0, .25);
 
 `

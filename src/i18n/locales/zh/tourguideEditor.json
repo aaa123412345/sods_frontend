@@ -18,5 +18,14 @@
     "no-vr-image": "沒有VR 相片",
     "no-vr-available": "VR 導賞設定尚未完成",
     "active-booth": "已發佈", 
-    "inactive-booth": "尚未發佈"
+    "inactive-booth": "尚未發佈", 
+
+    "color-red": "紅",
+    "color-blue": "藍",
+    "color-green": "綠",
+    "color-orange": "橙",
+    "color-purple": "紫",
+    "color-pink": "粉紅",
+    "light-mode": "深色模式",
+    "dark-mode": "深色模式"
 }

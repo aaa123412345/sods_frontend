@@ -35,7 +35,12 @@
     "label-ar-game-answer": "Answer(s)", 
 
     "heading-assign-game": "Assign Game To Booth",
-    "label-assign-booth-game": "Select Booth"
+    "label-assign-booth-game": "Select Booth",
+
+    "heading-configs": "Tour Guide System Configuration",
+    "label-theme-color": "Theme Color",
+    "label-openday-date": "Open Day Date", 
+    "label-min-stamp": "Minimum Stamp(s) To Obtain"
 
 
 

@@ -11,14 +11,15 @@ import { langGetter } from '../../../../helpers/langGetter'
 
 const StatusBar = (props) => {
 
-    const themeColor = useSelector(state => state.sysConfig?.config?.themeColor)
+    const { themeColor, opendayDate } = useSelector(state => state.sysConfig?.config)
 
     const bg = useColorModeValue('white', 'black')
 
     const { t } = useTranslation()
     const lang = langGetter() === 'en' ? 'en' : 'tc'
 
-    const date = new Date("2/14/23")
+    const tempDate = JSON.stringify(new Date().getTime() - 24 * 60 * 60 * 1000)
+    const date = new Date(JSON.parse(opendayDate ?? tempDate))
     const [timeLeft, setTimeLeft] = useState(null)
 
     const [iconNum, setIconNum] = useState(null)

@@ -1,15 +1,17 @@
-import { faA, faAlignLeft, faBook, faCalendar, faImage, faLocationDot, faMapLocation, faMapSigns, faPalette, faQ, faTent, faVrCardboard } from "@fortawesome/free-solid-svg-icons";
+import { faA, faAlignLeft, faBook, faCalendar, faImage, faLocationDot, faMapLocation, faMapSigns, faPalette, faQ, faStamp, faTent, faVrCardboard } from "@fortawesome/free-solid-svg-icons";
 import { faImages, faMap } from "@fortawesome/free-regular-svg-icons";
 
 import { updateBooth, updateFloorplan, updateStory, updateBoothGame, updateARGame, updateConfigInput } from "../redux/form/form.action";
 
 import TextInput from "../components/Common/common/Inputs/TextInput/TextInput";
+import NumberInput from '../components/Common/common/Inputs/NumberInput/NumberInput'
 import ImageUploader from '../components/Common/common/Inputs/ImageUploader/ImageUploader'
 import TourGuideMap from "../components/TourGuideCanvas/TourGuideMap/TourGuideMap";
 import TagInput from "../components/Common/common/Inputs/TagInput/TagInput";
 import ItemList from "../components/Common/common/ItemList/ItemList";
 import ColorPicker from "../components/Common/common/Inputs/ColorPicker/ColorPicker";
 import DateTimePicker from "../components/Common/common/Inputs/DateTimePicker/DateTimePicker";
+import DarkModeSwitcher from "../components/Common/common/Inputs/DarkModeSwitcher/DarkModeSwitcher";
 
 export const tourModalData = {
 
@@ -215,6 +217,18 @@ export const tourModalData = {
                     names: { form: 'configs', field: 'opendayDate'},
                     update: (data) => updateConfigInput(data)
                 }
+            }, 
+            {
+                type: NumberInput, 
+                props: {
+                    faIcon: faStamp, label: 'label-min-stamp', 
+                    names: { form: 'configs', field: 'minStampNum'},
+                    update: (data) => updateConfigInput(data)
+                }
+            }, 
+            {
+                type: DarkModeSwitcher,
+                props:{}
             }
         ]
 
