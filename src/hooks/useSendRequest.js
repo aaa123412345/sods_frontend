@@ -21,9 +21,13 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect,auto
                     setIsLoaded(false)
                     setIsReady(false)
                 
-                    getDataFromServerAndProcess()
+                    
                 }
             }
+        }
+
+        if(active){
+            getDataFromServerAndProcess()
         }
        
     },[active])

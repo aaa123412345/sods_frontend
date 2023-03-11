@@ -24,9 +24,9 @@
       registerActive:false,
     })
     const login = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/login'
-    ,'post',loginDict,hookState.loginActive)
+    ,'post',loginDict,hookState.loginActive,false,false)
     const register = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/register'
-    ,'post',registerDict,hookState.registerActive)
+    ,'post',registerDict,hookState.registerActive,false,false)
 
 
     const handleLoginSubmit = (event) => {
@@ -72,6 +72,7 @@
 
   
     useEffect(()=>{
+      //window.sessionStorage.clear()
       if(!login.isLoaded){
         if(login.ready){
             alert("Welcome")

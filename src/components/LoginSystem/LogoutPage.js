@@ -7,15 +7,16 @@ import { Navigate } from 'react-router-dom';
 const LogoutPage = () => {
 const {user,clearLoginState} = useContext(UserContext)
 const [hookActive,setHookActive] = useState(false)
-const logout = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/logout','post',{},true)
+const logout = useSendRequest(process.env.REACT_APP_USER_SYSTEM_HOST+'/logout','post',{},true,false,false)
    
 
     useEffect(()=>{
+        
         if(!logout.isLoaded){
           if(logout.ready){
             alert("Logout Success")
+            setHookActive(false)
             clearLoginState()
-
           }else if(logout.errMsg!==''){
             if(hookActive){
               alert(logout.errMsg)

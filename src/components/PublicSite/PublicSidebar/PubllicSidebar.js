@@ -5,7 +5,7 @@ import Sidebar from '../../Common/Sidebar/Sidebar'
 import { useState,useEffect } from "react";
 
 import useSendRequestWithCache from "../../../hooks/useSendRequestWithCache";
-
+//import useSendRequest from "../../../hooks/useSendRequest";
 
 const PublicSidebar = props =>  {
     
@@ -14,7 +14,7 @@ const PublicSidebar = props =>  {
     
     const host = process.env.REACT_APP_PAGE_IMPORTANT_ELEMENT_REST_HOST
     const pathname = "publicnavdata"
-    const initHook = useSendRequestWithCache(host+props.lang+'/'+pathname,'get',{},true,false,true);
+    const initHook =useSendRequestWithCache(host+props.lang+'/'+pathname,'get',{},true,false,true);
 
     useEffect(()=>{
       if(!initHook.isLoaded){
