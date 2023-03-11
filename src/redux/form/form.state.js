@@ -1,4 +1,4 @@
-import { floorplan, booth, marker, story, vr, arTreasure, boothGame } from "../../data/formTemplates"
+import { floorplan, booth, marker, story, vr, arTreasure, boothGame, configs } from "../../data/formTemplates"
 
 export const initFormState = {
 
@@ -8,6 +8,7 @@ export const initFormState = {
     story: story,
     vr: vr,
     arGame: arTreasure, 
-    boothGame: boothGame
+    boothGame: boothGame, 
+    configs: configs
 
 }

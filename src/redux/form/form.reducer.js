@@ -1,4 +1,4 @@
-import { RESET_DATA, UPDATE_AR_GAME, UPDATE_BOOTH, UPDATE_BOOTH_GAME, UPDATE_FLOORPLAN, UPDATE_MARKER, UPDATE_STORY, UPDATE_VR } from "./form.action"
+import { RESET_DATA, UPDATE_AR_GAME, UPDATE_BOOTH, UPDATE_BOOTH_GAME, UPDATE_CONFIG_INPUT, UPDATE_FLOORPLAN, UPDATE_MARKER, UPDATE_STORY, UPDATE_VR } from "./form.action"
 import { initFormState } from "./form.state"
 
 const formReducer = (state = initFormState, action) => {
@@ -18,6 +18,8 @@ const formReducer = (state = initFormState, action) => {
             return { ...state, arGame: action.arTreasure }
         case UPDATE_BOOTH_GAME:
             return { ...state, boothGame: action.boothGame }
+        case UPDATE_CONFIG_INPUT:
+            return { ...state, configs: action.newConfig }
         case RESET_DATA:
             return initFormState
         default:

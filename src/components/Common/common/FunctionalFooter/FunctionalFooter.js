@@ -179,7 +179,10 @@ const FunctionalFooter = (props) => {
 
         let data = form[name]
         let newData = {...data}
-        let url = host + '/' + path + "/" + id
+        let url = host + '/' + path 
+        
+        if(id)
+            url += "/" + id
 
         if(imageUrl)
             newData[file?.name] = imageUrl     
