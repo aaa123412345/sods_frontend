@@ -8,7 +8,10 @@ export const initModalState = {
     name: '',
     id: null,
     assignItem: null,
+    onConfirm: undefined,
+    messageName: '',
     qrID: null, 
+    needUpdate: false,
     isQRCode: false
 
 }

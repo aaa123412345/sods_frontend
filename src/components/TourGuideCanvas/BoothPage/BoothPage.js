@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { connect, useDispatch } from 'react-redux'
-import { openQRModal } from '../../../redux/modal/modal.action'
+import { openModal, openQRModal } from '../../../redux/modal/modal.action'
 
 import { useTranslation } from 'react-i18next'
 
@@ -14,6 +14,7 @@ import { faAlignCenter, faArrowLeft, faLocationDot, faMap, faStamp, faTent, faVr
 import CustomButton from '../../Common/common/CustomButton/CustomButton'
 import AnimatedPage from '../../Common/common/AnimatedPage/AnimatedPage'
 import useWindowSize from '../../../hooks/useWindowSize'
+import { UserContext } from '../../../App'
 import { langGetter } from '../../../helpers/langGetter'
 import { mobileBreakPoint } from '../../../constants/constants'
 import { updateTreasureId } from '../../../redux/arTreasure/arTreasure.action'
@@ -23,7 +24,7 @@ const BoothPage = (props) => {
     const { tourguide, sysConfig } = props
     const { config } = sysConfig
     const { themeColor } = config ?? 'gray'
-    const { booths, boothGames } = tourguide
+    const { booths, boothGames, boothRecords } = tourguide
 
     const dispatch = useDispatch()
 
@@ -35,13 +36,20 @@ const BoothPage = (props) => {
     const windowSize = useWindowSize()
     const bg = useColorModeValue('gray.10', 'gray.100')
 
+    const { user } = useContext(UserContext)
+
     const userLang = langGetter().toUpperCase()
     const laptopMode = windowSize.width > mobileBreakPoint
 
-    const booth = booths.filter(booth => booth.id !== subsubpath)[0]
+    const records = boothRecords?.filter(record => record.isGotStamp === 1 )?.map(record => record.boothId)
+    const booth = booths.filter(booth => booth.id.toString() === subsubpath)[0]
+    const tempDate = JSON.stringify(new Date().getTime() - 60* 24 * 60 * 1000)
+    const date = new Date(JSON.parse(config?.opendayDate ?? tempDate)).getTime()
+    const now = new Date().getTime()
+    const hour = 60 * 60 * 1000
+    // const isOpenDay =  now > date && now < (date + 5 * hour)
+    const isOpenDay = true // for testing
 
-    const opendayDate = new Date()
-    const isOpendayToday = new Date() > opendayDate
 
     const userLangFormatter = (lang) => {
         return lang === 'EN' ? 'eng':'chi'
@@ -55,8 +63,21 @@ const BoothPage = (props) => {
         navigate(`/public/${userLangFormatter(userLang)}/tourguide-vr/${booth.id}`)
     }
 
+    const openQRScanner = () => {
+        let visitRecords = boothRecords?.map(record => record.boothId)
+        let isExistRecord = visitRecords?.includes(booth.id.toString()) ?? false
+        let needUpdate = !isExistRecord
+        dispatch(openQRModal(needUpdate))
+    }
+
     const goto_QRScanner = () => {
-        dispatch(openQRModal())
+
+        if(user.userId)
+            openQRScanner()
+        else{
+            let payload = { modalName: 'gameDataWarning', onConfirm: openQRScanner, messageName: 'game-data-warning' }
+            dispatch(openModal(payload))
+        }
     }
 
     useEffect(()=>{
@@ -108,8 +129,8 @@ const BoothPage = (props) => {
                 </Box>
 
                 <Flex mt="2em" >
-                    <CustomButton text={t('floorplan.vr-btn')} faIcon={faVrCardboard} onClick={goto_VrMode}/>
-                    <CustomButton text={t('floorplan.stamp-btn')} faIcon={faStamp} onClick={goto_QRScanner}/>
+                    { booth.vrImageUrl && <CustomButton text={t('floorplan.vr-btn')} faIcon={faVrCardboard} onClick={goto_VrMode}/> }
+                    { (isOpenDay && !records?.includes(booth.id)) && <CustomButton text={t('floorplan.stamp-btn')} faIcon={faStamp} onClick={goto_QRScanner}/> }
                 </Flex>
                 
                 

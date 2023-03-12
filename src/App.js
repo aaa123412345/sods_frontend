@@ -23,6 +23,7 @@ import VRCanvas from "./components/VRCanvas/VRCanvas";
 
 import ARCanvas from "./components/ARCanvas/ARCanvas";
 import FileUpload from "./components/CMS/FTP/FileUpload";
+import QRCodeModal from "./components/TourGuideCanvas/QRCodeModal/QRCodeModal";
 
 
 export const UserContext = createContext()
@@ -140,7 +141,8 @@ function App() {
 
                             <Routes>
                                 
-                            <Route>                          
+                            <Route>    
+                                <Route path="test-qr" element={<QRCodeModal test={true}/>} ></Route>                      
                                 <Route path="/file" element={<FileUpload></FileUpload>}></Route>                            
                                 <Route path="/public/:lang/ar-treasure/:id" element={<ARCanvas/>}></Route>
                                 <Route path="/public/:lang/tourguide-vr/:id" element={<VRCanvas />}></Route> 

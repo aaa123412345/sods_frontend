@@ -55,8 +55,10 @@ const CustomMarker = (props) => {
 
     const handle_onClick = () => {
 
-        if(!isMarkable && !isAssignBooth)
+        if(!isMarkable && !isAssignBooth){
+            console.log(boothID)
             navigate(`/public/${userLang}/tourguide/booths/${boothID ?? ""}`)
+        }
 
         if(isMarkable && !isAssignBooth)
             delete_marker()

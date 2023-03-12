@@ -21,7 +21,7 @@ import { UserContext } from '../../App'
 
 const TourGuideCanvas = (props) => {
 
-    const { block, sysConfig } = props
+    const { block, sysConfig, tourguide } = props
     const { isAdmin } = block
 
     const { lang, path, subpath } = useParams()
@@ -67,8 +67,11 @@ const TourGuideCanvas = (props) => {
         let url = `${tourHost}/${path}`
         await axios.get(url)
         .then((res)=>{
-            dispatch(updateFunction(res.data.data))
-            // console.log("updated from " + url + " successfully;")            
+            if(res.data.code < 400)
+                dispatch(updateFunction(res.data.data))
+            else
+                setError({message:'(Error) status code : '+ res.data.code})
+            console.log("updated from " + url + " successfully;")            
         })
         .catch((err)=>{setError(err)})
         
@@ -96,7 +99,6 @@ const TourGuideCanvas = (props) => {
             setIsLoading(false)
             dispatch(clearLoadingItem())
             dispatch(clearRefreshFlag())
-            console.log('floorplans: ', floorplans)
         })
      
     }, [sysConfig.refreshFlag])

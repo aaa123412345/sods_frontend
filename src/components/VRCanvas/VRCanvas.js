@@ -181,7 +181,7 @@ const VRCanvas = (props) => {
       </ExitButton>
 
       <Scene ref={sceneRef}>
-        <Entity primitive='a-sky' src={'/images/test-360-classroom.jpg'}/>
+        <Entity primitive='a-sky' src={vrImage ?? ""}/>
       </Scene>
     </div>
   

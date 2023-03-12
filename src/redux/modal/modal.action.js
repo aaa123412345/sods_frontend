@@ -21,8 +21,8 @@ export const updateModal = (config) => {
     return { type: UPDATE_MODAL, config }
 }
 
-export const openQRModal = () => {
-    return { type: OPEN_QR_MODAL }
+export const openQRModal = (needUpdate) => {
+    return { type: OPEN_QR_MODAL, needUpdate }
 }
 
 export const closeQRModal = () => {

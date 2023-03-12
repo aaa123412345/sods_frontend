@@ -232,7 +232,15 @@ export const tourModalData = {
             }
         ]
 
-    }
+    }, 
+
+    gameDataWarning: {
+
+        heading: 'heading-game-data-warning',
+        components: null, 
+
+
+    } 
 
 
 
