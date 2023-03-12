@@ -45,7 +45,7 @@ const GameInterface = (props) => {
                 <GameHeaderContainer bg={themeColor}>
 
                     <GameHeader>
-                        <CustomButton faIcon={faArrowLeft} onClick={()=>{navigate(`/public/${lang}/tourguide/floorplans`)}} isCircle/>
+                        <CustomButton faIcon={faArrowLeft} onClick={()=>{navigate(`/public/${lang}/tourguide/floorplans`); window.location.reload(true); }} isCircle/>
                         <Heading w="80%" color='white'>
                             <FontAwesomeIcon icon={faGamepad} />{ " " + t('arTreasure.title')}
                         </Heading>

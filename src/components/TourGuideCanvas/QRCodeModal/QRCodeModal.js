@@ -77,8 +77,8 @@ const QRCodeScanner = (props) => {
     const close_modal = () => {
 
         dispatch(closeQRModal())
-        if(qrID === null || qrID === undefined)
-            window.location.reload(true);
+        if(qrID === null || qrID === undefined) 
+            window.location.reload(true); // for stopping the camera
 
     }
 
@@ -150,7 +150,7 @@ const QRCodeScanner = (props) => {
                             qrID !== null ?
                             <QRCodeImage src={qrCode} borderRadius={25} />
                             :
-                            <QrReader delay={300} style={{ width: '100%' }} 
+                            <QrReader delay={300} style={{ width: '100%' }} constraints={{facingMode: 'environment'}}
                                 onResult={(result, error) =>{onResult(result, error)}} />
                         }
                     

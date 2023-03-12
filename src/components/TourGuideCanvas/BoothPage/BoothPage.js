@@ -128,8 +128,8 @@ const BoothPage = (props) => {
                     </Text>
                 </Box>
 
-                <Flex mt="2em" >
-                    { booth.vrImageUrl && <CustomButton text={t('floorplan.vr-btn')} faIcon={faVrCardboard} onClick={goto_VrMode}/> }
+                <Flex mt="2em" pb="1em">
+                    { (booth.vrImageUrl !== null || booth.vrImageUrl !== undefined) && <CustomButton text={t('floorplan.vr-btn')} faIcon={faVrCardboard} onClick={goto_VrMode}/> }
                     { (isOpenDay && !records?.includes(booth.id)) && <CustomButton text={t('floorplan.stamp-btn')} faIcon={faStamp} onClick={goto_QRScanner}/> }
                 </Flex>
                 

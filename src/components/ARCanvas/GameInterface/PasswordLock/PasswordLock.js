@@ -11,14 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
 
 import CustomButton from '../../../Common/common/CustomButton/CustomButton'
-import { arGameHost } from '../../../../constants/constants'
+import { arGameHost, tourHost } from '../../../../constants/constants'
 import { UserContext } from '../../../../App'
 
 
 const PasswordLock = (props) => {
 
     const { setIsLocked, isLocked, isFound, tourguide, sysConfig, arTreasure } = props
-    const { treasure } = arTreasure
+    const { treasure, boothGames } = arTreasure
     const { config } = sysConfig
     const { themeColor } = config ?? 'gray'
 
@@ -45,6 +45,11 @@ const PasswordLock = (props) => {
                 setIsLocked(false)
                 setCurrentStep("3")
                 score = 1
+
+                let boothId = boothGames?.filter(boothGame => parseInt(boothGame.gameId) === parseInt(treasure.treasureId))?.[0]?.boothId
+                axios.put(`${tourHost}/boothRecords?userId=${user.userId}&boothId=${boothId}`, data, header)
+                .then(res=>{console.log(res.data.data.code)})
+                .catch(err=>console.log(err.message))
             }
 
             data = { ...data, userAnswer: password, score: score, endTime: new Date().toISOString() }
