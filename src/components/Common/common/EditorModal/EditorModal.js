@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import styled from 'styled-components'
 import { AnimatePresence, motion, useAnimation } from 'framer-motion'
-import { Box, Flex,FormControl,Heading, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex, FormControl, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { useTranslation } from 'react-i18next'
@@ -26,7 +26,7 @@ const EditorModal = (props) => {
 
     const { form, modal, sysConfig }  = props
     const { config, originalThemeColor } = sysConfig
-    const { isOpen, modalName, host, path, method, name, id, assignedItem } = modal
+    const { isOpen, modalName, host, path, method, name, id, assignedItem, onConfirm, messageName } = modal
 
     const dispatch = useDispatch()
 
@@ -60,7 +60,7 @@ const EditorModal = (props) => {
                 <Modal 
                     bg={bg} borderRadius={{base: '18px 18px 0px 0px', md: 25}}
                     w={method==="delete"?"fit-content":{base: '100%', md: '80%'}} 
-                    h={method==="delete"?"fit-content":{base: '90%', md: '70%'}}>
+                    h={method==="delete"||onConfirm?"fit-content":{base: '90%', md: '70%'}}>
 
                 {/* <ProgressBar bg={progressBg} w="100%">
                     <Progress h="10px" w={`${(page + 1)/pages.length * 100}%`} bg={themeColor}></Progress>
@@ -75,17 +75,17 @@ const EditorModal = (props) => {
 
                     method !== 'delete' && 
 
-                    <Content w={{base: '90%', md: '70%'}}>
+                    <Content w={{base: '90%', md: '70%'}} h={onConfirm?'fit-content':'100%'}>
                         
                         
                         {
-                            tourModalData[modalName].components.map((modalElement, index) => {
+                            tourModalData[modalName].components?.map((modalElement, index) => {
                                 return React.createElement(modalElement.type, {
                                     key: index, index: index,
                                     file: file, setFile: setFile,
                                     ...modalElement.props
                                 })
-                            })
+                            }) ?? <Text>{t(`modal.message-${messageName}`)}</Text>
                         }
                         
                     </Content>
@@ -94,7 +94,8 @@ const EditorModal = (props) => {
 
                 <FunctionalFooter isShow={isOpen} onClose={close_modal}
                     method={method} host={host} path={path} name={name} id={id} assignedItem={assignedItem}
-                    file={file} setFile={setFile}/>
+                    file={file} setFile={setFile} 
+                    onConfirm={onConfirm === "CLOSE_MODAL" ? close_modal : onConfirm}/>
 
             </Modal>
         </Overlay>
@@ -150,7 +151,6 @@ const ModalHeader = styled(Flex)`
 const Content = styled(Box)`
 
     margin: 1em auto;
-    height: 100%;
     max-height: calc(100% - 90px - 60px);
     overflow-y: scroll;
 

@@ -40,9 +40,9 @@
     "heading-configs": "Tour Guide System Configuration",
     "label-theme-color": "Theme Color",
     "label-openday-date": "Open Day Date", 
-    "label-min-stamp": "Minimum Stamp(s) To Obtain"
+    "label-min-stamp": "Minimum Stamp(s) To Obtain",
 
-
-
+    "heading-game-data-warning": "Tips", 
+    "message-game-data-warning": "You haven't login yet. You can not save your game progress and obtain gift. "
     
 }

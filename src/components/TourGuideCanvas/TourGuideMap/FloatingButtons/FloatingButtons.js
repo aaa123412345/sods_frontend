@@ -14,7 +14,7 @@ const FloatingButtons = (props) => {
     const { sysConfig, tourguide } = props
     const { config } = sysConfig
     const { themeColor } = config ?? 'gray'
-    const { minStampNum } = config
+    const { minStampNum } = config ?? 0
     const { boothRecords } = tourguide
 
     const navigate = useNavigate()
@@ -29,7 +29,7 @@ const FloatingButtons = (props) => {
         <FloatingContainer bg={bg} mt="1em">
             <CustomButton faIcon={faStamp} onClick={()=>{navigate(url+"ticket")}} bgColor={themeColor} isCircle />
             <CustomButton faIcon={faGift} onClick={()=>{navigate(url+"story")}} bgColor={themeColor} isCircle 
-                isDisabled={boothRecords.length < minStampNum} /> 
+                isDisabled={boothRecords?.length < minStampNum} /> 
             <CustomButton faIcon={colorMode === 'light' ? faMoon : faSun} onClick={toggleColorMode} bgColor={themeColor} isCircle /> 
         </FloatingContainer>
     )

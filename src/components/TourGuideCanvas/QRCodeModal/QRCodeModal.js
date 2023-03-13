@@ -1,42 +1,96 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, connect } from 'react-redux'
+import axios from 'axios';
+
+import { QrReader } from 'react-qr-reader'
+import QRCode from 'qrcode';
+
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { Box, Flex,Heading, Image, useColorModeValue } from '@chakra-ui/react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import { useDispatch, connect } from 'react-redux'
-
-import { QrReader } from 'react-qr-reader'
-import QRCode from 'qrcode';
-
 import CustomButton from '../../Common/common/CustomButton/CustomButton'
 import { closeQRModal } from '../../../redux/modal/modal.action'
+import { langGetter } from '../../../helpers/langGetter'
+import { tourHost } from '../../../constants/constants';
+import { UserContext } from '../../../App';
 
 const MotionFlex = motion(Flex); 
 
 const QRCodeScanner = (props) => {
 
-    const { modal }  = props
-    const { isQRCode, qrID } = modal
+    const { modal, tourguide }  = props
+    const { isQRCode, qrID, needUpdate } = modal
+    const { boothGames } = tourguide
 
+    const lang = langGetter() === 'en' ? 'eng' : 'chi'
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     // chakra hooks
     const bg = useColorModeValue("white", "black")
 
     const [qrCode, setQRCode] = useState(null) 
+    const [isSent, setIsSent] = useState(false)
+    const [resultObtain, setResultObtain] = useState(null)
+
+    const {user,clearLoginState} = useContext(UserContext)
+
+    const header = { headers: { token: user.token } }
+
+    const handle_redirect = (code) => {
+
+        let url = `/public/${lang}/about`
+
+        if(code === 401){
+            url = `/user/${lang}/login`
+            clearLoginState()
+        }
+
+        if(code >= 400 && code < 500 ){
+            window.location.href = url
+            window.location.reload(true);
+
+        }
+
+    }
+
+    const update_record = (boothId) => {
+        
+        let newData = { userId: user.userId, boothId: boothId, visitEndTime: JSON.stringify(new Date().toISOString()) }
+        console.log('update: ', newData)
+
+        console.log('url: ', tourHost+ '/boothRecords')
+            
+        axios.post(tourHost + '/boothRecords', {...newData}, header)
+        .then((res)=>{
+            let code = res.data.code
+            console.log('post record, ', res.data)
+            // handle_redirect(code)
+        })
+        .catch(err=>{console.log(err); setIsSent(false); setResultObtain(null)})        
+        
+    }
 
     const close_modal = () => {
 
         dispatch(closeQRModal())
+        if(qrID === null || qrID === undefined) 
+            window.location.reload(true); // for stopping the camera
 
     }
 
     const onResult = (result, error) => {
-        if (!!result) 
-            window.location.replace('game/'+result?.text); // result is boothID
+        if (!!result) {
+            let text = result?.text
+            console.log('result: ', text)
+            setResultObtain(text)
+        }
+            
         if (!!error) 
-          console.info(error);
+            console.info('err: ', error);
     }
 
     useEffect(()=>{
@@ -50,12 +104,34 @@ const QRCodeScanner = (props) => {
             QRCode.toDataURL(qrID.toString())
             .then(code => {
                 setQRCode(code)
-                console.log('code: ', code)
             })
             .catch(err => {console.error(err)})
         }
             
     },[qrCode, qrID])
+
+    useEffect(()=>{
+        console.log('result change, ', resultObtain)
+        if(resultObtain !== null || resultObtain !== undefined){
+            
+            // update booth visit record
+            if(!isSent && needUpdate){
+                setIsSent(true)
+                update_record(resultObtain)
+            }
+
+            // redirect to ar game 
+            let gameId = boothGames?.filter(game => game.boothId.toString() === resultObtain)?.[0]?.gameId
+            console.log('gameId:', gameId, "; isRedirectToGame: ", parseInt(gameId ?? "0") > 61202 * 1000000)
+            if(parseInt(gameId ?? "0") > 61202 * 1000000){
+                console.log('needUpdate: ', needUpdate)
+                window.location.replace(`/public/${lang}/ar-treasure/${gameId}`); // result is boothID
+            }else{
+                setResultObtain(null)
+            }
+        }
+
+    }, [resultObtain])
 
     return !isQRCode ? <></> : (
         <Overlay as={MotionFlex} initial={{opacity: 0}} animate={{opacity: 1}} transition={{ duration: .25 }}>
@@ -67,21 +143,18 @@ const QRCodeScanner = (props) => {
                     <Heading size='lg'>QR Code Scanner</Heading>
                     <CustomButton faIcon={faXmark} isCircle={true} onClick={close_modal}/>
                 </ModalHeader>
+            
+                    <Content>
 
-                <Content>
-
-                    {
-                        qrID !== null ?
-                        <QRCodeImage src={qrCode} borderRadius={25} />
-                        :
-                        <QrReader
-                            delay={300}
-                            style={{ width: '100%' }}
-                            onResult={(result, error) => onResult(result, error)}
-                            />
-                    }
-                
-                </Content>
+                        {
+                            qrID !== null ?
+                            <QRCodeImage src={qrCode} borderRadius={25} />
+                            :
+                            <QrReader delay={300} style={{ width: '100%' }} constraints={{facingMode: 'environment'}}
+                                onResult={(result, error) =>{onResult(result, error)}} />
+                        }
+                    
+                    </Content>
 
             </Modal>
         </Overlay>

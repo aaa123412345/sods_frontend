@@ -14,9 +14,9 @@ const modalReducer = (state = initModalState, action) => {
         case UPDATE_MODAL:
             return { ...state, ...action.config }
         case OPEN_QR_MODAL:
-            return { ...state, isQRCode: true }
+            return { ...state, isQRCode: true, needUpdate: action.needUpdate??false }
         case CLOSE_QR_MODAL:
-            return { ...state, isQRCode: false }
+            return { ...state, isQRCode: false, qrID: null }
         case UPDATE_QR_ID:
             return { ...state, qrID: action.qrID }
         default:

@@ -25,7 +25,6 @@ const VRCanvas = (props) => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [isExit, setIsExit] = useState(false)
 
   const sceneRef = useRef()
   const [vrImage, setVRImage] = useState(null)
@@ -122,23 +121,8 @@ const VRCanvas = (props) => {
   // }, [isSpeaking])
 
   const exit_to_map = () => {
-
-    
-    // navigator.mediaDevices
-    // .getUserMedia()
-    // .then((stream) => {
-    //   /* use the stream */
-    //   const tracks = stream.getTracks();
-    //   tracks.forEach(track => track.stop());
-    // })
-    // .catch((err) => {
-    //   /* handle the error */
-    // });
-
-    setIsExit(true)
-    // let stream = videoElement.current.stream;
-
-    // navigate(`/public/${langGetter() === 'en' ? 'eng': 'chi'}/tourguide/booths/${id}`)
+    navigate(`/public/${langGetter() === 'en' ? 'eng': 'chi'}/tourguide/booths/${id}`)
+    window.location.reload(true); // for stopping the camera
   }
 
   useEffect(()=>{
@@ -146,8 +130,9 @@ const VRCanvas = (props) => {
     let url = `${tourHost}/booths/${id}`
     axios.get(url)
     .then((res)=>{
+      console.log(res.data.data.vrImageUrl)
       setError(null)
-      setVRImage(res.data.data.imageUrl)
+      setVRImage(res.data.data.vrImageUrl)
         // console.log("updated from " + url + " successfully;")
     })
     .catch((err)=>{setError(err)})
@@ -164,7 +149,7 @@ const VRCanvas = (props) => {
     return <div>{t('tourguide.loading-vr')}</div>
 
 
-  return !isExit && (
+  return (
       
     <div style={{position: 'absolute', height: '100%', width: '100%', zIndex: 2000, background: 'black'}}>
     {/* { 
@@ -181,7 +166,7 @@ const VRCanvas = (props) => {
       </ExitButton>
 
       <Scene ref={sceneRef}>
-        <Entity primitive='a-sky' src={'/images/test-360-classroom.jpg'}/>
+        <Entity primitive='a-sky' src={vrImage ?? ""}/>
       </Scene>
     </div>
   

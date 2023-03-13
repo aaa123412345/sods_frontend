@@ -41,5 +41,9 @@
     "heading-configs": "導賞指南系統設定",
     "label-theme-color": "主題顏色",
     "label-openday-date": "開放日日期", 
-    "label-min-stamp": "最少印章數目"
+    "label-min-stamp": "最少印章數目", 
+
+    "heading-game-data-warning": "温馨提示", 
+    "message-game-data-warning": "您還未登錄！您將無法儲存遊戲進度及獲取獎品。"
+
 }

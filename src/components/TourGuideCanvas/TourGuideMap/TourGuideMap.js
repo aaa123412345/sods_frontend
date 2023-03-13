@@ -117,7 +117,7 @@ const TourGuideMap = (props) => {
                 <ScrollMap borderRadius={isAssignBooth ? 25 : 0} >
 
                     {
-                        floorplans[itemIndex] !== undefined ? 
+                        floorplans?.[itemIndex] !== undefined ? 
                         <LoadImageSize w="50%"
                             src={floorplans[itemIndex]?.imageUrl ?? ""}
                             onLoad={e=>setMapSize({ originalWidth: e.target.clientWidth, originalHeight: e.target.clientHeight })}/>
@@ -132,7 +132,7 @@ const TourGuideMap = (props) => {
 
                         {
 
-                            markers !== undefined && floorplans[itemIndex] !== undefined && 
+                            markers !== undefined && floorplans?.[itemIndex] !== undefined && 
                             <ImageMarker src={floorplans[itemIndex]?.imageUrl ?? ""}
                                 markers={
                                     markers

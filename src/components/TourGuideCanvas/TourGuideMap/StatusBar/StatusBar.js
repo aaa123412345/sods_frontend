@@ -11,7 +11,8 @@ import { langGetter } from '../../../../helpers/langGetter'
 
 const StatusBar = (props) => {
 
-    const { themeColor, opendayDate } = useSelector(state => state.sysConfig?.config)
+    const { config } = useSelector(state => state.sysConfig)
+    const { themeColor, opendayDate } = config ?? {themeColor: 'gray', opendayDate: JSON.stringify(new Date().getTime() - 24 * 60 * 60 * 1000)}
 
     const bg = useColorModeValue('white', 'black')
 

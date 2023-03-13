@@ -13,6 +13,7 @@
     "created": "Created",
     "updated": "Updated",
     "deleted": "Deleted",
+    "confirm": "Confirm",
     "error": "Error", 
     "try-again": "Please try again.", 
     "loading-vr": "Loading VR Scene", 

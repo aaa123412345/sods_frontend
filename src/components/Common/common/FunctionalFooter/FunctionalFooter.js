@@ -23,11 +23,12 @@ import { setRefreshFlag } from '../../../../redux/sysConfig/sysConfig.action'
 import { UserContext } from '../../../../App'
 import { storage } from '../../../../config/firebase'
 import { finishInspect } from '../../../../redux/inspector/inspector.action'
+import { langGetter } from '../../../../helpers/langGetter'
 
 const FunctionalFooter = (props) => {
 
     const { 
-        isShow, method, path, host, name, onClose, 
+        isShow, method, path, host, name, onClose, onConfirm,
         tourguide, sysConfig, form, id, assignedItem, file, setFile
     } = props
 
@@ -37,6 +38,7 @@ const FunctionalFooter = (props) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { t } = useTranslation()
+    const lang = langGetter() === 'en' ? 'eng' : 'chi'
 
     
     // chakra hooks
@@ -51,10 +53,10 @@ const FunctionalFooter = (props) => {
 
     const handle_redirect = (code) => {
 
-        let url = "/public/eng/about"
+        let url = `/public/${lang}/about`
 
         if(code === 401){
-            url = "/user/eng/login"
+            url = `/user/${lang}/login`
             clearLoginState()
         }
 
@@ -105,6 +107,12 @@ const FunctionalFooter = (props) => {
     }
 
     const trigger_action = (method) => {
+        
+        if(onConfirm){
+            dispatch(closeModal())
+            dispatch(resetData())
+            onConfirm()
+        }
 
         if(file){
             // upload image
@@ -145,7 +153,7 @@ const FunctionalFooter = (props) => {
         .then((res)=>{
             let code = res.data.code
             toast(toast_generator(code, t("tourguide.deleted"), t(`tourguide.${path}`)))
-            handle_redirect()
+            handle_redirect(code)
         })
         .catch(err=>toast(toast_generator()))
         
@@ -167,7 +175,7 @@ const FunctionalFooter = (props) => {
         .then((res)=>{
             let code = res.data.code
             toast(toast_generator(code, t("tourguide.created"), t(`tourguide.${name}`)))
-            handle_redirect()
+            handle_redirect(code)
         })
         .catch(err=>{toast(toast_generator())})
 
@@ -194,7 +202,7 @@ const FunctionalFooter = (props) => {
         .then((res)=>{
             let code = res.data.code
             toast(toast_generator(code, t("tourguide.updated"), t(`tourguide.${name}`)))
-            handle_redirect()
+            handle_redirect(code)
         })
         .catch(err=>{toast(toast_generator())})
             
@@ -219,7 +227,7 @@ const FunctionalFooter = (props) => {
             <Flex justifyContent='space-between'>
 
                 <CustomButton text={t('tourguide.cancel')} onClick={onClose}/>
-                <CustomButton text={t(`tourguide.${submitLabel[method]}`)} 
+                <CustomButton text={t(`tourguide.${submitLabel[method]??'confirm'}`)} 
                     onClick={()=>{trigger_action(method)}}
                     bgColor={method === 'delete' ? "danger" : themeColor} 
                     isDisabled={!canSubmit}/>
