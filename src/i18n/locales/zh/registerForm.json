@@ -1,0 +1,12 @@
+{
+    "username":"用戶名稱 (必須)",
+    "password":"密碼 (必須)",
+    "nickname":"暱稱",
+    "email":"電郵",
+    "phone":"電話",
+    "sex":"性別",
+    "sexMale":"男",
+    "sexFemale":"女",
+    "sexOther":"其他",
+    "registerBtn":"註冊"
+}

@@ -11,7 +11,7 @@
   import { useTranslation } from 'react-i18next'
 
 
-  const LoginPage = () =>{
+  const LoginPage = (props) =>{
     const {user,setUserContext} = useContext(UserContext)
 
     //Login
@@ -119,17 +119,17 @@
 
     return(
       <>
-       {login.ready?<Navigate to="/public/eng/about"></Navigate>:''}
-       {user.userType === ''?'':<Navigate replace to="/public/eng/about" />}
+       {login.ready?<Navigate to={"/public/"+props.lang+"/about"}></Navigate>:''}
+       {user.userType === ''?'':<Navigate replace to={"/public/"+props.lang+"/about"} />}
        <Tabs
                 defaultActiveKey="login"
                 id="uncontrolled-tab-example"
                 className="mb-3"
             >
-            <Tab eventKey="login" title="Login">
+            <Tab eventKey="login" title={t('loginPage.tabLogin')}>
                 <LoginForm setDictUP={setLoginDict} dict={loginDict} handleSubmit={handleLoginSubmit}></LoginForm>
             </Tab>
-            <Tab eventKey="register" title="Register">
+            <Tab eventKey="register" title={t('loginPage.tabRegister')}>
                 <RegisterForm setDictUP={setRegisterDict} dict={registerDict} handleSubmit={handleRegisterSubmit}></RegisterForm>
             </Tab>
 

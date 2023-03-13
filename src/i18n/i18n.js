@@ -23,6 +23,10 @@ import arTreasureEditorZH from './locales/zh/arTreasureEditor.json'
 //login component
 import loginPageEN from './locales/en/loginPage.json';
 import loginPageZH from './locales/zh/loginPage.json';
+import loginFormEN from './locales/en/loginForm.json';
+import loginFormZH from './locales/zh/loginForm.json';
+import registerFormEN from './locales/en/registerForm.json';
+import registerFormZH from './locales/zh/registerForm.json';
 
 
 let userLang = JSON.parse(window.localStorage.getItem('i18n-lang'))
@@ -53,7 +57,9 @@ const resources = {
       modal: modalEN, 
       arTreasure: arTreasureEN, 
       arTreasureEditor: arTreasureEditorEN,
-      loginPage: loginPageEN
+      loginPage: loginPageEN,
+      loginForm: loginFormEN,
+      registerForm: registerFormEN
     }
   },
   zh: {
@@ -65,7 +71,9 @@ const resources = {
       modal: modalZH,
       arTreasure: arTreasureZH, 
       arTreasureEditorZH: arTreasureEditorZH,
-      loginPage: loginPageZH
+      loginPage: loginPageZH,
+      loginForm: loginFormZH,
+      registerForm: registerFormZH
     }
   },
 };

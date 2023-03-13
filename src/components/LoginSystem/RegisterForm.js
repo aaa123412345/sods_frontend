@@ -3,6 +3,8 @@ import { faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useTranslation } from 'react-i18next'
+
 const RegistereFormStyle = {
     color:"black",
     width:"90%",
@@ -13,6 +15,8 @@ const RegistereFormStyle = {
   }
 
 const RegisterForm=({setDictUP,dict,handleSubmit})=>{
+    const { t } = useTranslation()
+
     function setDict(key,value){
         //setDictUP(...dict,{key:value})
         var tmp = dict
@@ -35,15 +39,15 @@ const RegisterForm=({setDictUP,dict,handleSubmit})=>{
            
           <Form>
             <Form.Group className="mb-3 mt-4" controlId="formRegisterName" style={{width:'80%'}}>
-              <Form.Label>User Name (Required)</Form.Label>
-              <Form.Control type="text" placeholder="User Name" required onChange={(e)=>setDict("userName",e.target.value)}/> 
+              <Form.Label>{t('registerForm.username')}</Form.Label>
+              <Form.Control type="text" placeholder={t('registerForm.username')} required onChange={(e)=>setDict("userName",e.target.value)}/> 
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formRegisterPassword" style={{width:'80%'}}>
-            <Form.Label>Password (Required)</Form.Label>
+            <Form.Label>{t('registerForm.password')}</Form.Label>
               <InputGroup className="mb-3">
                 <Form.Control
-                  placeholder="Password"
+                  placeholder={t('registerForm.password')}
                   aria-label="Password"
                   aria-describedby="showPassword"
                   type={dict.showPassword===undefined?'password':dict.showPassword?'text':'password'}
@@ -63,33 +67,33 @@ const RegisterForm=({setDictUP,dict,handleSubmit})=>{
             </Form.Group>
           
             <Form.Group className=" mt-4" controlId="formBasicNickName" style={{width:'80%'}}>
-              <Form.Label>Nick Name</Form.Label>
-              <Form.Control type="text" placeholder="Nick Name" onChange={(e)=>setDict("nickName",e.target.value)}/> 
+              <Form.Label>{t('registerForm.nickname')}</Form.Label>
+              <Form.Control type="text" placeholder={t('registerForm.nickname')} onChange={(e)=>setDict("nickName",e.target.value)}/> 
             </Form.Group>
 
             <Form.Group className="mt-4" controlId="formBasicEmail" style={{width:'80%'}}>
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="text" placeholder="Email" onChange={(e)=>setDict("email",e.target.value)}/> 
+              <Form.Label>{t('registerForm.email')}</Form.Label>
+              <Form.Control type="text" placeholder={t('registerForm.email')} onChange={(e)=>setDict("email",e.target.value)}/> 
             </Form.Group>
 
             <Form.Group className=" mt-4" controlId="formBasicPhone" style={{width:'80%'}}>
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control type="text" placeholder="Phone Number" onChange={(e)=>setDict("phonenumber",e.target.value)}/> 
+              <Form.Label>{t('registerForm.phone')}</Form.Label>
+              <Form.Control type="text" placeholder={t('registerForm.phone')} onChange={(e)=>setDict("phonenumber",e.target.value)}/> 
             </Form.Group>
 
             <Form.Group className=" mt-4" controlId="formBasicSex" style={{width:'80%'}}>
-              <Form.Label>Sex</Form.Label>
+              <Form.Label>{t('registerForm.sex')}</Form.Label>
               <Form.Select aria-label="Default select example" onChange={(e)=>setDict("sex",e.target.value)}>
-                <option value="M">Male</option>
-                <option value="F">Female</option>
-                <option value="O">Other</option>
+                <option value="M">{t('registerForm.sexMale')}</option>
+                <option value="F">{t('registerForm.sexFemale')}</option>
+                <option value="O">{t('registerForm.sexOther')}</option>
             </Form.Select>
               
             </Form.Group>
   
 
             <Button variant="primary" className='mb-3' onClick={handleSubmit}>
-              Register
+            {t('registerForm.registerBtn')}
             </Button>
 
            

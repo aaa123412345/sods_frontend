@@ -3,7 +3,7 @@ import useSendRequest from "../../../hooks/useSendRequest";
 import cloneDeep from 'lodash/cloneDeep'
 import NavigationTree from "./NavigationTree";
 import NavigationConfigPanel from "./NavigationConfigPanel";
-import { Button, Col, Row} from "react-bootstrap";
+import { Button, Col, Row, Modal} from "react-bootstrap";
 
 
 const NavigationEditor = props => {
@@ -29,7 +29,18 @@ const NavigationEditor = props => {
     const updateNavDataHook = useSendRequest(host+navDataState.lang+'/'+navDataState.domain+"navdata",updateNavDataState.mode,
     navData,updateNavDataState.active,false)
 
+    const [checkHookData,setCheckHookData] = useState({
+        active:false,
+    })
+    const checkHook = useSendRequest(host+'check/'+navDataState.lang+'/'+navDataState.domain+"navdata",'get',{},checkHookData.active,false)
    
+
+    const [copyModelShow,setCopyModelShow] = useState(false)
+    const [copyModelData,setCopyModelData] = useState({
+        domain:'public',
+        lang:'eng',
+        autoConvert:false
+    })
 
     const [configNodeData , setConfigNodeData] = useState({
         index:-1,
@@ -40,10 +51,12 @@ const NavigationEditor = props => {
     const [inEdit,setInEdit] = useState(false)
     const [update,setUpdate] = useState(false)
 
-    function changeNavDataState(event,target){
-        var tmp = navDataState
-        tmp[target] = event.target.value
-        setNavDataState(tmp)
+    function changeNavDataState(value,target){
+        
+        setNavDataState({
+            ...navDataState,
+            [target]:value
+        })
     }
 
     function startNew(){
@@ -52,7 +65,6 @@ const NavigationEditor = props => {
         setInEdit(true)
         setUpdateNavDataState({
             ...updateNavDataState,
-            mode:'post'
         })
     }
 
@@ -67,6 +79,7 @@ const NavigationEditor = props => {
     }
 
     function getExist(withBackup){
+        
         setNavDataState({
             ...navDataState,
             active:true,
@@ -74,7 +87,6 @@ const NavigationEditor = props => {
         })
         setUpdateNavDataState({
             ...updateNavDataState,
-            mode:'put'
         })
         
 
@@ -89,8 +101,13 @@ const NavigationEditor = props => {
         if(!navDataState.backup){
             if(!dictIsSame(navData,navDataBackup)){
                 
+                /*
                 setUpdateNavDataState({
                     ...updateNavDataState,
+                    active:true
+                })*/
+                setCheckHookData({
+                    ...checkHookData,
                     active:true
                 })
                 
@@ -98,11 +115,100 @@ const NavigationEditor = props => {
                 alert("No Change")
             }
         }else{
+            setCheckHookData({
+                ...checkHookData,
+                active:true
+            })
+            /*
             setUpdateNavDataState({
                 ...updateNavDataState,
                 active:true
-            })
+            })*/
+
         }
+    }
+
+    function handlecopyModelShow(){
+        setCopyModelShow(true)
+    }
+
+    function handlecopyModelClose(){
+        setCopyModelShow(false)
+    }
+
+    function copyModel(){
+        function copyModelOK(){
+            
+            if(copyModelData.autoConvert){
+                autoConvert()
+            }
+            setNavDataState({
+                ...navDataState,
+                domain:copyModelData.domain,
+                lang:copyModelData.lang
+
+            })
+            
+            setCopyModelShow(false)
+        }
+        function autoConvert(){
+            var tmp = cloneDeep(navData)
+            tmp.navdata.forEach((node)=>{
+                node.path = node.path.replace(navDataState.domain,copyModelData.domain)
+                node.path = node.path.replace(navDataState.lang,copyModelData.lang)
+                node.child.forEach((child)=>{
+                    child.path = child.path.replace(navDataState.domain,copyModelData.domain)
+                    child.path = child.path.replace(navDataState.lang,copyModelData.lang)
+                })
+            })
+            setNavData(tmp)
+
+        }
+        
+        return(
+            <Modal show={copyModelShow} onHide={handlecopyModelClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>Copy For:</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                Domain: {"   "}
+                <select onChange={(e)=>{setCopyModelData(
+                    {...copyModelData,
+                    domain:e.target.value
+                    }
+                )}}>
+                    <option value="public">Public</option>
+                    <option value="server">Server</option>
+                </select>
+                <br/>
+                Language: {"   "}
+                <select onChange={(e)=>{setCopyModelData(
+                    {...copyModelData,
+                    lang:e.target.value
+                    }
+                )}}>
+                    <option value="eng">English</option>
+                    <option value="chi">Chinese</option>
+                </select>
+                <br></br>
+
+                <input type="checkbox" id= "autoConvert" name="autoConvert" 
+                onChange={(e)=>{setCopyModelData(
+                    {...copyModelData,
+                    autoConvert:e.target.checked
+                    }
+                )}}/>
+                <label htmlFor="autoConvert"> {"Auto Convert the path?"}</label>
+
+                </Modal.Body>
+                <Modal.Footer>
+              
+                <Button variant="primary" onClick={copyModelOK}>
+                    Copy
+                </Button>
+                </Modal.Footer>
+            </Modal>
+        )
     }
 
     const parentNodeTemplate = {
@@ -263,9 +369,34 @@ const NavigationEditor = props => {
     },[navDataHook])
 
     useEffect(()=>{
+        if(checkHookData.active){
+            if(!checkHook.isLoaded){
+                if(checkHook.ready){
+                    if('exist' in checkHook.items){
+                        setUpdateNavDataState({
+                            ...updateNavDataState,
+                            mode:checkHook.items.exist?'PUT':'POST',
+                            active:true
+                        })
+                        setCheckHookData({
+                            ...checkHookData,
+                            active:false
+                        })
+                    }
+                }else if(checkHook.errMsg!==""){
+                    alert(checkHook.errMsg)
+                    setCheckHookData({
+                        ...checkHookData,
+                        active:false
+                    })
+                }
+            }
+        }
+    },[checkHook])
+
+    useEffect(()=>{
        
         if(updateNavDataState.active){
-            
             if(!updateNavDataHook.isLoaded){
                 if(updateNavDataHook.ready){
                     setUpdateNavDataState({
@@ -288,22 +419,35 @@ const NavigationEditor = props => {
         }
     },[updateNavDataHook])
 
+    useEffect(()=>{
+        console.log(updateNavDataState)
+    },[updateNavDataState])
+
+    useEffect(()=>{
+        console.log(navDataState)
+    },[navDataState])
+
+
     if(pageReady){
         return(
         <>
         <Row className="mb-3 mt-3">
             <Col>
                 {"Domain: "} 
-                <select disabled={inEdit} onChange={(e)=>{changeNavDataState(e,'domain')}}>
-                    <option value="public">Public</option>
-                    <option value="server">Server</option>
+                <select disabled={inEdit} onChange={(e)=>{changeNavDataState(e.target.value,'domain')}} value={navDataState.domain}>
+                    {['public','server'].map((item,index)=>{
+                        return <option key={"domain-slecet-"+index} value={item} >{item}</option>
+                    })}
+                    
                 </select>
             </Col>
             <Col>
                 {"Language: "} 
-                <select disabled={inEdit} onChange={(e)=>{changeNavDataState(e,'lang')}}>
-                    <option value="eng">English</option>
-                    <option value="chi">Chinese</option>
+                <select disabled={inEdit} onChange={(e)=>{changeNavDataState(e.target.value,'lang')}} value={navDataState.lang}>
+                {['eng','chi'].map((item,index)=>{
+                        return <option key={"lang-slecet-"+index} value={item} >{item}</option>
+                    })}
+                   
                     
                 </select>
             </Col>
@@ -319,10 +463,11 @@ const NavigationEditor = props => {
                  <Button style={{marginRight:"5px"}} onClick={updateNavData}>Upload</Button>
                  <Button style={{marginRight:"5px"}} onClick={()=>{getExist(navDataState.backup)}}>Recover</Button>
                  <Button style={{marginRight:"5px"}} onClick={Unfreeze}>Unfreeze</Button>
-                
+                 <Button style={{marginRight:"5px"}} onClick={handlecopyModelShow}>Copy to</Button>
                 </>}
                 
             </Col>
+            {copyModel()}
         </Row>
         {inEdit?
         <Row>
@@ -335,6 +480,8 @@ const NavigationEditor = props => {
             </Col>
         </Row>
         :''}
+
+        
             
         </>
         )
