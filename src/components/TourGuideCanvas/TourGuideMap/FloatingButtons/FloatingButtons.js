@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -8,6 +8,7 @@ import { faGift, faMoon, faStamp, faSun, faTicket } from '@fortawesome/free-soli
 
 import CustomButton from '../../../Common/common/CustomButton/CustomButton';
 import { langGetter } from '../../../../helpers/langGetter'
+import { UserContext } from '../../../../App';
 
 const FloatingButtons = (props) => {
 
@@ -18,6 +19,7 @@ const FloatingButtons = (props) => {
     const { boothRecords } = tourguide
 
     const navigate = useNavigate()
+    const { user } = useContext(UserContext)
 
     const { colorMode, toggleColorMode } = useColorMode()
     const bg = useColorModeValue('white', 'black')
@@ -27,7 +29,8 @@ const FloatingButtons = (props) => {
 
     return (
         <FloatingContainer bg={bg} mt="1em">
-            <CustomButton faIcon={faStamp} onClick={()=>{navigate(url+"ticket")}} bgColor={themeColor} isCircle />
+            <CustomButton faIcon={faStamp} onClick={()=>{navigate(url+"ticket")}} bgColor={themeColor} isCircle 
+                isDisabled={(user.userId ?? (-1) ) <= 0}/>
             <CustomButton faIcon={faGift} onClick={()=>{navigate(url+"story")}} bgColor={themeColor} isCircle 
                 isDisabled={boothRecords?.length < minStampNum} /> 
             <CustomButton faIcon={colorMode === 'light' ? faMoon : faSun} onClick={toggleColorMode} bgColor={themeColor} isCircle /> 
