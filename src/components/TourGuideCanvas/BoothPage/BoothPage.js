@@ -18,6 +18,7 @@ import { UserContext } from '../../../App'
 import { langGetter } from '../../../helpers/langGetter'
 import { mobileBreakPoint } from '../../../constants/constants'
 import { updateTreasureId } from '../../../redux/arTreasure/arTreasure.action'
+import BoothRating from './BoothRating/BoothRating'
 
 const BoothPage = (props) => {
 
@@ -121,6 +122,8 @@ const BoothPage = (props) => {
 
                 <CustomText icon={faLocationDot} text={booth[`venue${userLang}`]}/>
 
+                <BoothRating userId={user.userId} boothId={booth.id} isShow={records?.includes(booth.id.toString())} themeColor={themeColor} initScore={records?.filter(record=>record.boothId === booth.id.toString())?.ratingScore ?? 0} />
+
                 <Box mt="2em">
                     <CustomText isHeading icon={faAlignCenter} text={t('tourguide.description')}/>
                     <Text>
@@ -130,7 +133,7 @@ const BoothPage = (props) => {
 
                 <Flex mt="2em" pb="1em">
                     { (booth.vrImageUrl !== null || booth.vrImageUrl !== undefined) && <CustomButton text={t('floorplan.vr-btn')} faIcon={faVrCardboard} onClick={goto_VrMode}/> }
-                    { (isOpenDay && !records?.includes(booth.id)) && <CustomButton text={t('floorplan.stamp-btn')} faIcon={faStamp} onClick={goto_QRScanner}/> }
+                    { (isOpenDay && !records?.includes(booth.id.toString())) && <CustomButton text={t('floorplan.stamp-btn')} faIcon={faStamp} onClick={goto_QRScanner}/> }
                 </Flex>
                 
                 

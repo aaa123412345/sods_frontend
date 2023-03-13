@@ -17,6 +17,10 @@ export const tourModalData = {
 
     floorplan: {
         heading: "heading-floorplan",
+        errorChecking: {
+            regionEN: (value) => (value?.length ?? 0) <= 0,
+            regionZH: (value) => (value?.length ?? 0) <= 0
+        }, 
         components: [
             {
                 type: TextInput,
@@ -42,6 +46,12 @@ export const tourModalData = {
 
     marker: {
         heading: "heading-where-booth",
+        errorChecking: {
+            floorPlanID: (value) => value === null || value === undefined,
+            boothID: (value) => value === null || value === undefined,
+            x: (value) => value === null || value === undefined,
+            y: (value) => value === null || value === undefined,
+        }, 
         components: [
             {
                 type: TourGuideMap, 
@@ -52,6 +62,7 @@ export const tourModalData = {
 
     vrTour: {
         heading: "heading-vr",
+        errorChecking: {}, 
         components: [
             {
                 type: ImageUploader, 
@@ -66,6 +77,16 @@ export const tourModalData = {
 
     booth: {
         heading: "heading-booth",
+        errorChecking: {
+            titleEN: (value) => (value?.length ?? 0) <= 0,
+            titleZH: (value) => (value?.length ?? 0) <= 0,
+            venueEN: (value) => (value?.length ?? 0) <= 0,
+            venueZH: (value) => (value?.length ?? 0) <= 0,
+            boothEN: (value) => (value?.length ?? 0) <= 0,
+            boothZH: (value) => (value?.length ?? 0) <= 0,
+            descriptionEN: (value) => (value?.length ?? 0) <= 0,
+            descriptionZH: (value) => (value?.length ?? 0) <= 0,
+        }, 
         components: [
 
             {
@@ -114,6 +135,12 @@ export const tourModalData = {
     story: {
 
         heading: "heading-story",
+        errorChecking: {
+            titleEN: (value) => (value?.length ?? 0) <= 0,
+            titleZH: (value) => (value?.length ?? 0) <= 0,
+            contentEN: (value) => (value?.length ?? 0) <= 0,
+            contentZH: (value) => (value?.length ?? 0) <= 0,
+        }, 
         components: [
     
             {
@@ -153,6 +180,11 @@ export const tourModalData = {
     arTreasure: {
 
         heading: "heading-ar-game",
+        errorChecking: {
+            questionEN: (value) => (value?.length ?? 0) <= 0,
+            questionZH: (value) => (value?.length ?? 0) <= 0,
+            answers: (value) => JSON.parse(value ?? JSON.stringify([])).length <= 0
+        }, 
         components: [
             {
                 type: TextInput,
@@ -183,6 +215,10 @@ export const tourModalData = {
     boothGame: {
 
         heading: 'heading-assign-game',
+        errorChecking: {
+            boothId: (value) => value === null || value === undefined, 
+            gameId: (value) => value === null || value === undefined,
+        }, 
         components: [
             {
                 type: ItemList, 
@@ -201,6 +237,7 @@ export const tourModalData = {
     configs: {
 
         heading: 'heading-configs',
+        errorChecking: null, 
         components: [
             {
                 type: ColorPicker, 
@@ -237,6 +274,7 @@ export const tourModalData = {
     gameDataWarning: {
 
         heading: 'heading-game-data-warning',
+        errorChecking: null, 
         components: null, 
 
 

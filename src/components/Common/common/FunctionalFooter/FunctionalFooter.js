@@ -28,7 +28,7 @@ import { langGetter } from '../../../../helpers/langGetter'
 const FunctionalFooter = (props) => {
 
     const { 
-        isShow, method, path, host, name, onClose, onConfirm,
+        isShow, method, path, host, name, onClose, errorChecking, onConfirm,
         tourguide, sysConfig, form, id, assignedItem, file, setFile
     } = props
 
@@ -64,30 +64,6 @@ const FunctionalFooter = (props) => {
             setRedirectURL(url)
         else
             setRedirectURL(null)
-
-    }
-
-    const check_validation = (data) => {
-
-        let errorExist = false
-
-        if(method === 'delete')
-            errorExist = false
-        else if(name === "marker")
-            errorExist = form['marker'].x === null || form['marker'].y === null || form['marker'].floorID === null
-        else{
-
-            // Object.entries(data).map(([key, value], index)=>{
-            //     // WILL CHECK OTHER TYPE LATER
-            //     console.log(key, ": ", value)
-            //     if(value.length === 0)
-            //         errorExist = true
-            // })
-
-        }
-
-        // console.log('errorExist: ', errorExist)
-        setCanSubmit(!errorExist)
 
     }
 
@@ -210,8 +186,32 @@ const FunctionalFooter = (props) => {
 
     }    
 
+    const check_validation = (data) => {
+
+        let errorExist = false
+
+        if(method === 'delete')
+            errorExist = false
+        else if(errorChecking !== null){
+                
+            Object.entries(data).map(([key, value], index)=>{
+                
+                if(key.toUpperCase().includes('IMAGEURL'))
+                    errorExist = (file === null || file === undefined)
+                else if(errorChecking[key]?.(value))
+                    errorExist = true
+                console.log(key, ": ", value, '; error: ', errorChecking[key]?.(value))
+            })
+
+        }
+        
+        setCanSubmit(!errorExist)
+
+    }
+
     useEffect(()=>{
 
+        console.log(form[name])
         check_validation(method === 'delete' ? null : form[name])
 
     },[form])

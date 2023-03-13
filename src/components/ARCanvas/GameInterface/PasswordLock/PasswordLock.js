@@ -47,7 +47,8 @@ const PasswordLock = (props) => {
                 score = 1
 
                 let boothId = boothGames?.filter(boothGame => parseInt(boothGame.gameId) === parseInt(treasure.treasureId))?.[0]?.boothId
-                axios.put(`${tourHost}/boothRecords?userId=${user.userId}&boothId=${boothId}`, data, header)
+                let newData = { userId: user.userId, boothId: boothId, isGotStamp: 1 }
+                axios.put(`${tourHost}/boothRecords`, newData, header)
                 .then(res=>{console.log(res.data.data.code)})
                 .catch(err=>console.log(err.message))
             }
