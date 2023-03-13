@@ -28,6 +28,13 @@ import loginFormZH from './locales/zh/loginForm.json';
 import registerFormEN from './locales/en/registerForm.json';
 import registerFormZH from './locales/zh/registerForm.json';
 
+//booking system
+import bookingSystemEN from './locales/en/bookingSystem.json';
+import bookingSystemZH from './locales/zh/bookingSystem.json';
+import bookingClientDetailedEN from './locales/en/bookingClientDetailed.json';
+import bookingClientDetailedZH from './locales/zh/bookingClientDetailed.json';
+import bookingCardEN from './locales/en/bookingCard.json';
+import bookingCardZH from './locales/zh/bookingCard.json';
 
 let userLang = JSON.parse(window.localStorage.getItem('i18n-lang'))
 const url = window.location.pathname
@@ -59,7 +66,10 @@ const resources = {
       arTreasureEditor: arTreasureEditorEN,
       loginPage: loginPageEN,
       loginForm: loginFormEN,
-      registerForm: registerFormEN
+      registerForm: registerFormEN,
+      bookingSystem: bookingSystemEN,
+      bookingClientDetailed: bookingClientDetailedEN,
+      bookingCard: bookingCardEN
     }
   },
   zh: {
@@ -73,7 +83,10 @@ const resources = {
       arTreasureEditorZH: arTreasureEditorZH,
       loginPage: loginPageZH,
       loginForm: loginFormZH,
-      registerForm: registerFormZH
+      registerForm: registerFormZH,
+      bookingSystem: bookingSystemZH,
+      bookingClientDetailed: bookingClientDetailedZH,
+      bookingCard: bookingCardZH
     }
   },
 };

@@ -1,0 +1,14 @@
+{
+    "qrModelTitle":"請把QR code放在檢查器下",
+    "missValueErr":"請由活動瀏覽器進入此頁面",
+    "joinSuccess":"加入活動成功",
+    "leaveSuccess":"離開活動成功",
+    "titleField": "標題:",
+    "quoteField": "人數:",
+    "contentField": "內容:",
+    "startTimeField": "開始時間:",
+    "endTimeField": "結束時間:",
+    "joinBtn": "加入",
+    "leaveBtn": "離開",
+    "QRCodeBtn": "QR碼"
+}

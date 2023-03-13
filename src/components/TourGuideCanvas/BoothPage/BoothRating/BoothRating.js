@@ -8,6 +8,7 @@ import { Text, Box } from '@chakra-ui/react'
 
 import { colorPalette } from '../../../../theme/theme'
 import { tourHost } from '../../../../constants/constants'
+import axios from 'axios'
 
 
 const BoothRating = (props) => {

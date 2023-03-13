@@ -1,0 +1,14 @@
+{
+    "qrModelTitle":"Activity QR Code (For Checker)",
+    "missValueErr":"Missing value. You should not go this page with the href directily.",
+    "joinSuccess":"Join Activity Success",
+    "leaveSuccess":"Leave Activity Success",
+    "titleField": "Title:",
+    "quoteField": "Qutoe:",
+    "contentField": "Content:",
+    "startTimeField": "Start Time:",
+    "endTimeField": "End Time:",
+    "joinBtn": "Join",
+    "leaveBtn": "Leave",
+    "QRCodeBtn": "QR Code"
+}

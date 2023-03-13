@@ -5,9 +5,11 @@ import useSendRequest from "../../../hooks/useSendRequest";
 import {UserContext} from '../../../App'
 import QRCode from "react-qr-code";
 import CryptoJS from "crypto-js";
+import { useTranslation } from "react-i18next";
 
 const BookingClientDetailed = () => {
     const fontSize = "2vw"
+    const { t } = useTranslation();
 
     const [initHookActive,setInitHookAcive] = useState(false)
     const [checkHookActive,setCheckHookActive] = useState(false)
@@ -44,7 +46,7 @@ const BookingClientDetailed = () => {
             return(
                 <Modal show={showQRCode} onHide={()=>{setShowQRCode(false)}}>
                 <Modal.Header closeButton>
-                <Modal.Title>Activity QR Code (For Checker)</Modal.Title>
+                <Modal.Title>{t('bookingClientDetailed.qrModelTitle')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <QRCode value={cryptoData} size={256} style={{ height: "auto", maxWidth: "100%", width: "100%",marginLeft:'auto',marginRight:'auto' }} 
@@ -67,7 +69,7 @@ const BookingClientDetailed = () => {
             if(urlParams.has('activityId')){
                 setActivityId(urlParams.get('activityId'))
             }else{
-                alert("Missing value. You should not go this page with the href directily.")
+                alert(t('bookingClientDetailed.missValueErr'))
                 window.location.href = "/public/eng/booking_manager"
             }
            
@@ -81,14 +83,14 @@ const BookingClientDetailed = () => {
         if(!userAction.isLoaded && userActionState.active){
             if(userAction.ready){
                 if(userActionState.method==='post'){
-                    alert("Join Activity Success")
+                    alert(t('bookingClientDetailed.joinSuccess'))
                     setIsJoin(true)
                     setUserActionState({
                         ...userActionState,
                         active:false
                     })
                 }else if(userActionState.method==='delete'){
-                    alert("Leave Activity Success")
+                    alert(t('bookingClientDetailed.leaveSuccess'))
                     setIsJoin(false)
                     setUserActionState({
                         ...userActionState,
@@ -137,7 +139,7 @@ const BookingClientDetailed = () => {
                     <div style={{width:"70%"}}>
                         <Row>
                             <Col md={6}>
-                                <h3 style={{fontSize:fontSize}}>Title:</h3>
+                                <h3 style={{fontSize:fontSize}}>{t('bookingClientDetailed.titleField')}</h3>
                             </Col>
                             <Col md={6}>
                                 <h3 style={{fontSize:fontSize}}>{init.items.title}</h3>
@@ -145,7 +147,7 @@ const BookingClientDetailed = () => {
                         </Row>
                         <Row>
                             <Col md={6}>
-                                <h3 style={{fontSize:fontSize}}>Content:</h3>
+                                <h3 style={{fontSize:fontSize}}>{t('bookingClientDetailed.contentField')}</h3>
                             </Col>
                             <Col md={6}>
                                 <p id="textcontent">
@@ -155,12 +157,12 @@ const BookingClientDetailed = () => {
                         </Row>   
                         <Row>
                             <Col>
-                                <h3 style={{fontSize:fontSize}}>{"Quote: ("+init.items.currentNum+"/"+init.items.maxQuote+")"}</h3>
+                                <h3 style={{fontSize:fontSize}}>{t('bookingClientDetailed.quoteField')+ "("+init.items.currentNum+"/"+init.items.maxQuote+")"}</h3>
                             </Col>
                         </Row>
                         <Row>
                             <Col md={6}>
-                                <h3 style={{fontSize:fontSize}}>Start Time:</h3>
+                                <h3 style={{fontSize:fontSize}}>{t('bookingClientDetailed.startTimeField')}</h3>
                             </Col>
                             <Col md={6}>
                                 <h3 style={{fontSize:fontSize}}>{init.items.startTime}</h3>
@@ -168,7 +170,7 @@ const BookingClientDetailed = () => {
                         </Row> 
                         <Row>
                             <Col md={6}>
-                                <h3 style={{fontSize:fontSize}}>End Time:</h3>
+                                <h3 style={{fontSize:fontSize}}>{t('bookingClientDetailed.endTimeField')}</h3>
                             </Col>
                             <Col md={6}>
                                 <h3 style={{fontSize:fontSize}}>{init.items.endTime}</h3>
@@ -176,13 +178,13 @@ const BookingClientDetailed = () => {
                         </Row> 
                         <Row>
                             <div style={{width:"33%"}}>
-                                <Button onClick={joinActivity} disabled={user.token === ''?true:isJoin}>Join</Button>
+                                <Button onClick={joinActivity} disabled={user.token === ''?true:isJoin}>{t('bookingClientDetailed.joinBtn')}</Button>
                             </div>
                             <div style={{width:"33%"}}>
-                                <Button onClick={leaveActivity} disabled={user.token === ''?true:!isJoin}>Leave</Button>
+                                <Button onClick={leaveActivity} disabled={user.token === ''?true:!isJoin}>{t('bookingClientDetailed.leaveBtn')}</Button>
                             </div>
                             <div style={{width:"33%"}}>
-                                <Button onClick={()=> setShowQRCode(true)} disabled={user.token === ''?true:!isJoin}>QR Code</Button>
+                                <Button onClick={()=> setShowQRCode(true)} disabled={user.token === ''?true:!isJoin}>{t('bookingClientDetailed.QRCodeBtn')}</Button>
                             </div>
                         </Row>
                     </div>  

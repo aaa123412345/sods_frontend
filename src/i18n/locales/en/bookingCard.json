@@ -1,0 +1,8 @@
+{
+    "locationModel":"Location",
+    "fromModel":"From",
+    "toModel":"To",
+    "detailsModel":"Look Detail",
+    "noItem":"No Activity can be found"
+
+}
