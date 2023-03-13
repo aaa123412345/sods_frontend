@@ -8,6 +8,8 @@
   import RegisterForm from './RegisterForm.js';
   import { Tab, Tabs } from "react-bootstrap";
 
+  import { useTranslation } from 'react-i18next'
+
 
   const LoginPage = () =>{
     const {user,setUserContext} = useContext(UserContext)
@@ -17,6 +19,8 @@
 
     //Register
     const [registerDict,setRegisterDict] = useState({userName:"",password:"",showPassword:false,remember:false})
+
+    const { t } = useTranslation()
 
     //Hook
     const [hookState, setHookState] = useState({
@@ -34,7 +38,7 @@
      
       if (loginDict.userName===""||loginDict.password==='') {
         
-          alert("Invalid Format of User Name or Password")
+          alert(t("loginPage.invalidFormat"))
       }else{
         setHookState({...hookState,loginActive:true})
           
@@ -45,8 +49,8 @@
       const form = event.currentTarget;
      
       if (registerDict.userName===""||registerDict.password==='') {
-        
-          alert("Invalid Format of User Name or Password")
+          alert(t('loginPage.invalidFormat'))
+          
       }else{
         setHookState({...hookState,registerActive:true})
           
@@ -75,7 +79,8 @@
       //window.sessionStorage.clear()
       if(!login.isLoaded){
         if(login.ready){
-            alert("Welcome")
+            //alert("Welcome")
+            alert(t('loginPage.loginSuccess'))
             setUserContext(login.items)
             storeInLocal(login.items)
         }else if(login.errMsg!==''){
@@ -94,8 +99,8 @@
           if(register.ready){
               
               if(hookState.registerActive){
-                alert("Registered. Please login again")
-
+                //alert("Registered. Please login again")
+                alert(t('loginPage.registerSuccess'))
                 window.location.reload();
               }
              

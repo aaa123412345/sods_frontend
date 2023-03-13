@@ -1,0 +1,5 @@
+{
+    "invalidFormat":"Invalid Format of User Name or Password",
+    "loginSuccess":"Login Success",
+    "registerSuccess":"Registered. Please login again"
+}

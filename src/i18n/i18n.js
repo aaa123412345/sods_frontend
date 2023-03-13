@@ -20,6 +20,11 @@ import arTreasureZH from './locales/zh/arTreasure.json'
 import arTreasureEditorEN from './locales/en/arTreasureEditor.json'
 import arTreasureEditorZH from './locales/zh/arTreasureEditor.json'
 
+//login component
+import loginPageEN from './locales/en/loginPage.json';
+import loginPageZH from './locales/zh/loginPage.json';
+
+
 let userLang = JSON.parse(window.localStorage.getItem('i18n-lang'))
 const url = window.location.pathname
 
@@ -47,7 +52,8 @@ const resources = {
       tourguideEditor: tourguideEditorEN,
       modal: modalEN, 
       arTreasure: arTreasureEN, 
-      arTreasureEditor: arTreasureEditorEN
+      arTreasureEditor: arTreasureEditorEN,
+      loginPage: loginPageEN
     }
   },
   zh: {
@@ -58,7 +64,8 @@ const resources = {
       tourguideEditor: tourguideEditorZH, 
       modal: modalZH,
       arTreasure: arTreasureZH, 
-      arTreasureEditorZH: arTreasureEditorZH
+      arTreasureEditorZH: arTreasureEditorZH,
+      loginPage: loginPageZH
     }
   },
 };
