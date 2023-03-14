@@ -49,8 +49,9 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
                   setPageActive(false)
                  
                 }else if(page.errMsg !==""){
-                  alert(page.errMsg)
                   setPageActive(false)
+                  alert(page.errMsg)
+                  
                 }
                 //console.log(page)
             }       

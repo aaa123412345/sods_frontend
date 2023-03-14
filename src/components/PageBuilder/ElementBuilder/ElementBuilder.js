@@ -27,9 +27,11 @@ const BookingAdminManager = React.lazy(()=>import("../../BookingSystem/Admin/Boo
 const BookingClientManager = React.lazy(()=>import("../../BookingSystem/Client/BookingClientManager"))
 const BookingClientDetailed = React.lazy(()=>import("../../BookingSystem/Client/BookingClientDetailed"))
 
-const NavigationEditor = React.lazy(()=>import("../../CMS/NavigationEditor/NavigationEditor"))
 const Crush = React.lazy(()=>import("../../MiniGame/Crush/Crush"))
 const Snake = React.lazy(()=>import("../../MiniGame/Snake/snake"))
+
+const NavigationEditor = React.lazy(()=>import("../../CMS/NavigationEditor/NavigationEditor"))
+const LanguageEditor = React.lazy(()=>import("../../CMS/LanguageEditor/LanguageEditor"))
 
 /*
 import CImage from "../../Common/LayoutElement/CImage/CImage";
@@ -93,6 +95,8 @@ const Components = {
 
   crushgame:Crush,
   snakegame:Snake,
+
+  languageEditor:LanguageEditor
 };
 
 export default block => {
