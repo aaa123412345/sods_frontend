@@ -100,6 +100,12 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
         })
     }
 
+    const borderStyle = {
+        borderStyle:'solid',
+        borderWidth:'1px',
+        borderColor:'black',
+    }
+
     useEffect(()=>{
         if(configNodeData !== undefined){
             if(configNodeData.index >= 0 ){
@@ -142,7 +148,7 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
                 <>
                 
                 <h4>auth : {nodeNavData.auth}</h4>
-                <select onChange={changeSelect}>
+                <select onChange={changeSelect} style={borderStyle}>
                     <option value={""}>No change</option>
                     <option value={"anonymous"}>permit all</option>
                     <option value={"anonymousOnly"}>anonymous</option>
@@ -153,11 +159,11 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
 
                 <h4> path : {nodeNavData.path}</h4>
                 
-                <input type="text" onChange={changePath}></input>
+                <input type="text" onChange={changePath} style={borderStyle}></input>
 
                 <h4>navName : {nodeNavData.navName}</h4>
           
-                <input type="text" onChange={changeNavName}></input>
+                <input type="text" onChange={changeNavName} style={borderStyle}></input>
                 <br></br><br></br>
                 <Button onClick={setDataToUpperEditor}>Change</Button>
                 </>

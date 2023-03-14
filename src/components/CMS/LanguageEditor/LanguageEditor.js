@@ -3,6 +3,9 @@ import { Col, Row,Table,Modal,Button } from 'react-bootstrap';
 import useSendRequest from '../../../hooks/useSendRequest';
 import cloneDeep from 'lodash.clonedeep';
 
+
+
+
 const LanguageEditor = (props) => {
     const [simpleFormHookState,setSimpleFormHookState] = useState(true)
     const simpleFormHook = useSendRequest(process.env.REACT_APP_LANGUAGE_HOST+'/simpleform','get',{},simpleFormHookState,false,false)
@@ -27,8 +30,11 @@ const LanguageEditor = (props) => {
     const [showRemoveModal,setShowRemoveModal] = useState(false)
     const [addTarget,setAddTarget] = useState('')
     const [removeTarget,setRemoveTarget] = useState('')
+    
 
-
+    const borderStyle = {
+        border:"1px solid black"
+    }
     useEffect(()=>{
         if(simpleFormHookState){
             if(!simpleFormHook.isLoaded){
@@ -158,7 +164,7 @@ const LanguageEditor = (props) => {
                 <Modal.Title>Add</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Language: <input type="text" key={"AddModalInput"} onChange={(e)=>setAddTarget(e.target.value)} 
-                defaultValue={addTarget}></input></Modal.Body>
+                style={borderStyle} defaultValue={addTarget}></input></Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={()=>{setShowAddModal(false)}}>
                     Close
@@ -184,7 +190,7 @@ const LanguageEditor = (props) => {
                 <Modal.Title>Remove</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{"Language: "} 
-                    <select onChange={(e)=> setRemoveTarget(e.target.value)}>
+                    <select onChange={(e)=> setRemoveTarget(e.target.value)} style={borderStyle}>
                         <option value="">. . .</option>
                         {langData.map((item,index)=>
                             <option key={"remove-"+index} value={item}>{item}</option>
@@ -232,7 +238,7 @@ const LanguageEditor = (props) => {
 
         return(
             <>
-                <Table striped bordered hover>
+                <Table striped bordered hover style={borderStyle}>
                     <thead>
                         <tr>
                             <th></th>
@@ -250,7 +256,8 @@ const LanguageEditor = (props) => {
                                             <input type="text" key={"input-"+item1+"-"+item2} 
                                             par1={item1} par2 ={item2}
                                             value={getDataInMatrix(item1,item2)}
-                                            onChange={handleCellChange}></input>
+                                            onChange={handleCellChange}
+                                            style={borderStyle}></input>
                                         
                                             
                                             

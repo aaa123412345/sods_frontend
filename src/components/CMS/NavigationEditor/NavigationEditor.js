@@ -51,6 +51,12 @@ const NavigationEditor = props => {
     const [inEdit,setInEdit] = useState(false)
     const [update,setUpdate] = useState(false)
 
+    const borderStyle = {
+        borderStyle:'solid',
+        borderWidth:'1px',
+        borderColor:'black',
+    }
+
     function changeNavDataState(value,target){
         
         setNavDataState({
@@ -172,7 +178,7 @@ const NavigationEditor = props => {
                 </Modal.Header>
                 <Modal.Body>
                 Domain: {"   "}
-                <select onChange={(e)=>{setCopyModelData(
+                <select style={borderStyle} onChange={(e)=>{setCopyModelData(
                     {...copyModelData,
                     domain:e.target.value
                     }
@@ -182,7 +188,7 @@ const NavigationEditor = props => {
                 </select>
                 <br/>
                 Language: {"   "}
-                <select onChange={(e)=>{setCopyModelData(
+                <select style={borderStyle} onChange={(e)=>{setCopyModelData(
                     {...copyModelData,
                     lang:e.target.value
                     }
@@ -192,7 +198,7 @@ const NavigationEditor = props => {
                 </select>
                 <br></br>
 
-                <input type="checkbox" id= "autoConvert" name="autoConvert" 
+                <input type="checkbox" id= "autoConvert" name="autoConvert" style={borderStyle}
                 onChange={(e)=>{setCopyModelData(
                     {...copyModelData,
                     autoConvert:e.target.checked
@@ -434,7 +440,7 @@ const NavigationEditor = props => {
         <Row className="mb-3 mt-3">
             <Col>
                 {"Domain: "} 
-                <select disabled={inEdit} onChange={(e)=>{changeNavDataState(e.target.value,'domain')}} value={navDataState.domain}>
+                <select style={borderStyle} disabled={inEdit} onChange={(e)=>{changeNavDataState(e.target.value,'domain')}} value={navDataState.domain}>
                     {['public','server'].map((item,index)=>{
                         return <option key={"domain-slecet-"+index} value={item} >{item}</option>
                     })}
@@ -443,7 +449,7 @@ const NavigationEditor = props => {
             </Col>
             <Col>
                 {"Language: "} 
-                <select disabled={inEdit} onChange={(e)=>{changeNavDataState(e.target.value,'lang')}} value={navDataState.lang}>
+                <select style={borderStyle} disabled={inEdit} onChange={(e)=>{changeNavDataState(e.target.value,'lang')}} value={navDataState.lang}>
                 {['eng','chi'].map((item,index)=>{
                         return <option key={"lang-slecet-"+index} value={item} >{item}</option>
                     })}
