@@ -13,8 +13,6 @@ const LanguageEditor = (props) => {
     const [languageMatrixHookState,setLanguageMatrixHookState] = useState(true)
     const languageMatrixHook = useSendRequest(process.env.REACT_APP_LANGUAGE_HOST+'/fullMatrix','get',{},languageMatrixHookState,false,false)
 
- 
-
 
     const [tableData,setTableData] = useState([])
     const [langData,setLangData] = useState([])

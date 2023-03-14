@@ -1,17 +1,50 @@
-import React from "react";
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import React,{useState,useEffect} from "react";
 
+import {Offcanvas,Navbar,Nav,Form,Container,Button} from 'react-bootstrap';
+
+import useSendRequest from "../../../../hooks/useSendRequest";
 import CusNavbarbuilder from "../CusNavbarbuilder/CusNavbarbuilder";
 
-const lang = "chi"
+
+
 const expand = 'md'
 
-const CusNavbar = (data) => (
+const CusNavbar = (data) => {
+  
+  const [simpleFormHookState,setSimpleFormHookState] = useState(true)
+  const simpleFormHook = useSendRequest(process.env.REACT_APP_LANGUAGE_HOST+'/fullform','get',{},simpleFormHookState,false,false)
+  const [langData,setLangData] = useState({})
+
+  useEffect(()=>{
+    if(simpleFormHookState){
+        if(!simpleFormHook.isLoaded){
+            if(simpleFormHook.ready){
+                
+                setLangData(simpleFormHook.items)
+                setSimpleFormHookState(false)
+            }else if(simpleFormHook.errMsg !==""){
+                alert(simpleFormHook.errMsg)
+                setSimpleFormHookState(false)
+
+            }
+        }
+    }
+},[simpleFormHook])
+
+  useEffect(()=>{
+  },[langData])
+
+  function changeLanguage(e){
+    var old = data.lang
+    var newLang = e.target.value
+    console.log("From "+old+" to "+newLang)
+    var fullpath = window.location.href
+    var fullpath = fullpath.replace(old,newLang)
+    window.location.href=fullpath
+  }
+
+
+  return(
   <>
       {
         <Navbar key={expand} bg="light" expand={expand} className="py-lg-4 py-md-3">
@@ -34,6 +67,11 @@ const CusNavbar = (data) => (
                       <CusNavbarbuilder data={data}></CusNavbarbuilder>
                   </span>
               </Nav>
+              <Form.Select aria-label="Default select example" style={{width:"100px"}} value={data.lang} onChange={changeLanguage}>
+                {Object.keys(langData).map((key,index)=>
+                  <option key={"lang-select-"+index} value={key}>{langData[key]}</option>
+                )}
+              </Form.Select>
                 <Form className="d-flex">
                   <Form.Control
                     type="search"
@@ -49,7 +87,8 @@ const CusNavbar = (data) => (
         </Navbar>
      }
     </>
-)
+  )
+}
 
 export default CusNavbar;
 
