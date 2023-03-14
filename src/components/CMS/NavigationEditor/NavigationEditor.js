@@ -42,6 +42,10 @@ const NavigationEditor = props => {
         autoConvert:false
     })
 
+    const [simpleFormHookState,setSimpleFormHookState] = useState(true)
+    const simpleFormHook = useSendRequest(process.env.REACT_APP_LANGUAGE_HOST+'/simpleform','get',{},simpleFormHookState,false,false)
+    const [langData,setLangData] = useState([])
+
     const [configNodeData , setConfigNodeData] = useState({
         index:-1,
         sindex:-1
@@ -193,8 +197,9 @@ const NavigationEditor = props => {
                     lang:e.target.value
                     }
                 )}}>
-                    <option value="eng">English</option>
-                    <option value="chi">Chinese</option>
+                     {langData.map((item,index)=>
+                        <option key={"lang-slecet-copymodel-"+index} value={item} >{item}</option>
+                    )}
                 </select>
                 <br></br>
 
@@ -343,6 +348,21 @@ const NavigationEditor = props => {
         }
     }
 
+    useEffect(()=>{
+        if(simpleFormHookState){
+            if(!simpleFormHook.isLoaded){
+                if(simpleFormHook.ready){
+                    
+                    setLangData(simpleFormHook.items.languageData)
+                    setSimpleFormHookState(false)
+                }else if(simpleFormHook.errMsg !==""){
+                    alert(simpleFormHook.errMsg)
+                    setSimpleFormHookState(false)
+
+                }
+            }
+        }
+    },[simpleFormHook])
 
 
     useEffect(()=>{
@@ -450,7 +470,7 @@ const NavigationEditor = props => {
             <Col>
                 {"Language: "} 
                 <select style={borderStyle} disabled={inEdit} onChange={(e)=>{changeNavDataState(e.target.value,'lang')}} value={navDataState.lang}>
-                {['eng','chi'].map((item,index)=>{
+                {langData.map((item,index)=>{
                         return <option key={"lang-slecet-"+index} value={item} >{item}</option>
                     })}
                    
