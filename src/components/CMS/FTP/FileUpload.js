@@ -49,7 +49,10 @@ const FileUpload = () => {
       })
       .then(response => {
         console.log(response);
-        alert("File uploaded");
+        alert(response.data.msg);
+        if(response.data.code === 200){
+          window.location.reload();
+        }
         
       })
       .catch(error => {
