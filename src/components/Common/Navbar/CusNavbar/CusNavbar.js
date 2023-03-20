@@ -67,11 +67,13 @@ const CusNavbar = (data) => {
                       <CusNavbarbuilder data={data}></CusNavbarbuilder>
                   </span>
               </Nav>
+              {data.mode === "public"?
               <Form.Select aria-label="Default select example" style={{width:"100px"}} value={data.lang} onChange={changeLanguage}>
                 {Object.keys(langData).map((key,index)=>
                   <option key={"lang-select-"+index} value={key}>{langData[key]}</option>
                 )}
-              </Form.Select>
+               
+              </Form.Select>:''}
                 <Form className="d-flex">
                   <Form.Control
                     type="search"
