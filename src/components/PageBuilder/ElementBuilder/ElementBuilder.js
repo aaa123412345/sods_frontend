@@ -33,7 +33,7 @@ const Snake = React.lazy(()=>import("../../MiniGame/Snake/snake"))
 const NavigationEditor = React.lazy(()=>import("../../CMS/NavigationEditor/NavigationEditor"))
 const LanguageEditor = React.lazy(()=>import("../../CMS/LanguageEditor/LanguageEditor"))
 const FileManager = React.lazy(()=>import("../../CMS/FTP/FileManager"))
-
+const PageEditor = React.lazy(()=>import("../../CMS/PageEditor/PageEditor"))
 
 /*
 import CImage from "../../Common/LayoutElement/CImage/CImage";
@@ -96,6 +96,7 @@ const Components = {
   navigationEditor:NavigationEditor,
   languageEditor:LanguageEditor,
   fileManager:FileManager,
+  pageEditor:PageEditor,
 
   crushgame:Crush,
   snakegame:Snake,
