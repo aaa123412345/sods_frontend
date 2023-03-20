@@ -42,7 +42,7 @@ const FileUpload = () => {
           'Content-Type': 'multipart/form-data',
         },
         onUploadProgress: (progressEvent) => {
-          const progress = (progressEvent.loaded / progressEvent.total) * 50;
+          const progress = (progressEvent.loaded / progressEvent.total) * 100;
           console.log(progressEvent.loaded);
           setProgress(progress);
         }
@@ -50,7 +50,7 @@ const FileUpload = () => {
       .then(response => {
         console.log(response);
         alert("File uploaded");
-        window.location.reload();
+        
       })
       .catch(error => {
         console.error(error);
