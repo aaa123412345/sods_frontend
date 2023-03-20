@@ -48,8 +48,9 @@ const FileUpload = () => {
         }
       })
       .then(response => {
-        
+        console.log(response);
         alert("File uploaded");
+        window.location.reload();
       })
       .catch(error => {
         console.error(error);
