@@ -32,6 +32,8 @@ const Snake = React.lazy(()=>import("../../MiniGame/Snake/snake"))
 
 const NavigationEditor = React.lazy(()=>import("../../CMS/NavigationEditor/NavigationEditor"))
 const LanguageEditor = React.lazy(()=>import("../../CMS/LanguageEditor/LanguageEditor"))
+const FileManager = React.lazy(()=>import("../../CMS/FTP/FileManager"))
+
 
 /*
 import CImage from "../../Common/LayoutElement/CImage/CImage";
@@ -92,11 +94,13 @@ const Components = {
   bookingClientDetailed:BookingClientDetailed,
 
   navigationEditor:NavigationEditor,
+  languageEditor:LanguageEditor,
+  fileManager:FileManager,
 
   crushgame:Crush,
   snakegame:Snake,
 
-  languageEditor:LanguageEditor
+  
 };
 
 export default block => {

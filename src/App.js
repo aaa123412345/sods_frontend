@@ -22,7 +22,7 @@ import UserPageManager from "./components/UserSite/UserPageManager/UserPageManag
 import VRCanvas from "./components/VRCanvas/VRCanvas";
 
 import ARCanvas from "./components/ARCanvas/ARCanvas";
-import FileUpload from "./components/CMS/FTP/FileUpload";
+import FileUpload from "./components/CMS/FTP/FileManager";
 import QRCodeModal from "./components/TourGuideCanvas/QRCodeModal/QRCodeModal";
 import ChatRoom from "./components/ChatRoom/ChatRoom";
 
