@@ -85,8 +85,8 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
             {useHeader&&mode==="public"?<PublicHeader lang={lang}/>:''}
             <div className="PageContent" style={items.page.style}> 
                 
-                {mode==="public"? <PublicNavbar pdata={items.page} lang={lang} mode = "public"></PublicNavbar>:
-                  <ServerNavbar pdata={items.page} lang={lang} mode = "server"></ServerNavbar>
+                {mode==="public"? <PublicNavbar pdata={items.page} lang={lang} ></PublicNavbar>:
+                  <ServerNavbar pdata={items.page} lang={lang}></ServerNavbar>
                 }
               
               <div style={{paddingLeft:'5px'}}>

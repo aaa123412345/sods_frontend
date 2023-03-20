@@ -33,7 +33,7 @@ const PublicNavbar = props =>  {
      
   if(ready){    
         return(
-            <CusNavbar data={items} lang={lang} pdata={props.pdata}/>
+            <CusNavbar data={items} lang={lang} pdata={props.pdata} mode = "public"/>
         )
   }
       
