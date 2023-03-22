@@ -1,8 +1,9 @@
 import React,{useEffect, useState} from 'react'
 import { Tab,Tabs } from 'react-bootstrap'
 
-import PageSearcher from './PageSearcher'
-import PagePreview from './PagePreview'
+import PageSearcher from './PageSearcher/PageSearcher'
+import PagePreview from './PagePreview/PagePreview'
+import PageDetailEditor from './PageDetailEditor/PageDetailEditor'
 import useSendRequest from '../../../hooks/useSendRequest'
 
 
@@ -68,8 +69,10 @@ const PageEditor = () => {
             <Tab eventKey="searcher" title="Searcher"  >
                 <PageSearcher startEdit = {startEdit}/>
             </Tab>:null}
-            <Tab eventKey="editor" title="Editor" disabled ={pageData===null?true:false}>
 
+          
+            <Tab eventKey="editor" title="Editor" disabled ={pageData===null?true:false}>
+                <PageDetailEditor items={pageData}/>
             </Tab>
             <Tab eventKey="preview" title="Preview" disabled ={pageData===null?true:false} >
                 <PagePreview items={pageData}/>

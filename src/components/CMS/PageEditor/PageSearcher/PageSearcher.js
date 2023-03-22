@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { useEffect } from 'react'
 import { Row,Col,ButtonGroup,Button } from 'react-bootstrap'
-import useSendRequest from "../../../hooks/useSendRequest";
+import useSendRequest from "../../../../hooks/useSendRequest";
 import PageSearcherTable from './PageSearcherTable';
 
 const borderStyle = {
