@@ -1,9 +1,9 @@
 import PECardModel from "./PECardModel";
-import PECardModelForAdd from "./PECardModelForAdd";
+
 import { Row,Col,Button } from "react-bootstrap";
 import { useEffect } from "react";
 import { pageDataCommand } from "../../PageDataCommand";
-
+import './pe.css'
 
 
 const PECardDisplayer = ({items,command}) =>{
@@ -40,7 +40,7 @@ const PECardDisplayer = ({items,command}) =>{
             return(
                 <Col key={"col-major-"+index+"-"+sindex} lg={bootstrapData.lg} md={bootstrapData.md} sm={bootstrapData.sm}
                 xl={bootstrapData.xl} xxl={bootstrapData.xxl} xs={bootstrapData.xs}>
-                    <PECardModel key={"data-major-"+index+"-"+sindex}/>
+                    <PECardModel key={"data-major-"+index+"-"+sindex} data={data}/>
                 </Col>
             )
         }
@@ -53,7 +53,8 @@ const PECardDisplayer = ({items,command}) =>{
                 <Col sm={1} key={"col-leftbtn-"+rowkey}>
                     <Row key={"row-leftbtn-"+rowkey}>
                         <Col key={"col-leftbtn-sub-"+rowkey}>
-                            <Button key={"btn-leftbtn-"+rowkey} onClick={()=>command(pageDataCommand.addElementInLeft,{rank:rowkey})} className="mt-2" style={{width:"100%"}}>Add</Button>
+                            <Button key={"btn-leftbtn-"+rowkey} onClick={()=>command(pageDataCommand.addElementInLeft,{rank:rowkey})} className="mt-2" 
+                            style={{width:"100%",paddingTop:"8px",paddingBottom:"8px"}}>Add</Button>
                         </Col>
                     </Row>
                 </Col>
@@ -67,7 +68,8 @@ const PECardDisplayer = ({items,command}) =>{
                 <Col sm={1} key={"col-rightbtn-"+rowkey}>
                     <Row key={"row-rightbtn-"+rowkey}>
                         <Col key={"col-rightbtn-sub-"+rowkey}>
-                            <Button key={"btn-rightbtn-"+rowkey} onClick={()=>command(pageDataCommand.addElementInRight,{rank:rowkey})} className="mt-2" style={{width:"100%"}}>Add</Button>
+                            <Button key={"btn-rightbtn-"+rowkey} onClick={()=>command(pageDataCommand.addElementInRight,{rank:rowkey})} className="mt-2" 
+                            style={{width:"100%",paddingTop:"8px",paddingBottom:"8px"}}>Add</Button>
                         </Col>
                     </Row>
                 </Col>
@@ -83,7 +85,7 @@ const PECardDisplayer = ({items,command}) =>{
             rowComponent(groupByRow(items.element)[element],index+1) 
         )
         }
-        <Button style={{width:"100%"}} className="mt-3" onClick={()=>command(pageDataCommand.addElementInNewRow,{})}>Add</Button>
+        <Button style={{width:"100%",paddingTop:"8px",paddingBottom:"8px"}} className="mt-3" onClick={()=>command(pageDataCommand.addElementInNewRow,{})}>Add</Button>
        
         </div>
     )

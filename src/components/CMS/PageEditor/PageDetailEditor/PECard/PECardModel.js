@@ -1,13 +1,16 @@
-import { Card,Button } from "react-bootstrap";
+import { Card} from "react-bootstrap";
+import PEConfigModal from "../PEConfigModal/PEConfigModal";
 
-const PECardModel = () =>{
+
+
+const PECardModel = ({data}) =>{
+    
     return(
         <Card style={{ width: '100%' }}>
             <Card.Body>
-                <p className="text-md">
-                    AABBCC
-                </p>
                 
+                <PEConfigModal data={data}/>
+                {"Type : "+data.type}
             </Card.Body>
         </Card>
     )
