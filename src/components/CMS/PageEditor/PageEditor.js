@@ -3,6 +3,7 @@ import { Button, Tab,Tabs } from 'react-bootstrap'
 
 import PageSearcher from './PageSearcher/PageSearcher'
 import PagePreview from './PagePreview/PagePreview'
+import PageUploader from './PageUploader/PageUploader'
 import PageDetailEditor from './PageDetailEditor/PageDetailEditor'
 import useSendRequest from '../../../hooks/useSendRequest'
 import { pageDataCommand } from './PageDataCommand'
@@ -113,6 +114,12 @@ const PageEditor = () => {
                 <PagePreview items={pageData.getData()}/>
                 }
             </Tab>
+            <Tab eventKey="upload" title="Upload" disabled ={pageData===null} >
+                {pageData===null?'':
+                <PageUploader data={pageData.getData()} routing={pagePathData}/>
+                }
+            </Tab>
+
         </Tabs>
     )
     

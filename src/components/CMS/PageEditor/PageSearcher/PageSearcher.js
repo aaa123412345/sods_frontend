@@ -129,7 +129,8 @@ const PageSearcher = ({startEdit}) => {
                     </Col>
                     <Col sm={4}>
                         {"Path: "} 
-                        <input style={borderStyle} type="text" onChange={(e)=>{changePageDataState(e.target.value,'path')}} value={pageDataState.path}/>
+                        <input style={borderStyle} type="text" 
+                        onChange={(e)=>{changePageDataState(e.target.value,'path')}} value={pageDataState.path}/>
                     </Col>
                     <Col sm={4}>
                     <ButtonGroup aria-label="Basic example">
