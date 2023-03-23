@@ -3,13 +3,13 @@ import PEConfigModal from "../PEConfigModal/PEConfigModal";
 
 
 
-const PECardModel = ({data}) =>{
+const PECardModel = ({data,command}) =>{
     
     return(
         <Card style={{ width: '100%' }}>
             <Card.Body>
                 
-                <PEConfigModal data={data}/>
+                <PEConfigModal data={data} command={command}/>
                 {"Type : "+data.type}
             </Card.Body>
         </Card>

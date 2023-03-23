@@ -104,13 +104,15 @@ class PageData{
 
     updateElement(data){
         if('element' in data && 'rank' in data && 'subrank' in data){
-            //Get the target element
-            var targetElement = this.element.filter((element)=>element.rank===data.rank && element.subrank===data.subrank)
-            //Update the target element
-            targetElement[0] = data.element
-           
+            //get the all element expect the target element
+            var targetElement = this.element.filter((element)=>element.rank!==data.rank || element.subrank!==data.subrank)
+            //Add the new element
+            targetElement.push(data.element)
+            this.element = targetElement
+            
         }
-        
+        console.log("result")
+        console.log(this.element)
     }
 
 

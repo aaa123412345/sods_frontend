@@ -18,6 +18,7 @@ const PECardDisplayer = ({items,command}) =>{
         }
         return rowArr
     }
+    
     function groupByRow(elements){
         var rowArr = getDistinctRow(elements)
         var rowGroup = {}
@@ -40,7 +41,7 @@ const PECardDisplayer = ({items,command}) =>{
             return(
                 <Col key={"col-major-"+index+"-"+sindex} lg={bootstrapData.lg} md={bootstrapData.md} sm={bootstrapData.sm}
                 xl={bootstrapData.xl} xxl={bootstrapData.xxl} xs={bootstrapData.xs}>
-                    <PECardModel key={"data-major-"+index+"-"+sindex} data={data}/>
+                    <PECardModel key={"data-major-"+index+"-"+sindex} data={data} command={command}/>
                 </Col>
             )
         }

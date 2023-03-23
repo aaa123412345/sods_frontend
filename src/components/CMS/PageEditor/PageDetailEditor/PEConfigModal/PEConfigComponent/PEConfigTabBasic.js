@@ -5,17 +5,7 @@ const PEConfigTabBasic = ({editData,command}) =>{
         <Tab eventKey="basic" title="Basic">
                 <Row>
                     <Col>
-                        <h1 style={{fontSize:"2vw"}}>{"Type: "}</h1>
-                        <select value={editData.type} onChange={(e)=>command.setEditDataInChild("type",e.target.value)} style={{border:'solid black 1px'}}>
-                            <option value="ctext">Text</option>
-                            <option value="cimage">Image</option>
-                            <option value="cvideo">Video</option>
-                            <option value="crestable">Table</option>
-                            <option value="cmultipletext">Multiple Text</option>
-                            
-
-
-                        </select>
+                       
                         <h1 style={{fontSize:"2vw"}}>{"Bootstrap: (MAX:12)"}</h1>
                     
                         <Table striped bordered hover>

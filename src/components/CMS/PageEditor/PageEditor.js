@@ -83,6 +83,8 @@ const PageEditor = () => {
             pageData.addElementInLeft(data)
         }else if(command === pageDataCommand.addElementInNewRow){
             pageData.addElementInNewRow(data)
+        }else if(command === pageDataCommand.updateElement){
+            pageData.updateElement(data)
         }
 
 
@@ -101,7 +103,7 @@ const PageEditor = () => {
             <Tab eventKey="editor" title="Editor" disabled ={pageData===null}>
                 {pageData===null?'':
                 <>
-                    <PageDetailEditor items={pageData.getData()} command = {setPageDataFromChild}/>
+                    <PageDetailEditor items={pageData.getData()} command={setPageDataFromChild}/>
                 </>
                 }
                 
