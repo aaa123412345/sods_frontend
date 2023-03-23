@@ -3,7 +3,7 @@ import PECardModel from "./PECardModel";
 import { Row,Col,Button } from "react-bootstrap";
 import { useEffect } from "react";
 import { pageDataCommand } from "../../PageDataCommand";
-import './pe.css'
+
 
 
 const PECardDisplayer = ({items,command}) =>{
