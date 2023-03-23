@@ -50,8 +50,9 @@ const PageEditor = () => {
 
    
     useEffect(() => {
+        console.log(pageData)
         if(pageDataUpdate){
-            console.log(pageData)
+            
             setPageDataUpdate(false)
         }
         

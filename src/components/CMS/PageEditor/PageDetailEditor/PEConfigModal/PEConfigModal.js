@@ -32,10 +32,107 @@ const PEConfigModal = ({data,command})=> {
  };
 
  const changeType = async (type) =>{
-    startTransition(() => {
+    
+    function getDataFromTemp(type){
         var tmpEditData = cloneDeep(data)
-        tmpEditData.type = type
-        setEditData(tmpEditData)
+        if(tmpEditData.type===type) {
+            return tmpEditData
+        }
+
+        var response = {}
+        response.type = type
+        response.rank = tmpEditData.rank
+        response.subrank = tmpEditData.subrank
+        response.bootstrap = tmpEditData.bootstrap
+        
+        //get template in tempDict and foreach key in template, set value to response
+
+        const tempDict = {
+            ctext:{
+                content:"Temp Text",
+                style:{
+                    color:"black",
+                    fontSize:"1vw",
+                    fontWeight:"normal",
+                    fontStyle:"normal",
+                    textDecoration:"none",
+                }
+            },
+            cimage:{
+                alt:"Temp Image",
+                src:"",
+                style:{
+                }
+            },
+            cvideo:{
+                alt:"Temp Video",
+                src:"",
+                style:{
+                    width:"100%",
+                },
+                autoplay:false,
+                loop:false,
+                muted:false,
+                controls:true,
+            },
+            crestable:{
+                content:{
+                    key:["TempKey","TempValue"],
+                    tableStyle:{
+                        dataStyleNum :2,
+                        head:{
+                            backgroundColor:"black",
+                            color:"white",
+                           
+                           
+
+                        },
+                        whole:{
+                                hover:true,
+                                striped:true,
+                                bordered:true,
+                        }, 
+                        data:[
+                            {backgroundColor:"white",color:"black"},
+                            {backgroundColor:"gray",color:"black"}
+                        ]
+                    },
+                    value:[{TempKey:1,TempValue:11},{TempKey:2,TempValue:22}],
+                },
+                style:{
+                    width:"500px",
+                    height:"500px",
+                }
+                    
+
+            },
+            cmultipletext:{
+                content:['temp1','temp2','temp3'],
+                commonstyle:{
+                    width:"500",
+                    height:"500",
+                },
+                textNum:3,
+                elementstyle:[
+                    {color: '#FF0000'},
+                    {color: '#00FF00'},
+                    {color: '#0000FF'}
+                ]
+            }
+        
+        }
+        var template = tempDict[type]
+        for (const [key, value] of Object.entries(template)) {
+            response[key] = value
+        }
+
+        return response
+    }   
+            
+    
+    startTransition(() => {
+       
+        setEditData(getDataFromTemp(type))
         setEditDataUpdate(true)
     })
  }
