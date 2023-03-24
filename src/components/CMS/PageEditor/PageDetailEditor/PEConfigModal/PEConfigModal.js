@@ -144,6 +144,20 @@ const PEConfigModal = ({data,command})=> {
     setEditDataUpdate(true)
  }
 
+ function setEditDataWithSubkeyInChild(key,subkey,value){
+    var tmpEditData = cloneDeep(editData)
+    tmpEditData[key][subkey] = value
+    setEditData(tmpEditData)
+    setEditDataUpdate(true)
+ }
+
+ function setEditDataWithSubSubkeyInChild(key,subkey,subsubkey,value){
+    var tmpEditData = cloneDeep(editData)
+    tmpEditData[key][subkey][subsubkey] = value
+    setEditData(tmpEditData)
+    setEditDataUpdate(true)
+ }
+
  function setBootstrapData(key,value){
     var tmpEditData = cloneDeep(editData)
     tmpEditData.bootstrap[key] = parseInt(value)
@@ -185,7 +199,10 @@ const PEConfigModal = ({data,command})=> {
                                 <option value="cmultipletext">Multiple Text</option>
                             </select>
                         <PEConfigModalFactory type={editData.type} editData={editData} 
-                        command={{setEditDataInChild:setEditDataInChild,setBootstrapData:setBootstrapData,setStyleData:setStyleData,changeType:changeType}}></PEConfigModalFactory>
+                        command={{setEditDataInChild:setEditDataInChild,
+                        setBootstrapData:setBootstrapData,setEditDataWithSubkeyInChild:setEditDataWithSubkeyInChild,
+                        setEditDataWithSubSubkeyInChild:setEditDataWithSubSubkeyInChild,
+                        setStyleData:setStyleData,changeType:changeType}}></PEConfigModalFactory>
                         
                     
                     </Modal.Body>
