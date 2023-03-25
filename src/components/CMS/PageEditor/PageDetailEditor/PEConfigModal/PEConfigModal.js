@@ -81,8 +81,8 @@ const PEConfigModal = ({data,command})=> {
                     tableStyle:{
                         dataStyleNum :2,
                         head:{
-                            backgroundColor:"black",
-                            color:"white",
+                            backgroundColor:"#000000",
+                            color:"#FFFFFF",
                            
                            
 
@@ -93,8 +93,8 @@ const PEConfigModal = ({data,command})=> {
                                 bordered:true,
                         }, 
                         data:[
-                            {backgroundColor:"white",color:"black"},
-                            {backgroundColor:"gray",color:"black"}
+                            {backgroundColor:"#FFFFFF",color:"#000000"},
+                            {backgroundColor:"#555555",color:"#000000"}
                         ]
                     },
                     value:[{TempKey:1,TempValue:11},{TempKey:2,TempValue:22}],
