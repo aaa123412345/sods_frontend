@@ -137,9 +137,15 @@ const PEConfigModal = ({data,command})=> {
     })
  }
 
+ function setEditDataDirectily(data){
+    setEditData(data)
+    setEditDataUpdate(true)
+ }
+
  function setEditDataInChild(key,value){
     var tmpEditData = cloneDeep(editData)
     tmpEditData[key] = value
+    console.log(tmpEditData)
     setEditData(tmpEditData)
     setEditDataUpdate(true)
  }
@@ -182,7 +188,9 @@ const PEConfigModal = ({data,command})=> {
     
         return (
             <>
-            <FontAwesomeIcon icon={faGear} style={{paddingLeft:'5px',paddingRight:"5px", cursor:"pointer"}} onClick={handleShow}/>
+            {data.type=== "ctext" || data.type=== "cimage"||data.type=== "cvideo"||data.type=== "crestable"||data.type=== "cmultipletext" ?
+            <FontAwesomeIcon icon={faGear} style={{paddingLeft:'5px',paddingRight:"5px", cursor:"pointer"}} onClick={handleShow}/>:null
+            }
             {editData !== null ?
                 <Modal show={show} onHide={handleClose} dialogClassName="modal-90w" size="xl">
                     <Modal.Header closeButton>
@@ -202,7 +210,7 @@ const PEConfigModal = ({data,command})=> {
                         command={{setEditDataInChild:setEditDataInChild,
                         setBootstrapData:setBootstrapData,setEditDataWithSubkeyInChild:setEditDataWithSubkeyInChild,
                         setEditDataWithSubSubkeyInChild:setEditDataWithSubSubkeyInChild,
-                        setStyleData:setStyleData,changeType:changeType}}></PEConfigModalFactory>
+                        setStyleData:setStyleData,changeType:changeType,setEditDataDirectily:setEditDataDirectily}}></PEConfigModalFactory>
                         
                     
                     </Modal.Body>

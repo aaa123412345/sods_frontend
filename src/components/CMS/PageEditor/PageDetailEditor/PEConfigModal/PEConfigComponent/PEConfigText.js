@@ -40,6 +40,13 @@ const PEConfigText = ({editData,command}) => {
                                 <input type="checkbox" checked={editData.style.textDecorationLine === "underline"?true:false}
                                 onChange={(e)=>command.setStyleData("textDecorationLine",e.target.checked?"underline":"none")} 
                                 style={{paddingLeft:"10px",paddingRight:"10px"}}></input> {"Underline "}
+                                 <h1 style={{fontSize:"1.5vw"}}>{"Text Align: "}</h1>
+                                        <select value={editData?.style?.textAlign}
+                                            onChange={(e)=>command.setStyleData("textAlign",e.target.value)}>
+                                            <option value="left">Left</option>
+                                            <option value="center">Center</option>
+                                            <option value="right">Right</option>
+                                        </select>
                                
                                 
                             </Col>
