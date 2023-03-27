@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Table, Row, Col,Modal,Button } from "react-bootstrap"
 
 
-const PageSearcherTable = ({data,startEdit}) =>{
+const PageSearcherTable = ({data,startEdit,deletePage}) =>{
 
        
     if(data.length > 0){
@@ -60,6 +60,8 @@ const PageSearcherTable = ({data,startEdit}) =>{
                  
                    <td key={keyPass + "-table-data-"+index+"-td-"+6}> 
                         <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Edit</Button>
+                        {"    "}
+                        <Button onClick={()=>deletePage(data['domain'],data['language'],data['path'])}>Delete</Button>
                     </td>
                    
                   
@@ -94,7 +96,10 @@ const PageSearcherTable = ({data,startEdit}) =>{
                     
            
                     <span key={keyPass + "-table-data-"+index+"-td-"+6}>
-                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Edit</Button> <br></br>
+                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Edit</Button> 
+                        {"    "}
+                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Delete</Button>
+                        <br></br>
                     </span>
                    
                     

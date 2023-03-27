@@ -1,5 +1,5 @@
 import React,{useEffect, useState,startTransition} from 'react'
-import { Button, Tab,Tabs } from 'react-bootstrap'
+import { Tab,Tabs } from 'react-bootstrap'
 
 import PageSearcher from './PageSearcher/PageSearcher'
 import PagePreview from './PagePreview/PagePreview'
@@ -20,6 +20,15 @@ const PageEditor = () => {
         active:false
     })
     const pageDataHook = useSendRequest(getRESTUrl(),'get',{},pagePathData.active,false,false)
+
+    const [removePageState, setRemovePageState] = useState({
+        domain:'',
+        language:'',
+        path:'',
+        active:false
+    })
+    const removePageHook = useSendRequest(process.env.REACT_APP_BASE_HOST+"rest/"+removePageState.domain+"/"+removePageState.language+"/"+removePageState.path,
+    'delete',{},removePageState.active,false,false)
 
     const [pageData, setPageData] = useState(null)
     const [pageDataUpdate, setPageDataUpdate] = useState(false)
@@ -59,6 +68,22 @@ const PageEditor = () => {
         
     }, [pageDataUpdate])
 
+    useEffect(() => {
+        if(removePageState){
+            if(!removePageHook.isLoaded){
+                if(removePageHook.ready){
+                    setRemovePageState(false)
+                    setKey('searcher')
+                    window.location.reload()
+                }else if(removePageHook.errMsg!==""){
+                    alert(removePageHook.errMsg)
+                    setRemovePageState(false)
+                }
+            }
+        }
+    }, [removePageHook])
+
+
     function getRESTUrl(){
         var url = process.env.REACT_APP_BASE_HOST
         url += "rest/"+pagePathData.domain+"/"+pagePathData.language+"/"+pagePathData.path
@@ -97,6 +122,25 @@ const PageEditor = () => {
         
     }
 
+    function deletePage(domain,language,path){
+        function confirmBox(string){
+            var result = window.confirm(string)
+            return result
+        }
+        var ok = confirmBox("Delete Page in: "+domain+"/"+language+"/"+path+"?")
+           
+        
+        if(ok){
+            setRemovePageState({
+                domain:domain,
+                language:language,
+                path:path,
+                active:true
+            })
+
+        }
+    }
+
     function setPageDataFromChild(command,data){
         console.log(command)
         console.log(data)
@@ -121,7 +165,7 @@ const PageEditor = () => {
         <Tabs activeKey={key} onSelect={(k) => setKey(k)}>
             {pageData===null?
             <Tab eventKey="searcher" title="Searcher"  >
-                <PageSearcher startEdit = {startEdit}/>
+                <PageSearcher startEdit = {startEdit} deletePage={deletePage}/>
             </Tab>:null}
 
           

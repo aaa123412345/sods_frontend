@@ -11,7 +11,7 @@ const borderStyle = {
 }
 
 
-const PageSearcher = ({startEdit}) => {
+const PageSearcher = ({startEdit,deletePage}) => {
     const [pageDataState,setPageDataState] = useState({
         domain:'public',
         lang:'',
@@ -42,6 +42,7 @@ const PageSearcher = ({startEdit}) => {
         if(pageDataState.path !== ''){
             url += "pathVariable=" + pageDataState.path+"&"
         }
+        url += "editable=1"
         return url
 
     }
@@ -141,7 +142,7 @@ const PageSearcher = ({startEdit}) => {
                 </Row>
                 <Row>
                     <Col> 
-                        {searchResult.length > 0 ? <PageSearcherTable data={searchResult} startEdit={startEdit}/> : null}
+                        {searchResult.length > 0 ? <PageSearcherTable data={searchResult} startEdit={startEdit} deletePage={deletePage}/> : null}
                         
                     </Col>
                 </Row>

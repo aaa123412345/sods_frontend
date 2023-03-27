@@ -113,7 +113,7 @@ const PageUploader = ({data,routing}) =>{
         <br></br>
         <select style={borderStyle}  onChange={(e)=>{changePageDataState(e.target.value,'domain')}} value={pageDataState.domain}>
                            
-            {['public','server'].map((item,index)=>{
+            {['','public','server'].map((item,index)=>{
                 return <option key={"domain-slecet-"+index} value={item} >{item}</option>
             })}
                             
@@ -122,7 +122,7 @@ const PageUploader = ({data,routing}) =>{
         {"Language: "} 
         <br></br>
             <select style={borderStyle}  onChange={(e)=>{changePageDataState(e.target.value,'lang')}} value={pageDataState.lang} >
-                
+                <option key={"opt-lang-none"} value={''}></option>
                 {langData.map((item,index)=>{
                 return <option key={"lang-slecet-"+index} value={item} >{item}</option>
             })}
