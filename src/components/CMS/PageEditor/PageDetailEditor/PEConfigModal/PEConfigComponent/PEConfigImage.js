@@ -39,6 +39,20 @@ const PEConfigImage = ({editData,command}) => {
                                 <input type="text" value={editData.alt} style={{border:'solid black 1px'}}
                                     onChange={(e)=>command.setEditDataInChild("alt",e.target.value)}>
                                 </input>
+                                <h1 style={{fontSize:"1.5vw"}}>{"width: "}</h1>
+                                <input type="text" value={editData.width} style={{border:'solid black 1px'}}
+                                    onChange={(e)=>command.setStyleData("width",e.target.value)}>
+                                </input>
+                                <h1 style={{fontSize:"1.5vw"}}>{"height: "}</h1>
+                                <input type="text" value={editData.height} style={{border:'solid black 1px'}}
+                                    onChange={(e)=>command.setStyleData("height",e.target.value)}>
+                                </input>
+                                <h1 style={{fontSize:"1.5vw"}}>{"Picture Align: "}</h1>
+                                <select value={editData.pictureAlign} onChange={(e)=>command.setStyleData("float",e.target.value)} style={{border:'solid black 1px'}}>
+                                    <option value="left">Left</option>
+                                    <option value="none">Center</option>
+                                    <option value="right">Right</option>
+                                </select>
                                
 
 

@@ -70,6 +70,11 @@ const PEConfigModal = ({data,command})=> {
                 alt:"Temp Image",
                 src:"",
                 style:{
+                    margin:"auto",
+                    float:"none",
+                    width:"100%",
+                    height:"auto",
+
                 }
             },
             cvideo:{
@@ -77,6 +82,8 @@ const PEConfigModal = ({data,command})=> {
                 src:"",
                 style:{
                     width:"100%",
+                    margin:"auto",
+                    float:"none",
                 },
                 autoplay:false,
                 loop:false,
