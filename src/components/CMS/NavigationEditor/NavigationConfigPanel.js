@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import { Button } from "react-bootstrap"
+import useSendRequest from "../../../hooks/useSendRequest"
 
 const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
     const [nodeNavData,setNodeNavData] = useState({
@@ -13,9 +14,31 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
         auth:"",
         path:"",
         navName:"",
-        select:""
+        authSelect:"",
+        pathSelect:""
     })
 
+    const [pageDataState,setPageDataState] = useState({
+       
+        active:true
+    })
+
+    const [pageConfigChoice,setPageConfigChoice] = useState({
+        page:[],
+        permission:[]
+    })
+  
+    const searchPageHook = useSendRequest(getRequestURL(),'get',{},pageDataState.active,false,false)
+
+    function getRequestURL(){
+        var url = process.env.REACT_APP_CMS_PAGE_EDITOR_HOST
+       
+        url += "?editable=1"
+        return url
+
+    }
+
+    
     function setDataToUpperEditor(){
         const tmpData = {}
         if(editData.auth === ""){
@@ -60,28 +83,54 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
         setNode(configNodeData.index,configNodeData.sindex,tmpData)
     }
 
-    function changeSelect(event){
+    function changeAuthSelect(event){
         
         if(event.target.value !== "other"){
             setEditData({
                 ...editData,
-                select: event.target.value,
+                authSelect: event.target.value,
                 auth: event.target.value
             })
         }else{
             setEditData({
                 ...editData,
-                select: event.target.value
+                authSelect: event.target.value
                 
             })
         }
     }
 
+    function changePathSelect(event){
+        if(event.target.value !== "other"){
+            setEditData({
+                ...editData,
+                pathSelect: event.target.value,
+                path: event.target.value
+            })
+        }else{
+            setEditData({
+                ...editData,
+                pathSelect: event.target.value
+                
+            })
+        }
+    }
+
+
     function changeAuth(event){
-        if(editData.select === "other"){
+        if(editData.authSelect === "other"){
             setEditData({
                 ...editData,
                 auth:event.target.value
+            })
+        }
+    }
+
+    function changePath(event){
+        if(editData.pathSelect === "other"){
+            setEditData({
+                ...editData,
+                path:event.target.value
             })
         }
     }
@@ -105,6 +154,34 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
         borderWidth:'1px',
         borderColor:'black',
     }
+
+    useEffect(()=>{
+        console.log("pageConfigChoice")
+        console.log(pageConfigChoice)
+    },[pageConfigChoice])
+
+    useEffect(()=>{
+        if(pageDataState.active){
+            if(!searchPageHook.isLoaded){
+                if(searchPageHook.ready){
+                    setPageConfigChoice({
+                        ...pageConfigChoice,
+                        page:searchPageHook.items
+                    })
+                    setPageDataState({
+                        ...pageDataState,
+                        active:false
+                    })
+                }else if(searchPageHook.errMsg !== ""){
+                    alert(searchPageHook.errMsg)
+                    setPageDataState({
+                        ...pageDataState,
+                        active:false
+                    })
+                }
+            }
+        }
+    },[searchPageHook])
 
     useEffect(()=>{
         if(configNodeData !== undefined){
@@ -142,24 +219,37 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
        
         
     },[configNodeData])
+
     if(configNodeData !== undefined){
         if(configNodeData.index >=0 ){
             return(
                 <>
                 
                 <h4>auth : {nodeNavData.auth}</h4>
-                <select onChange={changeSelect} style={borderStyle}>
+                <select onChange={changeAuthSelect} style={borderStyle}>
                     <option value={""}>No change</option>
                     <option value={"anonymous"}>permit all</option>
                     <option value={"anonymousOnly"}>anonymous</option>
                     <option value={"authenticated"}>authenticated</option>
                     <option value={"other"}>other</option>
                 </select>
-                {editData.select === "other"?<input type="text" onChange={changeAuth} ></input>:""}
+                <br/>
+                {editData.authSelect === "other"?<input type="text" onChange={changeAuth} style={{border:"black solid 1px"}}></input>:""}
 
                 <h4> path : {nodeNavData.path}</h4>
                 
-                <input type="text" onChange={changePath} style={borderStyle}></input>
+                <select onChange={changePathSelect} style={borderStyle}>
+                    <option value={""}>No change</option>
+                    <option value={"other"}>Other</option>
+                    {pageConfigChoice.page.map((item,index)=>{
+                        return(
+                            <option key={"path-select-opt-"+index} value={"/"+item.domain+"/"+item.language+"/"+item.path}>{"/"+item.domain+"/"+item.language+"/"+item.path}</option>
+                        )
+                    }
+                    )}
+                </select>
+                <br/>
+                {editData.pathSelect === "other"?<input type="text" onChange={changePath} style={{border:"black solid 1px"}}></input>:""}
 
                 <h4>navName : {nodeNavData.navName}</h4>
           
