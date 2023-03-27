@@ -32,23 +32,37 @@ class PageData{
     }
 
     removeElement(data){
+        
         if('rank' in data && 'subrank' in data){
-            //Get the target element
-            var targetElement = this.element.filter((element)=>element.rank===data.rank && element.subrank===data.subrank)
-            //Get the target element rank
-            var targetRank = targetElement[0].rank
-            //Get the target element subrank
-            var targetSubrank = targetElement[0].subrank
-            //Get the target element size
-            var targetElementSize = this.element.filter((element)=>element.rank===targetRank).length
-            //Remove the target element
-            this.element = this.element.filter((element)=>element.rank!==targetRank || element.subrank!==targetSubrank)
-            //Get the element with the same rank and subrank > target subrank
-            var targetElement = this.element.filter((element)=>element.rank===targetRank && element.subrank>targetSubrank)
-            //Subtract the subrank by 1
-            targetElement.forEach((element)=>{
-                element.subrank = element.subrank-1
-            })
+            //get the all element expect the target element (Remove the target element)
+            console.log(this.element)
+            this.element = this.element.filter((element)=>element.rank!==data.rank || element.subrank!==data.subrank)
+            //Get the number of element with the same rank of target
+            var targetElement = this.element.filter((element)=>element.rank===data.rank)
+            var targetElementSize = targetElement.length
+            //If targetElementSize is 0, remove the rank of all element with rank > target rank
+            if(targetElementSize===0){
+                this.element.forEach((element)=>{
+                    if(element.rank>data.rank){
+                        element.rank = element.rank-1
+                    }
+                })
+            }
+            //If targetElementSize is not 0, remove the rank of all element with the smae rank but subrank > target subrank
+            else{
+                this.element.forEach((element)=>{
+                    if(element.rank===data.rank && element.subrank>data.subrank){
+                        element.subrank = element.subrank-1
+                    }
+                })
+            }
+
+
+            
+
+            
+
+
         }
         
     }
@@ -88,12 +102,13 @@ class PageData{
     addElementInNewRow(data){
             //Find the maxium rank in the element
             var maxRank = 0
-            this.element.forEach((element)=>{
-                if(element.rank>maxRank){
-                    maxRank = element.rank
+            if(this.element.length>0){
+                this.element.forEach((element)=>{
+                    if(element.rank>maxRank){
+                        maxRank = element.rank
+                    }
                 }
-            }
-            )
+            )}
             //Add the new element in the new row with max rank +1
             var newElement = cloneDeep(elementTemplate)
             newElement.rank = maxRank+1

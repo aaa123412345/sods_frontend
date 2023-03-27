@@ -22,7 +22,7 @@ const PagePreview = ({items}) => {
         const subpath = "temp"
         const lang = "temp"
         
-        if(items!==null){
+        if(items!==null && items.element.length>0){
          
           return(
             <>

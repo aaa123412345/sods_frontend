@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState,startTransition} from 'react'
 import { Button, Tab,Tabs } from 'react-bootstrap'
 
 import PageSearcher from './PageSearcher/PageSearcher'
@@ -66,13 +66,34 @@ const PageEditor = () => {
     }
 
     function startEdit(domain,language,path){
-       
-        setPagePathData({
-            domain:domain,
-            language:language,
-            path:path,
-            active:true
-        })
+        if(domain === '' || language === '' || path === ''){
+            const tmp = {
+                page:{
+                    useBootstrap:true,
+                    useHeader:true,
+                    title:'temp',
+                    style:{},
+                    auth:''
+                },
+                element:[
+
+                ]
+            }
+            var tmp2 = new PageData(tmp)
+            tmp2.addElementInNewRow({})
+            startTransition(() => {
+                setPageData(tmp2)
+                setKey('editor')
+            })
+            
+        }else{
+            setPagePathData({
+                domain:domain,
+                language:language,
+                path:path,
+                active:true
+            })
+        }
         
     }
 
@@ -87,6 +108,8 @@ const PageEditor = () => {
             pageData.addElementInNewRow(data)
         }else if(command === pageDataCommand.updateElement){
             pageData.updateElement(data)
+        }else if(command === pageDataCommand.removeElement){
+            pageData.removeElement(data)
         }
 
 

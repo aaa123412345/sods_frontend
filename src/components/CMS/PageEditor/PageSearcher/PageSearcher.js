@@ -134,8 +134,8 @@ const PageSearcher = ({startEdit}) => {
                     </Col>
                     <Col sm={4}>
                     <ButtonGroup aria-label="Basic example">
-                        <Button variant="primary" onClick={searchPage}>Search</Button>
-                        <Button variant="primary">Create</Button>
+                        <Button variant="primary" onClick={()=>searchPage()}>Search</Button>
+                        <Button variant="primary" onClick={()=>startEdit('','','')}>Create</Button>
                     </ButtonGroup>
                     </Col>
                 </Row>

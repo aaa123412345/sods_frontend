@@ -1,7 +1,7 @@
 import React, { useState,startTransition } from 'react';
 
 import {Modal,Button} from 'react-bootstrap';
-import { faGear} from "@fortawesome/free-solid-svg-icons";
+import { faGear,faTrash} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cloneDeep from 'lodash.clonedeep';
 import { useEffect } from 'react';
@@ -30,6 +30,14 @@ const PEConfigModal = ({data,command})=> {
         setEditData(cloneDeep(data))
         setEditDataUpdate(true)
  };
+
+ const handleRemove = async() => {
+    
+    startTransition(() => {
+       
+        command(pageDataCommand.removeElement, {rank:data.rank,subrank:data.subrank});
+    })
+ }
 
  const changeType = async (type) =>{
     
@@ -189,7 +197,10 @@ const PEConfigModal = ({data,command})=> {
         return (
             <>
             {data.type=== "ctext" || data.type=== "cimage"||data.type=== "cvideo"||data.type=== "crestable"||data.type=== "cmultipletext" ?
-            <FontAwesomeIcon icon={faGear} style={{paddingLeft:'5px',paddingRight:"5px", cursor:"pointer"}} onClick={handleShow}/>:null
+            <>
+            <FontAwesomeIcon icon={faGear} style={{paddingLeft:'5px',paddingRight:"5px", cursor:"pointer"}} onClick={()=>handleShow()}/>
+            <FontAwesomeIcon icon={faTrash} style={{paddingLeft:'5px',paddingRight:"5px", cursor:"pointer"}} onClick={()=>handleRemove()}/>
+            </>:null
             }
             {editData !== null ?
                 <Modal show={show} onHide={handleClose} dialogClassName="modal-90w" size="xl">
