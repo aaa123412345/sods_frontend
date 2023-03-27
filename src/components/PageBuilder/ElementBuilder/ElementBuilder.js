@@ -35,6 +35,9 @@ const LanguageEditor = React.lazy(()=>import("../../CMS/LanguageEditor/LanguageE
 const FileManager = React.lazy(()=>import("../../CMS/FTP/FileManager"))
 const PageEditor = React.lazy(()=>import("../../CMS/PageEditor/PageEditor"))
 
+const AdminRegister = React.lazy(()=>import("../../UserManagement/AdminRegister/AdminRegister"))
+const RoleManager = React.lazy(()=>import("../../UserManagement/RoleManager/RoleManager"))
+const UserManager = React.lazy(()=>import("../../UserManagement/UserManager/UserManager"))
 /*
 import CImage from "../../Common/LayoutElement/CImage/CImage";
 import CMultipleText from "../../Common/LayoutElement/CMultipleText/CMultipleText";
@@ -101,7 +104,9 @@ const Components = {
   crushgame:Crush,
   snakegame:Snake,
 
-  
+  adminRegister:AdminRegister,
+  roleManager:RoleManager,
+  userManager:UserManager,
 };
 
 export default block => {
