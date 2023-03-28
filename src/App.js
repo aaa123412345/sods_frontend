@@ -42,9 +42,10 @@ function App() {
         userType:'',
         userId:'',
         deviceID:''
+        
     });
     const [fpHash, setFpHash] = useState('');
-    const localStorageKey = process.env.REACT_APP_LOCAL_STARGE_KEY + fpHash
+    const localStorageKey = process.env.REACT_APP_LOCAL_STARGE_KEY 
     
     const setUserContext = (userDict) => {
         if (userDict.rolePermission.length > 0) {
@@ -70,18 +71,18 @@ function App() {
     }
 
     useEffect(()=>{
+        console.log('App.js useEffect')
+        if(user.userType === '' ){
+            getInLocal()
+        }
         
-        
-         const setFp = async () => {
+        const setFp = async () => {
           const fp = await FingerprintJS.load();
     
           const { visitorId } = await fp.get();
     
           setFpHash(visitorId);
-          setUser({
-            ...user,
-            deviceID: visitorId
-          })
+         
         };
     
         setFp();
@@ -91,12 +92,7 @@ function App() {
     }
     ,[])
 
-    useEffect(()=>{
-        if(user.userType === '' && fpHash !== ''){
-            getInLocal()
-        }
-    },[fpHash])
-
+    
    
 
     function storeInLocal(data){
@@ -113,6 +109,8 @@ function App() {
         localStorage.setItem('sods_fyp_ut', userType);
         localStorage.setItem('sods_fyp_ud', userId);
         localStorage.setItem('sods_fyp_ck',checkKey);
+
+        
     }
 
     function getInLocal(){
@@ -135,7 +133,11 @@ function App() {
                     localStorage.removeItem('sods_fyp_ud')
                 }
             }catch(e){
-                alert(e)
+                localStorage.removeItem('sods_fyp_ck')
+                    localStorage.removeItem('sods_fyp_ut')
+                    localStorage.removeItem('sods_fyp_rp')
+                    localStorage.removeItem('sods_fyp_t')
+                    localStorage.removeItem('sods_fyp_ud')
                 
             }
             
@@ -166,12 +168,14 @@ function App() {
 
             })
         }
+
+        
     }
    
     return (
         <React.StrictMode>
             
-            <UserContext.Provider value={{user,setUserContext,clearLoginState,storeInLocal}}>
+            <UserContext.Provider value={{user,setUserContext,clearLoginState,storeInLocal,fpHash}}>
                 
                     <Provider store={store}>
                         <BrowserRouter>

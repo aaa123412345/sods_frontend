@@ -4,7 +4,7 @@ import {UserContext} from '../App'
 
 
 export default function useSendRequestWithCache(url,method,tdata,active,autoRedirect,autoReset){
-    const {user,clearLoginState} = useContext(UserContext)
+    const {user,clearLoginState,fpHash} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -16,7 +16,7 @@ export default function useSendRequestWithCache(url,method,tdata,active,autoRedi
         
         if(autoReset !== undefined){
             if(autoReset === true){
-                if(active){
+                if(active ){
                     setErrMsg('')
                     setError(null)
                     setIsLoaded(false)
@@ -49,7 +49,7 @@ export default function useSendRequestWithCache(url,method,tdata,active,autoRedi
             if (user.token) {
                 headers['token'] = user.token
             }
-            headers['deviceID'] = user.deviceID
+            headers['deviceID'] = fpHash
             
             const { data } = await axios({
                 method: method,

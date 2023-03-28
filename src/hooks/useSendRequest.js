@@ -3,7 +3,7 @@ import { useState, useEffect,useContext } from "react";
 import {UserContext} from '../App'
 
 export default function useSendRequest(url,method,tdata,active,autoRedirect,autoReset){
-    const {user,clearLoginState} = useContext(UserContext)
+    const {user,clearLoginState,fpHash} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -15,13 +15,11 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect,auto
         
         if(autoReset !== undefined){
             if(autoReset === true){
-                if(active){
+                if(active ){
                     setErrMsg('')
                     setError(null)
                     setIsLoaded(false)
-                    setIsReady(false)
-                
-                    
+                    setIsReady(false) 
                 }
             }
         }
@@ -43,7 +41,7 @@ export default function useSendRequest(url,method,tdata,active,autoRedirect,auto
                 headers['token'] = user.token
             }
 
-            headers['deviceID'] = user.deviceID
+            headers['deviceID'] = fpHash
             
             const { data } = await axios({
                 method: method,

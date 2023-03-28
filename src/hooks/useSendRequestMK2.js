@@ -3,7 +3,7 @@ import { useState, useEffect,useContext } from "react";
 import {UserContext} from '../App'
 
 export default function useSendRequestMK2(axiosDict,active,autoRedirect){
-    const {user,clearLoginState} = useContext(UserContext)
+    const {user,clearLoginState,fpHash} = useContext(UserContext)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [ready, setIsReady] = useState(false);
@@ -34,7 +34,7 @@ export default function useSendRequestMK2(axiosDict,active,autoRedirect){
             if (user.token) {
                 headers['token'] = user.token
             }
-            headers['deviceID'] = user.deviceID
+            headers['deviceID'] = fpHash
             
             const { data } = await axios({
                 ...axiosDict,
