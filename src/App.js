@@ -23,8 +23,9 @@ import VRCanvas from "./components/VRCanvas/VRCanvas";
 
 import ARCanvas from "./components/ARCanvas/ARCanvas";
 import FileUpload from "./components/CMS/FTP/FileManager";
-import QRCodeModal from "./components/TourGuideCanvas/QRCodeModal/QRCodeModal";
+
 import ChatRoom from "./components/ChatRoom/ChatRoom";
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 
 export const UserContext = createContext()
@@ -41,6 +42,8 @@ function App() {
         userType:'',
         userId:''
     });
+    const [fpHash, setFpHash] = useState('');
+    const localStorageKey = process.env.REACT_APP_LOCAL_STARGE_KEY + fpHash
     
     const setUserContext = (userDict) => {
         if (userDict.rolePermission.length > 0) {
@@ -74,11 +77,37 @@ function App() {
     }
     ,[])
 
+    useEffect(() => {
+        const setFp = async () => {
+          const fp = await FingerprintJS.load();
     
+          const { visitorId } = await fp.get();
+    
+          setFpHash(visitorId);
+        };
+    
+        setFp();
+      }, []);
+
+    function storeInLocal(data){
+        var CryptoJS = require("crypto-js");
+        var key = localStorageKey
+        var rolePermission = CryptoJS.AES.encrypt(JSON.stringify(data.rolePermission), key).toString();
+        var token = CryptoJS.AES.encrypt(data.token, key).toString();
+        var userType = CryptoJS.AES.encrypt(data.userType, key).toString();
+        var userId = CryptoJS.AES.encrypt(data.userId, key).toString();
+        var checkKey = CryptoJS.AES.encrypt('sods_fyp', key).toString();
+  
+        localStorage.setItem('sods_fyp_rp', rolePermission);
+        localStorage.setItem('sods_fyp_t', token);
+        localStorage.setItem('sods_fyp_ut', userType);
+        localStorage.setItem('sods_fyp_ud', userId);
+        localStorage.setItem('sods_fyp_ck',checkKey);
+    }
 
     function getInLocal(){
         var CryptoJS = require("crypto-js");
-        var key = process.env.REACT_APP_LOCAL_STARGE_KEY
+        var key = localStorageKey
         var haveData = false
         var tmpUser = {
             
@@ -133,7 +162,7 @@ function App() {
     return (
         <React.StrictMode>
             
-            <UserContext.Provider value={{user,setUserContext,clearLoginState}}>
+            <UserContext.Provider value={{user,setUserContext,clearLoginState,storeInLocal}}>
                 
                     <Provider store={store}>
                         <BrowserRouter>
