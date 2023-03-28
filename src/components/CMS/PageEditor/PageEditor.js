@@ -9,6 +9,7 @@ import useSendRequest from '../../../hooks/useSendRequest'
 import { pageDataCommand } from './PageDataCommand'
 
 import PageData from './PageData'
+import PageOverallConfig from './PageOverallConfig'
 
 
 const PageEditor = () => {
@@ -154,6 +155,8 @@ const PageEditor = () => {
             pageData.updateElement(data)
         }else if(command === pageDataCommand.removeElement){
             pageData.removeElement(data)
+        }else if(command === pageDataCommand.updatePage){
+            pageData.updatePage(data)
         }
 
 
@@ -167,7 +170,14 @@ const PageEditor = () => {
             <Tab eventKey="searcher" title="Searcher"  >
                 <PageSearcher startEdit = {startEdit} deletePage={deletePage}/>
             </Tab>:null}
-
+            <Tab eventKey="pageconfig" title="Page config" disabled ={pageData===null}>
+                {pageData===null?'':
+                <>
+                    <PageOverallConfig items={pageData.getData()} command={setPageDataFromChild}/>
+                </>
+                }
+                
+            </Tab>    
           
             <Tab eventKey="editor" title="Editor" disabled ={pageData===null}>
                 {pageData===null?'':

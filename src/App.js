@@ -71,15 +71,8 @@ function App() {
 
     useEffect(()=>{
         
-        if(user.userType === ''){
-            getInLocal()
-        }
         
-    }
-    ,[])
-
-    useEffect(() => {
-        const setFp = async () => {
+         const setFp = async () => {
           const fp = await FingerprintJS.load();
     
           const { visitorId } = await fp.get();
@@ -92,7 +85,19 @@ function App() {
         };
     
         setFp();
-      }, []);
+
+       
+        
+    }
+    ,[])
+
+    useEffect(()=>{
+        if(user.userType === '' && fpHash !== ''){
+            getInLocal()
+        }
+    },[fpHash])
+
+   
 
     function storeInLocal(data){
         var CryptoJS = require("crypto-js");
@@ -102,7 +107,7 @@ function App() {
         var userType = CryptoJS.AES.encrypt(data.userType, key).toString();
         var userId = CryptoJS.AES.encrypt(data.userId, key).toString();
         var checkKey = CryptoJS.AES.encrypt('sods_fyp', key).toString();
-  
+       
         localStorage.setItem('sods_fyp_rp', rolePermission);
         localStorage.setItem('sods_fyp_t', token);
         localStorage.setItem('sods_fyp_ut', userType);
@@ -130,11 +135,8 @@ function App() {
                     localStorage.removeItem('sods_fyp_ud')
                 }
             }catch(e){
-                localStorage.removeItem('sods_fyp_ck')
-                localStorage.removeItem('sods_fyp_ut')
-                localStorage.removeItem('sods_fyp_rp')
-                localStorage.removeItem('sods_fyp_t')
-                localStorage.removeItem('sods_fyp_ud')
+                alert(e)
+                
             }
             
         }

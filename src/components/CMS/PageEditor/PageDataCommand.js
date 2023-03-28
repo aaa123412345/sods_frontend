@@ -4,4 +4,5 @@ export const pageDataCommand = {
     addElementInNewRow: "addElementInNewRow",
     removeElement: "removeElement",
     updateElement: "updateElement",
+    updatePage: "updatePage",
 };

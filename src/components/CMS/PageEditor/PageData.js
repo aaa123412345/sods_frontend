@@ -25,6 +25,10 @@ class PageData{
         this.page = cloneDeep(data.page);
     }
 
+    updatePage(data){
+        this.page = data
+    }
+
     sortElement(){
         this.element.sort((a,b)=>a.subrank-b.subrank)
         this.element.sort((a,b)=>a.rank-b.rank)
