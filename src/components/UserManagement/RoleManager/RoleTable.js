@@ -1,12 +1,8 @@
 import React from "react"
 
 import { Table, Row, Col,Button } from "react-bootstrap"
-
-
-const PageSearcherTable = ({data,startEdit,deletePage}) =>{
-
-       
-    if(data.length > 0){
+const RoleTable = ({data,removeRole}) => {
+    if(data?.length > 0){
         return(
             <>
                 <div className="d-none d-sm-block">
@@ -28,7 +24,7 @@ const PageSearcherTable = ({data,startEdit,deletePage}) =>{
         var bordered = true
         var tableHeadStyle = {}
         var tableDataStyle = [{},{}]
-        var tableKey = ['Domain','Language', 'Path','Action']
+        var tableKey = ['ID','Name', 'Permission Length','Action']
         return(
             <Table key={pkey + "desktop-table"} hover={hover} striped={striped} bordered={bordered}>
                 <thead key={pkey + "desktop-table-head"}>
@@ -51,18 +47,13 @@ const PageSearcherTable = ({data,startEdit,deletePage}) =>{
            
             return(
                 <tr style={style} key={keyPass + "-table-data-"+index+"-tr"}>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['domain']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data['language']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['path']} </td>
-                  
-                 
-                   <td key={keyPass + "-table-data-"+index+"-td-"+6}> 
-                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Edit</Button>
-                        {"    "}
-                        <Button onClick={()=>deletePage(data['domain'],data['language'],data['path'])}>Delete</Button>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data.roles['roleId']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data.roles['name']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data.permissions.length} </td>
+                    <td key={keyPass + "-table-data-"+index+"-td-"+4}>
+                        <Button onClick={()=>removeRole(data.roles.roleId,data.roles['name'])}>Remove</Button>
                     </td>
-                   
-                  
+    
                 </tr>
             )
         }
@@ -70,7 +61,7 @@ const PageSearcherTable = ({data,startEdit,deletePage}) =>{
 
     function MobileTable(table,pkey){
         var styleNum = 2;
-        var tableKey = ['Domain','Language', 'Path','Action']
+        var tableKey = ['ID','Name', 'Permission Length']
         
         var tableDataStyle = [{"backgroundColor":"gray","color":"black"},{"backgroundColor":"white","color":"black"}]
         return(
@@ -88,17 +79,15 @@ const PageSearcherTable = ({data,startEdit,deletePage}) =>{
                 </Col>
                 <Col key={keyPass+"-Mobile-table-data-row-"+index+"-subrow-col-value"}>
                   
-                    <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data['domain']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['language']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['path']} <br></br></span>
-                    
-           
-                    <span key={keyPass + "-table-data-"+index+"-td-"+6}>
-                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Edit</Button> 
-                        {"    "}
-                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Delete</Button>
-                        <br></br>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data.roles['roleId']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data.roles['name']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data.permissions.length} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+4}>
+                        <Button onClick={()=>removeRole(data.roles['roleId'],data.roles['name'])}>Remove</Button>
                     </span>
+
+           
+                   
                    
                     
                 </Col>
@@ -108,7 +97,6 @@ const PageSearcherTable = ({data,startEdit,deletePage}) =>{
     }
 
     }
-
 }
 
-export default PageSearcherTable
+export default RoleTable;

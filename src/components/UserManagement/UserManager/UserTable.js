@@ -1,12 +1,8 @@
 import React from "react"
-
 import { Table, Row, Col,Button } from "react-bootstrap"
-
-
-const PageSearcherTable = ({data,startEdit,deletePage}) =>{
-
-       
-    if(data.length > 0){
+const UserTable = ({data}) => {
+    
+    if(data?.length > 0){
         return(
             <>
                 <div className="d-none d-sm-block">
@@ -57,9 +53,7 @@ const PageSearcherTable = ({data,startEdit,deletePage}) =>{
                   
                  
                    <td key={keyPass + "-table-data-"+index+"-td-"+6}> 
-                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Edit</Button>
-                        {"    "}
-                        <Button onClick={()=>deletePage(data['domain'],data['language'],data['path'])}>Delete</Button>
+
                     </td>
                    
                   
@@ -94,9 +88,7 @@ const PageSearcherTable = ({data,startEdit,deletePage}) =>{
                     
            
                     <span key={keyPass + "-table-data-"+index+"-td-"+6}>
-                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Edit</Button> 
-                        {"    "}
-                        <Button onClick={()=>startEdit(data['domain'],data['language'],data['path'])}>Delete</Button>
+                        
                         <br></br>
                     </span>
                    
@@ -108,7 +100,6 @@ const PageSearcherTable = ({data,startEdit,deletePage}) =>{
     }
 
     }
-
 }
 
-export default PageSearcherTable
+export default UserTable;

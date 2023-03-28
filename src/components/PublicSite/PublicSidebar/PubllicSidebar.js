@@ -29,6 +29,10 @@ const PublicSidebar = props =>  {
       }
 
   },[initHook])
+
+  useEffect(()=>{
+    console.log(items)
+  },[items])
     
   
       
