@@ -30,6 +30,9 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
   
     const searchPageHook = useSendRequest(getRequestURL(),'get',{},pageDataState.active,false,false)
 
+    const [serchPemissionState,setSerchPemissionState] = useState({active:true})
+    const serchPemissionHook = useSendRequest(process.env.REACT_APP_SECURITY_HOST+"permissions",'get',{},serchPemissionState.active,false,false)
+
     function getRequestURL(){
         var url = process.env.REACT_APP_CMS_PAGE_EDITOR_HOST
        
@@ -156,6 +159,36 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
     }
 
     useEffect(()=>{
+        if(serchPemissionState.active){
+            if(!serchPemissionHook.isLoaded){
+                if(serchPemissionHook.ready){
+                    setSerchPemissionState({
+                        ...serchPemissionState,
+                        active:false
+                    })
+                    //get the "perms" in serchPemissionHook.items and store it in pageConfigChoice.permission
+                    var tmp = []
+                    for(var i=0;i<serchPemissionHook.items.length;i++){
+                        tmp.push(serchPemissionHook.items[i].perms)
+                    }
+                    setPageConfigChoice({
+                        ...pageConfigChoice,
+                        permission:tmp
+                    })
+                }else if(serchPemissionHook.errMsg !== ""){
+                    alert(serchPemissionHook.errMsg)
+                    setSerchPemissionState({
+                        ...serchPemissionState,
+                        active:false
+                    })
+                }
+            }
+        }
+    },[serchPemissionHook])
+
+       
+
+    useEffect(()=>{
         console.log("pageConfigChoice")
         console.log(pageConfigChoice)
     },[pageConfigChoice])
@@ -234,7 +267,17 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
                     <option value={"other"}>other</option>
                 </select>
                 <br/>
-                {editData.authSelect === "other"?<input type="text" onChange={changeAuth} style={{border:"black solid 1px"}}></input>:""}
+                {editData.authSelect === "other"?
+                <select onChange={changeAuth} style={borderStyle}>
+                    {pageConfigChoice.permission.map((item,index)=>{
+                        return(
+                            <option key={"auth-select-opt-"+index} value={item}>{item}</option>
+                        )
+                    })}
+                </select>
+                
+                :""}
+                <br/>
 
                 <h4> path : {nodeNavData.path}</h4>
                 

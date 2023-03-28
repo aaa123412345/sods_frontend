@@ -34,6 +34,7 @@ export default function useSendRequestMK2(axiosDict,active,autoRedirect){
             if (user.token) {
                 headers['token'] = user.token
             }
+            headers['deviceID'] = user.deviceID
             
             const { data } = await axios({
                 ...axiosDict,

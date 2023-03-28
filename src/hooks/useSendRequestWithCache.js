@@ -49,6 +49,7 @@ export default function useSendRequestWithCache(url,method,tdata,active,autoRedi
             if (user.token) {
                 headers['token'] = user.token
             }
+            headers['deviceID'] = user.deviceID
             
             const { data } = await axios({
                 method: method,

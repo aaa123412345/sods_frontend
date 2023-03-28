@@ -40,7 +40,8 @@ function App() {
         rolePermission: [''],
         token:'',
         userType:'',
-        userId:''
+        userId:'',
+        deviceID:''
     });
     const [fpHash, setFpHash] = useState('');
     const localStorageKey = process.env.REACT_APP_LOCAL_STARGE_KEY + fpHash
@@ -84,6 +85,10 @@ function App() {
           const { visitorId } = await fp.get();
     
           setFpHash(visitorId);
+          setUser({
+            ...user,
+            deviceID: visitorId
+          })
         };
     
         setFp();
@@ -109,21 +114,22 @@ function App() {
         var CryptoJS = require("crypto-js");
         var key = localStorageKey
         var haveData = false
-        var tmpUser = {
-            
-            rolePermission: [''],
-            token:'',
-            userType:'',
-            userId:''
-        }
-
+        
         //decrept
         if(localStorage.getItem('sods_fyp_ck')!==null){
-            var bytes0  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_ck'), key);
-            var checkKey = bytes0.toString(CryptoJS.enc.Utf8);
-            if(checkKey === 'sods_fyp'){
-                haveData = true
-            }else{
+            try{
+                var bytes0  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_ck'), key);
+                var checkKey = bytes0.toString(CryptoJS.enc.Utf8);
+                if(checkKey === 'sods_fyp'){
+                    haveData = true
+                }else{
+                    localStorage.removeItem('sods_fyp_ck')
+                    localStorage.removeItem('sods_fyp_ut')
+                    localStorage.removeItem('sods_fyp_rp')
+                    localStorage.removeItem('sods_fyp_t')
+                    localStorage.removeItem('sods_fyp_ud')
+                }
+            }catch(e){
                 localStorage.removeItem('sods_fyp_ck')
                 localStorage.removeItem('sods_fyp_ut')
                 localStorage.removeItem('sods_fyp_rp')
@@ -149,13 +155,14 @@ function App() {
             var bytes4  = CryptoJS.AES.decrypt(localStorage.getItem('sods_fyp_ud'), key);
             var userId = bytes4.toString(CryptoJS.enc.Utf8);
 
-           
+            setUser({
+                ...user,
+                rolePermission: rolePermission,
+                token:token,
+                userType:userType,
+                userId:userId
 
-            tmpUser.rolePermission = rolePermission
-            tmpUser.token = token
-            tmpUser.userType = userType
-            tmpUser.userId = userId
-            setUser(tmpUser)
+            })
         }
     }
    
@@ -172,7 +179,7 @@ function App() {
                             <Routes>
                                 
                             <Route>                         
-                                <Route path="/file" element={<FileUpload></FileUpload>}></Route>                            
+                                                           
                                 <Route path="/public/:lang/ar-treasure/:id" element={<ARCanvas/>}></Route>
                                 <Route path="/public/:lang/tourguide-vr/:id" element={<VRCanvas />}></Route> 
                                 {/*bootstrap and chakraUI are affecting the display of VR Mode Button (which is provided by a-frame.js)*/}
