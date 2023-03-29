@@ -65,7 +65,7 @@ const RoleEditor = ({data,setCurrentEditRole,currentEditRole,permsChoice,updateR
         {currentEditRole!== null ?
             <div className="mt-3">
                
-                <h1 style={{fontSize:"1.5vw"}}>Role ID: {currentEditRole.roles.id}</h1>
+                <h1 style={{fontSize:"1.5vw"}}>Role ID: {currentEditRole.roles.roleId}</h1>
                 <h1 style={{fontSize:"1.5vw"}}>Role: 
                     <input type="text" value={currentEditRole.roles.name} onChange={(e)=>setRoleName(e)}></input>
                 </h1>

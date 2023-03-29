@@ -23,10 +23,8 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
         active:true
     })
 
-    const [pageConfigChoice,setPageConfigChoice] = useState({
-        page:[],
-        permission:[]
-    })
+    const [pageOpt,setPageOpt] = useState([])
+    const [permissionOpt,setPermissionOpt] = useState([])
   
     const searchPageHook = useSendRequest(getRequestURL(),'get',{},pageDataState.active,false,false)
 
@@ -166,15 +164,12 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
                         ...serchPemissionState,
                         active:false
                     })
-                    //get the "perms" in serchPemissionHook.items and store it in pageConfigChoice.permission
+                    //get the "perms" in serchPemissionHook.items and store it in permissionOpt
                     var tmp = []
                     for(var i=0;i<serchPemissionHook.items.length;i++){
                         tmp.push(serchPemissionHook.items[i].perms)
                     }
-                    setPageConfigChoice({
-                        ...pageConfigChoice,
-                        permission:tmp
-                    })
+                    setPermissionOpt(tmp)
                 }else if(serchPemissionHook.errMsg !== ""){
                     alert(serchPemissionHook.errMsg)
                     setSerchPemissionState({
@@ -186,21 +181,13 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
         }
     },[serchPemissionHook])
 
-       
-
-    useEffect(()=>{
-        console.log("pageConfigChoice")
-        console.log(pageConfigChoice)
-    },[pageConfigChoice])
+    
 
     useEffect(()=>{
         if(pageDataState.active){
             if(!searchPageHook.isLoaded){
                 if(searchPageHook.ready){
-                    setPageConfigChoice({
-                        ...pageConfigChoice,
-                        page:searchPageHook.items
-                    })
+                    setPageOpt(searchPageHook.items)
                     setPageDataState({
                         ...pageDataState,
                         active:false
@@ -269,7 +256,7 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
                 <br/>
                 {editData.authSelect === "other"?
                 <select onChange={changeAuth} style={borderStyle}>
-                    {pageConfigChoice.permission.map((item,index)=>{
+                    {permissionOpt.map((item,index)=>{
                         return(
                             <option key={"auth-select-opt-"+index} value={item}>{item}</option>
                         )
@@ -284,7 +271,7 @@ const NavigationConfigPanel = ({data,configNodeData,setNode}) =>{
                 <select onChange={changePathSelect} style={borderStyle}>
                     <option value={""}>No change</option>
                     <option value={"other"}>Other</option>
-                    {pageConfigChoice.page.map((item,index)=>{
+                    {pageOpt.map((item,index)=>{
                         return(
                             <option key={"path-select-opt-"+index} value={"/"+item.domain+"/"+item.language+"/"+item.path}>{"/"+item.domain+"/"+item.language+"/"+item.path}</option>
                         )

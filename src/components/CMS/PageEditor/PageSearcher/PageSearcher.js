@@ -16,6 +16,7 @@ const PageSearcher = ({startEdit,deletePage}) => {
         domain:'public',
         lang:'',
         path:'',
+        editAll:false,
         active:false
     })
   
@@ -42,7 +43,10 @@ const PageSearcher = ({startEdit,deletePage}) => {
         if(pageDataState.path !== ''){
             url += "pathVariable=" + pageDataState.path+"&"
         }
-        url += "editable=1"
+        if(!pageDataState.editAll){
+            url += "editable=1&"
+        }
+        
         return url
 
     }
@@ -109,7 +113,7 @@ const PageSearcher = ({startEdit,deletePage}) => {
         return (
             <div>
                 <Row className="mb-3 mt-3">
-                    <Col sm={2}>
+                    <Col sm={8}>
                         {"Domain: "} 
                         <select style={borderStyle}  onChange={(e)=>{changePageDataState(e.target.value,'domain')}} value={pageDataState.domain}>
                            
@@ -118,26 +122,27 @@ const PageSearcher = ({startEdit,deletePage}) => {
                             })}
                             
                         </select>
-                    </Col>
-                    <Col sm={2}>
-                        {"Language: "} 
+                    
+                        {"   Language: "} 
                         <select style={borderStyle}  onChange={(e)=>{changePageDataState(e.target.value,'lang')}} value={pageDataState.lang}>
                             <option value="">All</option>
                             {langData.map((item,index)=>{
                                 return <option key={"lang-slecet-"+index} value={item} >{item}</option>
                             })}
                         </select>
-                    </Col>
-                    <Col sm={4}>
-                        {"Path: "} 
+                    
+                        {"   Path: "} 
                         <input style={borderStyle} type="text" 
                         onChange={(e)=>{changePageDataState(e.target.value,'path')}} value={pageDataState.path}/>
+                        {"   Edit All: "}
+                        <input style={borderStyle} type="checkbox"
+                        onChange={(e)=>{changePageDataState(e.target.checked,'editAll')}} value={pageDataState.editAll}/>
                     </Col>
                     <Col sm={4}>
-                    <ButtonGroup aria-label="Basic example">
-                        <Button variant="primary" onClick={()=>searchPage()}>Search</Button>
-                        <Button variant="primary" onClick={()=>startEdit('','','')}>Create</Button>
-                    </ButtonGroup>
+                        <ButtonGroup aria-label="Basic example">
+                            <Button variant="primary" onClick={()=>searchPage()}>Search</Button>
+                            <Button variant="primary" onClick={()=>startEdit('','','')}>Create</Button>
+                        </ButtonGroup>
                     </Col>
                 </Row>
                 <Row>

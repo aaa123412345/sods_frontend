@@ -10,24 +10,17 @@ const PageOverallConfig = ({items,command}) => {
         permission:[]
     })
 
-    const [pageConfig, setPageConfig] = useState({
-        auth:"",
-        style:{},
-        title:"",
-        useBootstrap:false,
-        useHeader:false,
-        description:"",
-    })
+    const [pageConfig, setPageConfig] = useState(null)
 
     useEffect(()=>{
         if(items !== undefined){
             setPageConfig({
-                auth:items.auth,
-                style:items.style,
-                title:items.title,
-                useBootstrap:items.useBootstrap,
-                useHeader:items.useHeader,
-                description:items.description,
+                auth:items.page.auth,
+                style:items.page.style,
+                title:items.page.title,
+                useBootstrap:items.page.useBootstrap,
+                useHeader:items.page.useHeader,
+                description:items.page.description,
             })
         }
     },[items])
@@ -60,6 +53,11 @@ const PageOverallConfig = ({items,command}) => {
         }
     },[serchPemissionHook])
 
+    useEffect(()=>{
+        console.log(items)
+        console.log(pageConfig)
+    },[pageConfig])
+
 
     function setPageData(key,value){
         setPageConfig({
@@ -67,7 +65,7 @@ const PageOverallConfig = ({items,command}) => {
             [key]:value
         })
     }
-
+    if(pageConfig !== null){
     return(
         <>
             <h1 style={{fontSize:"1.5vw"}}>{"Auth: "}</h1>
@@ -100,6 +98,7 @@ const PageOverallConfig = ({items,command}) => {
             </input>
         </>
     )
+            }
 
 
 }

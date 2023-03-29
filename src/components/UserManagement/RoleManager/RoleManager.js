@@ -138,7 +138,7 @@ const RoleManager = () => {
             var permissionIdArray = []
             permissionNameArray.forEach(permissionName => {
                 var permission = pageConfigChoice.permission.find(e => e.perms === permissionName)
-                permissionIdArray.push(permission.id)
+                permissionIdArray.push(permission.menuId)
             });
             return permissionIdArray
         }

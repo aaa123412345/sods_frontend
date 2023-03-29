@@ -24,7 +24,7 @@ const UserTable = ({data}) => {
         var bordered = true
         var tableHeadStyle = {}
         var tableDataStyle = [{},{}]
-        var tableKey = ['Domain','Language', 'Path','Action']
+        var tableKey = ['User ID','User Name', 'Create Time','Action']
         return(
             <Table key={pkey + "desktop-table"} hover={hover} striped={striped} bordered={bordered}>
                 <thead key={pkey + "desktop-table-head"}>
@@ -47,9 +47,9 @@ const UserTable = ({data}) => {
            
             return(
                 <tr style={style} key={keyPass + "-table-data-"+index+"-tr"}>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['domain']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data['language']} </td>
-                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['path']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+1}> {data['userId']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+2}> {data['userName']} </td>
+                   <td key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createTime']} </td>
                   
                  
                    <td key={keyPass + "-table-data-"+index+"-td-"+6}> 
@@ -64,7 +64,7 @@ const UserTable = ({data}) => {
 
     function MobileTable(table,pkey){
         var styleNum = 2;
-        var tableKey = ['Domain','Language', 'Path','Action']
+        var tableKey = ['User ID','User Name', 'Create Time','Action']
         
         var tableDataStyle = [{"backgroundColor":"gray","color":"black"},{"backgroundColor":"white","color":"black"}]
         return(
@@ -82,9 +82,9 @@ const UserTable = ({data}) => {
                 </Col>
                 <Col key={keyPass+"-Mobile-table-data-row-"+index+"-subrow-col-value"}>
                   
-                    <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data['domain']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['language']} <br></br></span>
-                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['path']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+1}> {data['userId']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+2}> {data['userName']} <br></br></span>
+                    <span key={keyPass + "-table-data-"+index+"-td-"+3}> {data['createTime']} <br></br></span>
                     
            
                     <span key={keyPass + "-table-data-"+index+"-td-"+6}>
