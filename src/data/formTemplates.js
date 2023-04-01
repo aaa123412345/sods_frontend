@@ -71,3 +71,13 @@ export const vr = {
     speechZH: ""
 
 }
+
+export const template_dict = {
+    'floorplan': floorplan, 
+    'booth': booth,
+    'story': story,
+    'marker': marker, 
+    'arTreasure': arTreasure,
+    'boothGame': boothGame,
+    'configs': configs
+}

@@ -2,6 +2,7 @@
 
 export const tourHost = process.env.REACT_APP_TOURGUIDE_SYSTEM_HOST
 export const arGameHost = process.env.REACT_APP_AR_GAME_SYSTEM_HOST
+export const assistantHost = process.env.REACT_APP_AI_ASSISTANT_HOST
 export const refreshTime = 60 * 1000 // 1 min
 export const mobileBreakPoint = 48 * 16 // 46 em * 16 px (1em = 16px)
 
@@ -22,6 +23,28 @@ export const monthDictionary = {
     4: "May", 5: "Jun", 6: "Jul", 7: "Aug", 
     8: "Sep", 9: "Oct", 10: "Nov", 11: "Dec"
 
+}
+
+// chatroom 
+export const greet = {
+    en: 'Hello! I\'m O-Bot. How may I help you?', 
+    zh: '你好！我係O-Bot，請問我點樣可以幫到你？'
+}
+
+export const todayText = {
+    en: "Today", 
+    zh: "今天"
+}
+
+export const you = {
+    en: "You",
+    zh: '您'
+}
+
+export const flow_dict = {
+    floorplan: ['regionEN', 'regionZH'],
+    booth: ["titleEN", "titleZH", "venueEN", "venueZH", "descriptionEN", "descriptionZH"],
+    story: ['titleEN', 'titleZH', 'contentEN', 'contentZH']
 }
 
 // vr tour
