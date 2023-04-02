@@ -34,7 +34,7 @@ const Room = (props) => {
     const [dialogs, setDialogs] = useState(JSON.parse(sessionStorage.getItem('chat_history')??initDialogs))
     const [isWaiting, setIsWaiting] = useState(false)
     const [payload, setPayload] = useState("")
-    const [currentContext, setCurrentContext] = useState("")
+    const [chatContext, setChatContext] = useState("")
 
     const bottomRef = useRef()
     const bg = useColorModeValue('gray.10', 'gray.100')
@@ -60,14 +60,14 @@ const Room = (props) => {
         return { 
             sendTime: get_current_time(chatLang), 
             user_id: Number(user.userId), message: message, 
-            context_in: currentContext, payload: payload
+            context_in: dialogs[dialogs.length-1].context_out, payload: payload
         }
         
     }
 
     const update_payload = (message) => {
         // process context to update payload
-        const context_fragment = currentContext.split('_')
+        const context_fragment = chatContext.split('_')
         console.log('context_fragment_2:', context_fragment[0])
         if (context_fragment.length > 1 ){
 
@@ -91,27 +91,30 @@ const Room = (props) => {
         console.log('receiving response...')
         const header = { headers: { token: user.token } }
 
-        console.log('token: ', user.token)
         axios.post(assistantHost + "/MLChats", message_data, header)
         .then(res=>{
             let responseData = res.data.data
             console.log(responseData)
             let robotResponseData = {...responseData, sendTime: get_current_time(chatLang), user_id: "bot"}
             setDialogs([...dialogs, message_data, robotResponseData])
-            sessionStorage.setItem('chat_history', JSON.stringify([...dialogs, message_data, robotResponseData]))
-            setCurrentContext(responseData.context_out)
             setIsWaiting(false)
-            setAnimationIndex(1)
-            if(!window.speechSynthesis.speaking)
+            if(!window.speechSynthesis.speaking){
                 speak_speech(responseData.message)
+                setAnimationIndex(1)
+            }
             
+            sessionStorage.setItem('chat_history', JSON.stringify([...dialogs, message_data, robotResponseData]))
         })
         .catch(err=>{
             console.log(err.message)
-            const errorMessage = {...initMessage, message: "Sorry, could you repeat again?"}
+            const errorMessage = {...initMessage, message: "Sorry, could you repeat again?", context_out: dialogs[dialogs.length-1].context_out}
+            if(!window.speechSynthesis.speaking){
+                speak_speech("Sorry, could you repeat again?")
+                setAnimationIndex(1)
+            }
             setDialogs([...dialogs, message_data, errorMessage])
+            sessionStorage.setItem('chat_history', JSON.stringify([...dialogs, message_data, errorMessage]))
             setPayload("")
-            setCurrentContext("")
             setIsWaiting(false)
         })
 
@@ -133,16 +136,22 @@ const Room = (props) => {
 
     useEffect(()=>{
         bottomRef.current?.scrollIntoView({behavior: 'auto'}); // scroll to bottom once received message
-        console.log('current_context:', currentContext)
-        console.log('payload:', payload)
     }, [dialogs])
+
+    useEffect(()=>{
+        const id = setInterval(()=>{
+            console.log('chatContext: ', chatContext)
+        }, 1000)
+
+        return ()=>clearInterval(id)
+    }, [chatContext])
 
     useEffect(()=>{
 
         const id = setInterval(()=>{
 
-            console.log('animationIndex: ', animationIndex)
-            console.log('win.speech: ', window.speechSynthesis.speaking)
+            // console.log('animationIndex: ', animationIndex)
+            // console.log('win.speech: ', window.speechSynthesis.speaking)
             if(!window.speechSynthesis.speaking && animationIndex === 1)
                 setAnimationIndex(0)
         }, 1000)
