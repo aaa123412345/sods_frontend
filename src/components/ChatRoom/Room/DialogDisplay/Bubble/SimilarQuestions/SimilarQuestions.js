@@ -9,7 +9,7 @@ const SimilarQuestions = (props) => {
 
     return questions?.length ? (
         <Box maxW="80%" m="1em .5em">
-            <Text fontWeight={'bold'} color={color}>Questions you may want to ask:</Text>
+            <Text fontWeight={'bold'} color={'white'}>Questions you may want to ask:</Text>
             <List>
                 {
                     questions.map((question, index) => (
@@ -34,6 +34,7 @@ const Question = styled(ListItem)`
     cursor: pointer;
     font-size: .9rem;
     box-shadow: 0px 2.5px 18px rgba(0, 0, 0, .1);
+    background: rgba(255, 255, 255, .3);
 
 
 

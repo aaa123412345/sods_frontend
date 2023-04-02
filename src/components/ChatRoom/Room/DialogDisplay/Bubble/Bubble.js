@@ -27,8 +27,8 @@ const Bubble = (props) => {
 
 
             <Flex alignItems="center">
-                <Text m=".5em 0"><FontAwesomeIcon icon={isBotSent||isSkeleton?faRobot:faUser} />&nbsp;{isBotSent||isSkeleton?"O-Bot":you[chatLang]}&nbsp;</Text> 
-                <Text color="gray" fontSize=".8rem">&nbsp;{sendTime}</Text>
+                <Text m=".5em 0" color="white"><FontAwesomeIcon icon={isBotSent||isSkeleton?faRobot:faUser} />&nbsp;{isBotSent||isSkeleton?"O-Bot":you[chatLang]}&nbsp;</Text> 
+                <Text color="white" fontSize=".8rem">&nbsp;{sendTime}</Text>
             </Flex>
 
             
@@ -79,7 +79,10 @@ const BubbleText = styled(Box)`
 
     padding: .5em .8em;
     width: fit-content; max-width: 80%;
-
+    
+    opacity: .7;
+    z-index: 51;
+    
     ol {
         margin: 1em;
     }

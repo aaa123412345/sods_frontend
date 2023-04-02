@@ -18,7 +18,7 @@ import { template_dict } from '../../../data/formTemplates'
 
 const Room = (props) => {
 
-    const { closeChat, switchLang, chatLang, sysConfig } = props
+    const { closeChat, switchLang, chatLang, isShowChat, animationIndex, setAnimationIndex, sysConfig } = props
     
     const { user } = useContext(UserContext)
     
@@ -31,9 +31,6 @@ const Room = (props) => {
 
     const initDialogs = JSON.stringify([initMessage])
 
-    const { speak, speaking, voices } = useSpeechSynthesis();
-
-    const [animationIndex, setAnimationIndex] = useState(0)
     const [dialogs, setDialogs] = useState(JSON.parse(sessionStorage.getItem('chat_history')??initDialogs))
     const [isWaiting, setIsWaiting] = useState(false)
     const [payload, setPayload] = useState("")
@@ -42,10 +39,15 @@ const Room = (props) => {
     const bottomRef = useRef()
     const bg = useColorModeValue('gray.10', 'gray.100')
 
+    const { speak, voices } = useSpeechSynthesis();
+
+
     const speak_speech = (speech) => {
 
+        let s =  speech.replace(/<\/?[a-z][a-z0-9]*[^<>]*>/img, '')
+        console.log(s)
         let sentences = []
-        sentences = speech.split(/[.,!?]/)
+        sentences = s.split(/[.,!?]/)
         
         sentences.forEach((sentence, index) => {
             speak({text: sentence, voice: voices[2]})
@@ -100,7 +102,8 @@ const Room = (props) => {
             setCurrentContext(responseData.context_out)
             setIsWaiting(false)
             setAnimationIndex(1)
-            speak_speech(responseData.message)
+            if(!window.speechSynthesis.speaking)
+                speak_speech(responseData.message)
             
         })
         .catch(err=>{
@@ -129,10 +132,17 @@ const Room = (props) => {
     }
 
     useEffect(()=>{
+        bottomRef.current?.scrollIntoView({behavior: 'auto'}); // scroll to bottom once received message
+        console.log('current_context:', currentContext)
+        console.log('payload:', payload)
+    }, [dialogs])
+
+    useEffect(()=>{
 
         const id = setInterval(()=>{
 
             console.log('animationIndex: ', animationIndex)
+            console.log('win.speech: ', window.speechSynthesis.speaking)
             if(!window.speechSynthesis.speaking && animationIndex === 1)
                 setAnimationIndex(0)
         }, 1000)
@@ -140,12 +150,6 @@ const Room = (props) => {
         return () => clearInterval(id)
         
     },[animationIndex])
-
-    useEffect(()=>{
-        bottomRef.current?.scrollIntoView({behavior: 'auto'}); // scroll to bottom once received message
-        console.log('current_context:', currentContext)
-        console.log('payload:', payload)
-    }, [dialogs])
 
     return (
         <ChatContainer w={{base: '100vw', md: "400px"}} h={{base: '100vh', md: '550px'}} bg={bg}>

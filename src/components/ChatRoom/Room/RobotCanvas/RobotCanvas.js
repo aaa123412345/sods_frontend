@@ -10,12 +10,12 @@ const RobotCanvas = (props) => {
 
     return (
         <Canvas className="robot-canvas"
-            camera={{position: [1, 1.5, 2.5], fov:50}}>
+            camera={{position: [1, 0, 2.5], fov:50}}>
 
             <ambientLight intensity={0.5}/>
             <directionalLight position={[-2, 5, 2]} intensity={1}/>
 
-            <group position={[0, -2.5, -1.5]}>
+            <group position={[0, -3, -1.5]}>
                 <Robot animationIndex={animationIndex}/>
             </group>
             

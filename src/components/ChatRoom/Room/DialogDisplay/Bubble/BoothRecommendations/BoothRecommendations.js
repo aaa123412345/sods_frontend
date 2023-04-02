@@ -51,11 +51,13 @@ const SuggestCard = styled(Box)`
 
     margin: 1em .5em;
     height: 100px;
-    width: 100%;
+    width: 200px;
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0px 5px 12px rgba(0, 0, 0, .2);
+    color: white;
+    background: rgba(0, 0, 0, .5);
 
 `
 

@@ -8,6 +8,7 @@ import { Box } from '@chakra-ui/react'
 import axios from 'axios'
 import { connect, useDispatch } from 'react-redux'
 
+
 import { clearRefreshFlag, updateConfig } from '../../redux/sysConfig/sysConfig.action'
 import { tourHost } from '../../constants/constants'
 
@@ -15,6 +16,7 @@ import Wrapper from '../Common/common/Wrapper/Wrapper'
 import CustomButton from '../Common/common/CustomButton/CustomButton'
 import Room from './Room/Room'
 import { updateBooths } from '../../redux/tourguide/tourguide.action'
+import { greet } from '../../constants/constants'
 
 const Chatroom = (props) => {
 
@@ -26,23 +28,10 @@ const Chatroom = (props) => {
 
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [animationIndex, setAnimationIndex] = useState(0)
 
     const [isShowChat, setIsShowChat] = useState(false)
     const [chatLang, setChatLang] = useState('en')
-
-    const handle_chatDisplay = () => {
-        setIsShowChat(!isShowChat)
-        console.log('click')
-    }
-
-    const close_chat = () => {
-        setIsShowChat(false)
-    }
-
-    const switch_chatLanguage = () => {
-        let newLang = chatLang === 'en' ? 'en' : 'en'
-        setChatLang(newLang)
-    }
 
     const get_data = async (host, path, updateFunction) => {
 
@@ -57,6 +46,20 @@ const Chatroom = (props) => {
         })
         .catch((err)=>{setError(err)})
         
+    }
+
+    const handle_chatDisplay = () => {
+        setIsShowChat(true)
+        console.log('click')
+    }
+
+    const close_chat = () => {
+        setIsShowChat(false)
+    }
+
+    const switch_chatLanguage = () => {
+        let newLang = chatLang === 'en' ? 'en' : 'en'
+        setChatLang(newLang)
     }
 
     useEffect(()=>{
@@ -81,10 +84,11 @@ const Chatroom = (props) => {
             <ChatRoomContainer p={{base: 0, md: '1em'}}>
                 {
                     isShowChat?
-                    <Room closeChat={close_chat} switchLang={switch_chatLanguage} chatLang={chatLang} />
+                    <Room closeChat={close_chat} switchLang={switch_chatLanguage} chatLang={chatLang} isShowChat={isShowChat} 
+                        animationIndex={animationIndex} setAnimationIndex={setAnimationIndex}/>
                     :
                     <CustomButton faIcon={faCommentDots} bgColor={themeColor} cssStyle={{margin: '.5em', fontSize: '1.5rem', boxShadow: '0px 5px 12px rgba(0, 0, 0, .2)'}} 
-                        onClick={handle_chatDisplay} 
+                        onClick={()=>{handle_chatDisplay()}}
                         circleDiameter={60} isCircle />
                 }
 

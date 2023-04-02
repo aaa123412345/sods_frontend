@@ -73,7 +73,7 @@ const MessageInput = (props) => {
             <CustomButton faIcon={faMicrophone} bgColor={isListening ? themeColor : 'gray'} cssStyle={{filter: `brightness(${isListening?0.5:1}})`}} 
                 onClick={()=>{isListening?stop_listen():start_listen()}}
                 isCircle/>
-            <CustomButton faIcon={faPaperPlane} onClick={()=>{hanlde_sendMessage();}} isCircle/>
+            <CustomButton faIcon={faPaperPlane} onClick={hanlde_sendMessage} isCircle/>
         </InputContainer>
     )
 }
