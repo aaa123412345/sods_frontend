@@ -27,6 +27,7 @@ const VRCanvas = (props) => {
   const [error, setError] = useState(null)
 
   const sceneRef = useRef()
+  const vrImageRef = useRef()
   const [vrImage, setVRImage] = useState(null)
 
   const navigate = useNavigate()
@@ -165,8 +166,13 @@ const VRCanvas = (props) => {
         {" " + t('tourguide.exit')}
       </ExitButton>
 
+      {/* <image src={vrImage} height='100px'  width='100px'/> */}
+
       <Scene ref={sceneRef}>
-        <Entity primitive='a-sky' src={vrImage ?? ""}/>
+        <a-asset>
+          <img crossorigin="anonymous" id="vr-image" src={vrImage ?? ""} />
+        </a-asset>
+        <Entity primitive='a-sky' src='#vr-image' />
       </Scene>
     </div>
   

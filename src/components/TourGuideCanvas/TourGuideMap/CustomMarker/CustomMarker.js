@@ -37,10 +37,13 @@ const CustomMarker = (props) => {
 
     const delete_marker = () => {
         let newList = [...markers]
-        let markerToDelete = newList[index]
+        console.log('floorPlanId: ', floorPlanID)
+        console.log('marker: ', top, ' ', left )
+        let markerToDelete = newList.filter((markerInList)=> left === markerInList.x && top === markerInList.y && markerInList.floorPlanID === floorPlanID)?.[0]
+        let deleteIndex = newList.indexOf(markerToDelete)
         console.log('markerToDelete: ', markerToDelete)
-        newList.splice(index, 1)
-        console.log(user)
+        console.log(newList?.[deleteIndex])
+        newList.splice(deleteIndex, 1)
         let url = tourHost+`/markers/${markerToDelete.y}/${markerToDelete.x}/${markerToDelete.floorPlanID}`
         axios.delete(url, header)
         .then(res=>{ 
