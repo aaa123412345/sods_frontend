@@ -6,14 +6,14 @@ import { connect } from 'react-redux'
 import { useSpeechSynthesis } from 'react-speech-kit';
 
 import styled from 'styled-components'
-import { Box, Heading, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, useColorModeValue } from '@chakra-ui/react'
 
 import RoomHeader from './RoomHeader/RoomHeader'
 import DialogDiplay from './DialogDisplay/DialogDiplay'
 import MessageInput from './MessageInput/MessageInput'
 import { UserContext } from '../../../App'
 import { get_current_time } from '../../../helpers/formatDate'
-import { greet, today, flow_dict, assistantHost } from '../../../constants/constants'
+import { greet, flow_dict, assistantHost } from '../../../constants/constants'
 import { template_dict } from '../../../data/formTemplates'
 
 const Room = (props) => {
@@ -34,7 +34,6 @@ const Room = (props) => {
     const [dialogs, setDialogs] = useState(JSON.parse(sessionStorage.getItem('chat_history')??initDialogs))
     const [isWaiting, setIsWaiting] = useState(false)
     const [payload, setPayload] = useState("")
-    const [chatContext, setChatContext] = useState("")
 
     const bottomRef = useRef()
     const bg = useColorModeValue('gray.10', 'gray.100')
@@ -44,7 +43,7 @@ const Room = (props) => {
 
     const speak_speech = (speech) => {
 
-        let s =  speech.replace(/<\/?[a-z][a-z0-9]*[^<>]*>/img, '')
+        let s =  speech.replace(/<\/?[a-z][a-z0-9]*[^<>]*>/img, '.')
         console.log(s)
         let sentences = []
         sentences = s.split(/[.,!?]/)
@@ -67,9 +66,13 @@ const Room = (props) => {
 
     const update_payload = (message) => {
         // process context to update payload
+
+        let lastDialog = {...dialogs[dialogs?.length - 1]}
+        let chatContext = lastDialog?.context_out ?? ""
+    
         const context_fragment = chatContext.split('_')
         console.log('context_fragment_2:', context_fragment[0])
-        if (context_fragment.length > 1 ){
+        if (context_fragment?.length > 1 ){
 
             let type = context_fragment[0]
             let index = context_fragment[1]
@@ -122,7 +125,8 @@ const Room = (props) => {
 
     const send_message = (message) => {
         
-        update_payload(message)
+        if(message.indexOf('cancel') < 0 && message.indexOf("stop") < 0)
+            update_payload(message)
         
         // process and send message
         let userMessageData = get_request_body(message)
@@ -130,7 +134,13 @@ const Room = (props) => {
         setDialogs([...dialogs, userMessageData])
         sessionStorage.setItem('chat_history', JSON.stringify(dialogs))
 
-        receive_response(userMessageData)
+        if(message.indexOf('cancel') < 0 && message.indexOf("stop") < 0)
+            receive_response(userMessageData)
+        else{
+            let confrimMessage = {...initMessage, message: "OK. "}
+            setDialogs([...dialogs, userMessageData, confrimMessage])
+            sessionStorage.setItem('chat_history', JSON.stringify([...dialogs, userMessageData, confrimMessage]))
+        }
 
     }
 
@@ -139,24 +149,16 @@ const Room = (props) => {
     }, [dialogs])
 
     useEffect(()=>{
-        const id = setInterval(()=>{
-            console.log('chatContext: ', chatContext)
-        }, 1000)
-
-        return ()=>clearInterval(id)
-    }, [chatContext])
-
-    useEffect(()=>{
 
         const id = setInterval(()=>{
 
-            // console.log('animationIndex: ', animationIndex)
-            // console.log('win.speech: ', window.speechSynthesis.speaking)
             if(!window.speechSynthesis.speaking && animationIndex === 1)
                 setAnimationIndex(0)
+            
         }, 1000)
 
         return () => clearInterval(id)
+        
         
     },[animationIndex])
 

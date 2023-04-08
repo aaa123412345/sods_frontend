@@ -75,6 +75,7 @@ const Container = styled(Flex)`
 
   position: relative;
   flex-direction: column;
-  min-width: 220px
+  min-width: 220px;
+  height: 100%;
 
 `

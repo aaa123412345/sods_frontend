@@ -69,11 +69,11 @@ const TourGuideEditor = (props) => {
         const excludeCase = subsubpath === 'booths'
 
         if(subsubpath === undefined || subsubpath === null)
-            navigate(`/server/${lang}/tourguide/editor/${defaultEditorPath}/${pathIdDictionary[defaultEditorPath] ?? " "}`)
+            navigate(`/server/${lang}/tourguide/editor/${defaultEditorPath}/${pathIdDictionary[defaultEditorPath] ?? "None"}`)
         else {
     
             if((subsubsubpath === undefined || subsubsubpath === null) && !excludeCase)
-                navigate(`/server/${lang}/tourguide/editor/${subsubpath}/${pathIdDictionary[subsubpath] ?? " "}`)
+                navigate(`/server/${lang}/tourguide/editor/${subsubpath}/${pathIdDictionary[subsubpath] ?? "None"}`)
 
         }
 
@@ -96,7 +96,8 @@ const TourGuideEditor = (props) => {
             
             <EditorHeader />
         
-            <Container bg={bg} flexDir={{base: 'column', md: 'row'}}>
+            <Container bg={bg} flexDir={{base: 'column', md: 'row'}}
+                maxH={{base: "fit-content", md: "calc(100% - 80px)"}}>
                 <LeftPanel />
                 <RightPanel />
             </Container>
@@ -134,8 +135,7 @@ const Container = styled(Flex)`
 
     height: fit-content; 
     min-height: calc(100% - 80px);
-    max-height: calc(100% - 80px);
     position: relative;
     width: inherit;
-
+    
 `

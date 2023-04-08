@@ -123,7 +123,7 @@ const ItemList = (props) => {
           </FormLabel>
         }
 
-        <ScrollContent flexDir={{base: isCategoryList ? 'row' : 'column', md: 'column'}} flexWrap="no-wrap" overflowX={{base: isCategoryList ? "hidden":"scroll", md: "hidden"}} overflowY={{base: isCategoryList ? "scroll":"hidden", md: "scroll"}}>
+        <ScrollContent flexDir={{base: isCategoryList ? 'row' : 'column', md: 'column'}} flexWrap="no-wrap" overflowX={{base: 'scroll', md: "hidden"}} overflowY={{base: isCategoryList ? "scroll":"hidden", md: "scroll"}}>
           <AnimatePresence>
           {
 

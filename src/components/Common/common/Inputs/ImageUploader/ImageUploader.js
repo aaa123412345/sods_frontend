@@ -53,7 +53,7 @@ const ImageUploader = (props) => {
                 <Image src={previewUrl} cursor="pointer"/>
                 <ImageInput type="file" name="image-upload" id="image-input" accept="image/*"
                     onChange={e=>upload_image(e)}/>
-                <Label htmlFor="image-input">
+                <Label htmlFor="image-input" cursor="pointer">
                     {
                         (previewUrl === null || previewUrl === undefined || previewUrl === "" )
                         &&
@@ -88,6 +88,7 @@ export default connect(
 const ImageInput = styled.input.attrs({ type: 'file' })`
 
    display: none;
+   cursor: pointer;
 
 `
 

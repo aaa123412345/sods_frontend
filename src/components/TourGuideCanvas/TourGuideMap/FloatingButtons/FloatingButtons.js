@@ -30,9 +30,9 @@ const FloatingButtons = (props) => {
     return (
         <FloatingContainer bg={bg} mt="1em">
             <CustomButton faIcon={faStamp} onClick={()=>{navigate(url+"ticket")}} bgColor={themeColor} isCircle 
-                isDisabled={(user.userId ?? (-1) ) <= 0}/>
+                isDisabled={(user.userId ?? (-1)) <= 0}/>
             <CustomButton faIcon={faGift} onClick={()=>{navigate(url+"story")}} bgColor={themeColor} isCircle 
-                isDisabled={boothRecords?.length < minStampNum} /> 
+                isDisabled={boothRecords?.length < minStampNum || (user.userId ?? (-1)) <= 0} /> 
             <CustomButton faIcon={colorMode === 'light' ? faMoon : faSun} onClick={toggleColorMode} bgColor={themeColor} isCircle /> 
         </FloatingContainer>
     )

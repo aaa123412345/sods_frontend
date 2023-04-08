@@ -16,9 +16,10 @@ export const Robot = (props) => {
   useEffect(()=>{
     
     actions[names[animationIndex]].reset().fadeIn(0.5).play()
-    return () => {
-      actions[names[animationIndex]].fadeOut(0.5)
-    }
+    // return () => {
+    //   actions[names[animationIndex]].reset().fadeIn(0.5).play()
+    //   actions[names[animationIndex]].fadeOut(0.5)
+    // }
     
   }, [animationIndex])
 

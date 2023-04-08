@@ -83,14 +83,37 @@ const QRCodeScanner = (props) => {
     }
 
     const onResult = (result, error) => {
-        if (!!result) {
+
+        console.log('88 !!result && isQRCode:', !!result && isQRCode)
+
+        if (!!result && isQRCode) {
             let text = result?.text
             console.log('result: ', text)
-            setResultObtain(text)
+            // setResultObtain(text)
+            console.log('result change, ', resultObtain)
+            if(text !== null || text !== undefined){
+                
+                // update booth visit record
+                if(!isSent && needUpdate){
+                    setIsSent(true)
+                    update_record(text)
+                }
+    
+                // redirect to ar game 
+                let gameId = boothGames?.filter(game => game.boothId.toString() === text)?.[0]?.gameId
+                console.log('gameId:', gameId, "; isRedirectToGame: ", parseInt(gameId ?? "0") > 61202 * 1000000)
+                if(parseInt(gameId ?? "0") > 61202 * 1000000){
+                    console.log('needUpdate: ', needUpdate)
+                    window.location.replace(`/public/${lang}/ar-treasure/${gameId}`); // result is boothID
+                }else{
+                    setResultObtain(null)
+                }
+            }
         }
             
         if (!!error) 
             console.info('err: ', error);
+        
     }
 
     useEffect(()=>{
@@ -110,30 +133,38 @@ const QRCodeScanner = (props) => {
             
     },[qrCode, qrID])
 
-    useEffect(()=>{
-        console.log('result change, ', resultObtain)
-        if(resultObtain !== null || resultObtain !== undefined){
+    // useEffect(()=>{
+
+    //     if(isQRCode){
+
+    //         console.log('result change, ', resultObtain)
+    //         if(resultObtain !== null || resultObtain !== undefined){
+                
+    //             // update booth visit record
+    //             if(!isSent && needUpdate){
+    //                 setIsSent(true)
+    //                 update_record(resultObtain)
+    //             }
+    
+    //             // redirect to ar game 
+    //             let gameId = boothGames?.filter(game => game.boothId.toString() === resultObtain)?.[0]?.gameId
+    //             console.log('gameId:', gameId, "; isRedirectToGame: ", parseInt(gameId ?? "0") > 61202 * 1000000)
+    //             if(parseInt(gameId ?? "0") > 61202 * 1000000){
+    //                 console.log('needUpdate: ', needUpdate)
+    //                 window.location.replace(`/public/${lang}/ar-treasure/${gameId}`); // result is boothID
+    //             }else{
+    //                 setResultObtain(null)
+    //             }
+    //         }
+
+    //     }
+
+    //     console.log('144 isQRCode: ', isQRCode)
             
-            // update booth visit record
-            if(!isSent && needUpdate){
-                setIsSent(true)
-                update_record(resultObtain)
-            }
 
-            // redirect to ar game 
-            let gameId = boothGames?.filter(game => game.boothId.toString() === resultObtain)?.[0]?.gameId
-            console.log('gameId:', gameId, "; isRedirectToGame: ", parseInt(gameId ?? "0") > 61202 * 1000000)
-            if(parseInt(gameId ?? "0") > 61202 * 1000000){
-                console.log('needUpdate: ', needUpdate)
-                window.location.replace(`/public/${lang}/ar-treasure/${gameId}`); // result is boothID
-            }else{
-                setResultObtain(null)
-            }
-        }
+    // }, [resultObtain])
 
-    }, [resultObtain])
-
-    return !isQRCode ? <></> : (
+    return isQRCode && (
         <Overlay as={MotionFlex} initial={{opacity: 0}} animate={{opacity: 1}} transition={{ duration: .25 }}>
 
             <Modal as={MotionFlex} initial={{y: 200}} animate={{y: 0}} transition={{ duration: .25 }}
@@ -143,7 +174,9 @@ const QRCodeScanner = (props) => {
                     <Heading size='lg'>QR Code Scanner</Heading>
                     <CustomButton faIcon={faXmark} isCircle={true} onClick={close_modal}/>
                 </ModalHeader>
-            
+
+                {
+                    isQRCode &&
                     <Content>
 
                         {
@@ -151,10 +184,12 @@ const QRCodeScanner = (props) => {
                             <QRCodeImage src={qrCode} borderRadius={25} />
                             :
                             <QrReader delay={300} style={{ width: '100%' }} constraints={{facingMode: 'environment'}}
-                                onResult={(result, error) =>{onResult(result, error)}} />
+                                onResult={(result, error) =>{ if(isQRCode) onResult(result, error)}} />
                         }
                     
                     </Content>
+                }
+            
 
             </Modal>
         </Overlay>

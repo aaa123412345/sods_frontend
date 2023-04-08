@@ -1,4 +1,4 @@
-import React, { useRef, createRef } from 'react'
+import React, { useRef, createRef, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import styled from 'styled-components'
@@ -13,13 +13,15 @@ import CustomButton from '../../Common/common/CustomButton/CustomButton'
 import { langGetter } from '../../../helpers/langGetter'
 import { mobileBreakPoint, scrollbarCSS } from '../../../constants/constants'
 import useWindowSize from '../../../hooks/useWindowSize'
+import { UserContext } from '../../../App'
 
 const StorySplider = (props) => {
 
     const { isPreviewMode = false, tourguide, sysConfig } = props
     const { config } = sysConfig
     const { themeColor } = config ?? 'gray'
-    const { stories, itemIndex } = tourguide
+    const { minStampNum } = config ?? 0
+    const { stories, itemIndex, boothRecords } = tourguide
 
     const { subpath } = useParams()
 
@@ -28,7 +30,7 @@ const StorySplider = (props) => {
     const navigate = useNavigate()
 
     const windowSize = useWindowSize()
-
+    const { user } = useContext(UserContext)
     const lang = langGetter().toUpperCase()
     const laptopMode = windowSize.width > mobileBreakPoint
 
@@ -53,6 +55,11 @@ const StorySplider = (props) => {
             </React.Fragment>
         )
     }
+
+    if(subpath !== 'editor' && (boothRecords?.length < minStampNum || (user.userId ?? (-1)) <= 0)){
+        navigate(`/user/${lang === 'EN' ? 'eng':'chi'}/login`)
+    }
+
 
     return (
         <StyledCanvas h={isPreviewMode? "100%": '100vh'}>

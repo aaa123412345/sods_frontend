@@ -74,7 +74,7 @@ const RightPanel = (props) => {
                     {text: t(`tourguideEditor.delete-${isStoryEditor ? "story" : 'region'}`), faIcon: faTrash, onClick: ()=>onOpen(true)}]} />
 
 
-            <Content bg={bg} ref={contentRef}>
+            <Content bg={bg} ref={contentRef} minH={{base: "80vh", md: "calc(100% - 2em)"}}>
   
                 {
                     tourEditorData[subsubpath ?? ""]?.components?.map((component, index) => {
@@ -118,6 +118,7 @@ const Container = styled(Flex)`
     flex: 1;
     margin: 1em; 
     border-radius: 25px;
+    
 
 `
 

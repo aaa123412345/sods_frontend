@@ -51,7 +51,7 @@ const BoothInspector = (props) => {
         <React.Fragment>
             
             <InspectorWindow variants={animations} initial='initial' animate="animate" exit='exit' transition={{duration: .25}}
-                flexDir={{base: "column", md: "row"}} position={{base: "absolute" , md: "relative"}} w={{base: '95%', md: '60%'}} zIndex="50" bg={bg}>
+                flexDir={{base: "column", md: "column"}} position={{base: "absolute" , md: "relative"}} w={{base: '95%', md: '60%'}} zIndex="50" bg={bg}>
 
                 <CustomButton faIcon={faXmarkCircle} onClick={handle_closeInspector} isCircle cssStyle={{minHeight: '35px', minWidth: '35px', maxHeight: '35px', maxWidth: '35px', position: 'absolute', right: 0, top: 0}} />
 

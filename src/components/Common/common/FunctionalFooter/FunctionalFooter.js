@@ -196,8 +196,10 @@ const FunctionalFooter = (props) => {
                 
             Object.entries(data).map(([key, value], index)=>{
                 
-                if(key.toUpperCase().includes('IMAGEURL'))
-                    errorExist = (file === null || file === undefined)
+                if(key.toUpperCase().includes('IMAGEURL') || key.toUpperCase().includes('VRIMAGEURL')){
+                    if(file === null || file === undefined)
+                        errorExist = true
+                }
                 else if(errorChecking[key]?.(value))
                     errorExist = true
                 console.log(key, ": ", value, '; error: ', errorChecking[key]?.(value))
@@ -214,7 +216,7 @@ const FunctionalFooter = (props) => {
         console.log(form[name])
         check_validation(method === 'delete' ? null : form[name])
 
-    },[form])
+    },[form, file])
 
     useEffect(()=>{
         if(redirectURL !== null)

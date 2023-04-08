@@ -89,7 +89,7 @@ const PageContent = ({host,path,subpath,subsubpath,lang,mode}) => {
                   <ServerNavbar pdata={items.page} lang={lang}></ServerNavbar>
                 }
               
-              <div style={{paddingLeft:'5px'}}>
+              <div>
                 { items.page.useBootstrap?
                 <PageBootstrapHandler data={items.element} path={path} subpath={ subpath} lang={lang}></PageBootstrapHandler>:
                 items.element.map((element)=> ElementBuilder({data:element,path:path,subpath:subpath,lang:lang}))

@@ -92,7 +92,7 @@ const EditorModal = (props) => {
 
                 }
 
-                <FunctionalFooter isShow={isOpen} onClose={close_modal} errorChecking={tourModalData[modalName].errorChecking}
+                <FunctionalFooter isShow={isOpen} onClose={close_modal} errorChecking={tourModalData[modalName]?.errorChecking}
                     method={method} host={host} path={path} name={name} id={id} assignedItem={assignedItem}
                     file={file} setFile={setFile} 
                     onConfirm={onConfirm === "CLOSE_MODAL" ? close_modal : onConfirm}/>

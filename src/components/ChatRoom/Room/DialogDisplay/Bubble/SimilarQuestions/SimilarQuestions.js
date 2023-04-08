@@ -34,7 +34,8 @@ const Question = styled(ListItem)`
     cursor: pointer;
     font-size: .9rem;
     box-shadow: 0px 2.5px 18px rgba(0, 0, 0, .1);
-    background: rgba(255, 255, 255, .3);
+    background: rgba(255, 255, 255, .5);
+    font-weight: bold;
 
 
 

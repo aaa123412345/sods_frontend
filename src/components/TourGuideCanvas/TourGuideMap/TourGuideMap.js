@@ -91,8 +91,9 @@ const TourGuideMap = (props) => {
     useEffect(()=>{
 
         if(subpath !== "editor" && path === 'tourguide' && 
-            (subsubpath === "" || subsubpath === undefined || subsubpath === null))
-            navigate(`/public/${userLang}/tourguide/floorplans/${floorplans[itemIndex]?.id ?? ""}`)
+            (subsubpath === "" || subsubpath === undefined || subsubpath === null)){
+                navigate(`/public/${userLang}/tourguide/floorplans/${floorplans[itemIndex]?.id ?? "None"}`)
+            }
 
     }, [])
 
@@ -122,8 +123,8 @@ const TourGuideMap = (props) => {
                             src={floorplans[itemIndex]?.imageUrl ?? ""}
                             onLoad={e=>setMapSize({ originalWidth: e.target.clientWidth, originalHeight: e.target.clientHeight })}/>
                         :
-                        <Flex w="100%" h="100%" alignItems="center" justifyContent="center">
-                            <Text>{t(`floorplan.map-not-ready`)}</Text>
+                        <Flex w="100%" h="100%" minH="100vh" alignItems="center" justifyContent="center">
+                            <Text m="1em">{t(`floorplan.map-not-ready`)}</Text>
                         </Flex>
 
                     }
@@ -190,7 +191,6 @@ const ScrollMap = styled(Box)`
 const MapContainer = styled(Box)`
 
     position: relative;
-
 `
 
 const LoadImageSize = styled(Image)`
