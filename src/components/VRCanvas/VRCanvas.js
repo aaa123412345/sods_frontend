@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
+import { ref, getStorage, getDownloadURL, getBlob } from 'firebase/storage'
+
 import axios from 'axios'
 
 import 'aframe'
@@ -13,6 +15,7 @@ import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
 
 import { tourHost } from '../../constants/constants'
 import { langGetter } from '../../helpers/langGetter'
+import { storage } from '../../config/firebase'
 
 // import { useSpeechSynthesis } from 'react-speech-kit';
 // import { errorEN, errorZH, introductionEN, introductionZH } from '../../constants/constants';
@@ -31,6 +34,38 @@ const VRCanvas = (props) => {
   const [vrImage, setVRImage] = useState(null)
 
   const navigate = useNavigate()
+
+  const download_vrImage = (url) => {
+    console.log(url)
+    const fileRef = ref(storage, url)
+    const blob = getBlob(fileRef)
+    const blobUrl = URL.createObjectURL(blob)
+    setVRImage(blobUrl)
+    // getDownloadURL(imageRef)
+    // .then((url) => {
+    //   // `url` is the download URL for 'images/stars.jpg'
+
+    //   // This can be downloaded directly:
+    //   const xhr = new XMLHttpRequest();
+    //   xhr.responseType = 'blob';
+    //   xhr.onload = (event) => {
+    //     const blob = xhr.response;
+    //   };
+    //   // xhr.open('GET', url);
+    //   // xhr.send();
+
+    //   console.log('url: ', url)
+
+    //   // Or inserted into an <img> element
+    //   // const img = document.getElementById('vr-renderer');
+    //   // img.setAttribute('src', url);
+    //   // console.log(img)
+    // })
+    // .catch((error) => {
+    //   // Handle any errors
+    // });
+
+  }
 
   // const { vrTour, tourguide } = props
   // const { host, language } = tourguide
@@ -131,9 +166,14 @@ const VRCanvas = (props) => {
     let url = `${tourHost}/booths/${id}`
     axios.get(url)
     .then((res)=>{
-      console.log(res.data.data.vrImageUrl)
-      setError(null)
-      setVRImage(res.data.data.vrImageUrl)
+      let url = res.data.data.vrImageUrl
+      if(url.length > 0){
+        console.log(url)
+        setError(null)
+        setVRImage(url)
+        // download_vrImage(url) 
+      }
+
         // console.log("updated from " + url + " successfully;")
     })
     .catch((err)=>{setError(err)})
@@ -168,11 +208,14 @@ const VRCanvas = (props) => {
 
       {/* <image src={vrImage} height='100px'  width='100px'/> */}
 
+
+      {/* <img src={vrImage}/> */}
       <Scene ref={sceneRef}>
         <a-asset>
-          <img crossorigin="anonymous" id="vr-image" src={vrImage ?? ""} />
+          <img crossorigin="anonymous" src={vrImage ?? ""} id="vr-image"/>
         </a-asset>
-        <Entity primitive='a-sky' src='#vr-image' />
+
+        <Entity primitive='a-sky' id="vr-renderer" src={'#vr-image'} />
       </Scene>
     </div>
   
