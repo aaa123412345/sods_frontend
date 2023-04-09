@@ -58,10 +58,10 @@ const BoothButton = (props) => {
         )
     }
 
-    return (markers.filter(marker => marker.floorPlanID === floorplans[itemIndex]?.id).find(marker => marker.boothID === data.id) !== undefined 
+    return ((markers.filter(marker => marker.floorPlanID === floorplans[itemIndex]?.id).find(marker => marker.boothID === data.id) !== undefined 
     || markers.filter(marker => marker.floorPlanID === floorplans[itemIndex]?.id).find(marker => marker.boothID === data.id) === undefined 
     && markers.find(marker => marker.boothID === data.id) === undefined)
-    && (
+    || (isNotUseFunction ?? false)) && (
         <React.Fragment>
 
             

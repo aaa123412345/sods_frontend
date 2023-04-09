@@ -1,6 +1,6 @@
 export const initARTreasureState = {
 
-    booths: [],
+    tourBooths: [],
     boothGames: [],
     treasure: null,
     treasures: [],

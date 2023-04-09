@@ -77,7 +77,7 @@ const ItemList = (props) => {
     if(isInputList){
       setSelectIndex(index)
       let newData = {...form[names.form]}
-      newData[names.field] = arTreasure['booths'][index].id
+      newData[names.field] = arTreasure['tourBooths'][index].id
       dispatch(update({...newData}))
     }
     
@@ -93,6 +93,8 @@ const ItemList = (props) => {
     dispatch(openModal(payload))
       
   }
+
+  console.log('item list: ', arTreasure['tourBooths'])
 
   return (
     
@@ -127,7 +129,7 @@ const ItemList = (props) => {
           <AnimatePresence>
           {
 
-            (isInputList ? arTreasure['booths'] : tourguide[dataName])?.map((item, index) => (
+            (isInputList ? arTreasure['tourBooths'] : tourguide[dataName])?.map((item, index) => (
               <ItemButton key={index} type={path ?? names?.form} data={item}
                 variant={handle_active(index) ? themeColor : 'gray'}
                 onClick={()=>(select_item(index))}/>

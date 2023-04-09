@@ -7,8 +7,8 @@ export const UPDATE_AR_TREASURES = "UPDATE_AR_TREASURES"
 
 // action creator
 
-export const updateARBooths = (booths) => {
-    return { type: UPDATE_AR_BOOTHS, booths }
+export const updateARBooths = (tourBooths) => {
+    return { type: UPDATE_AR_BOOTHS, tourBooths }
 }
 
 export const updateBoothGames = (boothGames) => {

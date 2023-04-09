@@ -6,7 +6,7 @@ const arTreasureReducer = (state = initARTreasureState, action) => {
     switch(action.type){
 
         case UPDATE_AR_BOOTHS:
-            return { ...state, booths: action.booths }
+            return { ...state, tourBooths: action.tourBooths }
 
         case UPDATE_BOOTH_GAMES:
             return { ...state, boothGames: action.boothGames }

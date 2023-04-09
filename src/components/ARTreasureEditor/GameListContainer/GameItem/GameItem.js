@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import styled from 'styled-components'
-import { Flex, Box, Text, Heading, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Box, Text, Heading, useColorModeValue, useFormControlStyles } from '@chakra-ui/react'
 import { faPen, faQuestion, faTent, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { useTranslation } from 'react-i18next'
@@ -18,7 +18,7 @@ const GameItem = (props) => {
 
     const { isHeader = false, treasure, sysConfig, arTreasure, form } = props
     const { config } = sysConfig
-    const { booths, boothGames } = arTreasure
+    const { tourBooths, boothGames } = arTreasure
 
     const [booth, setBooth] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -98,14 +98,23 @@ const GameItem = (props) => {
 
         if(!isHeader){
 
+            
             // init card info
             let boothGame = boothGames?.filter((boothGame) => boothGame.gameId === treasure.treasureId)
+            console.log('boothGames: ', boothGames)
             
             if(boothGame?.length ?? 0 !== 0){      
+                console.log(treasure.treasureId)
+
                 
-                let booth = booths?.filter((booth) => booth.id.toString() === boothGame[0].boothId.toString())
-                if(booth?.length ?? 0 !== 0)
-                    setBooth(booth[0])
+                let cBooth = tourBooths?.filter((booth) => booth.id.toString() === boothGame[0].boothId.toString())
+                // console.log("tourBooths: ", tourBooths[6].id)
+                // console.log('tourBooths: ', tourBooths)
+                // console.log('current: ', boothGame[0].boothId)
+                // console.log(tourBooths[6].id === boothGame[0].boothId)
+                // console.log('booth: ', cBooth)
+                if(cBooth?.length ?? 0 !== 0)
+                    setBooth(cBooth[0])
             }
         }
 
@@ -125,6 +134,8 @@ const GameItem = (props) => {
                     <ColumnHeading title={t('arTreasureEditor.heading-answer')}/>
                     <Flex flexWrap="wrap">
                         {
+                            !isLoaded ? <Text>{t('arTreasureEditor.loading')}</Text>
+                            :
                             answers?.map((answer, index)=>(
                                 <Tag key={index} color={color}>{answer}</Tag>
                             ))??<></>   

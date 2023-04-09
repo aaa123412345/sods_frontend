@@ -101,7 +101,7 @@ const TagInput = (props) => {
                 <CustomButton faIcon={faAdd} onClick={()=>{add_tag()}} isCircle/>
             </Flex>
 
-            <Flex>
+            <Flex wrap="wrap">
                 {
                     tagList.map((tag, index)=>(
                         <Tag key={index} text={tag} onClick={()=>{remove_tag(index)}}/>

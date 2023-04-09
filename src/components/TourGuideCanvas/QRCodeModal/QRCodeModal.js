@@ -88,10 +88,11 @@ const QRCodeScanner = (props) => {
 
         if (!!result && isQRCode) {
             let text = result?.text
-            console.log('result: ', text)
+            // console.log('result: ', text)
             // setResultObtain(text)
-            console.log('result change, ', resultObtain)
+            // console.log('result change, ', resultObtain)
             if(text !== null || text !== undefined){
+                console.log('scanned: ', text)
                 
                 // update booth visit record
                 if(!isSent && needUpdate){
